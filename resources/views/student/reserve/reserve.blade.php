@@ -30,35 +30,214 @@
 
 
 
-            <div class="card">
-                @if ($application)
+            {{-- <div class="card"> --}}
+            @if ($application)
+                <div class="block tab-pane" id="overviewTabs">
+                    <div class="grid grid-cols-1 gap-x-5 2xl:grid-cols-12">
+                        <div class="2xl:col-span-12">
+                            <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
+
+                                <div class="text-center card bg-custom-500 xl:col-span-3">
+                                    <div class="flex flex-col h-full card-body">
+                                        <img src="{{ asset(Auth::user()->photo) }}" alt=""
+                                            class="w-2/6 mx-auto rounded-full">
+                                        <div class="mt-5 mb-auto">
+                                            <h5 class="mb-1 text-white">Congratulations!
+                                                {{ $existingReservation->applicant->firstname }}</h5>
+                                            <p class="text-custom-200">You have successfully reserve a slot. Kindly click
+                                                the <b>Application Number </b> download your CEE slip.</p>
+                                        </div>
+                                        <div class="p-3 mt-5 rounded-md bg-custom-600">
+                                            {{-- <h2 class="mb-1 text-white">{{ $existingReservation->app_no }}</h2> --}}
+                                            <a href="" class="text-decoration-none">
+                                                <h2 class="mb-1 text-white">{{ $existingReservation->app_no }}</h2>
+                                            </a>
+                                            <p class="text-custom-200">Application Number</p>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                                <div class="xl:col-span-4">
+                                    <div class="card">
+                                        <div class="bg-slate-200 card-body rounded-t-md dark:bg-zink-600">
+                                            <h6 class="mb-1 text-15">USMCEE Reservation Details</h6>
+                                        </div>
+                                        <div class="card-body">
+
+                                            <div class="overflow-x-auto">
+                                                <table class="w-full ltr:text-left rtl:ext-right">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="pt-2 font-semibold ps-0" scope="row">Learner
+                                                                Rerefence Number</th>
+                                                            <td class="pt-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $existingReservation->applicant->lrn }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Full Name
+                                                            </th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $existingReservation->applicant->lastname }},
+                                                                {{ $existingReservation->applicant->firstname }}
+                                                                {{ $existingReservation->applicant->middlename }}
+                                                                {{ $existingReservation->applicant->suffix }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Sex</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $existingReservation->applicant->sex }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Phone No</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $existingReservation->applicant->phone }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Email</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $existingReservation->applicant->email }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Birth of Date
+                                                            </th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ \Carbon\Carbon::parse($existingReservation->applicant->birthdate)->format('F j, Y') }}
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                                <div class="xl:col-span-5">
+                                    <div class="card">
+                                        <div class="bg-slate-200 card-body rounded-t-md dark:bg-zink-600">
+                                            <h6 class="mb-1 text-15">Priority Programs and Schedule </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="overflow-x-auto">
+                                                <table class="w-full ltr:text-left rtl:ext-right">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">First
+                                                                Priority</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $existingReservation->firstpriorty }} -
+                                                                @if ($existingReservation->campus_id == 1)
+                                                                    USM-Main
+                                                                @elseif ($existingReservation->campus_id == 3)
+                                                                    USM KCC
+                                                                @elseif ($existingReservation->campus_id == 5)
+                                                                    USM PALMA CLUSTER
+                                                                @elseif ($existingReservation->campus_id == 6)
+                                                                    USM MLANG
+                                                                @else
+                                                                    Unknown Campus
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Second
+                                                                Priority</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $existingReservation->secondpriorty }} -
+                                                                @if ($existingReservation->campus_id == 1)
+                                                                    USM-Main
+                                                                @elseif ($existingReservation->campus_id == 3)
+                                                                    USM KCC
+                                                                @elseif ($existingReservation->campus_id == 5)
+                                                                    USM PALMA CLUSTER
+                                                                @elseif ($existingReservation->campus_id == 6)
+                                                                    USM MLANG
+                                                                @else
+                                                                    Unknown Campus
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Second
+                                                                Priority</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $existingReservation->thirdpriorty }} -
+                                                                @if ($existingReservation->campus_id == 1)
+                                                                    USM-Main
+                                                                @elseif ($existingReservation->campus_id == 3)
+                                                                    USM KCC
+                                                                @elseif ($existingReservation->campus_id == 5)
+                                                                    USM PALMA CLUSTER
+                                                                @elseif ($existingReservation->campus_id == 6)
+                                                                    USM MLANG
+                                                                @else
+                                                                    Unknown Campus
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Session and
+                                                                Date</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                               <b> {{ strtoupper($existingReservation->exam_session) }} <b>
+                                                                {{ \Carbon\Carbon::parse($existingReservation->room->schedule)->format('F j, Y') }}
+                                                                (
+                                                                {{ $existingReservation->room->time }})</td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Examination
+                                                                Place</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $existingReservation->room->college_name }} -
+                                                                {{ $existingReservation->room->room_name }} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">CEE FEE</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                FREE for First taker
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                            </div><!--end grid-->
+
+                        </div><!--end col-->
+                    </div><!--end grid-->
+
+                </div><!--end tab pane-->
+
+                <div class="card">
+                    <div class="bg-slate-200 card-body rounded-t-md dark:bg-zink-600">
+                        <h6 class="mb-1 text-15">USM Interactive Map</h6>
+                    </div>
                     <div class="card-body">
-
-
-                        <h6 class="mb-1 text-5">RESERVATION DETAILS</h6>
-                        <hr class="mb-2" />
-                        <div style="height: 500px;">
-                            <iframe src="https://localapps.usm.edu.ph/campus-nav" frameborder="0" height="100%"
-                                width="100%"></iframe>
-                        </div>
-
-
-
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.0913334125385!2d124.83410507650434!3d7.115413992888201!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f88d6eb36848a5%3A0x284e2a004693d67b!2sUniversity%20of%20Southern%20Mindanao!5e0!3m2!1sen!2sph!4v1730724031596!5m2!1sen!2sph"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
-                @else
-                    <div class="card">
-                        <div class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
-                            <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                            <div>
-                                <h6 class="mb-1">Kindly read this note before proceeding to CEE Slot Reservation</h6>
-                                <p><b>Note:</b> Please ensure that you provide accurate and correct information.
-                                    Double-check
-                                    all details before submitting, as you will not be able to edit them once saved. </p>
-                            </div>
+
+                </div>
+            @else
+                <div class="card">
+                    <div class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
+                        <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                        <div>
+                            <h6 class="mb-1">Kindly read this note before proceeding to CEE Slot Reservation</h6>
+                            <p><b>Note:</b> Please ensure that you provide accurate and correct information.
+                                Double-check
+                                all details before submitting, as you will not be able to edit them once saved. </p>
                         </div>
                     </div>
-                    <br>
-
+                </div>
+                <div class="card">
                     <div class="card-body">
 
                         <form action="{{ route('student.reserve.store') }}" method="POST">
@@ -77,17 +256,11 @@
                                 <h6 class="mt-2 text-5">Priority Programs</h6>
 
                                 <div class="xl:col-span-12">
-                                    <label for="campus" class="inline-block mb-2 text-base font-medium">Select Campus<span
-                                            class="text-red-500">*</span></label>
-                                    <select id="campus-select" name="campus" data-choices
+                                    <label for="campus" class="inline-block mb-2 text-base font-medium">Select
+                                        Campus<span class="text-red-500">*</span></label>
+                                    <select id="campus-select" name="campus"
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Campus</option>
-                                        {{--  USM-KCC 3, MAIN -1, PALMA-5 MLANG-6 --}}
-                                        {{-- @foreach ($campusList as $campus)
-                                        <option value="{{ $campus['campusName'] }}"
-                                            data-campus-name="{{ $campus['campusName'] }}">{{ $campus['campusName'] }}
-                                        </option>
-                                    @endforeach --}}
                                         <option value="1">USM Main</option>
                                         <option value="3">USM KCC</option>
                                         <option value="5">USM PALMA CLUSTER</option>
@@ -96,11 +269,11 @@
                                     </select>
                                 </div>
 
-                                <div class="xl:col-span-6">
+                                <div class="xl:col-span-12">
                                     <label for="firstprioprog" class="inline-block mb-2 text-base font-medium">First
                                         Priority
                                         Program <span class="text-red-500">*</span></label>
-                                    <select id="program-select" name="firstprioprog"
+                                    <select id="program-select" name="firstprioprog" select2
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
@@ -108,16 +281,16 @@
 
 
 
-                                <div class="xl:col-span-6">
-                                    <label for="firstpriomajor" class="inline-block mb-2 text-base font-medium">Major
-                                        In</label>
-                                    <select id="major-select" name="firstpriomajor"
-                                        class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                        <option selected="true" disabled>Choose Major</option>
-                                    </select>
-                                </div>
+                                {{-- <div class="xl:col-span-6">
+                                        <label for="firstpriomajor" class="inline-block mb-2 text-base font-medium">Major
+                                            In</label>
+                                        <select id="major-select" name="firstpriomajor"
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                            <option selected="true" disabled>Choose Major</option>
+                                        </select>
+                                    </div> --}}
 
-                                <div class="xl:col-span-6">
+                                <div class="xl:col-span-12">
                                     <label for="secondprioprog" class="inline-block mb-2 text-base font-medium">Second
                                         Priority
                                         Program <span class="text-red-500">*</span></label>
@@ -126,16 +299,16 @@
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
                                 </div>
-                                <div class="xl:col-span-6">
-                                    <label for="secondpriomajor" class="inline-block mb-2 text-base font-medium">Major
-                                        In</label>
-                                    <select id="major-select2" name="secondpriomajor"
-                                        class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                        <option selected="true" disabled>Choose Major</option>
-                                    </select>
-                                </div>
+                                {{-- <div class="xl:col-span-6">
+                                        <label for="secondpriomajor" class="inline-block mb-2 text-base font-medium">Major
+                                            In</label>
+                                        <select id="major-select2" name="secondpriomajor"
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                            <option selected="true" disabled>Choose Major</option>
+                                        </select>
+                                    </div> --}}
 
-                                <div class="xl:col-span-6">
+                                <div class="xl:col-span-12">
                                     <label for="thirdprioprog" class="inline-block mb-2 text-base font-medium">Third
                                         Priority
                                         Program <span class="text-red-500">*</span></label>
@@ -144,21 +317,22 @@
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
                                 </div>
-                                <div class="xl:col-span-6">
-                                    <label for="thirdpriomajor" class="inline-block mb-2 text-base font-medium">Major
-                                        In</label>
-                                    <select id="major-select2" name="thirdpriomajor"
-                                        class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                        <option selected="true" disabled>Choose Major</option>
-                                    </select>
-                                </div>
+                                {{-- <div class="xl:col-span-6">
+                                        <label for="thirdpriomajor" class="inline-block mb-2 text-base font-medium">Major
+                                            In</label>
+                                        <select id="major-select2" name="thirdpriomajor"
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                            <option selected="true" disabled>Choose Major</option>
+                                        </select>
+                                    </div> --}}
 
                                 <div class="xl:col-span-12">
                                     <h6 class="mt-2 text-5">Examination Details</h6>
                                 </div>
 
                                 <div class="xl:col-span-6">
-                                    <label for="ceesession" class="inline-block mb-2 text-base font-medium">USMCEE Session
+                                    <label for="ceesession" class="inline-block mb-2 text-base font-medium">USMCEE
+                                        Session
                                         <span class="text-red-500">*</span></label>
                                     <select class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
                                         id="ceeexamsession" name="ceeexamsession" onchange="loadRooms()">
@@ -190,30 +364,46 @@
                                     <button type="submit"
                                         class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100">Submit</button>
                                 </div><!--end col-->
-
-
-
-
                             </div>
                         </form>
 
                     </div>
-                @endif
-
-
-
-
-
-
-
-
-            </div><!--end card-->
+                </div>
+            @endif
+            {{-- </div><!--end card--> --}}
         </div><!--end col-->
     </div><!--end grid-->
 @endsection
 @push('scripts')
     <!-- Include SweetAlert library -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session('message'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "{{ session('status') === 'error' ? 'error' : 'success' }}",
+                    title: "{{ session('status') === 'error' ? 'Error' : 'Success' }}",
+                    text: "{{ session('message') }}",
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
+
+    @if ($errors->any())
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Errors',
+                    html: '{!! implode('<br>', $errors->all()) !!}',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
+
     <script>
         $(document).ready(function() {
             $('form').on('submit', function(event) {
@@ -236,61 +426,105 @@
                 });
             });
         });
-        document.getElementById('campus-select').addEventListener('change', function() {
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
             const campusSelect = document.getElementById('campus-select');
-            const selectedOption = campusSelect.options[campusSelect.selectedIndex];
-            const campusName = selectedOption.getAttribute('data-campus-name');
-            let tenantId = campusName === 'USM-KCC' ? 3 : 1; // Default tenantId is 1 unless 'USM-KCC' is selected
-
-            // Select all program dropdowns
-            const programSelects = [
-                document.getElementById('program-select'),
-                document.getElementById('program-select2'),
-                document.getElementById('program-select3')
-            ];
-
-            // Function to set inner HTML for all program selects
-            const setInnerHTMLForAll = (htmlContent) => {
-                programSelects.forEach(select => {
-                    select.innerHTML = htmlContent;
-                });
-            };
-
-            // Show loading message on all selects
-            setInnerHTMLForAll('<option selected="true" disabled>Loading Programs...</option>');
+            const programSelect = document.getElementById('program-select');
+            const programSelect2 = document.getElementById('program-select2');
+            const programSelect3 = document.getElementById('program-select3');
 
 
+            function loadPrograms() {
+                const realCampusId = campusSelect.value;
+
+                // Set termId based on the selected campus
+                let termId;
+                switch (realCampusId) {
+                    case "1": // USM Main
+                        termId = 95;
+                        break;
+                    case "3": // USM KCC
+                        termId = 67;
+                        break;
+                    case "5": // PALMA
+                        termId = 95;
+                        break;
+                    case "6": // Mlang
+                        termId = 67;
+                        break;
+                    default:
+                        termId = null; // Default or no termId if campus is not matched
+                        break;
+                }
+
+                // Check if both realCampusId and termId are set
+                if (!realCampusId || !termId) {
+                    return; // Exit if either value is missing
+                }
+
+                // Clear program dropdown and show loading message
+                programSelect.innerHTML = '<option selected disabled>Loading...</option>';
+                programSelect2.innerHTML = '<option selected disabled>Loading...</option>';
+                programSelect3.innerHTML = '<option selected disabled>Loading...</option>';
 
 
-            // Make the API call with the dynamic tenantId
-            fetch(`/api/programs?tenantId=${tenantId}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Set default option after loading
-                    setInnerHTMLForAll('<option selected="true" disabled>Choose Program</option>');
+                // Fetch programs based on selected realCampusId and termId
+                fetch(`/student/cee/get-programs-by-campus?termId=${termId}&realCampusId=${realCampusId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Populate the program dropdown with the response data
+                        programSelect.innerHTML = '<option selected disabled>Choose Program</option>';
+                        programSelect2.innerHTML = '<option selected disabled>Choose Program</option>';
+                        programSelect3.innerHTML = '<option selected disabled>Choose Program</option>';
 
-                    // Populate each program select with options
-                    data.forEach(program => {
-                        const option = document.createElement('option');
-                        option.value = program.progName;
-                        option.textContent = `${program.progCode} - ${program.progName}`;
+                        data.forEach(program => {
+                            const option = document.createElement('option');
+                            const option2 = document.createElement('option');
+                            const option3 = document.createElement('option');
 
-                        programSelects.forEach(select => {
-                            select.appendChild(option.cloneNode(
-                                true)); // Clone to avoid reusing the same node
+                            const programId = program.programId;
+                            const programName = program.programName;
+
+                            const majorDiscDesc = program.majorDiscDesc;
+
+                            // Check if majorDiscDesc is null, empty, or an empty string
+                            if (!majorDiscDesc) {
+                                option.textContent = programName;
+                                option2.textContent = programName;
+                                option3.textContent = programName;
+                            } else {
+                                option.textContent = `${programName}  -  ${majorDiscDesc}`;
+                                option2.textContent = `${programName}  -  ${majorDiscDesc}`;
+                                option3.textContent = `${programName}  -  ${majorDiscDesc}`;
+                            }
+
+                            option2.value = programName;
+                            option3.value = programName;
+                            option.value = programName;
+
+                            programSelect.appendChild(option);
+                            programSelect2.appendChild(option2);
+                            programSelect3.appendChild(option3);
                         });
+                    })
+                    .catch(error => {
+                        console.error('Error loading programs:', error);
+                        programSelect.innerHTML = '<option selected disabled>Error loading programs</option>';
+                        programSelect2.innerHTML = '<option selected disabled>Error loading programs</option>';
+                        programSelect3.innerHTML = '<option selected disabled>Error loading programs</option>';
                     });
+            }
 
-
-                })
-                .catch(error => {
-                    console.error('Error fetching programs:', error);
-                    setInnerHTMLForAll('<option selected="true" disabled>Error loading programs</option>');
-                });
+            // Load programs when the campus dropdown changes
+            campusSelect.addEventListener('change', loadPrograms);
         });
 
+
+
+
         function loadRooms() {
-            console.log('loadRooms function called');
             const ceesession = document.getElementById('ceeexamsession').value;
             const roomSelect = document.getElementById('room-select');
 
@@ -310,7 +544,6 @@
                         return response.json();
                     })
                     .then(data => {
-                        console.log(data); // Check data here
                         data.forEach(room => {
                             const option = document.createElement('option');
                             option.value = room.id;

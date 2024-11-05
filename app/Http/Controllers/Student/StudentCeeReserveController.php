@@ -10,9 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class StudentCeeReserveController extends Controller
 {
+
+
     public function index()
     {
         $response = Http::get('http://172.16.0.60/academic/api/v2/Campus/list');
@@ -28,9 +31,10 @@ class StudentCeeReserveController extends Controller
         }
 
         $ceeSession = CeeSession::where('status', 'active')->first();
-        $application = Reservation::where('user_id',  Auth::user()->id)->exists();
+        $application = Reservation::where('user_id', Auth::user()->id)->exists();
+        $existingReservation = Reservation::where('user_id', Auth::user()->id)->first();
 
-        return view("student.reserve.reserve", compact('ceeSession', 'campusList','application'));
+        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'existingReservation'));
     }
 
     public function getProgramsByTenant(Request $request)
@@ -64,12 +68,44 @@ class StudentCeeReserveController extends Controller
         }
     }
 
+    public function getProgramByRealCampusId(Request $request)
+    {
+       
+
+        $termId = $request->query('termId');
+        $realCampusId = $request->query('realCampusId');
+
+        // Define a unique cache key based on termId and realCampusId
+        $cacheKey = "program_policies_{$termId}_{$realCampusId}";
+
+        // Cache the response for 60 minutes
+        $programs = Cache::remember($cacheKey, 60, function () use ($termId, $realCampusId) {
+            $response = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/list/term/{$termId}/realcampus/{$realCampusId}");
+
+            if ($response->successful()) {
+                return collect($response->json());
+            } else {
+                // Handle the case where the API request was unsuccessful
+                return null; // Return null if the request fails
+            }
+        });
+
+        if ($programs) {
+            return response()->json($programs);
+        } else {
+            return response()->json(['error' => 'Failed to fetch programs'], 500);
+        }
+    }
+
     public function getRoomsByExamSession(Request $request)
     {
         $session = $request->input('ceesession');
 
         // Retrieve rooms based on session
-        $rooms = Room::where('exam_session', $session)->where('status', 'active')->get(['id', 'room_name', 'capacity', 'college_name']);
+        $rooms = Room::where('exam_session', $session)
+            ->where('status', 'active')
+            ->where('capacity', '>', 0)
+            ->get(['id', 'room_name', 'capacity', 'college_name']);
 
         return response()->json($rooms);
     }
@@ -90,55 +126,81 @@ class StudentCeeReserveController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'ceesession' => 'required|integer',
-                'campus' => 'required|string|max:100',
-                'firstprioprog' => 'required|string|max:100',
-                'firstpriomajor' => 'nullable|string|max:100',
-                'secondprioprog' => 'nullable|string|max:100',
-                'secondpriomajor' => 'nullable|string|max:100',
-                'thirdprioprog' => 'nullable|string|max:100',
-                'thirdpriomajor' => 'nullable|string|max:100',
-                'ceeexamsession' => 'required|string|max:50',
-                'room' => 'required|string|max:100',
-            ]
-        );
+        $request->validate([
+            'ceesession' => 'required|integer',
+            'campus' => 'required|string|max:100',
+            'firstprioprog' => 'required|string|max:100',
+            'firstpriomajor' => 'nullable|string|max:100',
+            'secondprioprog' => 'nullable|string|max:100',
+            'secondpriomajor' => 'nullable|string|max:100',
+            'thirdprioprog' => 'nullable|string|max:100',
+            'thirdpriomajor' => 'nullable|string|max:100',
+            'ceeexamsession' => 'required|string|max:50',
+            'room' => 'required|string|max:100',
+        ]);
 
-         $userId =  Auth::user()->id;
-         $ceeSession = $request->ceesession;
-         $lastRow = Reservation::find(Reservation::max('id'));
-         $lastId = $lastRow ? $lastRow->id : 0; // If no rows, start with 0
+        // Check room availability
+        $checkifzero = Room::where('exam_session', $request->room)
+            ->where('status', 'active')
+            ->where('capacity', '<=', 0)
+            ->exists();
 
-         // Format the date
-         $formattedDate = Carbon::parse($request->created_at)->format('Ymd');
+        if ($checkifzero) {
+            return redirect()->back()->with([
+                'message' => 'We are sorry! No more slots are available for this room. Please select a different session or room.',
+                'status' => 'error'
+            ]);
+        } else {
+            $userId = Auth::user()->id;
+            $ceeSession = $request->ceesession;
+            $lastRow = Reservation::find(Reservation::max('id'));
+            $lastId = $lastRow ? $lastRow->id : 0; // If no rows, start with 0
 
-         // Concatenate the formatted date with the last ID incremented by 1
-         $appno = $formattedDate .$userId.$ceeSession.($lastId + 1);
+            // Format the date
+            $formattedDate = Carbon::parse($request->created_at)->format('Ymd');
 
-        $application = new Reservation();
-        $application->cee_session_id =  $ceeSession;
-        $application->user_id = $userId;
-        $application->app_no =  $appno;
-        $application->campus_id = $request->campus;
-        $application->firstpriorty = $request->firstprioprog;
-        $application->firstpriortymajor = $request->firstpriomajor;
-        $application->secondpriorty = $request->secondprioprog;
-        $application->secondpriortymajor = $request->secondpriomajor;
-        $application->thirdpriorty = $request->thirdprioprog;
-        $application->thirdpriortymajor = $request->thirdpriomajor;
-        $application->exam_session = $request->ceeexamsession;
-        $application->room = $request->room;
-        $application->save();
+            // Concatenate the formatted date with the last ID incremented by 1
+            $appno = 'CEE-' . $formattedDate . $userId . $ceeSession . ($lastId + 1);
 
-        //update room qty
-        $room = Room::findOrFail($request->room)->first();
-        $roomCap =  $room->capacity;
-        $newRoomcap =  $roomCap -  $request->room;
-        $room->capacity = $newRoomcap;
-        $room->save();
+            $checkifzero = Room::where('id', $request->room)
+                ->where('status', 'active')
+                ->where('capacity', '<=', 0)
+                ->exists();
 
-        return redirect()->back()->with('message', 'Congratulations! USMCEE Slot reservation Successful.');
+            if ($checkifzero) {
+                return redirect()->back()->with([
+                    'message' => 'We are sorry! No more slots are available for this room. Please select a different session or room.',
+                    'status' => 'error'
+                ]);
+            }
 
+            $application = new Reservation();
+            $application->cee_session_id = $ceeSession;
+            $application->user_id = $userId;
+            $application->app_no = $appno;
+            $application->campus_id = $request->campus;
+            $application->firstpriorty = $request->firstprioprog;
+            $application->firstpriortymajor = $request->firstpriomajor;
+            $application->secondpriorty = $request->secondprioprog;
+            $application->secondpriortymajor = $request->secondpriomajor;
+            $application->thirdpriorty = $request->thirdprioprog;
+            $application->thirdpriortymajor = $request->thirdpriomajor;
+            $application->exam_session = $request->ceeexamsession;
+            $application->room_id = $request->room;
+            $application->save();
+
+            // Update room quantity
+            $room = Room::findOrFail($request->room)->first();
+            $roomCap = $room->capacity;
+            $newRoomcap = $roomCap - 1;
+            $room->capacity = $newRoomcap;
+            $room->save();
+        }
+
+        return redirect()->back()->with([
+            'message' => 'Congratulations! USMCEE Slot reservation Successful.',
+            'status' => 'success'
+        ]);
     }
+
 }

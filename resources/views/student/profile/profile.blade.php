@@ -52,7 +52,10 @@
                     <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details here easily.
                     </p>
 
-                    <form action="{{ route('student.profile.update', ['profile' => $studentdetails->id]) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('student.profile.update', ['profile' => $studentdetails->id]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        {{-- <form action="/student/test-update/{{ $studentdetails->id }}" method="POST"
+                        enctype="multipart/form-data"> --}}
                         @csrf
                         @method('PUT')
 
@@ -89,6 +92,9 @@
                                 <input type="text" id="lrn" name="lrn"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}">
+                                @error('lrn')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                             </div><!--end col-->
 
                             <div class="xl:col-span-6">
@@ -181,6 +187,9 @@
                                 <input type="text" id="phone" name="phone"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="Enter 11 digit phone number" value="{{ $studentdetails->phone }}">
+                                @error('phone')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                             </div><!--end col-->
                             <div class="xl:col-span-3">
                                 <label for="email" class="inline-block mb-2 text-base font-medium">Email Address
@@ -325,25 +334,25 @@
     <script>
         $(document).ready(function() {
 
-            $('form').on('submit', function(event) {
-                event.preventDefault(); // Prevent default submission
+            // $('form').on('submit', function(event) {
+            //     event.preventDefault(); // Prevent default submission
 
-                // Show SweetAlert confirmation dialog
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "I confirm that all data has been reviewed and is accurate. I understand that once saved, I will no longer be able to edit the information.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, save it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // If confirmed, submit the form
-                        this.submit();
-                    }
-                });
-            });
+            //     // Show SweetAlert confirmation dialog
+            //     Swal.fire({
+            //         title: 'Are you sure?',
+            //         text: "I confirm that all data has been reviewed and is accurate. I understand that once saved, I will no longer be able to edit the information.",
+            //         icon: 'warning',
+            //         showCancelButton: true,
+            //         confirmButtonColor: '#3085d6',
+            //         cancelButtonColor: '#d33',
+            //         confirmButtonText: 'Yes, save it!'
+            //     }).then((result) => {
+            //         if (result.isConfirmed) {
+            //             // If confirmed, submit the form
+            //             $(this).off('submit').submit();
+            //         }
+            //     });
+            // });
 
             // URLs for JSON files
             var regionUrl = "{{ url('backend/assets/ph-json/region.json') }}";

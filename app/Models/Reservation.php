@@ -16,7 +16,7 @@ class Reservation extends Model
 
     public function room()
     {
-        return $this->belongsTo(Room::class, 'room');
+        return $this->belongsTo(Room::class, 'room_id');
     }
 
     public function ceesession()

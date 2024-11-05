@@ -6,11 +6,11 @@
             <div>
                 <script>
                     document.write(new Date().getFullYear())
-                </script> © Province.
+                </script> © www.usm.edu.ph
             </div>
             <div class="hidden lg:block">
                 <div class="ltr:text-right rtl:text-left">
-                    Design & Develop by Themesdesign
+                    Design & Develop by UICTO
                 </div>
             </div>
         </div>

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('thirdpriorty')->nullable();
             $table->string('thirdpriortymajor')->nullable();
             $table->string('exam_session');
-            $table->string('room');
+            $table->integer('room');
             $table->timestamps();
         });
     }

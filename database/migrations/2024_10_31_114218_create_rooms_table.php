@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('college_name');
             $table->string('room_name');
-            $table->integer('capacity')->check('capacity >= 0');
+            $table->unsignedInteger('capacity'); // This will prevent negative values
             $table->enum('status',['active', 'inactive'])->default('active');
             $table->timestamps();
         });

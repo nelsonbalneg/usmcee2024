@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\CeeSession;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,6 +34,8 @@ class StudentController extends Controller
         if ($checkEmptyFields) {
 
             $studentdetails = User::where('id', Auth::user()->id)->first();
+            $ceeActiveession = CeeSession::where('status', 'active')->first();
+
            return view("student.profile.profile", compact('studentdetails'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
         } else {
             return view('student.dashboard');
