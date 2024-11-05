@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use App\Models\PastCeeData;
 
 class StudentCeeReserveController extends Controller
 {
@@ -30,11 +31,21 @@ class StudentCeeReserveController extends Controller
             $campusList = [];
         }
 
+        $firstname = Auth::user()->firstname;
+        $lastname = Auth::user()->lastname;
+        $birthdate = Auth::user()->birthdate;
+
         $ceeSession = CeeSession::where('status', 'active')->first();
         $application = Reservation::where('user_id', Auth::user()->id)->exists();
         $existingReservation = Reservation::where('user_id', Auth::user()->id)->first();
 
-        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'existingReservation'));
+        //check if name exist in the past cee data session
+        $isRetaker = PastCeeData::where('firstname', $firstname)
+            ->where('lastname', $lastname)
+            ->where('birthdate', $birthdate)
+            ->exists();
+
+        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'existingReservation', 'isRetaker'));
     }
 
     public function getProgramsByTenant(Request $request)
@@ -70,7 +81,7 @@ class StudentCeeReserveController extends Controller
 
     public function getProgramByRealCampusId(Request $request)
     {
-       
+
 
         $termId = $request->query('termId');
         $realCampusId = $request->query('realCampusId');
@@ -175,22 +186,23 @@ class StudentCeeReserveController extends Controller
             }
 
             $application = new Reservation();
-            $application->cee_session_id = $ceeSession;
-            $application->user_id = $userId;
-            $application->app_no = $appno;
-            $application->campus_id = $request->campus;
-            $application->firstpriorty = $request->firstprioprog;
-            $application->firstpriortymajor = $request->firstpriomajor;
-            $application->secondpriorty = $request->secondprioprog;
-            $application->secondpriortymajor = $request->secondpriomajor;
-            $application->thirdpriorty = $request->thirdprioprog;
-            $application->thirdpriortymajor = $request->thirdpriomajor;
-            $application->exam_session = $request->ceeexamsession;
-            $application->room_id = $request->room;
+            $application->cee_session_id = trim($ceeSession);
+            $application->user_id = trim($userId);
+            $application->app_no = trim($appno);
+            $application->campus_id = trim($request->campus);
+            $application->firstpriorty = trim($request->firstprioprog);
+            $application->firstpriortymajor = trim($request->firstpriomajor);
+            $application->secondpriorty = trim($request->secondprioprog);
+            $application->secondpriortymajor = trim($request->secondpriomajor);
+            $application->thirdpriorty = trim($request->thirdprioprog);
+            $application->thirdpriortymajor = trim($request->thirdpriomajor);
+            $application->exam_session = trim($request->ceeexamsession);
+            $application->room_id = trim($request->room);
+            $application->is_repeat_exam = trim($request->is_repeat_exam);
             $application->save();
 
             // Update room quantity
-            $room = Room::findOrFail($request->room)->first();
+            $room = Room::findOrFail($request->room);
             $roomCap = $room->capacity;
             $newRoomcap = $roomCap - 1;
             $room->capacity = $newRoomcap;
