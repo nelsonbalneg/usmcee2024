@@ -31,7 +31,7 @@
 
 
             {{-- <div class="card"> --}}
-            @if ($application)
+            @if ($existingReservation)
                 <div class="block tab-pane" id="overviewTabs">
                     <div class="grid grid-cols-1 gap-x-5 2xl:grid-cols-12">
                         <div class="2xl:col-span-12">
@@ -180,10 +180,12 @@
                                                             <th class="py-2 font-semibold ps-0" scope="row">Session and
                                                                 Date</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                               <b> {{ strtoupper($existingReservation->exam_session) }} <b>
-                                                                {{ \Carbon\Carbon::parse($existingReservation->room->schedule)->format('F j, Y') }}
-                                                                (
-                                                                {{ $existingReservation->room->time }})</td>
+                                                                <b> {{ strtoupper($existingReservation->exam_session) }}
+                                                                    <b>
+                                                                        {{ \Carbon\Carbon::parse($existingReservation->room->schedule)->format('F j, Y') }}
+                                                                        (
+                                                                        {{ $existingReservation->room->time }})
+                                                            </td>
 
                                                         </tr>
                                                         <tr>
@@ -194,9 +196,11 @@
                                                                 {{ $existingReservation->room->room_name }} </td>
                                                         </tr>
                                                         <tr>
-                                                            <th class="py-2 font-semibold ps-0" scope="row">CEE FEE</th>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Status</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                FREE for First taker
+                                                                @if ($existingReservation->is_repeat_exam == 'No')First Time Taker
+                                                                @elseif ($existingReservation->is_repeat_exam == 'Yes')Retaker
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -243,7 +247,7 @@
                         <form action="{{ route('student.reserve.store') }}" method="POST">
                             @csrf
                             <h6 class="mb-1 text-5">RESERVATION DETAILS</h6>
-                            <hr class="mb-2" />
+                            <hr class="mb-4" />
 
                             <div class="xl:col-span-6">
                                 <input type="hidden" name="ceesession"
@@ -253,7 +257,18 @@
 
                             <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
 
-                                <h6 class="mt-2 text-5">Priority Programs</h6>
+                                <div class="xl:col-span-6">
+                                    <label for="is_repeat_exam" class="inline-block mb-2 text-base font-medium">CEE
+                                        Retaker?</label>
+                                    <input type="text" id="is_repeat_exam" name="is_repeat_exam"
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                        value="<?php echo $isRetaker ? 'Yes' : 'No'; ?>" @readonly(true)>
+                                </div><!--end col-->
+
+                                <div class="xl:col-span-12">
+                                    <h6 class=" text-5">Priority Programs</h6>
+
+                                </div>
 
                                 <div class="xl:col-span-12">
                                     <label for="campus" class="inline-block mb-2 text-base font-medium">Select
@@ -279,17 +294,6 @@
                                     </select>
                                 </div>
 
-
-
-                                {{-- <div class="xl:col-span-6">
-                                        <label for="firstpriomajor" class="inline-block mb-2 text-base font-medium">Major
-                                            In</label>
-                                        <select id="major-select" name="firstpriomajor"
-                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                            <option selected="true" disabled>Choose Major</option>
-                                        </select>
-                                    </div> --}}
-
                                 <div class="xl:col-span-12">
                                     <label for="secondprioprog" class="inline-block mb-2 text-base font-medium">Second
                                         Priority
@@ -299,14 +303,7 @@
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
                                 </div>
-                                {{-- <div class="xl:col-span-6">
-                                        <label for="secondpriomajor" class="inline-block mb-2 text-base font-medium">Major
-                                            In</label>
-                                        <select id="major-select2" name="secondpriomajor"
-                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                            <option selected="true" disabled>Choose Major</option>
-                                        </select>
-                                    </div> --}}
+
 
                                 <div class="xl:col-span-12">
                                     <label for="thirdprioprog" class="inline-block mb-2 text-base font-medium">Third
@@ -317,14 +314,7 @@
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
                                 </div>
-                                {{-- <div class="xl:col-span-6">
-                                        <label for="thirdpriomajor" class="inline-block mb-2 text-base font-medium">Major
-                                            In</label>
-                                        <select id="major-select2" name="thirdpriomajor"
-                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                            <option selected="true" disabled>Choose Major</option>
-                                        </select>
-                                    </div> --}}
+
 
                                 <div class="xl:col-span-12">
                                     <h6 class="mt-2 text-5">Examination Details</h6>
@@ -370,7 +360,7 @@
                     </div>
                 </div>
             @endif
-            {{-- </div><!--end card--> --}}
+
         </div><!--end col-->
     </div><!--end grid-->
 @endsection
