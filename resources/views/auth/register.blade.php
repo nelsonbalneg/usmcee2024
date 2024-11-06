@@ -99,7 +99,7 @@
                 </a>
 
                 <div class="mt-8 text-center">
-                    <h4 class="mb-1 text-info-500 dark:text-info-500">Create your account</h4>
+                    <h4 class="mb-1 text-info-500 dark:text-green-500">Create your account</h4>
                 </div>
                 <form method="POST" class="mt-10" action="{{ route('register') }}">
                     @csrf
