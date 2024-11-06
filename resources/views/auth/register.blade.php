@@ -183,28 +183,33 @@
                         <input type="text" id="email-field" name="email"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Enter email">
-                        <span class="text-base font-small text-red-600">* Please use a valid and
-                            active
-                            email. This
-                            email will be essential for
-                            password resets and other important updates.</span>
+                        <span class="text-base font-small text-red-600">* Please use a valid and active email. This
+                            email will be essential <br>for password resets and other important updates.</span>
                         <div id="email-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email
                             address.</div>
                         @error('email')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone <sup
-                                class="text-red-500">* required</sup></label>
-                        <input type="text" id="cleavePhone" name="phone"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="09xx xxx xxxx">
-                        @error('phone')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
+                    <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
+                        <div class="flex-1">
+                            <label for="code" class="inline-block mb-2 text-base font-medium">Code <sup
+                                    class="text-blue-500">* read only</sup></label>
+                            <input type="text"
+                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                name="code" value="+639" placeholder="+639" readonly>
+                        </div>
+                        <div class="flex-12">
+                            <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone <sup
+                                    class="text-red-500">* required</sup></label>
+                            <input type="text" id="cleavePhone" name="phone"
+                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                placeholder="xx-xxx-xxxx">
+                            @error('phone')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
-
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password <sup
                                 class="text-red-500">* required</sup></label>
@@ -289,10 +294,6 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src='{{ asset('backend/assets/libs/choices/public/assets/scripts/choices.min.js') }}'></script>
     <script src="{{ asset('backend/assets/libs/@popperjs/core/umd/popper.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/tippy.js/tippy-bundle.umd.min.js') }}"></script>
@@ -301,7 +302,8 @@
     <script src="{{ asset('backend/assets/libs/lucide/umd/lucide.js') }}"></script>
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-
+    <!-- cleave.js -->
+    <script src="{{ asset('backend/assets/libs/cleave.js/cleave.min.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
@@ -315,6 +317,14 @@
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        if (document.querySelector("#cleavePhone")) {
+            var cleaveBlocks = new Cleave('#cleavePhone', {
+                delimiters: ['-', '-'],
+                blocks: [2, 3, 4], // Adjusted for xx-xxx-xxxx format
+                numericOnly: true
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const checkbox = document.getElementById("defaultCheck1");
             const submitButton = document.getElementById("submitButton");
