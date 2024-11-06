@@ -89,7 +89,7 @@
             </svg>
         </div>
 
-        <div class="mb-0 w-[600px] card shadow-lg border-none shadow-slate-100 relative">
+        <div class="mb-0 w-screen lg:mx-auto lg:w-[500px] card shadow-lg border-none shadow-slate-100 relative">
             <div class="!px-10 !py-12 card-body">
                 <a href="#!">
                     <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
@@ -99,19 +99,13 @@
                 </a>
 
                 <div class="mt-8 text-center">
-                    <h4 class="mb-1 text-custom-500 dark:text-custom-500">Create your account</h4>
+                    <h4 class="mb-1 text-info-500 dark:text-info-500">Create your account</h4>
                 </div>
-
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" class="mt-10" action="{{ route('register') }}">
                     @csrf
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
                         <div class="flex-1">
-<<<<<<< HEAD
-                            <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name<sup
-=======
-                            <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name <sup
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
-                                    class="text-red-500">* required</sup></label>
+                            <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name <sup class="text-red-500">* required</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 name="firstname" value="{{ old('firstname') }}" placeholder="Enter First Name">
@@ -120,12 +114,8 @@
 
 
                         <div class="flex-1">
-                            <label for="middlename" class="inline-block mb-2 text-base font-medium">Middle
-<<<<<<< HEAD
-                                Name<sup class="text-blue-500">* optional</sup></label>
-=======
+                            <label for="middlename" class="inline-block mb-2 text-base font-medium">Middle Name<sup class="text-blue-500">* optional</sup></label>
                                 Name <sup class="text-blue-500">* optional</sup></label>
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 name="middlename" value="{{ old('middlename') }}" placeholder="Enter Last Middle Name">
@@ -135,11 +125,7 @@
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
 
                         <div class="flex-1">
-<<<<<<< HEAD
                             <label for="lastname" class="inline-block mb-2 text-base font-medium">Last Name<sup
-=======
-                            <label for="lastname" class="inline-block mb-2 text-base font-medium">Last Name <sup
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                                     class="text-red-500">* required</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -169,13 +155,8 @@
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
 
                         <div class="xl:col-span-3">
-<<<<<<< HEAD
                             <label for="birthdate" class="inline-block mb-2 text-base font-medium">Birthdate<sup
                                     class="text-red-500">* required</sup></label>
-=======
-                            <label for="birthdate" class="inline-block mb-2 text-base font-medium">Birthdate
-                                <sup class="text-red-500">* required</sup></label>
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                             <input type="text" id="birthdate" name="birthdate"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 placeholder="Select date" data-provider="flatpickr" data-date-format="M d, Y"
@@ -194,90 +175,7 @@
                         </div><!--end col-->
                     </div>
 
-<<<<<<< HEAD
-                    <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
-                        <div class="flex-1">
-                            <label for="code" class="inline-block mb-2 text-base font-medium">Code <sup
-                                    class="text-blue-500">* read only</sup></label>
-                            <input type="text"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                name="code" value="+639" placeholder="+639" readonly>
-                        </div>
-                        <div class="flex-12">
-                            <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone <sup
-                                    class="text-red-500">* required</sup></label>
-                            <input type="text" id="cleavePhone" name="phone"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="xx-xxx-xxxx">
-                            @error('phone')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="email-field" class="inline-block mb-2 text-base font-medium">Email<sup
-=======
-                    <div class="mb-3">
-                        <label for="email-field" class="inline-block mb-2 text-base font-medium">Email <sup
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
-                                class="text-red-500">* required</sup></label>
-                        <input type="text" id="email-field" name="email"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="Enter email">
-                        <span class="text-base font-small text-red-600">* Please use a valid and active email. This
-                            email will be essential <br>for password resets and other important updates.</span>
-                        <div id="email-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email
-                            address.</div>
-                        <span class="text-base font-small text-blue-500">* Please use a valid and active email.
-                            This
-                            email will be essential <br>for password resets and other important updates.</span>
-                        @error('email')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-<<<<<<< HEAD
-                    {{-- <div class="mb-3">
-                        <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone</label>
-                        <input type="text" id="cleavePhone" name="phone"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="09xx xxx xxxx">
-                        @error('phone')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div> --}}
-
-                    <div class="mb-3">
-                        <label for="password" class="inline-block mb-2 text-base font-medium">Password<sup
-=======
-                    <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
-                        <div class="flex-1">
-                            <label for="code" class="inline-block mb-2 text-base font-medium">Code <sup
-                                    class="text-blue-500">* read only</sup></label>
-                            <input type="text"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                name="code" value="+639" placeholder="+639" readonly>
-                        </div>
-                        <div class="flex-1">
-                            <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone <sup
-                                    class="text-red-500">* required</sup></label>
-                            <input type="text" id="cleavePhone" name="phone"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="xx-xxx-xxxx">
-                            @error('phone')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
-                        <span class="text-base font-small text-red-600">* Please use a valid and active cellphone
-                            number. This number<br> is essential for SMS notifications, including entrance exam<br>
-                            information
-                            and future updates.</span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="inline-block mb-2 text-base font-medium">Password <sup
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                                 class="text-red-500">* required</sup></label>
                         <input type="password" name="password" id="password" required autocomplete="new-password"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -301,15 +199,14 @@
                             class="form-checkbox h-4 w-4 text-green-600 border-gray-300 rounded focus:ring focus:ring-green-500 focus:ring-opacity-50">
                         <label for="defaultCheck1" class="text-gray-500 font-normal text-sm">
                             By creating an account, you agree to our
-                            <a href="#" class="text-green-600 underline" data-modal-target="topModal">Terms
-                                &
+
                                 Conditions</a>
                         </label>
                     </div>
 
-                    <div class="mt-10">
+                    <div class="mt-10 text-center">
                         <button type="submit" id="submitButton" disabled
-                            class="w-full text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                            class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                             Create Account</button>
                     </div>
                 </form>
@@ -320,18 +217,16 @@
                             class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">Login</a>
                     </p>
                 </div>
-
-                <div id="topModal" modal-top
-                    class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 show">
-                    <div class="w-screen lg:w-[55rem] bg-white shadow rounded-md dark:bg-zink-600 flex flex-col">
-                        <div
-                            class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
-                            <h5 class="text-16">Terms and Conditions for Online Registration:</h5>
-                            <button data-modal-close="topModal"
-                                class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500"><i
-                                    data-lucide="x" class="size-5"></i></button>
-                        </div>
-                        <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
+                <div id="drawerterms" drawer-end
+                    class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow ltr:right-0 rtl:left-0 md:w-80 z-drawer show dark:bg-zink-600">
+                    <div
+                        class="flex items-center justify-between p-4 border-b card-body border-slate-200 dark:border-zink-500">
+                        <h6 class="text-15">Terms and Conditions</h6>
+                        <button data-drawer-close="drawerterms"><i data-lucide="x"
+                                class="transition-all duration-200 ease-linear size-4 text-slate-500 hover:text-slate-700 dark:text-zink-200 dark:hover:text-zink-50"></i></button>
+                    </div>
+                    <div class="h-full p-4 overflow-y-auto">
+                        <div class="card-body">
                             <p class='text-justify'>
                                 This serves as an important reminder to provide accurate and truthful information in all
                                 profiles and submissions within our academic institution's systems. Ensuring the
@@ -354,8 +249,10 @@
                             <p class='text-justify'>
                                 By proceeding with the registration, you agree to comply with these terms and conditions
                                 to support a secure and trustworthy academic environment.</p>
-
                         </div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 border-t border-slate-200 dark:border-zink-500">
+                        <h6 class="text-15">University of Southern Mindanao</h6>
                     </div>
                 </div>
             </div>
@@ -393,12 +290,7 @@
                 numericOnly: true
             });
         }
-<<<<<<< HEAD
-        document.addEventListener("DOMContentLoaded", function() {
-=======
 
-        document.addEventListener("DOMContentLoaded", function () {
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
             const checkbox = document.getElementById("defaultCheck1");
             const submitButton = document.getElementById("submitButton");
 

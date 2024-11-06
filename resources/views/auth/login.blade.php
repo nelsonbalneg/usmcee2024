@@ -99,7 +99,7 @@
                 </a>
 
                 <div class="mt-8 text-center">
-                    <h4 class="mb-1 text-custom-500 dark:text-custom-500">Welcome Back !</h4>
+                    <h4 class="mb-1 text-yellow-500 dark:text-yellow-500">Welcome Students !</h4>
                     <p class="text-slate-500 dark:text-zink-200">Sign in to continue to USM CEE.</p>
                 </div>
 
@@ -132,9 +132,9 @@
                         <div id="remember-error" class="hidden mt-1 text-sm text-red-500">Please check the "Remember
                             me" before submitting the form.</div>
                     </div>
-                    <div class="mt-10">
+                    <div class="mt-10 text-center">
                         <button type="submit"
-                            class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Sign
+                            class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Sign
                             In</button>
                     </div>
 
