@@ -335,26 +335,36 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             flatpickr("#birthdate", {
-                dateFormat: "M d, Y",         // Your preferred display format
-                maxDate: "2016-12-31",        // Restrict dates to December 31, 2016
+                dateFormat: "M d, Y",           // Display format for the date
+                maxDate: "2010-11-06",          // Limit selection to November 6, 2010, for 14 years or older
+                disable: [
+                    {
+                        from: "2010-11-07",      // Disable all dates from November 7, 2010, onwards
+                        to: new Date()           // Current date or any future date
+                    }
+                ],
                 onReady: function (selectedDates, dateStr, instance) {
-                    instance.jumpToDate("2016-12-31"); // Ensures the calendar opens at the last allowed date
+                    instance.jumpToDate("2010-11-06"); // Opens calendar at the last allowed date
                 },
                 onChange: function (selectedDates, dateStr, instance) {
-                    if (selectedDates[0] && selectedDates[0].getFullYear() > 2016) {
-                        instance.clear();
+                    const selectedDate = selectedDates[0];
+                    if (selectedDate && selectedDate > new Date("2010-11-06")) {
+                        instance.clear(); // Clears selection if date is beyond November 6, 2010
                         Toastify({
-                            text: 'You are not eligible to take the exam. Only individuals aged 16 years or older can apply.',
+                            text: 'Only individuals aged 14 years or older can apply.',
                             duration: 5000,
                             gravity: "top",
                             position: "right",
-                            backgroundColor: "#f56565", // Red for error
+                            backgroundColor: "#f56565", // Red color for error
                             className: "error",
                         }).showToast();
                     }
                 }
             });
         });
+
+
+
 
 
         document.addEventListener("DOMContentLoaded", function () {
