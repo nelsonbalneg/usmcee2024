@@ -139,11 +139,11 @@ class StudentCeeReserveController extends Controller
             'ceesession' => 'required|integer',
             'campus' => 'required|string|max:100',
             'firstprioprog' => 'required|string|max:100',
-            'firstpriomajor' => 'nullable|string|max:100',
+
             'secondprioprog' => 'nullable|string|max:100',
-            'secondpriomajor' => 'nullable|string|max:100',
+
             'thirdprioprog' => 'nullable|string|max:100',
-            'thirdpriomajor' => 'nullable|string|max:100',
+
             'ceeexamsession' => 'required|string|max:50',
             'room' => 'required|string|max:100',
         ]);
@@ -188,12 +188,20 @@ class StudentCeeReserveController extends Controller
             $application->user_id = trim($userId);
             $application->app_no = trim($appno);
             $application->campus_id = trim($request->campus);
+            $application->campus_id_prio_prog_2 = trim($request->campus2);
+            $application->campus_id_prio_prog_3 = trim($request->campus3);
             $application->firstpriorty = trim($request->firstprioprog);
-            $application->firstpriortymajor = trim($request->firstpriomajor);
+
+            $application->firstpriorty_desc = trim($request->firstprioprog_desc);
+
             $application->secondpriorty = trim($request->secondprioprog);
-            $application->secondpriortymajor = trim($request->secondpriomajor);
+
+            $application->secondpriority_desc = trim($request->secondprioprog_desc);
+
             $application->thirdpriorty = trim($request->thirdprioprog);
-            $application->thirdpriortymajor = trim($request->thirdpriomajor);
+
+            $application->thirdpriorty_desc = trim($request->thirdprioprog_desc);
+
             $application->exam_session = trim($request->ceeexamsession);
             $application->room_id = trim($request->room);
             $application->is_repeat_exam = trim($request->is_repeat_exam);
