@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->string('status')->nullable();
+            $table->renameColumn('firstpriortymajor', 'firstpriorty_desc');
+            $table->renameColumn('secondpriortymajor', 'secondpriority_desc');
+            $table->renameColumn('thirdpriortymajor', 'thirdpriorty_desc');
         });
     }
 
@@ -22,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->dropColumn(columns: 'status');
+            $table->renameColumn('firstpriortymajor', 'firstpriority_desc');
+            $table->renameColumn('secondpriortymajor', 'secondpriority_desc');
+            $table->renameColumn('thirdpriortymajor', 'thirdpriority_desc');
         });
     }
 };

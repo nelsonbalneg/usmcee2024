@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->string('status')->nullable();
+            $table->string('campus_id_prio_prog_2')->nullable();
+            $table->string('campus_id_prio_prog_3')->nullable();
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->dropColumn(columns: 'status');
+            $table->dropColumn(columns: 'campus_id_prio_prog_2');
+            $table->dropColumn(columns: 'campus_id_prio_prog_3');
         });
     }
 };
