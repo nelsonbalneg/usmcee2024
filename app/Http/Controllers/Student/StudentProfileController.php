@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Student;
 use Auth;
 use File;
 use App\Models\User;
+use App\Models\SchoolName;
 use Illuminate\Http\Request;
 use App\Trait\ImageUploadTrait;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,7 +26,7 @@ class StudentProfileController extends Controller
         $studentdetails->province = $studentdetails->province ?? '';
         $studentdetails->city = $studentdetails->city ?? '';
         $studentdetails->brgy = $studentdetails->brgy ?? '';
-        
+
         return view("student.profile.profile", compact('studentdetails'));
     }
 
@@ -68,17 +70,12 @@ class StudentProfileController extends Controller
         // validation
         $request->validate(
             [
-                'firstname' => ['required', 'string', 'max:255'],
-                'lastname' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'string', 'max:12', 'unique:users,phone,' . $id],
-                'email' => ['required', 'email', 'unique:users,email,' . $id],
                 'photo' => ['nullable', 'file', 'mimes:jpeg,png,jpg', 'max:5120'],
-                'lrn' => ['required', 'string', 'size:12']
+                'lrn' => ['required', 'string', 'size:12'],
+                'track' => ['required', 'string', 'max:100']
 
             ],
             [
-                'phone.unique' => 'The phone number is already in use. Please use a different number.',
-                'email.unique' => 'The email address is already taken. Please use a different email.',
                 'lrn.size' => 'The LRN must be exactly 12 characters.',
             ]
         );
@@ -87,16 +84,8 @@ class StudentProfileController extends Controller
 
         $user->lrn = trim($request->lrn);
         $user->track = trim($request->track);
-        $user->firstname = trim($request->firstname);
-        $user->lastname = trim($request->lastname);
-        $user->middlename = trim($request->middlename);
-        $user->suffix = trim($request->suffix);
-        $user->birthdate = trim($request->birthdate);
-        $user->sex = trim($request->sex);
-        $user->phone = trim($request->phone);
-        $user->email = trim($request->email);
-        $user->schoolid = trim($request->schoolid);
-        $user->shs_school = trim($request->shs_school);
+        $user->schoolid = trim($request->school_id);
+        $user->shs_school = trim($request->school_name);
         $user->school_address = trim($request->school_address);
         $user->region = trim($request->region_text);
         $user->province = trim($request->province_text);
@@ -112,6 +101,99 @@ class StudentProfileController extends Controller
         $user->save();
 
         return redirect()->back()->with('message', 'Your Profile Details have been updated! You can now reserve a slot for USM CEE');
+    }
+
+    public function uploadPhoto(Request $request)
+    {
+        // validation
+        $request->validate(
+            [
+                'photo' => ['nullable', 'file', 'mimes:jpeg,png,jpg', 'max:5120'],
+
+            ]);
+
+        $user = User::findOrFail($request->id);
+        
+        // Handle photo upload
+        $imagePath = $this->updateImage($request, 'photo', 'uploads', $user->photo);
+        $user->photo = empty(!$imagePath) ? $imagePath : $user->photo;
+
+        $user->save();
+
+        return redirect()->back()->with('message', 'Your Profile Details have been updated! You can now reserve a slot for USM CEE');
+    }
+
+    public function school_name(Request $request): JsonResponse
+    {
+        // Check if 'schoolid' is provided in the request
+        if ($request->has('schoolid')) {
+            // Fetch records where 'schoolid' matches the provided value
+            $schools = SchoolName::where('schoolid', $request->input('schoolid'))->get();
+        } else {
+            // Fetch all records if 'schoolid' is not provided
+            $schools = SchoolName::all();
+        }
+
+        // Return the results in JSON format
+        return response()->json($schools);
+    }
+
+    public function getLrn(Request $request): JsonResponse
+    {
+        if ($request->has('lrn')) {
+            // Check if a record exists where 'lrn' matches the provided value
+            $exists = User::where('lrn', $request->input('lrn'))->exists();
+
+            return response()->json(['exists' => $exists]);
+        }
+
+        // If 'lrn' is not provided, return false by default
+        return response()->json(['exists' => false]);
+    }
+
+    public function upload(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Path to Tesseract executable (update if located elsewhere)
+        $tesseractPath = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe';
+
+        // Temporarily store the uploaded file in the system's temporary directory
+        $tempFilePath = $request->file('image')->getPathname();
+
+        // Run Tesseract OCR
+        $command = "\"$tesseractPath\" \"$tempFilePath\" stdout 2>&1";
+        $output = shell_exec($command);
+
+        $twelveDigitNumber = null;
+        $sixDigitNumber = null;
+
+        // Match both 12-digit and 6-digit patterns separately
+        if (preg_match('/\b\d{12}\b/', $output, $twelveDigitMatch)) {
+            $twelveDigitNumber = $twelveDigitMatch[0];
+        }
+
+        if (preg_match('/\b\d{6}\b/', $output, $sixDigitMatch)) {
+            $sixDigitNumber = $sixDigitMatch[0];
+        }
+
+        if ($twelveDigitNumber || $sixDigitNumber) {
+            return response()->json([
+                'success' => true,
+                'text' => $output,
+                'twelve_digit_number' => $twelveDigitNumber,
+                'six_digit_number' => $sixDigitNumber,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => 'No LRN found in the image.',
+                'text' => $output,
+            ]);
+        }
     }
 
     /**

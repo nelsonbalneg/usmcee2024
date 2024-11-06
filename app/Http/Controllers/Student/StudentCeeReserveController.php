@@ -81,8 +81,6 @@ class StudentCeeReserveController extends Controller
 
     public function getProgramByRealCampusId(Request $request)
     {
-
-
         $termId = $request->query('termId');
         $realCampusId = $request->query('realCampusId');
 

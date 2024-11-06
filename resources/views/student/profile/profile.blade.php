@@ -1,6 +1,6 @@
 @extends('student.layouts.master')
 @section('title')
-    BMS - My Profile
+    USMCEE - My Profile
 @endsection
 
 @push('styles')
@@ -27,205 +27,155 @@
         <!--start col-->
         <div class="xl:col-span-12">
             <!--start card-->
-            @if (!empty($alert))
+            {{-- @if (!empty($alert)) --}}
                 <div class="card">
+                    <div class="card-body">
+                        <div class="grid grid-cols-1 gap-5 lg:grid-cols-12 2xl:grid-cols-12">
 
-                    <div
-                        class="flex gap-3 p-4 text-sm text-orange-500 border border-orange-200 rounded-md bg-orange-50 dark:bg-orange-400/20 dark:border-orange-500/50">
-                        <i data-lucide="alert-circle" class="h-4"></i>
-                        <div>
-                            <h6 class="mb-1">Hi there! {{ $studentdetails->firstname }}
-                                {{ $studentdetails->middlename }} {{ $studentdetails->lastname }}
-                                {{ $studentdetails->suffix }}</h6>
-                            <hr class="mb-2" />
-                            <p>{{ $alert }}</p>
-                            <p><b>Note:</b> Please ensure that you provide accurate and correct information. Double-check
-                                all details before submitting, as you will not be able to edit them once saved. </p>
-                        </div>
+                            <form id="profile-form" action="{{ route('student.cee.update-photo', ['id' => $studentdetails->id]) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="lg:col-span-2 2xl:col-span-1">
+                                    <div
+                                        class="relative inline-block rounded-full shadow-md size-21 bg-slate-100 profile-user xl:size-28">
+                                        @if (empty($studentdetails->photo))
+                                            <img src="data:image/jpeg;base64,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"
+                                                alt="" name='photo'
+                                                class="object-cover w-full h-full rounded-full user-profile-image">
+                                        @else
+                                            <img src="{{ asset($studentdetails->photo) }}" alt=""
+                                                class="object-cover w-full h-full rounded-full user-profile-image">
+                                        @endif
+                                        <div
+                                            class="absolute bottom-0 flex items-center justify-center rounded-full size-8 ltr:right-0 rtl:left-0 profile-photo-edit">
+                                            <input id="profile-img-file-input" name="photo" type="file"
+                                                class="hidden profile-img-file-input">
+                                            <label for="profile-img-file-input"
+                                                class="flex items-center justify-center bg-white rounded-full shadow-lg cursor-pointer size-8 dark:bg-zink-600 profile-photo-edit">
+                                                <i data-lucide="image-plus"
+                                                    class="size-4 text-slate-500 fill-slate-200 dark:text-zink-200 dark:fill-zink-500"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+
+                            </form>
+
+
+
+                            <div class="lg:col-span-10 2xl:col-span-9">
+                                <h5 class="mb-1">Hi! {{ $studentdetails->firstname }} {{ $studentdetails->middlename }}
+                                    {{ $studentdetails->lastname }} {{ $studentdetails->ssuffix }} <i
+                                        data-lucide="badge-check"
+                                        class="inline-block size-4 text-sky-500 fill-sky-100 dark:fill-custom-500/20"></i>
+                                </h5>
+                                <div class="flex gap-3 mb-4">
+                                    <p class="text-slate-500 dark:text-zink-200"><i data-lucide="phone"
+                                            class="inline-block size-4 ltr:mr-1 rtl:ml-1 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-500"></i>
+                                        {{ $studentdetails->phone }}</p>
+                                    <p class="text-slate-500 dark:text-zink-200"><i data-lucide="mail"
+                                            class="inline-block size-4 ltr:mr-1 rtl:ml-1 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-500"></i>
+                                        {{ $studentdetails->email }}</p>
+                                </div>
+                                <p class="text-slate-500 dark:text-zink-200"><i data-lucide="info"
+                                        class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
+                                    Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025.
+                                </p>
+                                <p class="text-orange-500 text-slate-500 dark:text-zink-200"><i data-lucide="info"
+                                        class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
+                                    Please
+                                    ensure that you provide
+                                    accurate and
+                                    correct information.</p>
+                                <p class="text-orange-500 text-slate-500 dark:text-zink-200"><i data-lucide="info"
+                                        class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
+                                    Double-check
+                                    all details before submitting, as you will not be able to edit them once saved.</p>
+                            </div>
+                        </div><!--end grid-->
                     </div>
-                </div>
-            @endif
+                </div><!--end card-->
+            {{-- @endif --}}
             <div class="card">
                 <div class="card-body">
 
-                    <h6 class="mb-1 text-15 text-blue-500">Personal Information</h6>
-                    <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details here easily.
+                    <h6 class="mb-5 text-15 text-blue-500">School Information</h6>
+                    {{-- <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details here easily. --}}
                     </p>
 
                     <form action="{{ route('student.profile.update', ['profile' => $studentdetails->id]) }}" method="POST"
                         enctype="multipart/form-data">
-                        {{-- <form action="/student/test-update/{{ $studentdetails->id }}" method="POST"
-                        enctype="multipart/form-data"> --}}
                         @csrf
                         @method('PUT')
-
-                        <div class="xl:col-span-12 mb-4">
-                            <div
-                                class="relative mx-auto mb-4 rounded-full shadow-md size-24 bg-slate-100 profile-user dark:bg-zink-500">
-                                @if (empty($studentdetails->photo))
-                                    <img src="data:image/jpeg;base64,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"
-                                        alt="" name='photo'
-                                        class="object-cover w-full h-full rounded-full user-profile-image">
-                                @else
-                                    <img src="{{ asset($studentdetails->photo) }}" alt=""
-                                        class="object-cover w-full h-full rounded-full user-profile-image">
-                                @endif
-
-                                <div
-                                    class="absolute bottom-0 flex items-center justify-center rounded-full size-8 ltr:right-0 rtl:left-0 profile-photo-edit">
-                                    <input id="profile-img-file-input" name="photo" type="file"
-                                        class="hidden profile-img-file-input">
-                                    <label for="profile-img-file-input"
-                                        class="flex items-center justify-center bg-white rounded-full shadow-lg cursor-pointer size-8 dark:bg-zink-600 profile-photo-edit">
-                                        <i data-lucide="image-plus"
-                                            class="size-4 text-slate-500 fill-slate-200 dark:text-zink-200 dark:fill-zink-500"></i>
-                                    </label>
-                                </div>
-                            </div>
+                        <div class="xl:col-span-8">
                         </div>
                         <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
+
+                            @if (empty($studentdetails->lrn))
+                            <div class="xl:col-span-4 mb-2">
+                                <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
+                                    Picture
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input type="file" id="schoolIdPicture" name="image"
+                                    class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                                    placeholder="Upload your school id picture">
+                            </div>
+                            @endif
+
+
+                            <div class="xl:col-span-8">
+                            </div>
 
 
                             <div class="xl:col-span-6">
                                 <label for="lrn" class="inline-block mb-2 text-base font-medium">Learner Reference
-                                    Number<span class="text-red-500">*</span></label>
+                                    Number<sup class="text-blue-500">* read only</sup></label>
                                 <input type="text" id="lrn" name="lrn"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}">
+                                    placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}" readonly>
                                 @error('lrn')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div><!--end col-->
 
                             <div class="xl:col-span-6">
-                                <label for="track" class="inline-block mb-2 text-base font-medium">Track<span
-                                        class="text-red-500">*</span></label>
+                                <label for="track" class="inline-block mb-2 text-base font-medium">Track<sup
+                                        class="text-red-500">* required</sup></label>
                                 <input type="text" id="track" name="track"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="Enter your SHS track" value="{{ $studentdetails->track }}">
-                            </div><!--end col-->
-
-
-                            <div class="xl:col-span-3">
-                                <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" id="firstname" name="firstname"
-                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter your value" value="{{ $studentdetails->firstname }}">
-                            </div><!--end col-->
-
-                            <div class="xl:col-span-3">
-                                <label for="middlename" class="inline-block mb-2 text-base font-medium">Middle Name</label>
-                                <input type="text" id="middlename" name="middlename"
-                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter Middle Name" value={{ $studentdetails->middlename }}>
-                            </div><!--end col-->
-
-                            <div class="xl:col-span-3">
-                                <label for="lastname" class="inline-block mb-2 text-base font-medium">Last Name <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" id="lastname" name="lastname"
-                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter your value" value={{ $studentdetails->lastname }}>
-                            </div><!--end col-->
-
-                            <div class="xl:col-span-3">
-                                <label for="suffix" class="inline-block mb-2 text-base font-medium">Suffix (ext.)</label>
-                                <select class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
-                                    id="suffix" data-choices name="suffix">
-                                    <option value="" {{ $studentdetails->suffix == '' ? 'selected' : '' }}>-Select-
-                                    </option>
-                                    <option value="Jr" {{ $studentdetails->suffix == 'Jr' ? 'selected' : '' }}>Jr
-                                    </option>
-                                    <option value="Sr" {{ $studentdetails->suffix == 'Sr' ? 'selected' : '' }}>Sr
-                                    </option>
-                                    <option value="I" {{ $studentdetails->suffix == 'I' ? 'selected' : '' }}>I
-                                    </option>
-                                    <option value="II" {{ $studentdetails->suffix == 'II' ? 'selected' : '' }}>II
-                                    </option>
-                                    <option value="III" {{ $studentdetails->suffix == 'III' ? 'selected' : '' }}>III
-                                    </option>
-                                    <option value="IV" {{ $studentdetails->suffix == 'IV' ? 'selected' : '' }}>IV
-                                    </option>
-                                    <option value="V" {{ $studentdetails->suffix == 'V' ? 'selected' : '' }}>V
-                                    </option>
-                                    <option value="VI" {{ $studentdetails->suffix == 'VI' ? 'selected' : '' }}>VI
-                                    </option>
-                                    <option value="VII" {{ $studentdetails->suffix == 'VII' ? 'selected' : '' }}>VII
-                                    </option>
-                                    <option value="VIII" {{ $studentdetails->suffix == 'VIII' ? 'selected' : '' }}>VII
-                                    </option>
-                                </select>
-                            </div><!--end col-->
-
-                            <div class="xl:col-span-3">
-                                <label for="birthdate" class="inline-block mb-2 text-base font-medium">Birthdate
-                                    <span class="text-red-500">*</span></label>
-                                <input type="text" id="birthdate" name="birthdate"
-                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Select date" data-provider="flatpickr" data-date-format="M d, Y"
-                                    value="{{ $studentdetails->birthdate }}">
-                            </div><!--end col-->
-
-                            <div class="xl:col-span-3">
-                                <label for="sex" class="inline-block mb-2 text-base font-medium">Sex <span
-                                        class="text-red-500">*</span></label>
-                                <select class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
-                                    id="sex" data-choices name="sex">
-                                    <option value="" {{ $studentdetails->sex == '' ? 'selected' : '' }}>-Select-
-                                    </option>
-                                    <option value="Male" {{ $studentdetails->sex == 'Male' ? 'selected' : '' }}>Male
-                                    </option>
-                                    <option value="Female" {{ $studentdetails->sex == 'Female' ? 'selected' : '' }}>Female
-                                    </option>
-                                </select>
-                            </div><!--end col-->
-
-                            <div class="xl:col-span-3">
-                                <label for="phone" class="inline-block mb-2 text-base font-medium">Phone Number <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" id="phone" name="phone"
-                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter 11 digit phone number" value="{{ $studentdetails->phone }}">
-                                @error('phone')
+                                @error('track')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div><!--end col-->
-                            <div class="xl:col-span-3">
-                                <label for="email" class="inline-block mb-2 text-base font-medium">Email Address
-                                    <span class="text-red-500">*</span></label>
-                                <input type="email" id="email" name="email"
-                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter your email address" value="{{ $studentdetails->email }}">
-                            </div><!--end col-->
-
-                            <div class="xl:col-span-12">
-                                <h6 class="mb-1 text-15 text-blue-500">Education Background</h6>
-                                <p class="mb-4 text-slate-500 dark:text-zink-200">Update Senior High School details easily.
-                                </p>
-                            </div>
 
                             <div class="xl:col-span-3">
-                                <label for="schoolid" class="inline-block mb-2 text-base font-medium">School ID</label>
-                                <input type="text" id="schoolid" name="schoolid"
+                                <label for="choices-single-default" class="inline-block mb-2 text-base font-medium">School
+                                    ID <sup class="text-red-500">* required</sup></label>
+                                <input type="text" id="school_id" name="school_id"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter School ID" value="{{ $studentdetails->firstname }}">
+                                    placeholder="School ID" value="{{ $studentdetails->schoolid }}"
+                                    onchange="handleChange(this.value)">
+                                </select>
                             </div><!--end col-->
 
                             <div class="xl:col-span-3">
-                                <label for="shs_school" class="inline-block mb-2 text-base font-medium">School Name <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" id="shs_school" name="shs_school"
+                                <label for="school_name" class="inline-block mb-2 text-base font-medium">School Name <sup
+                                        class="text-blue-500">* read only</sup></span></label>
+                                <input type="text" id="school_name" name="school_name"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter School Name" value="{{ $studentdetails->shs_school }}">
+                                    readonly placeholder=" School Name" value="{{ $studentdetails->shs_school }}">
                             </div><!--end col-->
 
                             <div class="xl:col-span-6">
                                 <label for="school_address" class="inline-block mb-2 text-base font-medium">School Address
-                                    <span class="text-red-500">*</span></label>
+                                    <sup class="text-blue-500">* read only</sup></label>
                                 <input type="text" id="school_address" name="school_address"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter School Address" value="{{ $studentdetails->school_address }}">
+                                    readonly placeholder="Enter School Address"
+                                    value="{{ $studentdetails->school_address }}">
                             </div><!--end col-->
 
 
@@ -290,6 +240,7 @@
                                     placeholder="Enter your zipcode" value="{{ $studentdetails->zipcode }}">
                             </div><!--end col-->
 
+                            @if (empty($studentdetails->lrn))
                             <div class="xl:col-span-12 flex justify-end gap-2">
                                 <button type="button"
                                     class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10"><i
@@ -298,6 +249,8 @@
                                 <button type="submit"
                                     class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100">Submit</button>
                             </div><!--end col-->
+                            @endif
+
                     </form><!--end form-->
                 </div>
 
@@ -332,27 +285,167 @@
     @endif
 
     <script>
+          document.getElementById('profile-img-file-input').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            // Preview the selected image
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profile-image-preview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // Automatically submit the form after previewing
+            document.getElementById('profile-form').submit();
+        }
+    });
+
+        document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
+            const formData = new FormData();
+            const imageFile = event.target.files[0];
+            const lrn = document.getElementById(
+                "lrn"); // Assuming this is an input field for displaying the extracted number
+            const school_id = document.getElementById("school_id");
+            formData.append('image', imageFile);
+
+            // Retrieve the CSRF token from the meta tag
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                'content');
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/student/cee/upload-image", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest' // Helps Laravel recognize it as an AJAX request
+                    }
+                });
+
+                const result = await response.json();
+
+                // Set the extracted 12-digit number to the `lrn` input field if available
+                if (result.success && result['twelve_digit_number']) {
+                    lrn.value = result['twelve_digit_number'];
+                    school_id.value = result['six_digit_number'];
+                    schoolid = result['six_digit_number'];
+                    handleChange(schoolid);
+                    Toastify({
+                        text: "LRN: " + result['twelve_digit_number'],
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#48bb78", // orange for success
+                        className: "success",
+                    }).showToast();
+                } else {
+                    Toastify({
+                        text: result.error,
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#f56565", // Red for error
+                        className: "error",
+                    }).showToast();
+                }
+
+            } catch (error) {
+                Toastify({
+                    text: 'An error occurred while processing the image.',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
+            }
+        });
+
+        async function handleChange(schoolid) {
+            const school_name = document.getElementById("school_name");
+            const school_address = document.getElementById("school_address");
+
+            // If schoolid is empty, clear the fields and return early
+            if (!schoolid) {
+                clearSchoolFields(school_name, school_address);
+                return;
+            }
+
+            try {
+                const data = await fetchSchoolData(schoolid);
+
+                if (Array.isArray(data) && data.length > 0) {
+                    const school = data[0];
+                    populateSchoolFields(school, school_name, school_address);
+                } else {
+                    handleSchoolNotFound(school_name, school_address);
+                }
+            } catch (error) {
+                school_name.value = '';
+                school_address.value = '';
+            }
+        }
+
+        // Fetch school data from the server
+        async function fetchSchoolData(schoolid) {
+            const url = schoolid ?
+                `http://127.0.0.1:8000/student/cee/schoolname?schoolid=${encodeURIComponent(schoolid)}` :
+                'http://127.0.0.1:8000/student/cee/schoolname';
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                school_name.value = '';
+                school_address.value = '';
+            }
+
+            return await response.json();
+        }
+
+        // Populate school fields if data is found
+        function populateSchoolFields(school, school_name, school_address) {
+            school_name.value = school.school_name;
+            school_address.value = school.school_address;
+        }
+
+        // Handle scenario when school is not found
+        function handleSchoolNotFound(school_name, school_address) {
+            alert('School not found');
+            clearSchoolFields(school_name, school_address);
+        }
+
+        // Clear the school name and address fields
+        function clearSchoolFields(school_name, school_address) {
+            school_name.value = '';
+            school_address.value = '';
+        }
+
         $(document).ready(function() {
 
-            // $('form').on('submit', function(event) {
-            //     event.preventDefault(); // Prevent default submission
+            $('form').on('submit', function(event) {
+                event.preventDefault(); // Prevent default submission
 
-            //     // Show SweetAlert confirmation dialog
-            //     Swal.fire({
-            //         title: 'Are you sure?',
-            //         text: "I confirm that all data has been reviewed and is accurate. I understand that once saved, I will no longer be able to edit the information.",
-            //         icon: 'warning',
-            //         showCancelButton: true,
-            //         confirmButtonColor: '#3085d6',
-            //         cancelButtonColor: '#d33',
-            //         confirmButtonText: 'Yes, save it!'
-            //     }).then((result) => {
-            //         if (result.isConfirmed) {
-            //             // If confirmed, submit the form
-            //             $(this).off('submit').submit();
-            //         }
-            //     });
-            // });
+                // Show SweetAlert confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "I confirm that all data has been reviewed and is accurate. I understand that once saved, I will no longer be able to edit the information.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, save it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If confirmed, submit the form
+                        this.submit();
+                    }
+                });
+            });
 
             // URLs for JSON files
             var regionUrl = "{{ url('backend/assets/ph-json/region.json') }}";

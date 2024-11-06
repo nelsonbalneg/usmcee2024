@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="light scroll-smooth group" data-layout="vertical" data-sidebar="light" data-sidebar-size="lg"
     data-mode="light" data-topbar="light" data-skin="default" data-navbar="sticky" data-content="fluid" dir="ltr">
@@ -6,7 +5,7 @@
 <head>
 
     <meta charset="utf-8">
-    <title>BMS | Sign in </title>
+    <title>USM CEE | Sign in </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta content="Minimal Admin & Dashboard Template" name="description">
     <meta content="Themesdesign" name="author">
@@ -101,7 +100,7 @@
 
                 <div class="mt-8 text-center">
                     <h4 class="mb-1 text-custom-500 dark:text-custom-500">Welcome Back !</h4>
-                    <p class="text-slate-500 dark:text-zink-200">Sign in to continue to BMS.</p>
+                    <p class="text-slate-500 dark:text-zink-200">Sign in to continue to USM CEE.</p>
                 </div>
 
                 <form method="POST" action="{{ route('login') }}" class="mt-10">
@@ -116,8 +115,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                        <input type="password" id="password" name="password" required
-                            autocomplete="current-password"
+                        <input type="password" id="password" name="password" required autocomplete="current-password"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Enter password">
                         <div id="password-error" class="hidden mt-1 text-sm text-red-500">Password must be at least 8
@@ -125,11 +123,7 @@
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <input id="remember_me"
-                                class="border rounded-sm appearance-none size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
-                                type="checkbox" name="remember">
-                            <label for="remember_me"
-                                class="inline-block text-base font-medium align-middle cursor-pointer">{{ __('Remember me') }}</label>
+
                             <label for="forgotpass"
                                 class="inline-block text-base font-medium align-middle cursor-pointer">
                                 <a href="{{ route('password.request') }}">Forgot Password?</a>

@@ -33,14 +33,23 @@ class RegisteredUserController extends Controller
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'phone' => ['required', 'string', 'unique:' . User::class], // Ensure the phone is unique as well
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ],
+        [
+            'phone.unique' => 'The phone number is already in use. Please use a different number.',
+            'email.unique' => 'The email address is already taken. Please use a different email.',
         ]);
 
         $user = User::create([
             'firstname' => $request->firstname,
+            'middlename' => $request->middlename,
             'lastname' => $request->lastname,
+            'suffix' => $request->suffix,
+            'sex' => $request->sex,
             'phone' => $request->phone,
             'email' => $request->email,
+            'birthdate' => $request->birthdate,
             'password' => Hash::make($request->password),
         ]);
 

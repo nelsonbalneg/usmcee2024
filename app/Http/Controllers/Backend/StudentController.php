@@ -23,20 +23,20 @@ class StudentController extends Controller
         $checkEmptyFields = User::where(function ($query) {
             $query->whereNull('lrn')
                 ->orWhere('lrn', '');
-        })
-            ->where('id', Auth::user()->id)
-            ->where(function ($query) {
-                $query->whereNull('birthdate')
-                    ->orWhere('birthdate', '');
-            })
-            ->exists();
+        })->exists();
+            // ->where('id', Auth::user()->id)
+            // ->where(function ($query) {
+            //     $query->whereNull('birthdate')
+            //         ->orWhere('birthdate', '');
+            // })
+            // ->exists();
 
         if ($checkEmptyFields) {
 
             $studentdetails = User::where('id', Auth::user()->id)->first();
             $ceeActiveession = CeeSession::where('status', 'active')->first();
 
-            return view("student.profile.profile", compact('studentdetails'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
+            return view("student.profile.profile", compact('studentdetails', 'ceeActiveession'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
         } else {
             return view('student.dashboard');
         }

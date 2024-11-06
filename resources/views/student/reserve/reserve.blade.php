@@ -32,6 +32,9 @@
 
             {{-- <div class="card"> --}}
             @if ($existingReservation)
+                @php
+                    $encryptedAppNo = Crypt::encryptString($existingReservation->app_no);
+                @endphp
                 <div class="block tab-pane" id="overviewTabs">
                     <div class="grid grid-cols-1 gap-x-5 2xl:grid-cols-12">
                         <div class="2xl:col-span-12">
@@ -49,10 +52,11 @@
                                         </div>
                                         <div class="p-3 mt-5 rounded-md bg-custom-600">
                                             {{-- <h2 class="mb-1 text-white">{{ $existingReservation->app_no }}</h2> --}}
-                                            <a href="" class="text-decoration-none">
+                                            <a href="{{ route('student.cee.exam-slip', ['app_no' => $encryptedAppNo]) }}"
+                                                class="text-decoration-none" target="_blank">
                                                 <h2 class="mb-1 text-white">{{ $existingReservation->app_no }}</h2>
                                             </a>
-                                            <p class="text-custom-200">Application Number</p>
+                                            {{-- <p class="text-custom-200">Application Number</p> --}}
                                         </div>
                                     </div>
                                 </div><!--end col-->
@@ -97,7 +101,7 @@
                                                                 {{ $existingReservation->applicant->email }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th class="py-2 font-semibold ps-0" scope="row">Birth of Date
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Birth Date
                                                             </th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
                                                                 {{ \Carbon\Carbon::parse($existingReservation->applicant->birthdate)->format('F j, Y') }}
@@ -198,8 +202,10 @@
                                                         <tr>
                                                             <th class="py-2 font-semibold ps-0" scope="row">Status</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                @if ($existingReservation->is_repeat_exam == 'No')First Time Taker
-                                                                @elseif ($existingReservation->is_repeat_exam == 'Yes')Retaker
+                                                                @if ($existingReservation->is_repeat_exam == 'No')
+                                                                    First Time Taker
+                                                                @elseif ($existingReservation->is_repeat_exam == 'Yes')
+                                                                    Retaker
                                                                 @endif
                                                             </td>
                                                         </tr>
@@ -433,16 +439,16 @@
                 let termId;
                 switch (realCampusId) {
                     case "1": // USM Main
-                        termId = 95;
+                        termId = 99;
                         break;
                     case "3": // USM KCC
-                        termId = 67;
+                        termId = 68;
                         break;
                     case "5": // PALMA
-                        termId = 95;
+                        termId = 99;
                         break;
                     case "6": // Mlang
-                        termId = 67;
+                        termId = 68;
                         break;
                     default:
                         termId = null; // Default or no termId if campus is not matched

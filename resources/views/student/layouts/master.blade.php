@@ -506,6 +506,9 @@
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <!--apexchart js-->
     <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
