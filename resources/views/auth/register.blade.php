@@ -105,7 +105,8 @@
                     @csrf
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
                         <div class="flex-1">
-                            <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name <sup class="text-red-500">* required</sup></label>
+                            <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name <sup
+                                    class="text-red-500">* required</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 name="firstname" value="{{ old('firstname') }}" placeholder="Enter First Name">
@@ -114,8 +115,9 @@
 
 
                         <div class="flex-1">
-                            <label for="middlename" class="inline-block mb-2 text-base font-medium">Middle Name<sup class="text-blue-500">* optional</sup></label>
-                                Name <sup class="text-blue-500">* optional</sup></label>
+                            <label for="middlename" class="inline-block mb-2 text-base font-medium">Middle Name<sup
+                                    class="text-blue-500">* optional</sup></label>
+                            Name <sup class="text-blue-500">* optional</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 name="middlename" value="{{ old('middlename') }}" placeholder="Enter Last Middle Name">
@@ -176,87 +178,86 @@
                     </div>
 
 
-                                class="text-red-500">* required</sup></label>
-                        <input type="password" name="password" id="password" required autocomplete="new-password"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="Enter password">
-                        <x-input-error :messages="$errors->get('password')" class="mt-1 text-sm text-red-500" />
-                    </div>
+                    class="text-red-500">* required</sup></label>
+                    <input type="password" name="password" id="password" required autocomplete="new-password"
+                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        placeholder="Enter password">
+                    <x-input-error :messages="$errors->get('password')" class="mt-1 text-sm text-red-500" />
+            </div>
 
-                    <div class="mb-3">
-                        <label for="password_confirmation" class="inline-block mb-2 text-base font-medium">Confirm
-                            Password <sup class="text-red-500">* required</sup></label>
-                        <input type="password" name="password_confirmation" id="password_confirmation" required
-                            autocomplete="new-password"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="Confirm password">
-                        <x-input-error :messages="$errors->get('password_confirmation')"
-                            class="mt-1 text-sm text-red-500" />
-                    </div>
+            <div class="mb-3">
+                <label for="password_confirmation" class="inline-block mb-2 text-base font-medium">Confirm
+                    Password <sup class="text-red-500">* required</sup></label>
+                <input type="password" name="password_confirmation" id="password_confirmation" required
+                    autocomplete="new-password"
+                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                    placeholder="Confirm password">
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1 text-sm text-red-500" />
+            </div>
 
-                    <div class="flex items-start space-x-2">
-                        <input type="checkbox" id="defaultCheck1"
-                            class="form-checkbox h-4 w-4 text-green-600 border-gray-300 rounded focus:ring focus:ring-green-500 focus:ring-opacity-50">
-                        <label for="defaultCheck1" class="text-gray-500 font-normal text-sm">
-                            By creating an account, you agree to our
+            <div class="flex items-start space-x-2">
+                <input type="checkbox" id="defaultCheck1"
+                    class="form-checkbox h-4 w-4 text-green-600 border-gray-300 rounded focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                <label for="defaultCheck1" class="text-gray-500 font-normal text-sm">
+                    By creating an account, you agree to our
 
-                                Conditions</a>
-                        </label>
-                    </div>
+                    Conditions</a>
+                </label>
+            </div>
 
-                    <div class="mt-10 text-center">
-                        <button type="submit" id="submitButton" disabled
-                            class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                            Create Account</button>
-                    </div>
-                </form>
+            <div class="mt-10 text-center">
+                <button type="submit" id="submitButton" disabled
+                    class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                    Create Account</button>
+            </div>
+            </form>
 
-                <div class="mt-10 text-center">
-                    <p class="mb-0 text-slate-500 dark:text-zink-200">Already have an account ? <a
-                            href="{{ route('login') }}"
-                            class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">Login</a>
-                    </p>
+            <div class="mt-10 text-center">
+                <p class="mb-0 text-slate-500 dark:text-zink-200">Already have an account ? <a
+                        href="{{ route('login') }}"
+                        class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">Login</a>
+                </p>
+            </div>
+            <div id="drawerterms" drawer-end
+                class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow ltr:right-0 rtl:left-0 md:w-80 z-drawer show dark:bg-zink-600">
+                <div
+                    class="flex items-center justify-between p-4 border-b card-body border-slate-200 dark:border-zink-500">
+                    <h6 class="text-15">Terms and Conditions</h6>
+                    <button data-drawer-close="drawerterms"><i data-lucide="x"
+                            class="transition-all duration-200 ease-linear size-4 text-slate-500 hover:text-slate-700 dark:text-zink-200 dark:hover:text-zink-50"></i></button>
                 </div>
-                <div id="drawerterms" drawer-end
-                    class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow ltr:right-0 rtl:left-0 md:w-80 z-drawer show dark:bg-zink-600">
-                    <div
-                        class="flex items-center justify-between p-4 border-b card-body border-slate-200 dark:border-zink-500">
-                        <h6 class="text-15">Terms and Conditions</h6>
-                        <button data-drawer-close="drawerterms"><i data-lucide="x"
-                                class="transition-all duration-200 ease-linear size-4 text-slate-500 hover:text-slate-700 dark:text-zink-200 dark:hover:text-zink-50"></i></button>
+                <div class="h-full p-4 overflow-y-auto">
+                    <div class="card-body">
+                        <p class='text-justify'>
+                            This serves as an important reminder to provide accurate and truthful information in all
+                            profiles and submissions within our academic institution's systems. Ensuring the
+                            integrity of your data is essential to maintain the quality and credibility of our
+                            educational environment.</p>
+                        <br>
+                        <p class='text-justify'>
+                            Providing incorrect information violates our academic policies and may lead to
+                            significant issues, including compromised academic integrity and potential
+                            administrative complications.</p>
+                        <br>
+                        <p class='text-justify'>
+                            Please note that taking screenshots of data within this system is strictly prohibited.
+                            Sensitive information must remain secure, and any unauthorized capture or sharing of
+                            data is a breach of confidentiality protocols.</p>
+                        <br>
+                        <p class='text-justify'>
+                            For data privacy concerns, please contact: dpo@usm.edu.ph.</p>
+                        <br>
+                        <p class='text-justify'>
+                            By proceeding with the registration, you agree to comply with these terms and conditions
+                            to support a secure and trustworthy academic environment.</p>
                     </div>
-                    <div class="h-full p-4 overflow-y-auto">
-                        <div class="card-body">
-                            <p class='text-justify'>
-                                This serves as an important reminder to provide accurate and truthful information in all
-                                profiles and submissions within our academic institution's systems. Ensuring the
-                                integrity of your data is essential to maintain the quality and credibility of our
-                                educational environment.</p>
-                            <br>
-                            <p class='text-justify'>
-                                Providing incorrect information violates our academic policies and may lead to
-                                significant issues, including compromised academic integrity and potential
-                                administrative complications.</p>
-                            <br>
-                            <p class='text-justify'>
-                                Please note that taking screenshots of data within this system is strictly prohibited.
-                                Sensitive information must remain secure, and any unauthorized capture or sharing of
-                                data is a breach of confidentiality protocols.</p>
-                            <br>
-                            <p class='text-justify'>
-                                For data privacy concerns, please contact: dpo@usm.edu.ph.</p>
-                            <br>
-                            <p class='text-justify'>
-                                By proceeding with the registration, you agree to comply with these terms and conditions
-                                to support a secure and trustworthy academic environment.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between p-4 border-t border-slate-200 dark:border-zink-500">
-                        <h6 class="text-15">University of Southern Mindanao</h6>
-                    </div>
+                </div>
+                <div class="flex items-center justify-between p-4 border-t border-slate-200 dark:border-zink-500">
+                    <h6 class="text-15">University of Southern Mindanao</h6>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <script src='{{ asset('backend/assets/libs/choices/public/assets/scripts/choices.min.js') }}'></script>
     <script src="{{ asset('backend/assets/libs/@popperjs/core/umd/popper.min.js') }}"></script>
@@ -291,27 +292,27 @@
             });
         }
 
-            const checkbox = document.getElementById("defaultCheck1");
-            const submitButton = document.getElementById("submitButton");
+        const checkbox = document.getElementById("defaultCheck1");
+        const submitButton = document.getElementById("submitButton");
 
-            // Enable/disable submit button based on checkbox state
-            checkbox.addEventListener("change", function () {
-                submitButton.disabled = !checkbox.checked;
+        // Enable/disable submit button based on checkbox state
+        checkbox.addEventListener("change", function () {
+            submitButton.disabled = !checkbox.checked;
+        });
+
+        // Display success message if session has success
+        @if (session('success'))
+            Swal.fire({
+                title: 'Success!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{ route('login') }}";
+                }
             });
-
-            // Display success message if session has success
-            @if (session('success'))
-                Swal.fire({
-                    title: 'Success!',
-                    text: "{{ session('success') }}",
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "{{ route('login') }}";
-                    }
-                });
-            @endif
+        @endif
         });
     </script>
 
