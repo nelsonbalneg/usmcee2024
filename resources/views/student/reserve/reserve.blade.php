@@ -1,6 +1,6 @@
 @extends('student.layouts.master')
 @section('title')
-    BMS - My Profile
+    USMCEE - My Profile
 @endsection
 
 @push('styles')
@@ -128,7 +128,7 @@
                                                             <th class="py-2 font-semibold ps-0" scope="row">First
                                                                 Priority</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                {{ $existingReservation->firstpriorty }} -
+                                                                {{ $existingReservation->firstpriorty_desc }} (
                                                                 @if ($existingReservation->campus_id == 1)
                                                                     USM-Main
                                                                 @elseif ($existingReservation->campus_id == 3)
@@ -139,7 +139,7 @@
                                                                     USM MLANG
                                                                 @else
                                                                     Unknown Campus
-                                                                @endif
+                                                                @endif)
                                                             </td>
                                                         </tr>
 
@@ -147,18 +147,18 @@
                                                             <th class="py-2 font-semibold ps-0" scope="row">Second
                                                                 Priority</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                {{ $existingReservation->secondpriorty }} -
-                                                                @if ($existingReservation->campus_id == 1)
+                                                                {{ $existingReservation->secondpriority_desc }} (
+                                                                @if ($existingReservation->campus_id_prio_prog_2 == 1)
                                                                     USM-Main
-                                                                @elseif ($existingReservation->campus_id == 3)
+                                                                @elseif ($existingReservation->campus_id_prio_prog_2 == 3)
                                                                     USM KCC
-                                                                @elseif ($existingReservation->campus_id == 5)
+                                                                @elseif ($existingReservation->campus_id_prio_prog_2 == 5)
                                                                     USM PALMA CLUSTER
-                                                                @elseif ($existingReservation->campus_id == 6)
+                                                                @elseif ($existingReservation->campus_id_prio_prog_2 == 6)
                                                                     USM MLANG
                                                                 @else
                                                                     Unknown Campus
-                                                                @endif
+                                                                @endif)
                                                             </td>
                                                         </tr>
 
@@ -166,18 +166,18 @@
                                                             <th class="py-2 font-semibold ps-0" scope="row">Second
                                                                 Priority</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                {{ $existingReservation->thirdpriorty }} -
-                                                                @if ($existingReservation->campus_id == 1)
+                                                                {{ $existingReservation->thirdpriorty_desc }} (
+                                                                @if ($existingReservation->campus_id_prio_prog_3 == 1)
                                                                     USM-Main
-                                                                @elseif ($existingReservation->campus_id == 3)
+                                                                @elseif ($existingReservation->campus_id_prio_prog_3 == 3)
                                                                     USM KCC
-                                                                @elseif ($existingReservation->campus_id == 5)
+                                                                @elseif ($existingReservation->campus_id_prio_prog_3 == 5)
                                                                     USM PALMA CLUSTER
-                                                                @elseif ($existingReservation->campus_id == 6)
+                                                                @elseif ($existingReservation->campus_id_prio_prog_3 == 6)
                                                                     USM MLANG
                                                                 @else
                                                                     Unknown Campus
-                                                                @endif
+                                                                @endif)
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -276,7 +276,7 @@
 
                                 </div>
 
-                                <div class="xl:col-span-12">
+                                <div class="xl:col-span-4">
                                     <label for="campus" class="inline-block mb-2 text-base font-medium">Select
                                         Campus<span class="text-red-500">*</span></label>
                                     <select id="campus-select" name="campus"
@@ -290,7 +290,7 @@
                                     </select>
                                 </div>
 
-                                <div class="xl:col-span-12">
+                                <div class="xl:col-span-8">
                                     <label for="firstprioprog" class="inline-block mb-2 text-base font-medium">First
                                         Priority
                                         Program <span class="text-red-500">*</span></label>
@@ -298,9 +298,26 @@
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
+                                    <input type="text" name="firstprioprog_desc" id="firstprioprog_desc">
                                 </div>
 
-                                <div class="xl:col-span-12">
+
+                                <div class="xl:col-span-4">
+                                    <label for="campus2" class="inline-block mb-2 text-base font-medium">Select
+                                        Campus<span class="text-red-500">*</span></label>
+                                    <select id="campus-select2" name="campus2"
+                                        class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                        <option selected="true" disabled>Choose Campus</option>
+                                        <option value="1">USM Main</option>
+                                        <option value="3">USM KCC</option>
+                                        <option value="5">USM PALMA CLUSTER</option>
+                                        <option value="6">USM MLANG</option>
+
+                                    </select>
+                                </div>
+
+
+                                <div class="xl:col-span-8">
                                     <label for="secondprioprog" class="inline-block mb-2 text-base font-medium">Second
                                         Priority
                                         Program <span class="text-red-500">*</span></label>
@@ -308,10 +325,24 @@
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
+                                    <input type="text" name="secondprioprog_desc" id="secondprioprog_desc">
                                 </div>
 
 
-                                <div class="xl:col-span-12">
+                                <div class="xl:col-span-4">
+                                    <label for="campus3" class="inline-block mb-2 text-base font-medium">Select
+                                        Campus<span class="text-red-500">*</span></label>
+                                    <select id="campus-select3" name="campus3"
+                                        class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                        <option selected="true" disabled>Choose Campus</option>
+                                        <option value="1">USM Main</option>
+                                        <option value="3">USM KCC</option>
+                                        <option value="5">USM PALMA CLUSTER</option>
+                                        <option value="6">USM MLANG</option>
+
+                                    </select>
+                                </div>
+                                <div class="xl:col-span-8">
                                     <label for="thirdprioprog" class="inline-block mb-2 text-base font-medium">Third
                                         Priority
                                         Program <span class="text-red-500">*</span></label>
@@ -319,6 +350,7 @@
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
+                                    <input type="text" name="thirdprioprog_desc" id="thirdprioprog_desc">
                                 </div>
 
 
@@ -328,17 +360,17 @@
 
                                 <div class="xl:col-span-6">
                                     <label for="ceesession" class="inline-block mb-2 text-base font-medium">USMCEE
-                                        Session
+                                        Batch
                                         <span class="text-red-500">*</span></label>
                                     <select class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
                                         id="ceeexamsession" name="ceeexamsession" onchange="loadRooms()">
                                         <option value="">-Select Examination Session
                                         </option>
-                                        <option value="session 1">Session 1 (6:00 AM - 9:00 AM)
+                                        <option value="batch 1">Batch 1 (6:00 AM - 9:00 AM)
                                         </option>
-                                        <option value="session 2">Session 2 (10:00 AM - 1:00 PM)
+                                        <option value="batch 2">Batch 2 (10:00 AM - 1:00 PM)
                                         </option>
-                                        <option value="session 3">Session 3 (1:00 PM - 4:00 PM)
+                                        <option value="batch 3">Batch 3 (2:00 PM - 5:00 PM)
                                         </option>
                                     </select>
                                 </div><!--end col-->
@@ -408,7 +440,7 @@
                 // Show SweetAlert confirmation dialog
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "I confirm that all data has been reviewed and is accurate. I understand that once saved, I will no longer be able to edit the information.",
+                    text: "I confirm that all data are correct and reviewed. I understand that once saved, I will no longer be able to edit the information.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -423,102 +455,87 @@
             });
         });
 
-
-
         document.addEventListener('DOMContentLoaded', function() {
-            const campusSelect = document.getElementById('campus-select');
-            const programSelect = document.getElementById('program-select');
+            const campusSelect1 = document.getElementById('campus-select');
+            const programSelect1 = document.getElementById('program-select');
+            const firstPriorityDescInput = document.getElementById('firstprioprog_desc');
+
+            const campusSelect2 = document.getElementById('campus-select2');
             const programSelect2 = document.getElementById('program-select2');
+            const secondPriorityDescInput = document.getElementById('secondprioprog_desc');
+
+            const campusSelect3 = document.getElementById('campus-select3');
             const programSelect3 = document.getElementById('program-select3');
+            const thirdPriorityDescInput = document.getElementById('thirdprioprog_desc');
 
 
-            function loadPrograms() {
+            function loadPrograms(campusSelect, programSelect) {
                 const realCampusId = campusSelect.value;
 
                 // Set termId based on the selected campus
                 let termId;
                 switch (realCampusId) {
-                    case "1": // USM Main
+                    case "1":
                         termId = 99;
-                        break;
-                    case "3": // USM KCC
+                        break; // USM Main
+                    case "3":
                         termId = 68;
-                        break;
-                    case "5": // PALMA
+                        break; // USM KCC
+                    case "5":
                         termId = 99;
-                        break;
-                    case "6": // Mlang
+                        break; // PALMA
+                    case "6":
                         termId = 68;
-                        break;
+                        break; // Mlang
                     default:
-                        termId = null; // Default or no termId if campus is not matched
+                        termId = null;
                         break;
                 }
 
-                // Check if both realCampusId and termId are set
-                if (!realCampusId || !termId) {
-                    return; // Exit if either value is missing
-                }
+                if (!realCampusId || !termId) return; // Exit if missing values
 
-                // Clear program dropdown and show loading message
-                programSelect.innerHTML = '<option selected disabled>Loading...</option>';
-                programSelect2.innerHTML = '<option selected disabled>Loading...</option>';
-                programSelect3.innerHTML = '<option selected disabled>Loading...</option>';
+                programSelect.innerHTML = '<option selected disabled>Please wait...</option>';
 
-
-                // Fetch programs based on selected realCampusId and termId
                 fetch(`/student/cee/get-programs-by-campus?termId=${termId}&realCampusId=${realCampusId}`)
                     .then(response => response.json())
                     .then(data => {
-                        // Populate the program dropdown with the response data
                         programSelect.innerHTML = '<option selected disabled>Choose Program</option>';
-                        programSelect2.innerHTML = '<option selected disabled>Choose Program</option>';
-                        programSelect3.innerHTML = '<option selected disabled>Choose Program</option>';
-
                         data.forEach(program => {
                             const option = document.createElement('option');
-                            const option2 = document.createElement('option');
-                            const option3 = document.createElement('option');
-
-                            const programId = program.programId;
-                            const programName = program.programName;
-
-                            const majorDiscDesc = program.majorDiscDesc;
-
-                            // Check if majorDiscDesc is null, empty, or an empty string
-                            if (!majorDiscDesc) {
-                                option.textContent = programName;
-                                option2.textContent = programName;
-                                option3.textContent = programName;
-                            } else {
-                                option.textContent = `${programName}  -  ${majorDiscDesc}`;
-                                option2.textContent = `${programName}  -  ${majorDiscDesc}`;
-                                option3.textContent = `${programName}  -  ${majorDiscDesc}`;
-                            }
-
-                            option2.value = programName;
-                            option3.value = programName;
-                            option.value = programName;
-
+                            option.value = program.programId;
+                            option.textContent = program.majorDiscDesc ?
+                                `${program.programName} - ${program.majorDiscDesc}` : program
+                                .programName;
+                            option.setAttribute('data-program-name', program.programName);
                             programSelect.appendChild(option);
-                            programSelect2.appendChild(option2);
-                            programSelect3.appendChild(option3);
                         });
                     })
                     .catch(error => {
                         console.error('Error loading programs:', error);
                         programSelect.innerHTML = '<option selected disabled>Error loading programs</option>';
-                        programSelect2.innerHTML = '<option selected disabled>Error loading programs</option>';
-                        programSelect3.innerHTML = '<option selected disabled>Error loading programs</option>';
                     });
             }
 
-            // Load programs when the campus dropdown changes
-            campusSelect.addEventListener('change', loadPrograms);
+            campusSelect1.addEventListener('change', () => loadPrograms(campusSelect1, programSelect1));
+            campusSelect2.addEventListener('change', () => loadPrograms(campusSelect2, programSelect2));
+            campusSelect3.addEventListener('change', () => loadPrograms(campusSelect3, programSelect3));
+
+            // Update priority description inputs when a program is selected
+            programSelect1.addEventListener('change', () => {
+                const selectedOption = programSelect1.options[programSelect1.selectedIndex];
+                firstPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
+            });
+
+            programSelect2.addEventListener('change', () => {
+                const selectedOption = programSelect2.options[programSelect2.selectedIndex];
+                secondPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
+            });
+
+            programSelect3.addEventListener('change', () => {
+                const selectedOption = programSelect3.options[programSelect3.selectedIndex];
+                thirdPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
+            });
         });
-
-
-
 
         function loadRooms() {
             const ceesession = document.getElementById('ceeexamsession').value;

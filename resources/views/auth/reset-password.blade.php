@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" class="light scroll-smooth group" data-layout="vertical" data-sidebar="light" data-sidebar-size="lg"
     data-mode="light" data-topbar="light" data-skin="default" data-navbar="sticky" data-content="fluid" dir="ltr">
+<<<<<<< HEAD
+<head>
+    <meta charset="utf-8">
+    <title>USM CEE | Reset Password</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta content="Minimal Admin & Dashboard Template" name="description">
+    <meta content="Themesdesign" name="author">
+    <link rel="shortcut icon" href="{{ asset('backend/./assets/images/favicon.ico') }}">
+    <script src="{{ asset('backend/assets/js/layout.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/tailwind2.css') }}">
+</head>
+
+=======
 
 <head>
     <meta charset="utf-8">
@@ -13,10 +26,15 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/tailwind2.css') }}">
 </head>
 
+>>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
 <body
     class="flex items-center justify-center min-h-screen py-16 lg:py-10 bg-slate-50 dark:bg-zink-800 dark:text-zink-100 font-public">
     <div class="relative">
         <div class="absolute hidden opacity-50 ltr:-left-16 rtl:-right-16 -top-10 md:block">
+<<<<<<< HEAD
+            <!-- SVG for background styling -->
+            <!-- Add SVG paths here if required -->
+=======
             <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125 316" width="125" height="316">
                 <title>&lt;Group&gt;</title>
                 <g id="&lt;Group&gt;">
@@ -46,6 +64,7 @@
                         d="m109.3 307.8l-1.3-3.1v-315.4l1.3 3.1z" />
                 </g>
             </svg>
+>>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
         </div>
 
         <div class="mb-0 w-screen lg:mx-auto lg:w-[500px] card shadow-lg border-none shadow-slate-100 relative">
@@ -68,6 +87,12 @@
                     <x-auth-session-status class="mb-4" :status="session('status')" />
                     <x-input-error :messages="$errors->get('password')" class="mt-2 text-sm text-red-500" />
                 </div>
+<<<<<<< HEAD
+                <form method="POST" action="{{ route('password.store') }}" class="mt-10">
+                    @csrf
+                    <!-- Password Reset Token -->
+                    <input type="hidden" name="token" value="{{ $request->route('token') }}">
+=======
 
                 <form method="POST" action="{{ route('password.store') }}" class="mt-10">
                     @csrf
@@ -75,6 +100,7 @@
                     <!-- Password Reset Token -->
                     <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
+>>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                     <!-- Email Address -->
                     <div class="mb-3">
                         <x-input-label for="email" :value="__('Email')"
@@ -84,7 +110,10 @@
                             required autofocus autocomplete="username" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-500" />
                     </div>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                     <!-- Password -->
                     <div class="mb-3">
                         <x-input-label for="password" :value="__('Password')"
@@ -94,7 +123,10 @@
                             required autocomplete="new-password" />
 
                     </div>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                     <!-- Confirm Password -->
                     <div class="mb-3">
                         <x-input-label for="password_confirmation" :value="__('Confirm Password')"
@@ -103,9 +135,13 @@
                             class="form-input w-full border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             required autocomplete="new-password" />
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+<<<<<<< HEAD
+                    </div>
+=======
 
                     </div>
 
+>>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                     <!-- Submit Button -->
                     <div class="mt-10">
                         <button type="submit"
@@ -114,7 +150,10 @@
                         </button>
                     </div>
                 </form>
+<<<<<<< HEAD
+=======
 
+>>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                 <!-- Login Link -->
                 <div class="mt-10 text-center">
                     <p class="mb-0 text-slate-500 dark:text-zink-200">
@@ -125,8 +164,14 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+    <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
+</body>
+</html>
+=======
 
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
 </body>
 
 </html>
+>>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
