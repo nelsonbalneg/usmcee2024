@@ -258,7 +258,7 @@
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 name="code" value="+639" placeholder="+639" readonly>
                         </div>
-                        <div class="flex-12">
+                        <div class="flex-1">
                             <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone <sup
                                     class="text-red-500">* required</sup></label>
                             <input type="text" id="cleavePhone" name="phone"
@@ -268,6 +268,12 @@
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
+                    </div>
+                    <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
+                        <span class="text-base font-small text-red-600">* Please use a valid and active cellphone
+                            number. This number<br> is essential for SMS notifications, including entrance exam<br>
+                            information
+                            and future updates.</span>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password <sup
