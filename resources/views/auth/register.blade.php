@@ -106,7 +106,8 @@
                     @csrf
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
                         <div class="flex-1">
-                            <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name</label>
+                            <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name <sup
+                                    class="text-red-500">* required</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 name="firstname" value="{{ old('firstname') }}" placeholder="Enter First Name">
@@ -116,18 +117,18 @@
 
                         <div class="flex-1">
                             <label for="middlename" class="inline-block mb-2 text-base font-medium">Middle
-                                Name</label>
+                                Name <sup class="text-blue-500">* optional</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                name="middlename" value="{{ old('middlename') }}"
-                                placeholder="Enter Last Middle Name">
+                                name="middlename" value="{{ old('middlename') }}" placeholder="Enter Last Middle Name">
                         </div>
                     </div>
 
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
 
                         <div class="flex-1">
-                            <label for="lastname" class="inline-block mb-2 text-base font-medium">Last Name</label>
+                            <label for="lastname" class="inline-block mb-2 text-base font-medium">Last Name <sup
+                                    class="text-red-500">* required</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 name="lastname" value="{{ old('lastname') }}" placeholder="Enter Last Name">
@@ -135,7 +136,7 @@
 
                         <div class="flex-1">
                             <label for="suffix" class="inline-block mb-2 text-base font-medium">Suffix
-                                (ext.)</label>
+                                (ext.) <sup class="text-blue-500">* optional</sup></label>
                             <select class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
                                 id="suffix" data-choices name="suffix">
                                 <option value="">-Select-</option>
@@ -157,7 +158,7 @@
 
                         <div class="xl:col-span-3">
                             <label for="birthdate" class="inline-block mb-2 text-base font-medium">Birthdate
-                                <span class="text-red-500">*</span></label>
+                                <sup class="text-red-500">* required</sup></label>
                             <input type="text" id="birthdate" name="birthdate"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 placeholder="Select date" data-provider="flatpickr" data-date-format="M d, Y"
@@ -165,8 +166,8 @@
                         </div><!--end col-->
 
                         <div class="flex-1">
-                            <label for="sex" class="inline-block mb-2 text-base font-medium">Sex <span
-                                    class="text-red-500">*</span></label>
+                            <label for="sex" class="inline-block mb-2 text-base font-medium">Sex <sup
+                                    class="text-red-500">* required</sup></label>
                             <select class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
                                 id="sex" data-choices name="sex">
                                 <option value="">-Select-</option>
@@ -176,12 +177,17 @@
                         </div><!--end col-->
                     </div>
 
-
                     <div class="mb-3">
-                        <label for="email-field" class="inline-block mb-2 text-base font-medium">Email</label>
+                        <label for="email-field" class="inline-block mb-2 text-base font-medium">Email <sup
+                                class="text-red-500">* required</sup></label>
                         <input type="text" id="email-field" name="email"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Enter email">
+                        <label class="inline-block mb-2 text-base font-small text-red-600">* Please use a valid and
+                            active
+                            email. This
+                            email will be essential for
+                            password resets and other important updates.</label>
                         <div id="email-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email
                             address.</div>
                         @error('email')
@@ -189,7 +195,8 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone</label>
+                        <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone <sup
+                                class="text-red-500">* required</sup></label>
                         <input type="text" id="cleavePhone" name="phone"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="09xx xxx xxxx">
@@ -199,7 +206,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
+                        <label for="password" class="inline-block mb-2 text-base font-medium">Password <sup
+                                class="text-red-500">* required</sup></label>
                         <input type="password" name="password" id="password" required autocomplete="new-password"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Enter password">
@@ -208,12 +216,13 @@
 
                     <div class="mb-3">
                         <label for="password_confirmation" class="inline-block mb-2 text-base font-medium">Confirm
-                            Password</label>
+                            Password <sup class="text-red-500">* required</sup></label>
                         <input type="password" name="password_confirmation" id="password_confirmation" required
                             autocomplete="new-password"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Confirm password">
-                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1 text-sm text-red-500" />
+                        <x-input-error :messages="$errors->get('password_confirmation')"
+                            class="mt-1 text-sm text-red-500" />
                     </div>
 
                     <div class="flex items-start space-x-2">
@@ -306,12 +315,12 @@
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const checkbox = document.getElementById("defaultCheck1");
             const submitButton = document.getElementById("submitButton");
 
             // Enable/disable submit button based on checkbox state
-            checkbox.addEventListener("change", function() {
+            checkbox.addEventListener("change", function () {
                 submitButton.disabled = !checkbox.checked;
             });
 
