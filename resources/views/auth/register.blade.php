@@ -101,8 +101,19 @@
                 <div class="mt-8 text-center">
                     <h4 class="mb-1 text-info-500 dark:text-green-500">Create your account</h4>
                 </div>
-                <form method="POST" class="mt-10" action="{{ route('register') }}">
+                <form method="POST" class="mt-5" action="{{ route('register') }}">
                     @csrf
+                    <div class="mb-3 text-left">
+                        @if ($errors->any())
+                            <div class="text-red-500 text-sm mt-2">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
                         <div class="flex-1">
                             <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name <sup
@@ -188,30 +199,23 @@
                         @enderror
                     </div>
                     <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
-                        <span class="text-base font-small text-red-600">* Please use a valid and active email. This
+                        <span class="text-base font-small text-sky-600">* Please use a valid and active email. This
                             email will be essential for password resets and other important updates.</span>
                     </div>
                     <div class="grid grid-cols-1 gap-4 mb-5 lg:grid-cols-2 xl:grid-cols-12">
-                        <div class="xl:col-span-3 sm:col-span-3">
-                            <label for="code" class="inline-block mb-2 text-base font-medium">Code <sup
-                                    class="text-blue-500">* read only</sup></label>
-                            <input type="text"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                name="code" value="+639" placeholder="+639" readonly>
-                        </div>
-                        <div class="xl:col-span-9 sm:col-span-9">
+                        <div class="xl:col-span-12 sm:col-span-12">
                             <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone <sup
                                     class="text-red-500">* required</sup></label>
                             <input type="text" id="cleavePhone" name="phone"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="xx-xxx-xxxx">
+                                placeholder="xxxx-xxx-xxxx">
                             @error('phone')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
                     <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
-                        <span class="text-base font-small text-red-600">* Please use a valid and active cellphone
+                        <span class="text-base font-small text-sky-600">* Please use a valid and active cellphone
                             number. This number is essential for receiving SMS notifications, including entrance exam
                             information and other important updates.</span>
                     </div>
@@ -235,7 +239,7 @@
                             class="mt-1 text-sm text-red-500" />
                     </div>
 
-                    <div class="flex items-start space-x-2">
+                    <div class="flex items-start space-x-2 mt-5">
                         <input type="checkbox" id="defaultCheck1"
                             class="form-checkbox h-4 w-4 text-green-600 border-gray-300 rounded focus:ring focus:ring-green-500 focus:ring-opacity-50">
                         <label for="defaultCheck1" class="text-gray-500 font-normal text-sm">By creating an account,
@@ -246,14 +250,16 @@
                         </label>
                     </div>
 
-                    <div class="mt-10 text-center">
+                    <div class="g-recaptcha mt-5" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+
+                    <div class="mt-5 text-center">
                         <button type="submit" id="submitButton" disabled
                             class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                             Create Account</button>
                     </div>
                 </form>
 
-                <div class="mt-10 text-center">
+                <div class="mt-8 text-center">
                     <p class="mb-0 text-slate-500 dark:text-zink-200">Already have an account ? <a
                             href="{{ route('login') }}"
                             class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">Login</a>
@@ -423,14 +429,39 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- cleave.js -->
         <script src="{{ asset('backend/assets/libs/cleave.js/cleave.min.js') }}"></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script>
             if (document.querySelector("#cleavePhone")) {
                 var cleaveBlocks = new Cleave('#cleavePhone', {
                     delimiters: ['-', '-'],
-                    blocks: [2, 3, 4], // Adjusted for xx-xxx-xxxx format
+                    blocks: [4, 3, 4], // Adjusted for xx-xxx-xxxx format
                     numericOnly: true
                 });
             }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const phoneInput = document.getElementById("cleavePhone");
+
+                // Validate phone input on blur
+                phoneInput.addEventListener("blur", function () {
+                    const phone = phoneInput.value.trim(); // Trim whitespace
+
+                    // Check if phone number is complete (e.g., xxxx-xxx-xxxx format, 12 characters including dashes)
+                    if (phone && phone.length !== 13) {
+                        phoneInput.value = ""; // Clear invalid phone input
+
+                        // Show a toast notification
+                        Toastify({
+                            text: 'Please enter a complete phone number in the format xxxx-xxx-xxxx.',
+                            duration: 5000,
+                            gravity: "top",
+                            position: "right",
+                            backgroundColor: "#f56565", // Red color for error
+                            className: "error",
+                        }).showToast();
+                    }
+                });
+            });
 
             document.addEventListener("DOMContentLoaded", function () {
                 flatpickr("#birthdate", {
