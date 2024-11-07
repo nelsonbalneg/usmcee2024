@@ -106,11 +106,7 @@
                     @csrf
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
                         <div class="flex-1">
-<<<<<<< HEAD
-                            <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name<sup
-=======
                             <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name <sup
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                                     class="text-red-500">* required</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -121,11 +117,7 @@
 
                         <div class="flex-1">
                             <label for="middlename" class="inline-block mb-2 text-base font-medium">Middle
-<<<<<<< HEAD
-                                Name<sup class="text-blue-500">* optional</sup></label>
-=======
                                 Name <sup class="text-blue-500">* optional</sup></label>
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 name="middlename" value="{{ old('middlename') }}" placeholder="Enter Last Middle Name">
@@ -135,11 +127,7 @@
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
 
                         <div class="flex-1">
-<<<<<<< HEAD
-                            <label for="lastname" class="inline-block mb-2 text-base font-medium">Last Name<sup
-=======
                             <label for="lastname" class="inline-block mb-2 text-base font-medium">Last Name <sup
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                                     class="text-red-500">* required</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -169,13 +157,8 @@
                     <div class="mb-3 flex flex-col md:flex-row gap-4">
 
                         <div class="xl:col-span-3">
-<<<<<<< HEAD
-                            <label for="birthdate" class="inline-block mb-2 text-base font-medium">Birthdate<sup
-                                    class="text-red-500">* required</sup></label>
-=======
                             <label for="birthdate" class="inline-block mb-2 text-base font-medium">Birthdate
                                 <sup class="text-red-500">* required</sup></label>
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                             <input type="text" id="birthdate" name="birthdate"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 placeholder="Select date" data-provider="flatpickr" data-date-format="M d, Y"
@@ -194,62 +177,21 @@
                         </div><!--end col-->
                     </div>
 
-<<<<<<< HEAD
-                    <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
-                        <div class="flex-1">
-                            <label for="code" class="inline-block mb-2 text-base font-medium">Code <sup
-                                    class="text-blue-500">* read only</sup></label>
-                            <input type="text"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                name="code" value="+639" placeholder="+639" readonly>
-                        </div>
-                        <div class="flex-12">
-                            <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone <sup
-                                    class="text-red-500">* required</sup></label>
-                            <input type="text" id="cleavePhone" name="phone"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="xx-xxx-xxxx">
-                            @error('phone')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email-field" class="inline-block mb-2 text-base font-medium">Email<sup
-=======
                     <div class="mb-3">
                         <label for="email-field" class="inline-block mb-2 text-base font-medium">Email <sup
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                                 class="text-red-500">* required</sup></label>
                         <input type="text" id="email-field" name="email"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Enter email">
-                        <span class="text-base font-small text-red-600">* Please use a valid and active email. This
-                            email will be essential <br>for password resets and other important updates.</span>
                         <div id="email-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email
                             address.</div>
-                        <span class="text-base font-small text-blue-500">* Please use a valid and active email.
-                            This
-                            email will be essential <br>for password resets and other important updates.</span>
+                            <span class="text-base font-small text-blue-500">* Please use a valid and active email.
+                                This
+                                email will be essential <br>for password resets and other important updates.</span>
                         @error('email')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-<<<<<<< HEAD
-                    {{-- <div class="mb-3">
-                        <label for="cleavePhone" class="inline-block mb-2 text-base font-medium">Phone</label>
-                        <input type="text" id="cleavePhone" name="phone"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="09xx xxx xxxx">
-                        @error('phone')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div> --}}
-
-                    <div class="mb-3">
-                        <label for="password" class="inline-block mb-2 text-base font-medium">Password<sup
-=======
                     <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
                         <div class="flex-1">
                             <label for="code" class="inline-block mb-2 text-base font-medium">Code <sup
@@ -271,7 +213,6 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password <sup
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
                                 class="text-red-500">* required</sup></label>
                         <input type="password" name="password" id="password" required autocomplete="new-password"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -387,12 +328,8 @@
                 numericOnly: true
             });
         }
-<<<<<<< HEAD
-        document.addEventListener("DOMContentLoaded", function() {
-=======
 
         document.addEventListener("DOMContentLoaded", function () {
->>>>>>> 47c811a9a0c213bca72335b6f37e1ab6b839dbf6
             const checkbox = document.getElementById("defaultCheck1");
             const submitButton = document.getElementById("submitButton");
 
