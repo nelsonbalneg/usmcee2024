@@ -59,7 +59,8 @@
                                                 </a>
                                             @else
                                                 <a class="text-decoration-none" target="_blank">
-                                                    <h5 class="mb-1 text-white">A Photo is required to download your CEE Slip!</h5>
+                                                    <h5 class="mb-1 text-white">A Photo is required to download your CEE
+                                                        Slip!</h5>
                                                 </a>
                                             @endif
 
@@ -293,7 +294,6 @@
                                         <option value="3">USM KCC</option>
                                         <option value="5">USM PALMA CLUSTER</option>
                                         <option value="6">USM MLANG</option>
-
                                     </select>
                                 </div>
 
@@ -319,7 +319,6 @@
                                         <option value="3">USM KCC</option>
                                         <option value="5">USM PALMA CLUSTER</option>
                                         <option value="6">USM MLANG</option>
-
                                     </select>
                                 </div>
 
@@ -349,6 +348,23 @@
 
                                     </select>
                                 </div>
+
+                                <!-- Modal overlay for loading spinner -->
+                                <div id="loading-modal"
+                                    class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 hidden">
+                                    <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                                        <svg class="animate-spin h-10 w-10 text-custom-500 mb-4"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0a12 12 0 100 24v-4a8 8 0 01-8-8z"></path>
+                                        </svg>
+                                        <p class="text-gray-700 font-medium">Loading, please wait...</p>
+                                    </div>
+                                </div>
+
+
                                 <div class="xl:col-span-8">
                                     <label for="thirdprioprog" class="inline-block mb-2 text-base font-medium">Third
                                         Priority
@@ -440,6 +456,31 @@
             });
         </script>
     @endif
+
+    <script>
+        // Get the select elements and the modal
+        const selects = ['campus-select', 'campus-select2', 'campus-select3'].map(id => document.getElementById(id));
+        const loadingModal = document.getElementById('loading-modal');
+
+        // Function to show the loading modal
+        function showLoadingModal(selectElement) {
+            loadingModal.classList.remove('hidden'); // Show the modal
+            selectElement.disabled = true; // Disable the specific select element
+
+            // Hide the modal and enable the select element after 10 seconds
+            setTimeout(() => {
+                loadingModal.classList.add('hidden');
+                selectElement.disabled = false;
+            }, 5000);
+        }
+
+        // Add event listeners for each select element
+        selects.forEach(select => {
+            select.addEventListener('change', function() {
+                showLoadingModal(select);
+            });
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -614,10 +655,6 @@
                     .textContent; // Set selected program text to input
             });
         });
-
-
-
-
 
 
         document.addEventListener("DOMContentLoaded", function() {
