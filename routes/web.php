@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentCeeReserveController;
 
 Route::get('/', function () {
+    // return view('info');
     return view('auth.login');
 });
 
@@ -29,3 +30,5 @@ Route::prefix('api')
 
 
 require __DIR__ . '/auth.php';
+
+

@@ -25,38 +25,35 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // Validate reCAPTCHA response
-        $recaptchaResponse = $request->input('g-recaptcha-response');
-        $recaptchaSecret = env('RECAPTCHA_SECRET_KEY');
+        // $request->authenticate();
 
-        dd(env('RECAPTCHA_SITE_KEY'));
+        // $request->session()->regenerate();
+        // if ($request->user()->role == 'admin') {
+        //     return redirect()->intended('admin/dashboard');
+        // } else if ($request->user()->role == 'utdc') {
+        //     return redirect()->intended('utdc/dashboard');
+        // }
+        //  else if ($request->user()->role == 'student') {
+        //      return redirect()->intended('student/dashboard');
+        //  }
+        // return redirect()->intended(route('dashboard', absolute: false));
+        $credentials = $request->only('email', 'password');
+        $remember = $request->has('remember'); // Check if the "remember me" option was checked
 
-        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => $recaptchaSecret,
-            'response' => $recaptchaResponse,
-        ]);
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
 
-        $body = $response->json();
-
-        if (!$body['success']) {
-            return back()->withErrors(['captcha' => 'Please complete the CAPTCHA']);
+            if ($request->user()->role == 'admin') {
+                return redirect()->intended('admin/dashboard');
+            } else if ($request->user()->role == 'utdc') {
+                return redirect()->intended('utdc/dashboard');
+            } else if ($request->user()->role == 'student') {
+                return redirect()->intended('student/dashboard');
+            }
+            return redirect()->intended(route('dashboard', absolute: false));
         }
 
-        // Authenticate the user
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        // Redirect based on user role
-        if ($request->user()->role == 'admin') {
-            return redirect()->intended('admin/dashboard');
-        } else if ($request->user()->role == 'utdc') {
-            return redirect()->intended('utdc/dashboard');
-        } else if ($request->user()->role == 'student') {
-            return redirect()->intended('student/dashboard');
-        }
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->back()->withErrors(['email' => 'Login failed. Please check your credentials.']);
     }
 
     /**
