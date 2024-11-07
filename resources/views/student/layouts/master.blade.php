@@ -503,7 +503,9 @@
     <script src="{{ asset('backend/assets/libs/tippy.js/tippy-bundle.umd.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/prismjs/prism.js') }}"></script>
-    <script src="{{ asset('backend/assets/libs/lucide/umd/lucide.js') }}"></script>
+    {{-- <script src="{{ asset('backend/assets/libs/lucide/umd/lucide.js') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 

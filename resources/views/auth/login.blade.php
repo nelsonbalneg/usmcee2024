@@ -155,7 +155,7 @@
                     </div>
 
                     <!-- Error message for Remember Me -->
-                    <div class="g-recaptcha mt-5" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                    <div class="g-recaptcha mt-5" data-sitekey="{{ config('services.recaptcha.site') }}"></div>
                     <div class="mt-5 text-center">
                         <button type="submit"
                             class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Sign

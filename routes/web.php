@@ -6,12 +6,27 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentCeeReserveController;
 
 Route::get('/', function () {
-    // return view('info');
     return view('auth.login');
-});
+})->middleware('guest'); // Apply 'guest' middleware here
+
+// Route::get('/', function () {
+//     // return view('info');
+//     return view('auth.login');
+// });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $user = auth()->user();
+    if ($user) {
+        // Check the user's role and redirect accordingly
+        return match ($user->role) {
+            'admin' => redirect()->route('admin.dashboard'),
+            'utdc' => redirect()->route('utdc.dashboard'),
+            'student' => redirect()->route('student.dashboard'),
+            default => redirect()->route('dashboard.default'),
+        };
+    }
+    return redirect()->route('login');
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

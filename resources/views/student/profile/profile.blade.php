@@ -122,6 +122,16 @@
                                     class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
                                     placeholder="Upload your school id picture">
                             </div>
+                            @else
+                            <div class="xl:col-span-4 mb-2 hidden">
+                                <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
+                                    Picture
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input type="file" id="schoolIdPicture" name="image"
+                                    class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                                    placeholder="Upload your school id picture">
+                            </div>
                             @endif
 
 

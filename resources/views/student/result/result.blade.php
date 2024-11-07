@@ -14,12 +14,17 @@
                 <a href="#!" class="text-slate-400 dark:text-zink-200">Home</a>
             </li>
             <li class="text-slate-700 dark:text-zink-100">
-                CEE Reserve
+                CEE Result
             </li>
         </ul>
     </div>
 
-    <div class="grid grid-cols-1 gap-x-5 2xl:grid-cols-12">
-        Not Available
+    <div class="grid grid-cols-1 2xl:grid-cols-12">
+        <div class="flex flex-col gap-3 col-span-1 2xl:col-span-12">
+            <div class="px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                <span class="font-bold">Hi!</span> No Result yet.
+            </div>
+        </div>
     </div>
+
 @endsection

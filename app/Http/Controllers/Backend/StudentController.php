@@ -39,6 +39,7 @@ class StudentController extends Controller
             return view("student.profile.profile", compact('studentdetails', 'ceeActiveession'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
         } else {
 
+
             return view('student.dashboard');
         }
     }
