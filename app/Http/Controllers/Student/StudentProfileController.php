@@ -113,14 +113,14 @@ class StudentProfileController extends Controller
             ]);
 
         $user = User::findOrFail($request->id);
-        
+
         // Handle photo upload
         $imagePath = $this->updateImage($request, 'photo', 'uploads', $user->photo);
         $user->photo = empty(!$imagePath) ? $imagePath : $user->photo;
 
         $user->save();
 
-        return redirect()->back()->with('message', 'Your Profile Details have been updated! You can now reserve a slot for USM CEE');
+        return redirect()->back()->with('message', 'Your Profile Photo has been updated!');
     }
 
     public function school_name(Request $request): JsonResponse

@@ -4,6 +4,7 @@
 @endsection
 
 @push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 @endpush
 
 @section('contents')
@@ -51,12 +52,17 @@
                                                 the <b>Application Number </b> download your CEE slip.</p>
                                         </div>
                                         <div class="p-3 mt-5 rounded-md bg-custom-600">
-                                            {{-- <h2 class="mb-1 text-white">{{ $existingReservation->app_no }}</h2> --}}
-                                            <a href="{{ route('student.cee.exam-slip', ['app_no' => $encryptedAppNo]) }}"
-                                                class="text-decoration-none" target="_blank">
-                                                <h2 class="mb-1 text-white">{{ $existingReservation->app_no }}</h2>
-                                            </a>
-                                            {{-- <p class="text-custom-200">Application Number</p> --}}
+                                            @if (!empty(Auth::user()->photo))
+                                                <a href="{{ route('student.cee.exam-slip', ['app_no' => $encryptedAppNo]) }}"
+                                                    class="text-decoration-none" target="_blank">
+                                                    <h2 class="mb-1 text-white">{{ $existingReservation->app_no }}</h2>
+                                                </a>
+                                            @else
+                                                <a class="text-decoration-none" target="_blank">
+                                                    <h5 class="mb-1 text-white">A Photo is required to download your CEE Slip!</h5>
+                                                </a>
+                                            @endif
+
                                         </div>
                                     </div>
                                 </div><!--end col-->
@@ -265,7 +271,7 @@
 
                                 <div class="xl:col-span-6">
                                     <label for="is_repeat_exam" class="inline-block mb-2 text-base font-medium">CEE
-                                        Retaker?</label>
+                                        Retaker?<sup class="text-blue-500">* read only</sup></label>
                                     <input type="text" id="is_repeat_exam" name="is_repeat_exam"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="<?php echo $isRetaker ? 'Yes' : 'No'; ?>" @readonly(true)>
@@ -278,8 +284,8 @@
 
                                 <div class="xl:col-span-4">
                                     <label for="campus" class="inline-block mb-2 text-base font-medium">Select
-                                        Campus<span class="text-red-500">*</span></label>
-                                    <select id="campus-select" name="campus"
+                                        Campus<sup class="text-red-500">* required</sup></label>
+                                    <select id="campus-select" name="campus" data-choices
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Campus</option>
                                         <option value="1">USM Main</option>
@@ -293,8 +299,8 @@
                                 <div class="xl:col-span-8">
                                     <label for="firstprioprog" class="inline-block mb-2 text-base font-medium">First
                                         Priority
-                                        Program <span class="text-red-500">*</span></label>
-                                    <select id="program-select" name="firstprioprog" select2
+                                        Program <sup class="text-red-500">* required</sup></label>
+                                    <select id="program-select" name="firstprioprog" data-choices
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
@@ -304,8 +310,8 @@
 
                                 <div class="xl:col-span-4">
                                     <label for="campus2" class="inline-block mb-2 text-base font-medium">Select
-                                        Campus<span class="text-red-500">*</span></label>
-                                    <select id="campus-select2" name="campus2"
+                                        Campus<sup class="text-red-500">* required</sup></label>
+                                    <select id="campus-select2" name="campus2" data-choices
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Campus</option>
                                         <option value="1">USM Main</option>
@@ -320,8 +326,8 @@
                                 <div class="xl:col-span-8">
                                     <label for="secondprioprog" class="inline-block mb-2 text-base font-medium">Second
                                         Priority
-                                        Program <span class="text-red-500">*</span></label>
-                                    <select id="program-select2" name="secondprioprog"
+                                        Program <sup class="text-red-500">* required</sup></label>
+                                    <select id="program-select2" name="secondprioprog" data-choices
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
@@ -331,8 +337,8 @@
 
                                 <div class="xl:col-span-4">
                                     <label for="campus3" class="inline-block mb-2 text-base font-medium">Select
-                                        Campus<span class="text-red-500">*</span></label>
-                                    <select id="campus-select3" name="campus3"
+                                        Campus<sup class="text-red-500">* required</sup></label>
+                                    <select id="campus-select3" name="campus3" data-choices
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Campus</option>
                                         <option value="1">USM Main</option>
@@ -345,8 +351,8 @@
                                 <div class="xl:col-span-8">
                                     <label for="thirdprioprog" class="inline-block mb-2 text-base font-medium">Third
                                         Priority
-                                        Program <span class="text-red-500">*</span></label>
-                                    <select id="program-select3" name="thirdprioprog"
+                                        Program <sup class="text-red-500">* required</sup></label>
+                                    <select id="program-select3" name="thirdprioprog" data-choices
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
@@ -361,25 +367,26 @@
                                 <div class="xl:col-span-6">
                                     <label for="ceesession" class="inline-block mb-2 text-base font-medium">USMCEE
                                         Batch
-                                        <span class="text-red-500">*</span></label>
+                                        <sup class="text-red-500">* required</sup></label>
                                     <select class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
-                                        id="ceeexamsession" name="ceeexamsession" onchange="loadRooms()">
+                                        id="ceeexamsession" name="ceeexamsession" data-choices>
                                         <option value="">-Select Examination Session
                                         </option>
-                                        <option value="batch 1">Batch 1 (6:00 AM - 9:00 AM)
+                                        <option value="Batch 1">Batch 1 (6:00 AM - 9:00 AM)
                                         </option>
-                                        <option value="batch 2">Batch 2 (10:00 AM - 1:00 PM)
+                                        <option value="Batch 2">Batch 2 (10:00 AM - 1:00 PM)
                                         </option>
-                                        <option value="batch 3">Batch 3 (2:00 PM - 5:00 PM)
+                                        <option value="Batch 3">Batch 3 (2:00 PM - 5:00 PM)
                                         </option>
                                     </select>
                                 </div><!--end col-->
 
                                 <div class="xl:col-span-6">
                                     <label for="room" class="inline-block mb-2 text-base font-medium">Room
-                                        Assignment<span class="text-red-500">*</span></label>
+                                        Assignment<sup class="text-red-500">* required</sup></label>
                                     <select id="room-select" name="room"
-                                        class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                        class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
+                                        data-choices>
                                         <option selected="true" disabled>Choose Room</option>
                                     </select>
                                 </div>
@@ -404,6 +411,7 @@
 @endsection
 @push('scripts')
     <!-- Include SweetAlert library -->
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @if (session('message'))
@@ -455,6 +463,15 @@
             });
         });
 
+        // Initialize Choices on the room select element
+        const choicesInstance = new Choices(ceeexamsession, {
+            searchEnabled: true,
+            placeholderValue: 'Choose Room',
+            noResultsText: 'No rooms available',
+        });
+
+
+        //for campus selection and program
         document.addEventListener('DOMContentLoaded', function() {
             const campusSelect1 = document.getElementById('campus-select');
             const programSelect1 = document.getElementById('program-select');
@@ -468,8 +485,36 @@
             const programSelect3 = document.getElementById('program-select3');
             const thirdPriorityDescInput = document.getElementById('thirdprioprog_desc');
 
+            // Initialize Choices instances
+            const choicesInstances = {
+                campusSelect1: new Choices(campusSelect1, {
+                    searchEnabled: true,
+                    placeholderValue: 'Choose Campus'
+                }),
+                programSelect1: new Choices(programSelect1, {
+                    searchEnabled: true,
+                    placeholderValue: 'Choose Program'
+                }),
+                campusSelect2: new Choices(campusSelect2, {
+                    searchEnabled: true,
+                    placeholderValue: 'Choose Campus'
+                }),
+                programSelect2: new Choices(programSelect2, {
+                    searchEnabled: true,
+                    placeholderValue: 'Choose Program'
+                }),
+                campusSelect3: new Choices(campusSelect3, {
+                    searchEnabled: true,
+                    placeholderValue: 'Choose Campus'
+                }),
+                programSelect3: new Choices(programSelect3, {
+                    searchEnabled: true,
+                    placeholderValue: 'Choose Program'
+                })
+            };
 
-            function loadPrograms(campusSelect, programSelect) {
+            // Function to load programs based on selected campus
+            function loadPrograms(campusSelect, programSelect, programChoicesInstance) {
                 const realCampusId = campusSelect.value;
 
                 // Set termId based on the selected campus
@@ -494,79 +539,143 @@
 
                 if (!realCampusId || !termId) return; // Exit if missing values
 
-                programSelect.innerHTML = '<option selected disabled>Please wait...</option>';
+                // Clear existing program choices and set loading message
+                programChoicesInstance.clearChoices();
+                programChoicesInstance.setChoices([{
+                    value: '',
+                    label: 'Please choose a program',
+                    disabled: true,
+                    selected: true
+                }]);
 
                 fetch(`/student/cee/get-programs-by-campus?termId=${termId}&realCampusId=${realCampusId}`)
                     .then(response => response.json())
                     .then(data => {
-                        programSelect.innerHTML = '<option selected disabled>Choose Program</option>';
-                        data.forEach(program => {
-                            const option = document.createElement('option');
-                            option.value = program.programId;
-                            option.textContent = program.majorDiscDesc ?
+                        // Update placeholder to "Please choose a program" after data loads
+                        programChoicesInstance.clearChoices();
+                        programChoicesInstance.setChoices([{
+                            value: '',
+                            label: 'Please choose a program',
+                            disabled: true,
+                            selected: true
+                        }]);
+
+                        // Map the data to choices format
+                        const programOptions = data.map(program => ({
+                            value: program.programId,
+                            label: program.majorDiscDesc ?
                                 `${program.programName} - ${program.majorDiscDesc}` : program
-                                .programName;
-                            option.setAttribute('data-program-name', program.programName);
-                            programSelect.appendChild(option);
-                        });
+                                .programName,
+                            customProperties: {
+                                programName: program.programName
+                            }
+                        }));
+
+                        // Add program options to the select element
+                        programChoicesInstance.setChoices(programOptions, 'value', 'label', true);
                     })
                     .catch(error => {
                         console.error('Error loading programs:', error);
-                        programSelect.innerHTML = '<option selected disabled>Error loading programs</option>';
+                        programChoicesInstance.clearChoices();
+                        programChoicesInstance.setChoices([{
+                            value: '',
+                            label: 'Error loading programs',
+                            disabled: true,
+                            selected: true
+                        }]);
                     });
             }
 
-            campusSelect1.addEventListener('change', () => loadPrograms(campusSelect1, programSelect1));
-            campusSelect2.addEventListener('change', () => loadPrograms(campusSelect2, programSelect2));
-            campusSelect3.addEventListener('change', () => loadPrograms(campusSelect3, programSelect3));
+            // Attach change event listeners to campus selects to load corresponding programs
+            campusSelect1.addEventListener('change', () => loadPrograms(campusSelect1, programSelect1,
+                choicesInstances.programSelect1));
+            campusSelect2.addEventListener('change', () => loadPrograms(campusSelect2, programSelect2,
+                choicesInstances.programSelect2));
+            campusSelect3.addEventListener('change', () => loadPrograms(campusSelect3, programSelect3,
+                choicesInstances.programSelect3));
 
             // Update priority description inputs when a program is selected
             programSelect1.addEventListener('change', () => {
                 const selectedOption = programSelect1.options[programSelect1.selectedIndex];
-                firstPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
+                firstPriorityDescInput.value = selectedOption
+                    .textContent; // Set selected program text to input
             });
 
             programSelect2.addEventListener('change', () => {
                 const selectedOption = programSelect2.options[programSelect2.selectedIndex];
-                secondPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
+                secondPriorityDescInput.value = selectedOption
+                    .textContent; // Set selected program text to input
             });
 
             programSelect3.addEventListener('change', () => {
                 const selectedOption = programSelect3.options[programSelect3.selectedIndex];
-                thirdPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
+                thirdPriorityDescInput.value = selectedOption
+                    .textContent; // Set selected program text to input
             });
         });
 
-        function loadRooms() {
-            const ceesession = document.getElementById('ceeexamsession').value;
+
+
+
+
+
+        document.addEventListener("DOMContentLoaded", function() {
             const roomSelect = document.getElementById('room-select');
+            const ceeSessionSelect = document.getElementById('ceeexamsession');
+            let choicesInstance;
 
-            // Clear current options
-            roomSelect.innerHTML = '<option selected="true" disabled>Choose Room</option>';
+            // Define the loadRooms function to reset and fetch rooms
+            function loadRooms() {
+                const ceesession = ceeSessionSelect.value;
 
-            if (ceesession) {
-                fetch(`/student/cee/rooms-by-session?ceesession=${ceesession}`, {
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        }
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        data.forEach(room => {
-                            const option = document.createElement('option');
-                            option.value = room.id;
-                            option.textContent =
-                                `${room.room_name} - ${room.college_name} - (Slots: ${room.capacity})`;
-                            roomSelect.appendChild(option);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching rooms:', error));
+                // Clear any previous selection in room-select and reset it
+                if (choicesInstance) {
+                    console.log('Destroying existing Choices instance');
+                    choicesInstance.destroy();
+                    choicesInstance = null; // Clear reference to allow reinitialization
+                }
+
+                // Clear roomSelect options directly (in case Choices does not clear all)
+                roomSelect.innerHTML = '<option value="" disabled selected>Choose Room</option>';
+                roomSelect.value = ''; // Clear any selected value in the DOM
+
+                // Reinitialize Choices.js with default settings
+                choicesInstance = new Choices(roomSelect, {
+                    searchEnabled: true,
+                    placeholderValue: 'Choose Room',
+                    noResultsText: 'No rooms available',
+                });
+
+                // If a batch session is selected, fetch room data
+                if (ceesession) {
+                    console.log(`Fetching rooms for session: ${ceesession}`); // Debugging statement
+                    fetch(`/student/cee/rooms-by-session?ceesession=${ceesession}`, {
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                    'content')
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Rooms data received:', data); // Debugging statement
+                            const roomOptions = data.map(room => ({
+                                value: room.id,
+                                label: `${room.room_name} - ${room.college_name} - (Slots: ${room.capacity})`
+                            }));
+                            // Populate the dropdown with fetched room data
+                            choicesInstance.setChoices(roomOptions, 'value', 'label', true);
+                        })
+                        .catch(error => console.error('Error fetching rooms:', error));
+                }
             }
-        }
+
+            // Attach the loadRooms function to the onchange event of ceeexamsession select
+            ceeSessionSelect.addEventListener('change', loadRooms);
+        });
     </script>
 @endpush
