@@ -127,10 +127,15 @@
                             <label for="forgotpass"
                                 class="inline-block text-base font-medium align-middle cursor-pointer">
                                 <a href="{{ route('password.request') }}">Forgot Password?</a>
+                                <p>Site Key: {{ env('RECAPTCHA_SITE_KEY') }}</p>
                             </label>
                         </div>
-                        <div id="remember-error" class="hidden mt-1 text-sm text-red-500">Please check the "Remember
-                            me" before submitting the form.</div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+
+                            <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                        </div>
                     </div>
                     <div class="mt-10 text-center">
                         <button type="submit"
@@ -153,7 +158,7 @@
     </div>
 
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
 </html>

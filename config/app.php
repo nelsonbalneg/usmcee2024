@@ -15,6 +15,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'recaptcha_site_key' => env('RECAPTCHA_SITE_KEY'),
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
