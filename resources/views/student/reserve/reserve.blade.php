@@ -298,7 +298,7 @@
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
-                                    <input type="text" name="firstprioprog_desc" id="firstprioprog_desc">
+                                    <input type="hidden" name="firstprioprog_desc" id="firstprioprog_desc">
                                 </div>
 
 
@@ -325,7 +325,7 @@
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
-                                    <input type="text" name="secondprioprog_desc" id="secondprioprog_desc">
+                                    <input type="hidden" name="secondprioprog_desc" id="secondprioprog_desc">
                                 </div>
 
 
@@ -350,7 +350,7 @@
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
-                                    <input type="text" name="thirdprioprog_desc" id="thirdprioprog_desc">
+                                    <input type="hidden" name="thirdprioprog_desc" id="thirdprioprog_desc">
                                 </div>
 
 
