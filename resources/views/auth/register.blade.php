@@ -112,15 +112,12 @@
                                 name="firstname" value="{{ old('firstname') }}" placeholder="Enter First Name">
                         </div>
 
-
-
                         <div class="flex-1">
-                            <label for="middlename" class="inline-block mb-2 text-base font-medium">Middle Name<sup
-                                    class="text-blue-500">* optional</sup></label>
-                            Name <sup class="text-blue-500">* optional</sup></label>
+                            <label for="middlename" class="inline-block mb-2 text-base font-medium">Middle Name <sup
+                                class="text-red-500">* required</sup></label>
                             <input type="text"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                name="middlename" value="{{ old('middlename') }}" placeholder="Enter Last Middle Name">
+                                name="middlename" value="{{ old('middlename') }}" placeholder="Enter Middle Name">
                         </div>
                     </div>
 
@@ -159,7 +156,7 @@
                         <div class="xl:col-span-3">
                             <label for="birthdate" class="inline-block mb-2 text-base font-medium">Birthdate<sup
                                     class="text-red-500">* required</sup></label>
-                            <input type="text" id="birthdate" name="birthdate"
+                            <input type="date" id="birthdate" name="birthdate"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 placeholder="Select date" data-provider="flatpickr" data-date-format="M d, Y"
                                 value="{{ old('birthdate') }}">
@@ -178,7 +175,9 @@
                     </div>
 
 
-                    class="text-red-500">* required</sup></label>
+                    <div class="mb-3">
+                        <label for="password_confirmation" class="inline-block mb-2 text-base font-medium">Confirm
+                            Password <sup class="text-red-500">* required</sup></label>
                     <input type="password" name="password" id="password" required autocomplete="new-password"
                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                         placeholder="Enter password">
@@ -200,8 +199,8 @@
                     class="form-checkbox h-4 w-4 text-green-600 border-gray-300 rounded focus:ring focus:ring-green-500 focus:ring-opacity-50">
                 <label for="defaultCheck1" class="text-gray-500 font-normal text-sm">
                     By creating an account, you agree to our
-
-                    Conditions</a>
+                    <a href="#" class="text-green-600 underline" data-modal-target="topModal">Terms &
+                        Conditions</a>
                 </label>
             </div>
 
@@ -313,7 +312,6 @@
                 }
             });
         @endif
-        });
     </script>
 
 </body>
