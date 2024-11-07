@@ -71,12 +71,13 @@ class StudentProfileController extends Controller
         $request->validate(
             [
                 'photo' => ['nullable', 'file', 'mimes:jpeg,png,jpg', 'max:5120'],
-                'lrn' => ['required', 'string', 'size:12'],
+                'lrn' => ['required', 'string', 'size:12', 'unique:users,lrn'],
                 'track' => ['required', 'string', 'max:100']
 
             ],
             [
                 'lrn.size' => 'The LRN must be exactly 12 characters.',
+                'lrn.unique' => 'The LRN has already been taken.'
             ]
         );
 
@@ -100,7 +101,7 @@ class StudentProfileController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('message', 'Your Profile Details have been updated! You can now reserve a slot for USM CEE');
+        return redirect()->back()->with('message', 'Your profile has been successfully updated! To reserve a slot, please go to the RESERVATION menu.');
     }
 
     public function uploadPhoto(Request $request)
