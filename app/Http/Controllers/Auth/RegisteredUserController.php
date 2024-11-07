@@ -79,7 +79,7 @@ class RegisteredUserController extends Controller
             [
                 'phone.unique' => 'The phone number is already in use. Please use a different number.',
                 'email.unique' => 'The email address is already taken. Please use a different email.',
-                'phone.regex' => 'The phone number must be in the format xxxx-xxx-xxxx and contain exactly 11 digits.',
+                'phone.regex' => 'The phone number contain exactly 11 digits.',
             ]
         );
 
