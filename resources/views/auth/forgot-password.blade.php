@@ -93,9 +93,9 @@
             <div class="!px-10 !py-12 card-body">
                 <a href="#!">
                     <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
-                        class="hidden h-6 mx-auto dark:block">
+                        class="hidden h-15 mx-auto dark:block">
                     <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
-                        class="block h-6 mx-auto dark:hidden">
+                        class="block h-15 mx-auto dark:hidden">
                 </a>
 
                 <div class="mt-8 text-center">
@@ -127,7 +127,7 @@
                     <!-- Submit Button -->
                     <div class="mt-10">
                         <button type="submit"
-                            class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                            class="w-full text-white btn bg-green-500 border-green-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                             {{ __('Email Password Reset Link') }}
                         </button>
                     </div>

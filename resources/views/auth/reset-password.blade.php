@@ -53,9 +53,9 @@
                 <!-- Logo Section -->
                 <a href="#!">
                     <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
-                        class="hidden h-6 mx-auto dark:block">
+                        class="hidden h-15 mx-auto dark:block">
                     <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
-                        class="block h-6 mx-auto dark:hidden">
+                        class="block h-15 mx-auto dark:hidden">
                 </a>
 
                 <div class="mt-8 text-center">
@@ -81,8 +81,8 @@
                             class="inline-block mb-2 text-base font-medium" />
                         <x-text-input id="email" type="email" name="email" :value="old('email', $request->email)"
                             class="form-input w-full border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            required autofocus autocomplete="username" readonly/>
-                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-500"  />
+                            required autofocus autocomplete="username" readonly />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-500" />
                     </div>
                     <!-- Password -->
                     <div class="mb-3">

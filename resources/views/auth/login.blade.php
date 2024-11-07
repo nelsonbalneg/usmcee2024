@@ -100,7 +100,7 @@
 
                 <div class="mt-8 text-center">
                     <h4 class="mb-1 text-yellow-500 dark:text-yellow-500">Welcome Students !</h4>
-                    <p class="text-slate-500 dark:text-zink-200">Sign in to continue to USM CEE.</p>
+                    <p class="text-slate-500 dark:text-zink-200">Sign in to continue to USMCEE</p>
                 </div>
 
                 <form method="POST" action="{{ route('login') }}" class="mt-10">
@@ -151,7 +151,7 @@
 
                     <div class="mt-10 text-center">
                         <button type="submit"
-                            class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Sign
+                            class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Sign
                             In</button>
                     </div>
 
