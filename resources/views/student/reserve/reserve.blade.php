@@ -128,18 +128,20 @@
                                                             <th class="py-2 font-semibold ps-0" scope="row">First
                                                                 Priority</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                {{ $existingReservation->firstpriorty_desc }} (
-                                                                @if ($existingReservation->campus_id == 1)
-                                                                    USM-Main
-                                                                @elseif ($existingReservation->campus_id == 3)
-                                                                    USM KCC
-                                                                @elseif ($existingReservation->campus_id == 5)
-                                                                    USM PALMA CLUSTER
-                                                                @elseif ($existingReservation->campus_id == 6)
-                                                                    USM MLANG
-                                                                @else
-                                                                    Unknown Campus
-                                                                @endif)
+                                                                {{ $existingReservation->firstpriorty_desc }} <b>
+                                                                    (
+                                                                    @if ($existingReservation->campus_id == 1)
+                                                                        USM-Main
+                                                                    @elseif ($existingReservation->campus_id == 3)
+                                                                        USM KCC
+                                                                    @elseif ($existingReservation->campus_id == 5)
+                                                                        USM PALMA CLUSTER
+                                                                    @elseif ($existingReservation->campus_id == 6)
+                                                                        USM MLANG
+                                                                    @else
+                                                                        Unknown Campus
+                                                                    @endif)
+                                                                </b>
                                                             </td>
                                                         </tr>
 
@@ -147,37 +149,41 @@
                                                             <th class="py-2 font-semibold ps-0" scope="row">Second
                                                                 Priority</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                {{ $existingReservation->secondpriority_desc }} (
-                                                                @if ($existingReservation->campus_id_prio_prog_2 == 1)
-                                                                    USM-Main
-                                                                @elseif ($existingReservation->campus_id_prio_prog_2 == 3)
-                                                                    USM KCC
-                                                                @elseif ($existingReservation->campus_id_prio_prog_2 == 5)
-                                                                    USM PALMA CLUSTER
-                                                                @elseif ($existingReservation->campus_id_prio_prog_2 == 6)
-                                                                    USM MLANG
-                                                                @else
-                                                                    Unknown Campus
-                                                                @endif)
+                                                                {{ $existingReservation->secondpriority_desc }} <b>
+                                                                    (
+                                                                    @if ($existingReservation->campus_id_prio_prog_2 == 1)
+                                                                        USM-Main
+                                                                    @elseif ($existingReservation->campus_id_prio_prog_2 == 3)
+                                                                        USM KCC
+                                                                    @elseif ($existingReservation->campus_id_prio_prog_2 == 5)
+                                                                        USM PALMA CLUSTER
+                                                                    @elseif ($existingReservation->campus_id_prio_prog_2 == 6)
+                                                                        USM MLANG
+                                                                    @else
+                                                                        Unknown Campus
+                                                                    @endif)
+                                                                </b>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
-                                                            <th class="py-2 font-semibold ps-0" scope="row">Second
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Third
                                                                 Priority</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                {{ $existingReservation->thirdpriorty_desc }} (
-                                                                @if ($existingReservation->campus_id_prio_prog_3 == 1)
-                                                                    USM-Main
-                                                                @elseif ($existingReservation->campus_id_prio_prog_3 == 3)
-                                                                    USM KCC
-                                                                @elseif ($existingReservation->campus_id_prio_prog_3 == 5)
-                                                                    USM PALMA CLUSTER
-                                                                @elseif ($existingReservation->campus_id_prio_prog_3 == 6)
-                                                                    USM MLANG
-                                                                @else
-                                                                    Unknown Campus
-                                                                @endif)
+                                                                {{ $existingReservation->thirdpriorty_desc }}
+                                                                <b>(
+                                                                    @if ($existingReservation->campus_id_prio_prog_3 == 1)
+                                                                        USM-Main
+                                                                    @elseif ($existingReservation->campus_id_prio_prog_3 == 3)
+                                                                        USM KCC
+                                                                    @elseif ($existingReservation->campus_id_prio_prog_3 == 5)
+                                                                        USM PALMA CLUSTER
+                                                                    @elseif ($existingReservation->campus_id_prio_prog_3 == 6)
+                                                                        USM MLANG
+                                                                    @else
+                                                                        Unknown Campus
+                                                                    @endif)
+                                                                </b>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -196,8 +202,8 @@
                                                             <th class="py-2 font-semibold ps-0" scope="row">Examination
                                                                 Place</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                {{ $existingReservation->room->college_name }} -
-                                                                {{ $existingReservation->room->room_name }} </td>
+                                                                {{ $existingReservation->room->college_name }} ({{ $existingReservation->room->room_name }} )
+                                                                </td>
                                                         </tr>
                                                         <tr>
                                                             <th class="py-2 font-semibold ps-0" scope="row">Status</th>
@@ -298,7 +304,7 @@
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
-                                    <input type="text" name="firstprioprog_desc" id="firstprioprog_desc">
+                                    <input type="hidden" name="firstprioprog_desc" id="firstprioprog_desc">
                                 </div>
 
 
@@ -325,7 +331,7 @@
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
-                                    <input type="text" name="secondprioprog_desc" id="secondprioprog_desc">
+                                    <input type="hidden" name="secondprioprog_desc" id="secondprioprog_desc">
                                 </div>
 
 
@@ -350,7 +356,7 @@
                                         class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                         <option selected="true" disabled>Choose Program</option>
                                     </select>
-                                    <input type="text" name="thirdprioprog_desc" id="thirdprioprog_desc">
+                                    <input type="hidden" name="thirdprioprog_desc" id="thirdprioprog_desc">
                                 </div>
 
 
