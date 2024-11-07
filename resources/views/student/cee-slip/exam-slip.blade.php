@@ -193,7 +193,7 @@ th {
                         </tr>
                         <tr>
                             <th style="text-align: left; width: 100px;">Test Venue:</th>
-                            <td>{{ $cee_reservation->room->college_name }} - {{ $cee_reservation->room->room_name }}
+                            <td> ({{ $cee_reservation->room->campus }}) {{ $cee_reservation->room->college_name }} - {{ $cee_reservation->room->room_name }}
                             </td>
                         </tr>
                         <tr>

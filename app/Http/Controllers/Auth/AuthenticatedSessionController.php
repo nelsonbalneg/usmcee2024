@@ -24,18 +24,35 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        // $request->authenticate();
 
-        $request->session()->regenerate();
-        if ($request->user()->role == 'admin') {
-            return redirect()->intended('admin/dashboard');
-        } else if ($request->user()->role == 'utdc') {
-            return redirect()->intended('utdc/dashboard');
+        // $request->session()->regenerate();
+        // if ($request->user()->role == 'admin') {
+        //     return redirect()->intended('admin/dashboard');
+        // } else if ($request->user()->role == 'utdc') {
+        //     return redirect()->intended('utdc/dashboard');
+        // }
+        //  else if ($request->user()->role == 'student') {
+        //      return redirect()->intended('student/dashboard');
+        //  }
+        // return redirect()->intended(route('dashboard', absolute: false));
+        $credentials = $request->only('email', 'password');
+        $remember = $request->has('remember'); // Check if the "remember me" option was checked
+
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+
+            if ($request->user()->role == 'admin') {
+                return redirect()->intended('admin/dashboard');
+            } else if ($request->user()->role == 'utdc') {
+                return redirect()->intended('utdc/dashboard');
+            } else if ($request->user()->role == 'student') {
+                return redirect()->intended('student/dashboard');
+            }
+            return redirect()->intended(route('dashboard', absolute: false));
         }
-         else if ($request->user()->role == 'student') {
-             return redirect()->intended('student/dashboard');
-         }
-        return redirect()->intended(route('dashboard', absolute: false));
+
+        return redirect()->back()->withErrors(['email' => 'Login failed. Please check your credentials.']);
     }
 
     /**

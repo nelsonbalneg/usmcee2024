@@ -95,7 +95,7 @@
                     <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
                         class="hidden h-6 mx-auto dark:block">
                     <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
-                        class="block h-6 mx-auto dark:hidden">
+                        class="block h-15 mx-auto dark:hidden">
                 </a>
 
                 <div class="mt-8 text-center">
@@ -115,23 +115,41 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                        <input type="password" id="password" name="password" required autocomplete="current-password"
+                        <input type="password" id="password" name="password" required
+                            autocomplete="current-password"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Enter password">
                         <div id="password-error" class="hidden mt-1 text-sm text-red-500">Password must be at least 8
                             characters long and contain both letters and numbers.</div>
                     </div>
-                    <div>
-                        <div class="flex items-center gap-2">
 
-                            <label for="forgotpass"
+                    <div class="flex items-center justify-between mt-4">
+                        <!-- Remember Me Checkbox -->
+                        <div class="flex items-center gap-2">
+                            <input id="checkboxDefault1" name="remember"
+                                class="border rounded-sm appearance-none size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
+                                type="checkbox" value="1">
+                            <label for="checkboxDefault1"
                                 class="inline-block text-base font-medium align-middle cursor-pointer">
-                                <a href="{{ route('password.request') }}">Forgot Password?</a>
+                                Remember me
                             </label>
                         </div>
-                        <div id="remember-error" class="hidden mt-1 text-sm text-red-500">Please check the "Remember
-                            me" before submitting the form.</div>
+
+                        <!-- Forgot Password Link -->
+                        <div>
+                            <a href="{{ route('password.request') }}"
+                                class="text-base font-medium cursor-pointer text-blue-600 hover:underline">
+                                Forgot Password?
+                            </a>
+                        </div>
                     </div>
+
+                    <!-- Error message for Remember Me -->
+                    <div id="remember-error" class="hidden mt-1 text-sm text-red-500">
+                        Please check the "Remember me" before submitting the form.
+                    </div>
+
+
                     <div class="mt-10 text-center">
                         <button type="submit"
                             class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Sign

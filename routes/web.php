@@ -6,8 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentCeeReserveController;
 
 Route::get('/', function () {
-    return view('info');
-    //return view('auth.login');
+    // return view('info');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {

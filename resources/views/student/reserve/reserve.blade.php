@@ -202,6 +202,7 @@
                                                             <th class="py-2 font-semibold ps-0" scope="row">Examination
                                                                 Place</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                ({{ $existingReservation->room->campus }})
                                                                 {{ $existingReservation->room->college_name }} -
                                                                 {{ $existingReservation->room->room_name }} </td>
                                                         </tr>
