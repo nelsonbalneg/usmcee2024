@@ -498,6 +498,14 @@ USMCEE - My Profile
             } catch (error) {
                 school_name.value = '';
                 school_address.value = '';
+                Toastify({
+                    text: 'Invalid School ID',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
             }
         }
 
