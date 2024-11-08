@@ -36,13 +36,14 @@ class AuthenticatedSessionController extends Controller
         $recaptchaResponse = $request->input('g-recaptcha-response');
         $secretKey = env('RECAPTCHA_SECRET_KEY'); // Your reCAPTCHA secret key
 
-        // Use file_get_contents to verify the reCAPTCHA response
+        // Prepare the data to verify reCAPTCHA
         $data = [
             'secret' => $secretKey,
             'response' => $recaptchaResponse,
             'remoteip' => $request->ip(),
         ];
 
+        // Create the context for the HTTP request using file_get_contents
         $options = [
             'http' => [
                 'method' => 'POST',
@@ -51,10 +52,14 @@ class AuthenticatedSessionController extends Controller
             ],
         ];
         $context = stream_context_create($options);
+
+        // Send the request to the reCAPTCHA verification endpoint
         $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+
+        // Decode the JSON response from Google reCAPTCHA
         $responseBody = json_decode($response);
 
-        // Log the reCAPTCHA response for debugging
+        // Log the reCAPTCHA response for debugging purposes
         Log::info('reCAPTCHA response from Google', (array) $responseBody);
 
         // Check if reCAPTCHA verification was successful
@@ -82,6 +87,7 @@ class AuthenticatedSessionController extends Controller
         // If login fails, redirect back with an error message
         return redirect()->back()->withErrors(['email' => 'Login failed. Please check your credentials.']);
     }
+
 
     /**
      * Destroy an authenticated session.
