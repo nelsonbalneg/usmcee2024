@@ -311,72 +311,73 @@
             }
         });
 
-        // document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
-        //     const formData = new FormData();
-        //     const imageFile = event.target.files[0];
-        //     const uploadImageUrl = "{{ route('student.upload_image') }}";
-        //     const lrn = document.getElementById(
-        //         "lrn"); // Assuming this is an input field for displaying the extracted number
-        //     const school_id = document.getElementById("school_id");
-        //     formData.append('image', imageFile);
+        document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
+            const formData = new FormData();
+            const imageFile = event.target.files[0];
+            const uploadImageUrl = "{{ route('student.upload_image') }}";
+            const lrn = document.getElementById(
+                "lrn"); // Assuming this is an input field for displaying the extracted number
+            const school_id = document.getElementById("school_id");
+            formData.append('image', imageFile);
 
-        //     // Retrieve the CSRF token from the meta tag
-        //     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
-        //         'content');
+            // Retrieve the CSRF token from the meta tag
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                'content');
 
-        //     try {
+            try {
 
 
-        //         const response = await fetch(uploadImageUrl, {
-        //             method: 'POST',
-        //             body: formData,
-        //             headers: {
-        //                 'X-CSRF-TOKEN': csrfToken,
-        //                 'X-Requested-With': 'XMLHttpRequest'
-        //             }
-        //         });
+                const response = await fetch(uploadImageUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
 
-        //         const result = await response.json();
+                const result = await response.json();
 
-        //         // Set the extracted 12-digit number to the `lrn` input field if available
-        //         if (result.success && result['twelve_digit_number']) {
-        //             lrn.value = result['twelve_digit_number'];
-        //             school_id.value = result['six_digit_number'];
-        //             schoolid = result['six_digit_number'];
-        //             handleChange(schoolid);
-        //             Toastify({
-        //                 text: "LRN: " + result['twelve_digit_number'],
-        //                 duration: 3000,
-        //                 gravity: "top",
-        //                 position: "right",
-        //                 backgroundColor: "#48bb78", // orange for success
-        //                 className: "success",
-        //             }).showToast();
-        //         } else {
-        //             Toastify({
-        //                 text: result.error,
-        //                 duration: 3000,
-        //                 gravity: "top",
-        //                 position: "right",
-        //                 backgroundColor: "#f56565", // Red for error
-        //                 className: "error",
-        //             }).showToast();
-        //         }
+                // Set the extracted 12-digit number to the `lrn` input field if available
+                if (result.success && result['twelve_digit_number']) {
+                    lrn.value = result['twelve_digit_number'];
+                    school_id.value = result['six_digit_number'];
+                    schoolid = result['six_digit_number'];
+                    handleChange(schoolid);
+                    Toastify({
+                        text: "LRN: " + result['twelve_digit_number'],
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#48bb78", // orange for success
+                        className: "success",
+                    }).showToast();
+                } else {
+                    Toastify({
+                        text: result.error,
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#f56565", // Red for error
+                        className: "error",
+                    }).showToast();
+                }
 
-        //     } catch (error) {
-        //         Toastify({
-        //             text: 'An error occurred while processing the image.',
-        //             duration: 3000,
-        //             gravity: "top",
-        //             position: "right",
-        //             backgroundColor: "#f56565", // Red for error
-        //             className: "error",
-        //         }).showToast();
-        //     }
-        // });
+            } catch (error) {
+                Toastify({
+                    text: 'An error occurred while processing the image.',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
+            }
+        });
 
         document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
             const imageFile = event.target.files[0];
+            const uploadImageUrl = "{{ route('student.upload_image') }}";
             const lrn = document.getElementById("lrn"); // Input field for displaying the extracted number
             const school_id = document.getElementById("school_id");
 
@@ -391,12 +392,12 @@
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             try {
-                const response = await fetch("http://127.0.0.1:8000/student/cee/upload-image", {
+                const response = await fetch(uploadImageUrl, {
                     method: 'POST',
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest' // Helps Laravel recognize it as an AJAX request
+                        'X-Requested-With': 'XMLHttpRequest'
                     }
                 });
 
