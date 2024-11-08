@@ -3,16 +3,19 @@
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\BypassMaintenanceForAllowedIPs;
 use App\Http\Controllers\Student\StudentCeeReserveController;
+
+
+Route::middleware(BypassMaintenanceForAllowedIPs::class)->group(function () {
+    // All routes go here, e.g., require __DIR__.'/admin.php';
+});
+
 
 Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest'); // Apply 'guest' middleware here
 
-// Route::get('/', function () {
-//     // return view('info');
-//     return view('auth.login');
-// });
 
 Route::get('/dashboard', function () {
     $user = auth()->user();
