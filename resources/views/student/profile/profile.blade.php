@@ -311,45 +311,108 @@
             }
         });
 
+        // document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
+        //     const formData = new FormData();
+        //     const imageFile = event.target.files[0];
+        //     const uploadImageUrl = "{{ route('student.upload_image') }}";
+        //     const lrn = document.getElementById(
+        //         "lrn"); // Assuming this is an input field for displaying the extracted number
+        //     const school_id = document.getElementById("school_id");
+        //     formData.append('image', imageFile);
+
+        //     // Retrieve the CSRF token from the meta tag
+        //     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+        //         'content');
+
+        //     try {
+
+
+        //         const response = await fetch(uploadImageUrl, {
+        //             method: 'POST',
+        //             body: formData,
+        //             headers: {
+        //                 'X-CSRF-TOKEN': csrfToken,
+        //                 'X-Requested-With': 'XMLHttpRequest'
+        //             }
+        //         });
+
+        //         const result = await response.json();
+
+        //         // Set the extracted 12-digit number to the `lrn` input field if available
+        //         if (result.success && result['twelve_digit_number']) {
+        //             lrn.value = result['twelve_digit_number'];
+        //             school_id.value = result['six_digit_number'];
+        //             schoolid = result['six_digit_number'];
+        //             handleChange(schoolid);
+        //             Toastify({
+        //                 text: "LRN: " + result['twelve_digit_number'],
+        //                 duration: 3000,
+        //                 gravity: "top",
+        //                 position: "right",
+        //                 backgroundColor: "#48bb78", // orange for success
+        //                 className: "success",
+        //             }).showToast();
+        //         } else {
+        //             Toastify({
+        //                 text: result.error,
+        //                 duration: 3000,
+        //                 gravity: "top",
+        //                 position: "right",
+        //                 backgroundColor: "#f56565", // Red for error
+        //                 className: "error",
+        //             }).showToast();
+        //         }
+
+        //     } catch (error) {
+        //         Toastify({
+        //             text: 'An error occurred while processing the image.',
+        //             duration: 3000,
+        //             gravity: "top",
+        //             position: "right",
+        //             backgroundColor: "#f56565", // Red for error
+        //             className: "error",
+        //         }).showToast();
+        //     }
+        // });
+
         document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
-            const formData = new FormData();
             const imageFile = event.target.files[0];
-            const uploadImageUrl = "{{ route('student.upload_image') }}";
-            const lrn = document.getElementById(
-                "lrn"); // Assuming this is an input field for displaying the extracted number
+            const lrn = document.getElementById("lrn"); // Input field for displaying the extracted number
             const school_id = document.getElementById("school_id");
-            formData.append('image', imageFile);
+
+            // Convert the image to grayscale
+            const grayscaleBlob = await convertToGrayscale(imageFile);
+
+            // Prepare FormData for upload
+            const formData = new FormData();
+            formData.append('image', grayscaleBlob, imageFile.name);
 
             // Retrieve the CSRF token from the meta tag
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
-                'content');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             try {
-
-
-                const response = await fetch(uploadImageUrl, {
+                const response = await fetch("http://127.0.0.1:8000/student/cee/upload-image", {
                     method: 'POST',
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest'
+                        'X-Requested-With': 'XMLHttpRequest' // Helps Laravel recognize it as an AJAX request
                     }
                 });
 
                 const result = await response.json();
 
-                // Set the extracted 12-digit number to the `lrn` input field if available
+                // Set the extracted 12-digit number to the lrn input field if available
                 if (result.success && result['twelve_digit_number']) {
                     lrn.value = result['twelve_digit_number'];
                     school_id.value = result['six_digit_number'];
-                    schoolid = result['six_digit_number'];
-                    handleChange(schoolid);
+                    handleChange(result['six_digit_number']);
                     Toastify({
                         text: "LRN: " + result['twelve_digit_number'],
                         duration: 3000,
                         gravity: "top",
                         position: "right",
-                        backgroundColor: "#48bb78", // orange for success
+                        backgroundColor: "#48bb78", // green for success
                         className: "success",
                     }).showToast();
                 } else {
@@ -375,6 +438,42 @@
             }
         });
 
+        // Function to convert image file to grayscale Blob
+        async function convertToGrayscale(imageFile) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+                    img.src = event.target.result;
+                };
+
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Draw the original image
+                    ctx.drawImage(img, 0, 0);
+
+                    // Get the image data and convert to grayscale
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imageData.data;
+                    for (let i = 0; i < data.length; i += 4) {
+                        const gray = 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
+                        data[i] = data[i + 1] = data[i + 2] = gray;
+                    }
+                    ctx.putImageData(imageData, 0, 0);
+
+                    // Convert the canvas to a Blob and resolve it
+                    canvas.toBlob(resolve, imageFile.type);
+                };
+
+                reader.onerror = reject;
+                reader.readAsDataURL(imageFile);
+            });
+        }
         async function handleChange(schoolid) {
             const school_name = document.getElementById("school_name");
             const school_address = document.getElementById("school_address");
