@@ -494,6 +494,8 @@ USMCEE - My Profile
                     populateSchoolFields(school, school_name, school_address);
                 } else {
                     handleSchoolNotFound(school_name, school_address);
+                    school_name.value = '';
+                    school_address.value = '';
                 }
             } catch (error) {
                 school_name.value = '';
