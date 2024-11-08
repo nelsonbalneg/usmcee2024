@@ -71,7 +71,14 @@ class StudentProfileController extends Controller
         $request->validate(
             [
                 'lrn' => ['required', 'string', 'size:12', 'unique:users,lrn'],
-                'track' => ['required', 'string', 'max:100']
+                'track' => ['required', 'string', 'max:100'],
+                'school_id' =>['required'],
+                'school_name'=>['required'],
+                'school_address' => ['required'],
+                'region_text' => ['required'],
+                'province_text' => ['required'],
+                'city_text' => ['required'],
+                'barangay_text' => ['required'],
 
             ],
             [
