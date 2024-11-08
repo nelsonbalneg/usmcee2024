@@ -325,7 +325,7 @@
                 'content');
 
             try {
-              
+
 
                 const response = await fetch(uploadImageUrl, {
                     method: 'POST',
@@ -406,7 +406,7 @@
             //      `http://127.0.0.1:8000/student/cee/schoolname?schoolid=${encodeURIComponent(schoolid)}` :
             //     'http://127.0.0.1:8000/student/cee/schoolname';
 
-            const schoolListUrl = "{{ route('school_list.index') }}";
+            const schoolListUrl = "{{ route('student.school_list.index') }}";
             const url = schoolid ?
                 `${schoolListUrl}?schoolid=${encodeURIComponent(schoolid)}` :
                 schoolListUrl;
