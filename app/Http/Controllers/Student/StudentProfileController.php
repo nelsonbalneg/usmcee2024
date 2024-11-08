@@ -160,7 +160,7 @@ class StudentProfileController extends Controller
         ]);
 
         // Path to Tesseract executable (update if located elsewhere)
-        $tesseractPath = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe';
+        $tesseractPath = '/usr/bin/tesseract';
 
         // Temporarily store the uploaded file in the system's temporary directory
         $tempFilePath = $request->file('image')->getPathname();
