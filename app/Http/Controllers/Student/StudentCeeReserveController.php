@@ -140,9 +140,9 @@ class StudentCeeReserveController extends Controller
             'campus' => 'required|string|max:100',
             'firstprioprog' => 'required|string|max:100',
 
-            'secondprioprog' => 'nullable|string|max:100',
+            'secondprioprog' => 'required|string|max:100',
 
-            'thirdprioprog' => 'nullable|string|max:100',
+            'thirdprioprog' => 'required|string|max:100',
 
             'ceeexamsession' => 'required|string|max:50',
             'room' => 'required|string|max:100',
