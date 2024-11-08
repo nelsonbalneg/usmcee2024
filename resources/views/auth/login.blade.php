@@ -181,27 +181,42 @@
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", () => {
             const emailInput = document.getElementById("email");
+            let hasInteracted = false;
 
-            emailInput.addEventListener("blur", function () {
-                const email = emailInput.value.trim(); // Trim whitespace
+            emailInput.addEventListener("input", () => {
+                hasInteracted = true;
+            });
+
+            emailInput.addEventListener("blur", () => {
+                if (!hasInteracted) return;
+
+                const email = emailInput.value.trim();
                 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-                // Only validate if email is not empty
                 if (email && !emailPattern.test(email)) {
-                    emailInput.value = ""; // Clear invalid email input
-                    Toastify({
-                        text: 'Please enter a valid email address.',
-                        duration: 5000,
-                        gravity: "top",
-                        position: "right",
-                        backgroundColor: "#f56565", // Red color for error
-                        className: "error",
-                    }).showToast();
+                    emailInput.value = "";
+                    displayToast('Please enter a valid email address.');
                 }
             });
+
+            /**
+             * @param {string} message 
+             */
+            function displayToast(message) {
+                Toastify({
+                    text: message,
+                    duration: 5000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red color for error
+                    className: "error",
+                }).showToast();
+            }
         });
+
+
     </script>
 </body>
 
