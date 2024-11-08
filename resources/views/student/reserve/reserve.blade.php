@@ -514,6 +514,147 @@
 
 
         //for campus selection and program
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const campusSelect1 = document.getElementById('campus-select');
+        //     const programSelect1 = document.getElementById('program-select');
+        //     const firstPriorityDescInput = document.getElementById('firstprioprog_desc');
+
+        //     const campusSelect2 = document.getElementById('campus-select2');
+        //     const programSelect2 = document.getElementById('program-select2');
+        //     const secondPriorityDescInput = document.getElementById('secondprioprog_desc');
+
+        //     const campusSelect3 = document.getElementById('campus-select3');
+        //     const programSelect3 = document.getElementById('program-select3');
+        //     const thirdPriorityDescInput = document.getElementById('thirdprioprog_desc');
+
+        //     // Initialize Choices instances
+        //     const choicesInstances = {
+        //         campusSelect1: new Choices(campusSelect1, {
+        //             searchEnabled: true,
+        //             placeholderValue: 'Choose Campus'
+        //         }),
+        //         programSelect1: new Choices(programSelect1, {
+        //             searchEnabled: true,
+        //             placeholderValue: 'Choose Program'
+        //         }),
+        //         campusSelect2: new Choices(campusSelect2, {
+        //             searchEnabled: true,
+        //             placeholderValue: 'Choose Campus'
+        //         }),
+        //         programSelect2: new Choices(programSelect2, {
+        //             searchEnabled: true,
+        //             placeholderValue: 'Choose Program'
+        //         }),
+        //         campusSelect3: new Choices(campusSelect3, {
+        //             searchEnabled: true,
+        //             placeholderValue: 'Choose Campus'
+        //         }),
+        //         programSelect3: new Choices(programSelect3, {
+        //             searchEnabled: true,
+        //             placeholderValue: 'Choose Program'
+        //         })
+        //     };
+
+        //     // Function to load programs based on selected campus
+        //     function loadPrograms(campusSelect, programSelect, programChoicesInstance) {
+        //         const realCampusId = campusSelect.value;
+
+        //         // Set termId based on the selected campus
+        //         let termId;
+        //         switch (realCampusId) {
+        //             case "1":
+        //                 termId = 99;
+        //                 break; // USM Main
+        //             case "3":
+        //                 termId = 68;
+        //                 break; // USM KCC
+        //             case "5":
+        //                 termId = 99;
+        //                 break; // PALMA
+        //             case "6":
+        //                 termId = 68;
+        //                 break; // Mlang
+        //             default:
+        //                 termId = null;
+        //                 break;
+        //         }
+
+        //         if (!realCampusId || !termId) return; // Exit if missing values
+
+        //         // Clear existing program choices and set loading message
+        //         programChoicesInstance.clearChoices();
+        //         programChoicesInstance.setChoices([{
+        //             value: '',
+        //             label: 'Please choose a program',
+        //             disabled: true,
+        //             selected: true
+        //         }]);
+
+        //         fetch(`/student/cee/get-programs-by-campus?termId=${termId}&realCampusId=${realCampusId}`)
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 // Update placeholder to "Please choose a program" after data loads
+        //                 programChoicesInstance.clearChoices();
+        //                 programChoicesInstance.setChoices([{
+        //                     value: '',
+        //                     label: 'Please choose a program',
+        //                     disabled: true,
+        //                     selected: true
+        //                 }]);
+
+        //                 // Map the data to choices format
+        //                 const programOptions = data.map(program => ({
+        //                     value: program.programId,
+        //                     label: program.majorDiscDesc ?
+        //                         `${program.programName} - ${program.majorDiscDesc}` : program
+        //                         .programName,
+        //                     customProperties: {
+        //                         programName: program.programName
+        //                     }
+        //                 }));
+
+        //                 // Add program options to the select element
+        //                 programChoicesInstance.setChoices(programOptions, 'value', 'label', true);
+        //             })
+        //             .catch(error => {
+        //                 console.error('Error loading programs:', error);
+        //                 programChoicesInstance.clearChoices();
+        //                 programChoicesInstance.setChoices([{
+        //                     value: '',
+        //                     label: 'Error loading programs',
+        //                     disabled: true,
+        //                     selected: true
+        //                 }]);
+        //             });
+        //     }
+
+        //     // Attach change event listeners to campus selects to load corresponding programs
+        //     campusSelect1.addEventListener('change', () => loadPrograms(campusSelect1, programSelect1,
+        //         choicesInstances.programSelect1));
+        //     campusSelect2.addEventListener('change', () => loadPrograms(campusSelect2, programSelect2,
+        //         choicesInstances.programSelect2));
+        //     campusSelect3.addEventListener('change', () => loadPrograms(campusSelect3, programSelect3,
+        //         choicesInstances.programSelect3));
+
+        //     // Update priority description inputs when a program is selected
+        //     programSelect1.addEventListener('change', () => {
+        //         const selectedOption = programSelect1.options[programSelect1.selectedIndex];
+        //         firstPriorityDescInput.value = selectedOption
+        //             .textContent; // Set selected program text to input
+        //     });
+
+        //     programSelect2.addEventListener('change', () => {
+        //         const selectedOption = programSelect2.options[programSelect2.selectedIndex];
+        //         secondPriorityDescInput.value = selectedOption
+        //             .textContent; // Set selected program text to input
+        //     });
+
+        //     programSelect3.addEventListener('change', () => {
+        //         const selectedOption = programSelect3.options[programSelect3.selectedIndex];
+        //         thirdPriorityDescInput.value = selectedOption
+        //             .textContent; // Set selected program text to input
+        //     });
+        // });
         document.addEventListener('DOMContentLoaded', function() {
             const campusSelect1 = document.getElementById('campus-select');
             const programSelect1 = document.getElementById('program-select');
@@ -527,36 +668,8 @@
             const programSelect3 = document.getElementById('program-select3');
             const thirdPriorityDescInput = document.getElementById('thirdprioprog_desc');
 
-            // Initialize Choices instances
-            const choicesInstances = {
-                campusSelect1: new Choices(campusSelect1, {
-                    searchEnabled: true,
-                    placeholderValue: 'Choose Campus'
-                }),
-                programSelect1: new Choices(programSelect1, {
-                    searchEnabled: true,
-                    placeholderValue: 'Choose Program'
-                }),
-                campusSelect2: new Choices(campusSelect2, {
-                    searchEnabled: true,
-                    placeholderValue: 'Choose Campus'
-                }),
-                programSelect2: new Choices(programSelect2, {
-                    searchEnabled: true,
-                    placeholderValue: 'Choose Program'
-                }),
-                campusSelect3: new Choices(campusSelect3, {
-                    searchEnabled: true,
-                    placeholderValue: 'Choose Campus'
-                }),
-                programSelect3: new Choices(programSelect3, {
-                    searchEnabled: true,
-                    placeholderValue: 'Choose Program'
-                })
-            };
 
-            // Function to load programs based on selected campus
-            function loadPrograms(campusSelect, programSelect, programChoicesInstance) {
+            function loadPrograms(campusSelect, programSelect) {
                 const realCampusId = campusSelect.value;
 
                 // Set termId based on the selected campus
@@ -581,78 +694,46 @@
 
                 if (!realCampusId || !termId) return; // Exit if missing values
 
-                // Clear existing program choices and set loading message
-                programChoicesInstance.clearChoices();
-                programChoicesInstance.setChoices([{
-                    value: '',
-                    label: 'Please choose a program',
-                    disabled: true,
-                    selected: true
-                }]);
+                programSelect.innerHTML = '<option selected disabled>Please wait...</option>';
 
                 fetch(`/student/cee/get-programs-by-campus?termId=${termId}&realCampusId=${realCampusId}`)
                     .then(response => response.json())
                     .then(data => {
-                        // Update placeholder to "Please choose a program" after data loads
-                        programChoicesInstance.clearChoices();
-                        programChoicesInstance.setChoices([{
-                            value: '',
-                            label: 'Please choose a program',
-                            disabled: true,
-                            selected: true
-                        }]);
-
-                        // Map the data to choices format
-                        const programOptions = data.map(program => ({
-                            value: program.programId,
-                            label: program.majorDiscDesc ?
+                        programSelect.innerHTML = '<option selected disabled>Choose Program</option>';
+                        data.forEach(program => {
+                            const option = document.createElement('option');
+                            option.value = program.programId;
+                            option.textContent = program.majorDiscDesc ?
                                 `${program.programName} - ${program.majorDiscDesc}` : program
-                                .programName,
-                            customProperties: {
-                                programName: program.programName
-                            }
-                        }));
-
-                        // Add program options to the select element
-                        programChoicesInstance.setChoices(programOptions, 'value', 'label', true);
+                                .programName;
+                            option.setAttribute('data-program-name', program.programName);
+                            programSelect.appendChild(option);
+                        });
                     })
                     .catch(error => {
                         console.error('Error loading programs:', error);
-                        programChoicesInstance.clearChoices();
-                        programChoicesInstance.setChoices([{
-                            value: '',
-                            label: 'Error loading programs',
-                            disabled: true,
-                            selected: true
-                        }]);
+                        programSelect.innerHTML = '<option selected disabled>Error loading programs</option>';
                     });
             }
 
-            // Attach change event listeners to campus selects to load corresponding programs
-            campusSelect1.addEventListener('change', () => loadPrograms(campusSelect1, programSelect1,
-                choicesInstances.programSelect1));
-            campusSelect2.addEventListener('change', () => loadPrograms(campusSelect2, programSelect2,
-                choicesInstances.programSelect2));
-            campusSelect3.addEventListener('change', () => loadPrograms(campusSelect3, programSelect3,
-                choicesInstances.programSelect3));
+            campusSelect1.addEventListener('change', () => loadPrograms(campusSelect1, programSelect1));
+            campusSelect2.addEventListener('change', () => loadPrograms(campusSelect2, programSelect2));
+            campusSelect3.addEventListener('change', () => loadPrograms(campusSelect3, programSelect3));
 
             // Update priority description inputs when a program is selected
             programSelect1.addEventListener('change', () => {
                 const selectedOption = programSelect1.options[programSelect1.selectedIndex];
-                firstPriorityDescInput.value = selectedOption
-                    .textContent; // Set selected program text to input
+                firstPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
             });
 
             programSelect2.addEventListener('change', () => {
                 const selectedOption = programSelect2.options[programSelect2.selectedIndex];
-                secondPriorityDescInput.value = selectedOption
-                    .textContent; // Set selected program text to input
+                secondPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
             });
 
             programSelect3.addEventListener('change', () => {
                 const selectedOption = programSelect3.options[programSelect3.selectedIndex];
-                thirdPriorityDescInput.value = selectedOption
-                    .textContent; // Set selected program text to input
+                thirdPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
             });
         });
 
