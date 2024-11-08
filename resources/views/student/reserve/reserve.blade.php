@@ -360,7 +360,7 @@
                                             <path class="opacity-75" fill="currentColor"
                                                 d="M4 12a8 8 0 018-8V0a12 12 0 100 24v-4a8 8 0 01-8-8z"></path>
                                         </svg>
-                                        <p class="text-gray-700 font-medium">Loading, please wait...</p>
+                                        <p class="text-gray-700 font-medium">Loading programs, please wait...</p>
                                     </div>
                                 </div>
 
