@@ -72,8 +72,8 @@ class StudentProfileController extends Controller
             [
                 'lrn' => ['required', 'string', 'size:12', 'unique:users,lrn'],
                 'track' => ['required', 'string', 'max:100'],
-                'school_id' =>['required'],
-                'school_name'=>['required'],
+                'school_id' => ['required'],
+                'school_name' => ['required'],
                 'school_address' => ['required'],
                 'region_text' => ['required'],
                 'province_text' => ['required'],
@@ -117,7 +117,8 @@ class StudentProfileController extends Controller
             [
                 'photo' => ['nullable', 'file', 'mimes:jpeg,png,jpg', 'max:5120'],
 
-            ]);
+            ]
+        );
 
         $user = User::findOrFail($request->id);
 
@@ -182,7 +183,8 @@ class StudentProfileController extends Controller
         $request->file('image')->move(sys_get_temp_dir(), basename($tempFilePath));
 
         // Corrected: Use escapeshellarg to prevent command injection
-        $command = escapeshellarg($tesseractPath) . ' ' . escapeshellarg($tempFilePath) . ' stdout 2>&1';
+        //$command = escapeshellarg($tesseractPath) . ' ' . escapeshellarg($tempFilePath) . ' stdout 2>&1';
+        $command = 'timeout 60s ' . escapeshellarg($tesseractPath) . ' ' . escapeshellarg($tempFilePath) . ' stdout 2>&1';
         $output = shell_exec($command);
 
         // Clean up the temporary file after running OCR
