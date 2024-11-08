@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/tailwind2.css') }}">
     <livewire:styles />
 
+    
 
 
 
