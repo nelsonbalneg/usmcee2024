@@ -279,9 +279,9 @@
                         <div class="card-body">
                             <p class='text-justify'>
                                 Welcome to the University of Southern Mindanao (USM) College Entrance Examination
-                                Registration web app. By using this platform, you agree to comply with the following
-                                terms and conditions. Please read these terms carefully before proceeding with your
-                                application.
+                                Registration Website. By accessing and using this website, you agree to comply with and
+                                be bound by these Terms and Conditions, which govern your use of this application. If
+                                you do not agree, please refrain from using this site.
                             </p>
                             <br>
                             <div
@@ -290,17 +290,16 @@
                             </div>
 
                             <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
-                                <li>Only eligible applicants, specifically senior high school students, are allowed to
-                                    use this web application for the purpose of applying to the University of Southern
-                                    Mindanao's entrance examination.
+                                <li>Only eligible applicants, specifically senior high school students, may use this
+                                    website to register for the USM College Entrance Examination.
                                 </li>
                                 <li>All information provided must be complete, accurate, and truthful. By submitting
-                                    your application, you confirm that all information entered is correct and that you
-                                    meet the eligibility requirements for admission.</li>
-                                <li>Providing false information or misrepresenting qualifications may result in
-                                    disqualification from the admission process. Since USM is a government institution,
-                                    fraudulent applications will be handled in accordance with university policies and,
-                                    if necessary, relevant Philippine laws.</li>
+                                    your application, you confirm that you meet the eligibility requirements.</li>
+                                <li>Providing false information or misrepresenting your qualifications may lead to
+                                    disqualification from the application process and will be handled in accordance with
+                                    Republic Act No. 10175 (Cybercrime Prevention Act of 2012) and Article 172
+                                    (Falsification by Private Individual) and Article 315 (Swindling/Estafa) of the
+                                    Revised Penal Code of the Philippines.</li>
 
                             </ul>
                             <div
@@ -310,20 +309,20 @@
                             </div>
 
                             <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
-                                <li>The information you provide will be used solely for the purpose of processing your
-                                    application, in accordance with the Data Privacy Act of 2012 (Republic Act No.
-                                    10173). Your data will be managed following the principles of transparency,
-                                    legitimate purpose, and proportionality.
+                                <li>Your information will be used solely for processing your application, in compliance
+                                    with the Data Privacy Act of 2012 (Republic Act No. 10173). USM is committed to
+                                    handling your data according to principles of transparency, legitimate purpose, and
+                                    proportionality.
 
                                 </li>
-                                <li>USM is committed to protecting your personal data. By using this application, you
-                                    consent to the collection, use, and processing of your information in compliance
-                                    with the Data Privacy Act and related regulations by the National Privacy Commission
-                                    (NPC).
+                                <li>By using this site, you consent to the collection, use, and processing of your
+                                    personal information as per USM’s Privacy Policy and in line with the Data Privacy
+                                    Act. We will use your data only as necessary to process your application and for
+                                    communications relevant to the entrance examination.
                                 </li>
-                                <li>As part of the data privacy compliance, USM will safeguard your information.
-                                    However, you are responsible for the confidentiality and security of your login
-                                    credentials.
+                                <li>USM will take appropriate measures to protect your data from unauthorized access.
+                                    However, it is your responsibility to maintain the confidentiality of your login
+                                    credentials and promptly report any suspected unauthorized use of your account.
                                 </li>
 
                             </ul>
@@ -335,14 +334,14 @@
                             </div>
 
                             <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
-                                <li>Any form of fraud or misrepresentation, including the submission of false
-                                    information, use of falsified documents, or impersonation, is strictly prohibited.
-                                    Violations may be subject to penalties under Article 172 (Falsification by Private
-                                    Individual) and Article 315 (Swindling/Estafa) of the Revised Penal Code.
+                                <li>Any form of fraud or misrepresentation, including the submission of falsified
+                                    documents or impersonation, is strictly prohibited. Violations may result in
+                                    penalties under Article 172 (Falsification by Private Individuals) and Article 315
+                                    (Swindling/Estafa) of the Revised Penal Code.
                                 </li>
-                                <li>As a government institution, USM reserves the right to take appropriate action,
-                                    including but not limited to the denial of admission, cancellation of registration,
-                                    and potential criminal prosecution.
+                                <li>USM reserves the right to take disciplinary and legal actions for fraudulent
+                                    applications, including but not limited to the denial of admission, cancellation of
+                                    registration, and potential prosecution under applicable Philippine laws.
                                 </li>
                             </ul>
                             <div
@@ -352,16 +351,14 @@
                             </div>
 
                             <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
-                                <li>This application is intended solely for the submission of entrance examination
-                                    applications. Unauthorized use, including attempts to disrupt or interfere with its
-                                    functionality, is a violation of Republic Act No. 8792 (Electronic Commerce Act of
-                                    2000). Such actions may result in the application’s suspension and potential legal
-                                    action.
-
+                                <li>This application is intended exclusively for entrance examination applications.
+                                    Unauthorized uses, including disruptive or damaging activities, may constitute
+                                    violations of Republic Act No. 8792 (Electronic Commerce Act of 2000) and Republic
+                                    Act No. 10175 (Cybercrime Prevention Act of 2012).
                                 </li>
-                                <li>Acts that interfere with, disable, or cause harm to the application may be treated
-                                    as cybercrimes under Republic Act No. 10175 (Cybercrime Prevention Act of 2012) and
-                                    may be pursued accordingly.
+                                <li>Actions that interfere with, disable, or cause harm to the application may lead to
+                                    suspension of your access and possible legal action as permitted under relevant
+                                    Philippine laws.
                                 </li>
                             </ul>
 
@@ -373,13 +370,11 @@
 
                             <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
                                 <li>By submitting your application, you acknowledge that you have read, understood, and
-                                    agree to these terms and conditions.
-
-
+                                    agree to these Terms and Conditions.
                                 </li>
-                                <li>The University of Southern Mindanao reserves the right to modify or update these
-                                    terms as necessary. Any changes will be posted on the application portal.
-
+                                <li>Modifications: USM reserves the right to modify these Terms and Conditions as
+                                    necessary to reflect changes in university policies or applicable laws. Any updates
+                                    will be posted on this portal.
                                 </li>
                             </ul>
 
@@ -390,10 +385,10 @@
                             </div>
 
                             <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
-                                <li>While USM endeavors to ensure the proper functioning and security of the application
-                                    portal, it shall not be liable for any direct or indirect damages arising from the
-                                    use or inability to use the platform.
-
+                                <li>USM will not be liable for any damages, losses, or liabilities arising from your use
+                                    of this website, including errors, interruptions, or technical malfunctions, except
+                                    as required by law. This limitation of liability applies to the fullest extent
+                                    permitted under Philippine law.
                                 </li>
                             </ul>
                         </div>
