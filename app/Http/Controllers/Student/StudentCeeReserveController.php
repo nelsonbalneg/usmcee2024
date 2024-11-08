@@ -148,6 +148,15 @@ class StudentCeeReserveController extends Controller
             'room' => 'required|string|max:100',
         ]);
 
+        //check if record exists
+        $isReserved = Reservation::where('user_id', Auth::user()->id)->exists();
+        if ($isReserved) {
+            return redirect()->back()->with([
+                'message' => 'You have reserved a slot already!',
+                'status' => 'error'
+            ]);
+        }
+
         // Check room availability
         $checkifzero = Room::where('exam_session', $request->room)
             ->where('status', 'active')
