@@ -162,12 +162,27 @@ class StudentProfileController extends Controller
         // Path to Tesseract executable (update if located elsewhere)
         $tesseractPath = '/usr/bin/tesseract';
 
-        // Temporarily store the uploaded file in the system's temporary directory
-        $tempFilePath = $request->file('image')->getPathname();
+        // Corrected: Ensure Tesseract path exists or handle accordingly
+        $tesseractPath = '/usr/bin/tesseract';
+        if (!file_exists($tesseractPath)) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Tesseract executable not found at the specified path.',
+            ]);
+        }
 
-        // Run Tesseract OCR
-        $command = "\"$tesseractPath\" \"$tempFilePath\" stdout 2>&1";
+        // Corrected: Temporarily store the uploaded file with a unique name in the system's temporary directory
+        $tempFilePath = sys_get_temp_dir() . '/' . uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(sys_get_temp_dir(), basename($tempFilePath));
+
+        // Corrected: Use escapeshellarg to prevent command injection
+        $command = escapeshellarg($tesseractPath) . ' ' . escapeshellarg($tempFilePath) . ' stdout 2>&1';
         $output = shell_exec($command);
+
+        // Clean up the temporary file after running OCR
+        if (file_exists($tempFilePath)) {
+            unlink($tempFilePath);
+        }
 
         $twelveDigitNumber = null;
         $sixDigitNumber = null;
