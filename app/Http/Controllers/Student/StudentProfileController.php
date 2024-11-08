@@ -70,7 +70,6 @@ class StudentProfileController extends Controller
         // validation
         $request->validate(
             [
-                'photo' => ['nullable', 'file', 'mimes:jpeg,png,jpg', 'max:5120'],
                 'lrn' => ['required', 'string', 'size:12', 'unique:users,lrn'],
                 'track' => ['required', 'string', 'max:100']
 
@@ -95,9 +94,9 @@ class StudentProfileController extends Controller
         $user->street = trim($request->street);
         $user->zipcode = trim($request->zipcode);
 
-        // Handle photo upload
-        $imagePath = $this->updateImage($request, 'photo', 'uploads', $user->photo);
-        $user->photo = empty(!$imagePath) ? $imagePath : $user->photo;
+        // // Handle photo upload
+        // $imagePath = $this->updateImage($request, 'photo', 'uploads', $user->photo);
+        // $user->photo = empty(!$imagePath) ? $imagePath : $user->photo;
 
         $user->save();
 
