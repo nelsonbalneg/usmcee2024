@@ -314,6 +314,7 @@
         document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
             const formData = new FormData();
             const imageFile = event.target.files[0];
+            const uploadImageUrl = "{{ route('student.upload_image') }}";
             const lrn = document.getElementById(
                 "lrn"); // Assuming this is an input field for displaying the extracted number
             const school_id = document.getElementById("school_id");
@@ -324,12 +325,21 @@
                 'content');
 
             try {
-                const response = await fetch("http://127.0.0.1:8000/student/cee/upload-image", {
+                // const response = await fetch("http://127.0.0.1:8000/student/cee/upload-image", {
+                //     method: 'POST',
+                //     body: formData,
+                //     headers: {
+                //         'X-CSRF-TOKEN': csrfToken,
+                //         'X-Requested-With': 'XMLHttpRequest' // Helps Laravel recognize it as an AJAX request
+                //     }
+                // });
+
+                const response = await fetch(uploadImageUrl, {
                     method: 'POST',
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest' // Helps Laravel recognize it as an AJAX request
+                        'X-Requested-With': 'XMLHttpRequest'
                     }
                 });
 
@@ -406,9 +416,6 @@
             const url = schoolid ?
                 `${schoolListUrl}?schoolid=${encodeURIComponent(schoolid)}` :
                 schoolListUrl;
-
-
-
 
             const response = await fetch(url, {
                 method: 'GET',

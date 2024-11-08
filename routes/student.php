@@ -24,7 +24,9 @@ Route::get('cee/schoolname', [StudentProfileController::class, 'school_name'])->
 
 Route::get('cee/checklrn', [StudentProfileController::class, 'getLrn'])->name('detectlrn.index');
 
-Route::post('cee/upload-image', [StudentProfileController::class, 'upload']);
+// Route::post('cee/upload-image', [StudentProfileController::class, 'upload']);
+Route::post('cee/upload-image', [StudentProfileController::class, 'upload'])->name('student.upload_image');
+
 Route::get('cee/upload-image-form', function () {
     return view('student.profile.upload'); // Accesses the upload.blade.php inside views/student/profile
 });
