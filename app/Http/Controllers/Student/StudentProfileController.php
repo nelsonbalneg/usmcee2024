@@ -174,59 +174,43 @@ class StudentProfileController extends Controller
             ]);
         }
 
+        // Create a temporary file path for the uploaded image
         $tempFilePath = sys_get_temp_dir() . '/' . uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(sys_get_temp_dir(), basename($tempFilePath));
 
-        $command = [$tesseractPath, $tempFilePath, 'stdout'];
-        $descriptorSpec = [
-            1 => ['pipe', 'w'], // stdout
-            2 => ['pipe', 'w'], // stderr
-        ];
+        // Create a temporary file path for the text output
+        $tempTextFilePath = sys_get_temp_dir() . '/' . uniqid() . '.txt';
 
-        $process = proc_open($command, $descriptorSpec, $pipes);
-        $output = '';
-        
+        // Prepare the command to run Tesseract and output to the text file
+        $command = sprintf('%s %s %s', escapeshellarg($tesseractPath), escapeshellarg($tempFilePath), escapeshellarg($tempTextFilePath));
+        $process = proc_open($command, [], $pipes);
+
         try {
             if (is_resource($process)) {
-                // Set a timeout (in seconds)
-                $timeout = 60;
-                $startTime = time();
+                // Wait for the process to finish and get the return code
+                $returnCode = proc_close($process);
 
-                // Read output while checking the timeout
-                while (!feof($pipes[1])) {
-                    if (time() - $startTime > $timeout) {
-                        proc_terminate($process); // Forcefully terminate if it times out
-                        throw new Exception('Tesseract OCR process timed out.');
-                    }
-                    $output .= fread($pipes[1], 4096);
+                // Check if Tesseract completed successfully
+                if ($returnCode === 0 && file_exists($tempTextFilePath)) {
+                    $output = file_get_contents($tempTextFilePath);
+                } else {
+                    $output = '';
                 }
-
-                // Close pipes
-                fclose($pipes[1]);
-                fclose($pipes[2]);
-
-                // Ensure the process exits
-                proc_close($process);
             }
-        } catch (Exception $e) {
-            // Clean up in case of error
-            if (is_resource($process)) {
-                proc_terminate($process);
-            }
-            return response()->json([
-                'success' => false,
-                'error' => $e->getMessage(),
-            ]);
         } finally {
-            // Clean up the temporary file
+            // Ensure the temporary files are deleted after processing
             if (file_exists($tempFilePath)) {
                 unlink($tempFilePath);
+            }
+            if (file_exists($tempTextFilePath)) {
+                unlink($tempTextFilePath);
             }
         }
 
         $twelveDigitNumber = null;
         $sixDigitNumber = null;
 
+        // Match both 12-digit and 6-digit patterns separately
         if (preg_match('/\b\d{12}\b/', $output, $twelveDigitMatch)) {
             $twelveDigitNumber = $twelveDigitMatch[0];
         }
@@ -250,6 +234,7 @@ class StudentProfileController extends Controller
             ]);
         }
     }
+
 
 
     /**
