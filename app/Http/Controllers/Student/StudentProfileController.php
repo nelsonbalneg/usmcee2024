@@ -188,51 +188,9 @@ class StudentProfileController extends Controller
         $command = 'timeout 60s ' . escapeshellarg($tesseractPath) . ' ' . escapeshellarg($tempFilePath) . ' stdout 2>&1';
         $output = shell_exec($command);
 
-<<<<<<< HEAD
-        $process = proc_open($command, $descriptorSpec, $pipes);
-        $output = '';
-
-        try {
-            if (is_resource($process)) {
-                // Set a timeout (in seconds)
-                $timeout = 60;
-                $startTime = time();
-
-                // Read output while checking the timeout
-                while (!feof($pipes[1])) {
-                    if (time() - $startTime > $timeout) {
-                        proc_terminate($process); // Forcefully terminate if it times out
-                        throw new Exception('Tesseract OCR process timed out.');
-                    }
-                    $output .= fread($pipes[1], 4096);
-                }
-
-                // Close pipes
-                fclose($pipes[1]);
-                fclose($pipes[2]);
-
-                // Ensure the process exits
-                proc_close($process);
-            }
-        } catch (Exception $e) {
-            // Clean up in case of error
-            if (is_resource($process)) {
-                proc_terminate($process);
-            }
-            return response()->json([
-                'success' => false,
-                'error' => $e->getMessage(),
-            ]);
-        } finally {
-            // Clean up the temporary file
-            if (file_exists($tempFilePath)) {
-                unlink($tempFilePath);
-            }
-=======
         // Clean up the temporary file after running OCR
         if (file_exists($tempFilePath)) {
             unlink($tempFilePath);
->>>>>>> 842d3ede3619f077991abcd7e2d964c2e13e5b20
         }
 
         $twelveDigitNumber = null;
