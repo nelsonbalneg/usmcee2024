@@ -143,7 +143,7 @@
 
                             <div class="xl:col-span-6">
                                 <label for="lrn" class="inline-block mb-2 text-base font-medium">Learner Reference
-                                    Number<sup class="text-blue-500">* required</sup></label>
+                                    Number<sup class="text-red-500">* required</sup></label>
                                 <input type="number" id="lrn" name="lrn"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}"
@@ -171,7 +171,9 @@
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="School ID" value="{{ $studentdetails->schoolid }}"
                                     onchange="handleChange(this.value)">
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @error('school_id')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                             </div><!--end col-->
 
                             <div class="xl:col-span-3">
@@ -180,7 +182,9 @@
                                 <input type="text" id="school_name" name="school_name"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     readonly placeholder=" School Name" value="{{ $studentdetails->shs_school }}">
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @error('school_name')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                             </div><!--end col-->
 
                             <div class="xl:col-span-6">
@@ -190,7 +194,9 @@
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     readonly placeholder="Enter School Address"
                                     value="{{ $studentdetails->school_address }}">
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @error('school_address')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                             </div><!--end col-->
 
 
@@ -249,9 +255,10 @@
                             <div class="xl:col-span-6">
                                 <label for="zipcode" class="inline-block mb-2 text-base font-medium">Zip
                                     Code<span></label>
-                                <input type="text" id="track" name="zipcode"
+                                <input type="text" id="zipcode" name="zipcode"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter your zipcode" value="{{ $studentdetails->zipcode }}">
+                                    placeholder="Enter your zipcode" value="{{ $studentdetails->zipcode }}"
+                                    onblur="validateZipcode()">
                             </div><!--end col-->
 
                             @if (empty($studentdetails->lrn))
@@ -297,7 +304,45 @@
             });
         </script>
     @endif
+    <script>
+        function validateLRN() {
+            const lrnInput = document.getElementById('lrn');
 
+            // Check if the LRN is exactly 12 digits and contains numbers only
+            if (!/^\d{12}$/.test(lrnInput.value)) {
+                Toastify({
+                    text: 'LRN must be exactly 12 digits.',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
+
+                // Clear the input field
+                lrnInput.value = '';
+            }
+        }
+
+        function validateZipcode() {
+            const lrnInput = document.getElementById('zipcode');
+
+            // Check if the LRN is exactly 12 digits and contains numbers only
+            if (!/^\d{4}$/.test(lrnInput.value)) {
+                Toastify({
+                    text: 'ZIPCODE must be exactly 4 digits.',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
+
+                // Clear the input field
+                lrnInput.value = '';
+            }
+        }
+    </script>
     <script>
         function validateLRN() {
             const lrnInput = document.getElementById('lrn');
@@ -396,69 +441,69 @@
         //     }
         // });
 
-        document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
-            const imageFile = event.target.files[0];
-            const uploadImageUrl = "{{ route('student.upload_image') }}";
-            const lrn = document.getElementById("lrn"); // Input field for displaying the extracted number
-            const school_id = document.getElementById("school_id");
+        // document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
+        //     const imageFile = event.target.files[0];
+        //     const uploadImageUrl = "{{ route('student.upload_image') }}";
+        //     const lrn = document.getElementById("lrn"); // Input field for displaying the extracted number
+        //     const school_id = document.getElementById("school_id");
 
-            // Convert the image to grayscale
-            const grayscaleBlob = await resizeAndConvertToGrayscale(imageFile);
+        //     // Convert the image to grayscale
+        //     const grayscaleBlob = await resizeAndConvertToGrayscale(imageFile);
 
-            // Prepare FormData for upload
-            const formData = new FormData();
-            formData.append('image', grayscaleBlob, imageFile.name);
+        //     // Prepare FormData for upload
+        //     const formData = new FormData();
+        //     formData.append('image', grayscaleBlob, imageFile.name);
 
-            // Retrieve the CSRF token from the meta tag
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        //     // Retrieve the CSRF token from the meta tag
+        //     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            try {
-                const response = await fetch(uploadImageUrl, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                });
+        //     try {
+        //         const response = await fetch(uploadImageUrl, {
+        //             method: 'POST',
+        //             body: formData,
+        //             headers: {
+        //                 'X-CSRF-TOKEN': csrfToken,
+        //                 'X-Requested-With': 'XMLHttpRequest'
+        //             }
+        //         });
 
-                const result = await response.json();
+        //         const result = await response.json();
 
-                // Set the extracted 12-digit number to the lrn input field if available
-                if (result.success && result['twelve_digit_number']) {
-                    lrn.value = result['twelve_digit_number'];
-                    school_id.value = result['six_digit_number'];
-                    handleChange(result['six_digit_number']);
-                    Toastify({
-                        text: "LRN: " + result['twelve_digit_number'],
-                        duration: 3000,
-                        gravity: "top",
-                        position: "right",
-                        backgroundColor: "#48bb78", // green for success
-                        className: "success",
-                    }).showToast();
-                } else {
-                    Toastify({
-                        text: result.error,
-                        duration: 3000,
-                        gravity: "top",
-                        position: "right",
-                        backgroundColor: "#f56565", // Red for error
-                        className: "error",
-                    }).showToast();
-                }
+        //         // Set the extracted 12-digit number to the lrn input field if available
+        //         if (result.success && result['twelve_digit_number']) {
+        //             lrn.value = result['twelve_digit_number'];
+        //             school_id.value = result['six_digit_number'];
+        //             handleChange(result['six_digit_number']);
+        //             Toastify({
+        //                 text: "LRN: " + result['twelve_digit_number'],
+        //                 duration: 3000,
+        //                 gravity: "top",
+        //                 position: "right",
+        //                 backgroundColor: "#48bb78", // green for success
+        //                 className: "success",
+        //             }).showToast();
+        //         } else {
+        //             Toastify({
+        //                 text: result.error,
+        //                 duration: 3000,
+        //                 gravity: "top",
+        //                 position: "right",
+        //                 backgroundColor: "#f56565", // Red for error
+        //                 className: "error",
+        //             }).showToast();
+        //         }
 
-            } catch (error) {
-                Toastify({
-                    text: 'An error occurred while processing the image.',
-                    duration: 3000,
-                    gravity: "top",
-                    position: "right",
-                    backgroundColor: "#f56565", // Red for error
-                    className: "error",
-                }).showToast();
-            }
-        });
+        //     } catch (error) {
+        //         Toastify({
+        //             text: 'An error occurred while processing the image.',
+        //             duration: 3000,
+        //             gravity: "top",
+        //             position: "right",
+        //             backgroundColor: "#f56565", // Red for error
+        //             className: "error",
+        //         }).showToast();
+        //     }
+        // });
 
         // // Function to convert image file to grayscale Blob
         // async function convertToGrayscale(imageFile) {
@@ -498,46 +543,46 @@
         // }
 
         // Function to resize image and convert to grayscale Blob
-        async function resizeAndConvertToGrayscale(imageFile) {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                const reader = new FileReader();
+        // async function resizeAndConvertToGrayscale(imageFile) {
+        //     return new Promise((resolve, reject) => {
+        //         const img = new Image();
+        //         const reader = new FileReader();
 
-                reader.onload = function(event) {
-                    img.src = event.target.result;
-                };
+        //         reader.onload = function(event) {
+        //             img.src = event.target.result;
+        //         };
 
-                img.onload = function() {
-                    // Set target width and calculate height to maintain aspect ratio
-                    const targetWidth = 500; // You can adjust this value
-                    const scaleFactor = targetWidth / img.width;
-                    const targetHeight = img.height * scaleFactor;
+        //         img.onload = function() {
+        //             // Set target width and calculate height to maintain aspect ratio
+        //             const targetWidth = 500; // You can adjust this value
+        //             const scaleFactor = targetWidth / img.width;
+        //             const targetHeight = img.height * scaleFactor;
 
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = targetWidth;
-                    canvas.height = targetHeight;
+        //             const canvas = document.createElement('canvas');
+        //             const ctx = canvas.getContext('2d');
+        //             canvas.width = targetWidth;
+        //             canvas.height = targetHeight;
 
-                    // Draw the resized image
-                    ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+        //             // Draw the resized image
+        //             ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
-                    // Get the image data and convert to grayscale
-                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    const data = imageData.data;
-                    for (let i = 0; i < data.length; i += 4) {
-                        const gray = 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
-                        data[i] = data[i + 1] = data[i + 2] = gray;
-                    }
-                    ctx.putImageData(imageData, 0, 0);
+        //             // Get the image data and convert to grayscale
+        //             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        //             const data = imageData.data;
+        //             for (let i = 0; i < data.length; i += 4) {
+        //                 const gray = 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
+        //                 data[i] = data[i + 1] = data[i + 2] = gray;
+        //             }
+        //             ctx.putImageData(imageData, 0, 0);
 
-                    // Convert the canvas to a Blob and resolve it
-                    canvas.toBlob(resolve, imageFile.type);
-                };
+        //             // Convert the canvas to a Blob and resolve it
+        //             canvas.toBlob(resolve, imageFile.type);
+        //         };
 
-                reader.onerror = reject;
-                reader.readAsDataURL(imageFile);
-            });
-        }
+        //         reader.onerror = reject;
+        //         reader.readAsDataURL(imageFile);
+        //     });
+        // }
 
         async function handleChange(schoolid) {
             const school_name = document.getElementById("school_name");
