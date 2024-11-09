@@ -70,7 +70,7 @@ class StudentProfileController extends Controller
         // validation
         $request->validate(
             [
-                'lrn' => ['required', 'string', 'size:12', 'unique:users,lrn'],
+                'lrn' => ['required', 'size:12', 'unique:users,lrn'],
                 'track' => ['required', 'string', 'max:100'],
                 'school_id' => ['required'],
                 'school_name' => ['required'],
@@ -82,7 +82,7 @@ class StudentProfileController extends Controller
 
             ],
             [
-                'lrn.size' => 'The LRN must be exactly 12 characters.',
+                'lrn.size' => 'The LRN must be exactly 12 digits.',
                 'lrn.unique' => 'The LRN has already been taken.'
             ]
         );
@@ -185,7 +185,7 @@ class StudentProfileController extends Controller
 
         $process = proc_open($command, $descriptorSpec, $pipes);
         $output = '';
-        
+
         try {
             if (is_resource($process)) {
                 // Set a timeout (in seconds)

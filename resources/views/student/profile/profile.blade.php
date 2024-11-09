@@ -114,7 +114,7 @@
                         </div>
                         <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
 
-                            @if (empty($studentdetails->lrn))
+                            {{-- @if (empty($studentdetails->lrn))
                                 <div class="xl:col-span-4 mb-2">
                                     <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
                                         Picture
@@ -134,7 +134,7 @@
                                         class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
                                         placeholder="Upload your school id picture">
                                 </div>
-                            @endif
+                            @endif --}}
 
 
                             <div class="xl:col-span-8">
@@ -144,9 +144,9 @@
                             <div class="xl:col-span-6">
                                 <label for="lrn" class="inline-block mb-2 text-base font-medium">Learner Reference
                                     Number<sup class="text-blue-500">* read only</sup></label>
-                                <input type="text" id="lrn" name="lrn"
+                                <input type="number" id="lrn" name="lrn"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}" readonly>
+                                    placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}">
                                 @error('lrn')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -170,6 +170,7 @@
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="School ID" value="{{ $studentdetails->schoolid }}"
                                     onchange="handleChange(this.value)">
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             </div><!--end col-->
 
                             <div class="xl:col-span-3">
@@ -178,6 +179,7 @@
                                 <input type="text" id="school_name" name="school_name"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     readonly placeholder=" School Name" value="{{ $studentdetails->shs_school }}">
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             </div><!--end col-->
 
                             <div class="xl:col-span-6">
@@ -187,13 +189,13 @@
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     readonly placeholder="Enter School Address"
                                     value="{{ $studentdetails->school_address }}">
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             </div><!--end col-->
 
 
                             <div class="xl:col-span-12">
                                 <h6 class="mb-1 text-15 text-blue-500">Address</h6>
-                                <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details
-                                    here easily.</p>
+                                <p class="mb-4 text-slate-500 dark:text-zink-200">Update your address.</p>
                             </div>
 
                             <div class="xl:col-span-3">
