@@ -14,7 +14,7 @@ class CeeSlipController extends Controller
     public function generateceeExamSlip(Request $request)
     {
         $app_no = Crypt::decryptString($request->app_no);
-        $cee_reservation = Reservation::where('app_no',$app_no)->first();
+        $cee_reservation = Reservation::where('app_no', $app_no)->first();
 
         $pdf = PDF::loadView('student.cee-slip.exam-slip', compact('cee_reservation'));
 

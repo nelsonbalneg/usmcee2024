@@ -1,250 +1,283 @@
-New Report Machine Ledger
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEE Examination Slip </title>
+    <title>Machine Ledger Report</title>
     <style>
-        @page {
-    size: 8.5in 13in;
-    margin: 0.25in;
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            margin: 0;
+            padding: 30px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
-body {
-    font-family: 'Corbel', sans-serif;
-    margin: 0;
-    padding: 0;
-    width: calc(8.5in - 0.5in);
-    height: 12.5in; /* Slightly smaller to avoid overflow */
-    box-sizing: border-box;
-    font-size: 9pt;
-}
+        .slip-container {
+            position: relative;
+            max-width: 750px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            padding: 30px;
+            border-radius: 12px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-.container {
-    width: 100%;
-    height: 100%;
-    padding: 0; /* Remove padding */
-    box-sizing: border-box;
-    page-break-inside: avoid; /* Avoid page break inside */
-}
 
-.header,
-.section {
-    width: 100%;
-    margin-bottom: 5px;
-    page-break-inside: avoid; /* Avoid page break inside */
-}
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
 
-.section div {
-    font-size: 9pt;
-}
+        .header-left,
+        .header-right {
+            width: 100px;
+            text-align: center;
+        }
 
-.header div {
-    text-align: center;
-    font-weight: bold;
-}
+        .header-center {
+            text-align: center;
+            flex-grow: 1;
+            margin: 0 20px;
+        }
 
-.header img {
-    position: absolute;
-    top: 0;
-    width: 100px;
-}
+        .header h1 {
+            margin: 0;
+            font-size: 25px;
+            color: #006400;
+            font-weight: bold;
+        }
 
-.header .left-logo {
-    left: 0;
-    margin-left: 100px;
-}
+        .header p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    page-break-inside: avoid; /* Prevent tables from breaking across pages */
-}
+        .header-left-logo {
+            max-width: 50px;
+            /* Adjust this value as needed */
+            height: auto;
+        }
 
-th,
-td {
-    border: 1px solid #000;
-    padding: 8px;
-    text-align: left;
-    font-size: 12px;
-    vertical-align: middle;
-}
+        .photo-container {
+            display: flex;
+            justify-content: center;
+            /* Centers the image horizontally */
+            align-items: center;
+            /* Centers the image vertically */
+            margin-top: 5px;
+            height: 150px;
+            /* You can adjust the height based on your layout */
+        }
 
-th {
-    background-color: #cecece;
-    text-align: center;
-    white-space: nowrap;
-}
+        .applicant-photo {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            margin-bottom: 10px;
+        }
 
-.fixed-width th {
-    width: 130px;
-    height: 8px;
-}
+        .info-table,
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-.equipment-specifications th,
-.equipment-specifications td {
-    background-color: #a1a1a1;
-}
+        .info-table td,
+        .item-table th,
+        .item-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
 
-.round-image {
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-}
+        .item-table th {
+            background-color: #f4f4f4;
+            text-align: left;
+            font-weight: bold;
+        }
 
-.watermark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
-    /* font-size: 100px; */
-    color: rgba(0, 0, 0, 0.1);
-    white-space: nowrap;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.3; /* 20% opacity */
-}
+        .item-table td {
+            background-color: #fafafa;
+        }
 
-.title {
-    text-align: center;
-    margin: 5px 0;
-}
+        .total {
+            text-align: right;
+            padding: 12px;
+            font-weight: bold;
+            color: #0056b3;
+        }
 
-.row-height td {
-    height: 12px;
-}
+        .requirements-container {
+            margin-top: 25px;
+        }
 
-.text-left {
-    display: flex;
-    justify-content: space-between;
-}
+        .requirements-container th {
+            text-align: left;
+            font-weight: bold;
+            color: #333;
+            font-size: 12px;
+        }
 
-.info-item {
-    margin-right: 40px;
-}
+        .requirements-container td {
+            padding-left: 20px;
+            font-size: 12px;
+        }
 
-.footer {
-    position: absolute; /* Change to absolute instead of fixed */
-    bottom: 0;
-    width: 100%;
-    color: rgb(46, 46, 46);
-    font-size: 7pt;
-}
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
 
-        </style>
+        .footer p {
+            margin: 3px 0;
+        }
+
+        .login-section {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .login-section a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #006400;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .login-section a:hover {
+            background-color: #004d00;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
+
+    <div class="slip-container">
+        <!-- Slip Header -->
         <div class="header">
-
-            <img src="{{ public_path('backend/assets/images/logo/OFFICIAL_USM_LOGO.png') }}" alt="University Logo"
-                class="left-logo">
-            <div>University of Southern Mindanao</div>
-            <div>UNIVERSITY TEST DEVELOPMENT CENTER</div>
-            <div style="font-size: 10pt;">Kabacan, Cotabato</div>
-            <br>
-
-            <div style="color: blue;">UNIVERSITY OF SOUTHERN MINDANAO <br>
-                COLLEGE ENTRANCE EXAMINATION</div>
-            <div class="title">Entrance Examination Slip</div>
-        </div>
-
-        <div class="row d-flex justify-content-center" style="margin-bottom: 10px; margin-top:40px;">
-            <div class="col">
-                <div class="text-left">
-                    <span class="info-item"><b>Congratulations!</b>You have successfully reserved a slot for the USMCEE. Below are your reservation details:</span>
-                </div>
-
+            <div class="header-center">
+                <p>University of Southern Mindanao</p>
+                <p>UNIVERSITY TEST DEVELOPMENT CENTER</p>
+                <p>Kabacan, Cotabato</p>
+                <br>
+                <h1>COLLEGE ENTRANCE EXAMINATION</h1>
+                <p>Entrance Examination Slip</p>
+            </div>
+            <div class="header-right">
+                <!-- Empty for symmetry -->
             </div>
         </div>
 
-        <table style="margin-bottom: 10px; width: 100%;">
-            <tr>
-                <th colspan="2" style="text-align: center;">CEE RESERVATION DETAILS</th>
-            </tr>
-            <tr>
-                <!-- Left Column -->
-                <td style="vertical-align: top; width: 50%;">
-                    <table style="width: 100%;">
-                        @if ($cee_reservation->photo)
-
-                        @endif
-                        <img src="{{ public_path($cee_reservation->applicant->photo) }}" alt="Applicant Photo"
-                            style="width: 100px; height: 100px; margin-left: 120px;" class="round-image">
-                        <p style="text-align: center;">App No.: <b> {{ $cee_reservation->app_no }}</b><br>
-                            Full Name: <b>{{ $cee_reservation->applicant->lastname }},
-                                {{ $cee_reservation->applicant->firstname }}
-                                {{ $cee_reservation->applicant->middlename }}
-                                {{ $cee_reservation->applicant->suffix }}</b> </p>
-                    </table>
-                </td>
-
-                <!-- Right Column -->
-                <td style="vertical-align: top; width: 50%;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <th style="text-align: left; width: 100px;">Test Session:</th>
-                            <td>{{ $cee_reservation->exam_session }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left; width: 100px;">Test Venue:</th>
-                            <td> ({{ $cee_reservation->room->campus }}) {{ $cee_reservation->room->college_name }} - {{ $cee_reservation->room->room_name }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left; width: 100px;">Date and Time:</th>
-                            <td> {{ \Carbon\Carbon::parse($cee_reservation->room->schedule)->format('Y-m-d') }} -
-                                {{ $cee_reservation->room->time }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left; width: 100px;">Examinee Type:</th>
-                            <td>
-                                @if ($cee_reservation->is_repeat_exam === 'Yes')
-                                    Retaker
-                                @else
-                                    New
-                                @endif
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+        <!-- Applicant Photo -->
+        <div class="photo-container">
+            <img src="{{ public_path($cee_reservation->applicant->photo) }}" alt="Applicant Photo"
+                class="applicant-photo">
+        </div>
+        <!-- Applicant Information -->
+        <table class="item-table">
+            <thead>
+                <tr>
+                    <th colspan="2">Applicant Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>App No.:</strong></td>
+                    <td>{{ $cee_reservation->app_no }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Full Name:</strong></td>
+                    <td>{{ $cee_reservation->applicant->lastname }},
+                        {{ $cee_reservation->applicant->firstname }}
+                        {{ $cee_reservation->applicant->middlename }}
+                        {{ $cee_reservation->applicant->suffix }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Test Session:</strong></td>
+                    <td>{{ $cee_reservation->exam_session }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Test Venue:</strong></td>
+                    <td>{{ $cee_reservation->room->campus }} /
+                        {{ $cee_reservation->room->college_name }} /
+                        {{ $cee_reservation->room->room_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Date and Time:</strong></td>
+                    <td>{{ \Carbon\Carbon::parse($cee_reservation->room->schedule)->format('Y-m-d') }} /
+                        {{ $cee_reservation->room->time }}
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
+        <!-- Requirements Section -->
+        <div class="requirements-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 80%;">Requirements upon entry to the testing center/venue:</th>
+                        <th style="width: 20%; text-align: right;"></th> <!-- Adjusted to align right -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>* USMCEE Entrance Examination Slip</td>
+                        <td rowspan="6" style="text-align: right; vertical-align: middle; padding-left: 20px;">
+                            <img src="{{ public_path('backend/assets/images/logo/qr.png') }}" alt="QR Code"
+                                style="width: 120px; height: 120px; object-fit: cover;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>* Valid Government-Issued ID, High School ID, or National ID</td>
+                    </tr>
+                    <tr>
+                        <td>* Face Mask</td>
+                    </tr>
+                    <tr>
+                        <td>* Personal Alcohol/Sanitizer</td>
+                    </tr>
+                    <tr>
+                        <td>* Personal Ballpen</td>
+                    </tr>
+                    <tr>
+                        <td>* Pencil and Sharpener</td>
+                    </tr>
+                    <tr>
+                        <td>* Snacks</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
 
-        <table class="table table-borderless">
-            <tr>
-                <td style=" border: none;">
-                    <h3>Requirements upon entry to the testing center/venue:</h3>
-                    <ul>
-                        <li>USMCEE Entrance Examination Slip</li>
-                        <li>One (1) Valid ID (Government-Issued ID, High School ID, Company ID, and National ID)</li>
-                        <li>Face mask</li>
-                        <li>Personal alcohol/sanitizer</li>
-                        <li>Personal ballpen (not sign pen)</li>
-                        <li>Pencil and sharpener</li>
-                        <li>Snacks</li>
-                        </ul>
-                </td>
-            </tr>
-        </table>
 
-        <div class="watermark">
-            @for ($i = 0; $i < 55; $i++)
-            <p>USMCEE -2024 {{$cee_reservation->app_no}} USMCEE -2024 {{$cee_reservation->app_no}} USMCEE -2024 {{$cee_reservation->app_no}} USMCEE -2024 {{$cee_reservation->app_no}} USMCEE -2024 {{$cee_reservation->app_no}} USMCEE -2024 {{$cee_reservation->app_no}} USMCEE -2024 {{$cee_reservation->app_no}} USMCEE -2024 {{$cee_reservation->app_no}} USMCEE -2024 USMCEE -2024</p>
-        @endfor
 
-        <br>
-        {{-- <div class="footer">
-            <p>Downloaded Date and Time: {{ \Carbon\Carbon::now()->format('Y-m-d H:i:s') }}</p>
-            <p> <i>University of Southern Mindanao - College Entrance Examination Reservation System v4.0 | <b> Powered by: UICTO</b></i></p>
-        </div> --}}
+        <!-- Footer -->
+        <div class="footer">
+            <p>Issued by: University Test Development Center</p>
+            <p>This is a computer-generated slip and does not require a signature.</p>
+            <p>Date: {{ \Carbon\Carbon::now()->format('Y-m-d') }}</p>
+        </div>
     </div>
 
 </body>
