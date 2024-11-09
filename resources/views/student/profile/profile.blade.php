@@ -323,24 +323,10 @@ USMCEE - My Profile
         </script>
     @endif
     <script>
-        function validateLRN() {
-            const lrnInput = document.getElementById('lrn');
 
-            // Check if the LRN is exactly 12 digits and contains numbers only
-            if (!/^\d{12}$/.test(lrnInput.value)) {
-                Toastify({
-                    text: 'LRN must be exactly 12 digits.',
-                    duration: 3000,
-                    gravity: "top",
-                    position: "right",
-                    backgroundColor: "#f56565", // Red for error
-                    className: "error",
-                }).showToast();
 
-                // Clear the input field
-                lrnInput.value = '';
-            }
-        }
+
+
 
         function validateZipcode() {
             const lrnInput = document.getElementById('zipcode');
@@ -364,11 +350,26 @@ USMCEE - My Profile
     <script>
         function validateLRN() {
             const lrnInput = document.getElementById('lrn');
+            const lrnValue = lrnInput.value;
 
             // Check if the LRN is exactly 12 digits and contains numbers only
-            if (!/^\d{12}$/.test(lrnInput.value)) {
+            if (!/^\d{12}$/.test(lrnValue)) {
                 Toastify({
                     text: 'LRN must be exactly 12 digits.',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
+
+                // Clear the input field
+                lrnInput.value = '';
+            }
+            // Check if the LRN contains repeated digits (e.g., 000000000000, 111111111111)
+            else if (/^(\d)\1{11}$/.test(lrnValue)) {
+                Toastify({
+                    text: 'LRN cannot be a sequence of repeated digits.',
                     duration: 3000,
                     gravity: "top",
                     position: "right",
