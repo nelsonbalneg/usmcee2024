@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentCeeReserveController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReservationDetailsController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -41,6 +43,12 @@ Route::prefix('api')
     ->group(function () {
         Route::get('programs', [StudentCeeReserveController::class, 'getProgramsByTenant']);
     });
+
+
+Route::get('reservation/{id}/{app_no}', [ReservationController::class, 'getReservationByIdAndAppNo']);
+// In routes/web.php
+Route::post('reservation-details', [ReservationDetailsController::class, 'store']);
+
 
 
 
