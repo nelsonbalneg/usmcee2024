@@ -362,6 +362,10 @@
                                                                     USM PALMA CLUSTER
                                                                 @elseif ($reservation->campus_id == 6)
                                                                     USM MLANG
+                                                                @elseif ($reservation->campus_id == 7)
+                                                                    USM Antipas
+                                                                @elseif ($reservation->campus_id == 8)
+                                                                    USM Pigcwayan
                                                                 @else
                                                                     Unknown Campus
                                                                 @endif)
@@ -381,6 +385,10 @@
                                                                     USM PALMA CLUSTER
                                                                 @elseif ($reservation->campus_id == 6)
                                                                     USM MLANG
+                                                                @elseif ($reservation->campus_id == 7)
+                                                                    USM Antipas
+                                                                @elseif ($reservation->campus_id == 8)
+                                                                    USM Pigcwayan
                                                                 @else
                                                                     Unknown Campus
                                                                 @endif)
@@ -399,6 +407,10 @@
                                                                     USM PALMA CLUSTER
                                                                 @elseif ($reservation->campus_id == 6)
                                                                     USM MLANG
+                                                                @elseif ($reservation->campus_id == 7)
+                                                                    USM Antipas
+                                                                @elseif ($reservation->campus_id == 8)
+                                                                    USM Pigcwayan
                                                                 @else
                                                                     Unknown Campus
                                                                 @endif)
