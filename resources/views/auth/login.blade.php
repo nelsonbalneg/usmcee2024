@@ -114,8 +114,19 @@
                     <h4 class="mb-1 text-yellow-500 dark:text-yellow-500">Welcome Students !</h4>
                     <p class="text-slate-500 dark:text-zink-200">Sign in to continue to USMCEE</p>
                 </div>
-
-                <form method="POST" action="{{ route('login') }}" class="mt-10">
+                <div
+                    class="flex gap-3 p-3 text-sm rounded-md text-yellow-500 rounded-md bg-yellow-50 dark:bg-yellow-400/20 mt-5">
+                    <div>
+                        <h6 class="mb-1">WARNING!</h6>
+                        <ul class="ml-2 list-disc list-inside">
+                            <li>Creating multiple accounts to secure slots is <b>PROHIBITED</b></li>
+                            <li>Ensure all information is complete and accurate.</li>
+                            <li>Incomplete or incorrect entries, or multiple accounts, may result in disqualification.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <form method="POST" action="{{ route('login') }}" class="mt-5">
                     @csrf
                     <div class="mb-3 text-center">
                         @if ($errors->any())
