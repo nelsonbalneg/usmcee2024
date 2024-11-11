@@ -233,219 +233,211 @@
                     </div><!--end grid-->
 
                 </div><!--end tab pane--> --}}
-              
-                    @php
-                        $encryptedAppNo = Crypt::encryptString($reservation->app_no);
-                    @endphp
-                    <div class="block tab-pane" id="overviewTabs">
-                        <div class="grid grid-cols-1 gap-x-5 2xl:grid-cols-12">
-                            <div class="2xl:col-span-12">
-                                <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
 
-                                    <div class="text-center card bg-custom-500 xl:col-span-3">
-                                        <div class="flex flex-col h-full card-body">
-                                            <img src="{{ asset(Auth::user()->photo) }}" alt=""
-                                                class="w-2/6 mx-auto rounded-full">
-                                            <div class="mt-5 mb-auto">
-                                                <h5 class="mb-1 text-white">Congratulations!
-                                                    {{ $reservation->firstname }}</h5>
-                                                <p class="text-custom-200">You have successfully reserved a slot. Kindly
-                                                    click
-                                                    the <b>Download Slip</b> button to download your CEE slip.</p>
-                                            </div>
-                                            <div class="p-3 mt-5 rounded-md bg-custom-600">
-                                                @if (!empty(Auth::user()->photo))
-                                                    <a href="{{ route('student.cee.exam-slip', ['app_no' => $encryptedAppNo]) }}"
-                                                        class="text-decoration-none" target="_blank">
-                                                        <h2 class="mb-1 text-white">Download Slip</h2>
-                                                    </a>
-                                                @else
-                                                    <a class="text-decoration-none" target="_blank">
-                                                        <h5 class="mb-1 text-white">A Photo is required to download your CEE
-                                                            Slip!</h5>
-                                                    </a>
-                                                @endif
-                                            </div>
+                @php
+                    $encryptedAppNo = Crypt::encryptString($reservation->app_no);
+                @endphp
+                <div class="block tab-pane" id="overviewTabs">
+                    <div class="grid grid-cols-1 gap-x-5 2xl:grid-cols-12">
+                        <div class="2xl:col-span-12">
+                            <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
+
+                                <div class="text-center card bg-custom-500 xl:col-span-3">
+                                    <div class="flex flex-col h-full card-body">
+                                        <img src="{{ asset(Auth::user()->photo) }}" alt=""
+                                            class="w-2/6 mx-auto rounded-full">
+                                        <div class="mt-5 mb-auto">
+                                            <h5 class="mb-1 text-white">Congratulations!
+                                                {{ $reservation->firstname }}</h5>
+                                            <p class="text-custom-200">You have successfully reserved a slot. Kindly
+                                                click
+                                                the <b>Download Slip</b> button to download your CEE slip.</p>
                                         </div>
-                                    </div><!--end col-->
+                                        <div class="p-3 mt-5 rounded-md bg-custom-600">
+                                            @if (!empty(Auth::user()->photo))
+                                                <a href="{{ route('student.cee.exam-slip', ['app_no' => $encryptedAppNo]) }}"
+                                                    class="text-decoration-none" target="_blank">
+                                                    <h4 class="mb-1 text-white">Download Slip</h4>
+                                                </a>
+                                            @else
+                                                <a class="text-decoration-none" target="_blank">
+                                                    <h5 class="mb-1 text-white">A Photo is required to download your CEE
+                                                        Slip!</h5>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
 
-                                    <div class="xl:col-span-4">
-                                        <div class="card">
-                                            <div class="bg-slate-200 card-body rounded-t-md dark:bg-zink-600">
-                                                <h6 class="mb-1 text-15">USMCEE Reservation Details</h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="overflow-x-auto">
-                                                    <table class="w-full ltr:text-left rtl:ext-right">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pt-2 font-semibold ps-0" scope="row">
-                                                                    Application Number</th>
-                                                                <td
-                                                                    class="pt-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->app_no }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="pt-2 font-semibold ps-0" scope="row">Full Name
-                                                                </th>
-                                                                <td
-                                                                    class="pt-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->lastname }},
-                                                                    {{ $reservation->firstname }}
-                                                                    {{ $reservation->middlename ?? '' }}
-                                                                    {{ $reservation->suffix ?? '' }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="pt-2 font-semibold ps-0" scope="row">Sex</th>
-                                                                <td
-                                                                    class="pt-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->sex }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="pt-2 font-semibold ps-0" scope="row">Email
-                                                                </th>
-                                                                <td
-                                                                    class="pt-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->email }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="pt-2 font-semibold ps-0" scope="row">Phone
-                                                                </th>
-                                                                <td
-                                                                    class="pt-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->phone }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="pt-2 font-semibold ps-0" scope="row">Birth
-                                                                    Date</th>
-                                                                <td
-                                                                    class="pt-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ \Carbon\Carbon::parse($reservation->birthdate)->format('F j, Y') }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="pt-2 font-semibold ps-0" scope="row">CEE Applicant Type</th>
-                                                                <td
-                                                                    class="pt-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    @if ($reservation->is_repeat_exam == 'No')
+                                <div class="xl:col-span-4">
+                                    <div class="card">
+                                        <div class="bg-slate-200 card-body rounded-t-md dark:bg-zink-600">
+                                            <h6 class="mb-1 text-15">USMCEE Reservation Details</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="overflow-x-auto">
+                                                <table class="w-full ltr:text-left rtl:ext-right">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="pt-2 font-semibold ps-0" scope="row">
+                                                                Application Number</th>
+                                                            <td class="pt-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->app_no }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="pt-2 font-semibold ps-0" scope="row">Full Name
+                                                            </th>
+                                                            <td class="pt-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->lastname }},
+                                                                {{ $reservation->firstname }}
+                                                                {{ $reservation->middlename ?? '' }}
+                                                                {{ $reservation->suffix ?? '' }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="pt-2 font-semibold ps-0" scope="row">Sex</th>
+                                                            <td class="pt-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->sex }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="pt-2 font-semibold ps-0" scope="row">Email
+                                                            </th>
+                                                            <td class="pt-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->email }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="pt-2 font-semibold ps-0" scope="row">Phone
+                                                            </th>
+                                                            <td class="pt-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->phone }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="pt-2 font-semibold ps-0" scope="row">Birth
+                                                                Date</th>
+                                                            <td class="pt-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ \Carbon\Carbon::parse($reservation->birthdate)->format('F j, Y') }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="pt-2 font-semibold ps-0" scope="row">CEE Applicant
+                                                                Type</th>
+                                                            <td class="pt-2 text-right text-slate-500 dark:text-zink-200">
+                                                                @if ($reservation->is_repeat_exam == 'No')
                                                                     First Time Taker
                                                                 @elseif ($reservation->is_repeat_exam == 'Yes')
                                                                     Retaker
                                                                 @endif
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>
+                                </div><!--end col-->
 
-                                    <div class="xl:col-span-5">
-                                        <div class="card">
-                                            <div class="bg-slate-200 card-body rounded-t-md dark:bg-zink-600">
-                                                <h6 class="mb-1 text-15">Priority Programs and Schedule</h6>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="overflow-x-auto">
-                                                    <table class="w-full ltr:text-left rtl:ext-right">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="py-2 font-semibold ps-0" scope="row">First
-                                                                    Priority</th>
-                                                                <td
-                                                                    class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->firstpriorty_desc }} (
-                                                                    @if ($reservation->campus_id == 1)
-                                                                        USM-Main
-                                                                    @elseif ($reservation->campus_id == 3)
-                                                                        USM KCC
-                                                                    @elseif ($reservation->campus_id == 5)
-                                                                        USM PALMA CLUSTER
-                                                                    @elseif ($reservation->campus_id == 6)
-                                                                        USM MLANG
-                                                                    @else
-                                                                        Unknown Campus
-                                                                    @endif)
-                                                                </td>
-                                                            </tr>
+                                <div class="xl:col-span-5">
+                                    <div class="card">
+                                        <div class="bg-slate-200 card-body rounded-t-md dark:bg-zink-600">
+                                            <h6 class="mb-1 text-15">Priority Programs and Schedule</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="overflow-x-auto">
+                                                <table class="w-full ltr:text-left rtl:ext-right">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">First
+                                                                Priority</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->firstpriorty_desc }} (
+                                                                @if ($reservation->campus_id == 1)
+                                                                    USM-Main
+                                                                @elseif ($reservation->campus_id == 3)
+                                                                    USM KCC
+                                                                @elseif ($reservation->campus_id == 5)
+                                                                    USM PALMA CLUSTER
+                                                                @elseif ($reservation->campus_id == 6)
+                                                                    USM MLANG
+                                                                @else
+                                                                    Unknown Campus
+                                                                @endif)
+                                                            </td>
+                                                        </tr>
 
-                                                            <tr>
-                                                                <th class="py-2 font-semibold ps-0" scope="row">Second
-                                                                    Priority</th>
-                                                                <td
-                                                                    class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->secondpriority_desc }} (
-                                                                    @if ($reservation->campus_id == 1)
-                                                                        USM-Main
-                                                                    @elseif ($reservation->campus_id == 3)
-                                                                        USM KCC
-                                                                    @elseif ($reservation->campus_id == 5)
-                                                                        USM PALMA CLUSTER
-                                                                    @elseif ($reservation->campus_id == 6)
-                                                                        USM MLANG
-                                                                    @else
-                                                                        Unknown Campus
-                                                                    @endif)
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="py-2 font-semibold ps-0" scope="row">Third
-                                                                    Priority</th>
-                                                                <td
-                                                                    class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->thirdpriorty_desc }} (
-                                                                    @if ($reservation->campus_id == 1)
-                                                                        USM-Main
-                                                                    @elseif ($reservation->campus_id == 3)
-                                                                        USM KCC
-                                                                    @elseif ($reservation->campus_id == 5)
-                                                                        USM PALMA CLUSTER
-                                                                    @elseif ($reservation->campus_id == 6)
-                                                                        USM MLANG
-                                                                    @else
-                                                                        Unknown Campus
-                                                                    @endif)
-                                                                </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Second
+                                                                Priority</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->secondpriority_desc }} (
+                                                                @if ($reservation->campus_id == 1)
+                                                                    USM-Main
+                                                                @elseif ($reservation->campus_id == 3)
+                                                                    USM KCC
+                                                                @elseif ($reservation->campus_id == 5)
+                                                                    USM PALMA CLUSTER
+                                                                @elseif ($reservation->campus_id == 6)
+                                                                    USM MLANG
+                                                                @else
+                                                                    Unknown Campus
+                                                                @endif)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Third
+                                                                Priority</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->thirdpriorty_desc }} (
+                                                                @if ($reservation->campus_id == 1)
+                                                                    USM-Main
+                                                                @elseif ($reservation->campus_id == 3)
+                                                                    USM KCC
+                                                                @elseif ($reservation->campus_id == 5)
+                                                                    USM PALMA CLUSTER
+                                                                @elseif ($reservation->campus_id == 6)
+                                                                    USM MLANG
+                                                                @else
+                                                                    Unknown Campus
+                                                                @endif)
+                                                            </td>
+                                                        </tr>
 
-                                                            <tr>
-                                                                <th class="py-2 font-semibold ps-0" scope="row">Batch and
-                                                                    Schedule</th>
-                                                                <td
-                                                                    class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->exam_session }}<br>
-                                                                    {{ \Carbon\Carbon::parse($reservation->schedule)->format('F j, Y') }} ({{ $reservation->time }})
-                                                                </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Batch and
+                                                                Schedule</th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->exam_session }}<br>
+                                                                {{ \Carbon\Carbon::parse($reservation->schedule)->format('F j, Y') }}
+                                                                ({{ $reservation->time }})
+                                                            </td>
+                                                        </tr>
 
-                                                            <tr>
-                                                                <th class="py-2 font-semibold ps-0" scope="row">Test Venue</th>
-                                                                <td
-                                                                    class="py-2 text-right text-slate-500 dark:text-zink-200">
-                                                                    {{ $reservation->campus }} <br>
-                                                                    {{ $reservation->college_name }} ({{ $reservation->room_name }})
-                                                                </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <th class="py-2 font-semibold ps-0" scope="row">Test Venue
+                                                            </th>
+                                                            <td class="py-2 text-right text-slate-500 dark:text-zink-200">
+                                                                {{ $reservation->campus }} <br>
+                                                                {{ $reservation->college_name }}
+                                                                ({{ $reservation->room_name }})
+                                                            </td>
+                                                        </tr>
 
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>
+                                </div><!--end col-->
 
-                                </div><!--end grid-->
+                            </div><!--end grid-->
 
-                            </div><!--end col-->
-                        </div><!--end grid-->
+                        </div><!--end col-->
+                    </div><!--end grid-->
 
-                    </div><!--end tab pane-->
+                </div><!--end tab pane-->
 
 
 
@@ -512,6 +504,9 @@
                                         <option value="3">USM KCC</option>
                                         <option value="5">USM PALMA CLUSTER</option>
                                         <option value="6">USM MLANG</option>
+                                        <option value="7">USM Antipas</option>
+                                        <option value="8">USM Pigcwayan</option>
+
                                     </select>
                                 </div>
 
@@ -537,6 +532,9 @@
                                         <option value="3">USM KCC</option>
                                         <option value="5">USM PALMA CLUSTER</option>
                                         <option value="6">USM MLANG</option>
+                                        <option value="7">USM Antipas</option>
+                                        <option value="8">USM Pigcwayan</option>
+
                                     </select>
                                 </div>
 
@@ -563,6 +561,8 @@
                                         <option value="3">USM KCC</option>
                                         <option value="5">USM PALMA CLUSTER</option>
                                         <option value="6">USM MLANG</option>
+                                        <option value="7">USM Antipas</option>
+                                        <option value="8">USM Pigcwayan</option>
 
                                     </select>
                                 </div>
@@ -611,7 +611,7 @@
                                         </option>
                                         <option value="Batch 2">Batch 2 (10:00 AM - 1:00 PM)
                                         </option>
-                                        <option value="Batch 3">Batch 3 (2:00 PM - 5:00 PM)
+                                        <option value="Batch 3">Batch 3 (1:30 PM - 4:30 PM)
                                         </option>
                                     </select>
                                 </div><!--end col-->
@@ -905,6 +905,12 @@
                     case "6":
                         termId = 99;
                         break; // Mlang
+                    case "7":
+                        termId = 99;
+                        break; // antipas
+                    case "8":
+                        termId = 99;
+                        break; // Pigcwayan
                     default:
                         termId = null;
                         break;
