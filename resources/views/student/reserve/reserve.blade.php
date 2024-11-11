@@ -393,7 +393,7 @@
                                         </option>
                                         <option value="Batch 2">Batch 2 (10:00 AM - 1:00 PM)
                                         </option>
-                                        <option value="Batch 3">Batch 3 (2:00 PM - 5:00 PM)
+                                        <option value="Batch 3">Batch 3 (1:30 PM - 4:30 PM)
                                         </option>
                                     </select>
                                 </div><!--end col-->
