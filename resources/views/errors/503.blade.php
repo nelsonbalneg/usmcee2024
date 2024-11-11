@@ -34,7 +34,7 @@
             </div>
             <div class="mt-8 text-center">
                 <h4 class="mb-2 text-purple-500">Currently in Maintenance Mode !!!</h4>
-                <p class="mb-6 text-slate-500 dark:text-zink-200">Our technical team is currently working on improving the system. We will be back online once the necessary updates are completed!</p>
+                <p class="mb-6 text-slate-500 dark:text-zink-200">Our technical team is actively working to enhance the system. We expect to be back online by 9:00 AM on November 12, 2024. Thank you for your patience and understanding.</p>
                 <a href="#" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="home" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Refresh</span></a>
             </div>
         </div>
