@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use App\Models\PastCeeData;
+use DB;
 
 class StudentCeeReserveController extends Controller
 {
@@ -34,10 +35,39 @@ class StudentCeeReserveController extends Controller
         $firstname = Auth::user()->firstname;
         $lastname = Auth::user()->lastname;
         $birthdate = Auth::user()->birthdate;
+        $userId = Auth::user()->id;
 
         $ceeSession = CeeSession::where('status', 'active')->first();
         $application = Reservation::where('user_id', Auth::user()->id)->exists();
-        $existingReservation = Reservation::where('user_id', Auth::user()->id)->first();
+
+
+        // $existingReservation = Reservation::where('user_id', Auth::user()->id)->first();
+        $reservation = DB::table('reservations')
+            ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+            ->join('users', 'reservations.user_id', '=', 'users.id')
+            ->where('reservations.user_id', $userId)
+            ->select(
+                'reservations.user_id',
+                'reservations.app_no',
+                'reservations.firstpriorty_desc',
+                'reservations.secondpriority_desc',
+                'reservations.thirdpriorty_desc',
+                'reservations.campus_id',
+                'reservations.is_repeat_exam',
+                'rooms.room_name',
+                'rooms.college_name',
+                'rooms.exam_session',
+                'rooms.campus',
+                'rooms.time',
+                'rooms.schedule',
+                'users.firstname',
+                'users.lastname',
+                'users.email',
+                'users.sex',
+                'users.phone',
+                'users.birthdate'
+            )
+            ->first();
 
         //check if name exist in the past cee data session
         $isRetaker = PastCeeData::where('firstname', $firstname)
@@ -45,7 +75,7 @@ class StudentCeeReserveController extends Controller
             ->where('birthdate', $birthdate)
             ->exists();
 
-        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'existingReservation', 'isRetaker'));
+        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'reservation', 'isRetaker'));
     }
 
     public function getProgramsByTenant(Request $request)

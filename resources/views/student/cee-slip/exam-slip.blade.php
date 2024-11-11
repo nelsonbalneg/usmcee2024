@@ -165,12 +165,14 @@ New Report Machine Ledger
                 <div class="text-left">
                     <span class="info-item"><b>Congratulations!</b>You have successfully reserved a slot for the USMCEE.
                         Below are your reservation details:</span>
+                    <span class="info-item"><b>Congratulations!</b>You have successfully reserved a slot for the USMCEE.
+                        Below are your reservation details:</span>
                 </div>
 
             </div>
         </div>
 
-        <table style="margin-bottom: 10px; width: 100%;">
+        {{-- <table style="margin-bottom: 10px; width: 100%;">
             <tr>
                 <th colspan="2" style="text-align: center;">CEE RESERVATION DETAILS</th>
             </tr>
@@ -181,7 +183,7 @@ New Report Machine Ledger
                         @if ($cee_reservation->photo)
                         @endif
                         <img src="{{ public_path($cee_reservation->applicant->photo) }}" alt="Applicant Photo"
-                            style="width: 100px; height: 100px; margin-left: 120px;" class="round-image">
+                            style="width: 100px; height: 100px; margin-left: 120px;">
                         <p style="text-align: center;">App No.: <b> {{ $cee_reservation->app_no }}</b><br>
                             Full Name: <b>{{ $cee_reservation->applicant->lastname }},
                                 {{ $cee_reservation->applicant->firstname }}
@@ -199,13 +201,13 @@ New Report Machine Ledger
                         </tr>
                         <tr>
                             <th style="text-align: left; width: 100px;">Test Venue:</th>
-                            <td> <b>{{ $cee_reservation->room->campus }}</b><br> {{ $cee_reservation->room->college_name }} -
+                            <td> ({{ $cee_reservation->room->campus }}) {{ $cee_reservation->room->college_name }} -
                                 {{ $cee_reservation->room->room_name }}
                             </td>
                         </tr>
                         <tr>
                             <th style="text-align: left; width: 100px;">Date and Time:</th>
-                            <td> {{ \Carbon\Carbon::parse($cee_reservation->room->schedule)->format('F j, Y') }}<br>
+                            <td> {{ \Carbon\Carbon::parse($cee_reservation->room->schedule)->format('F j, Y') }} -
                                 {{ $cee_reservation->room->time }}</td>
                         </tr>
                         <tr>
@@ -221,7 +223,60 @@ New Report Machine Ledger
                     </table>
                 </td>
             </tr>
+        </table> --}}
+
+        <table style="margin-bottom: 10px; width: 100%;">
+            <tr>
+                <th colspan="2" style="text-align: center;">CEE RESERVATION DETAILS</th>
+            </tr>
+            <tr>
+                <!-- Left Column -->
+                <td style="vertical-align: top; width: 50%;">
+                    <table style="width: 100%;">
+                        <img src="{{ public_path($cee_reservation->photo) }}" alt="Applicant Photo"
+                            style="width: 100px; height: 100px; margin-left: 120px;">
+                        <p style="text-align: center;">App No.: <b>{{ $cee_reservation->app_no }}</b><br>
+                            Full Name: <b>{{ $cee_reservation->lastname }},
+                                {{ $cee_reservation->firstname }}
+                                {{ $cee_reservation->middlename ?? '' }}
+                                {{ $cee_reservation->suffix ?? '' }}</b>
+                        </p>
+                    </table>
+                </td>
+
+                <!-- Right Column -->
+                <td style="vertical-align: top; width: 50%;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <th style="text-align: left; width: 100px;">Test Session:</th>
+                            <td>{{ $cee_reservation->exam_session }}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left; width: 100px;">Test Venue:</th>
+                            <td> ({{ $cee_reservation->campus }}) {{ $cee_reservation->college_name }} -
+                                {{ $cee_reservation->room_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left; width: 100px;">Date and Time:</th>
+                            <td> {{ \Carbon\Carbon::parse($cee_reservation->schedule)->format('F j, Y') }} -
+                                {{ $cee_reservation->time }}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left; width: 100px;">CEE Applicant Type:</th>
+                            <td>
+                                @if ($cee_reservation->is_repeat_exam === 'Yes')
+                                    Retaker
+                                @else
+                                    First Time Taker
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
         </table>
+
 
 
 
@@ -254,10 +309,11 @@ New Report Machine Ledger
                     USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }} USMCEE -2024 USMCEE -2024</p>
             @endfor
         </div>
+
         <div class="footer">
-            <p>Downloaded Date and Time: {{ \Carbon\Carbon::now()->format('F j, Y') }}</p>
-            <p style="margin-top:-8px;"> <i>University of Southern Mindanao - College Entrance Examination System v4.0 |
-                    <b> Powered by: UICTO</b></i></p>
+            <p>Downloaded Date and Time: {{ \Carbon\Carbon::now('Asia/Manila')->format('Y-m-d H:i:s') }}</p>
+            <p style="margin-top:-8px;"> <i>University of Southern Mindanao - College Entrance Examination Reservation System v4.0 | <b>
+                        Powered by: UICTO</b></i></p>
         </div>
 
 </body>
