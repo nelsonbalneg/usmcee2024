@@ -53,6 +53,8 @@ class StudentCeeReserveController extends Controller
                 'reservations.secondpriority_desc',
                 'reservations.thirdpriorty_desc',
                 'reservations.campus_id',
+                'reservations.campus_id_prio_prog_2',
+                'reservations.campus_id_prio_prog_3',
                 'reservations.is_repeat_exam',
                 'rooms.room_name',
                 'rooms.college_name',

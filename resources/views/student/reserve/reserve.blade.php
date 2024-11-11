@@ -377,17 +377,17 @@
                                                                 Priority</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
                                                                 {{ $reservation->secondpriority_desc }} (
-                                                                @if ($reservation->campus_id == 1)
+                                                                @if ($reservation->campus_id_prio_prog_2 == 1)
                                                                     USM-Main
-                                                                @elseif ($reservation->campus_id == 3)
+                                                                @elseif ($reservation->campus_id_prio_prog_2 == 3)
                                                                     USM KCC
-                                                                @elseif ($reservation->campus_id == 5)
+                                                                @elseif ($reservation->campus_id_prio_prog_2 == 5)
                                                                     USM PALMA CLUSTER
-                                                                @elseif ($reservation->campus_id == 6)
+                                                                @elseif ($reservation->campus_id_prio_prog_2 == 6)
                                                                     USM MLANG
-                                                                @elseif ($reservation->campus_id == 7)
+                                                                @elseif ($reservation->campus_id_prio_prog_2 == 7)
                                                                     USM Antipas
-                                                                @elseif ($reservation->campus_id == 8)
+                                                                @elseif ($reservation->campus_id_prio_prog_2 == 8)
                                                                     USM Pigcwayan
                                                                 @else
                                                                     Unknown Campus
@@ -399,17 +399,17 @@
                                                                 Priority</th>
                                                             <td class="py-2 text-right text-slate-500 dark:text-zink-200">
                                                                 {{ $reservation->thirdpriorty_desc }} (
-                                                                @if ($reservation->campus_id == 1)
+                                                                @if ($reservation->campus_id_prio_prog_3 == 1)
                                                                     USM-Main
-                                                                @elseif ($reservation->campus_id == 3)
+                                                                @elseif ($reservation->campus_id_prio_prog_3 == 3)
                                                                     USM KCC
-                                                                @elseif ($reservation->campus_id == 5)
+                                                                @elseif ($reservation->campus_id_prio_prog_3 == 5)
                                                                     USM PALMA CLUSTER
-                                                                @elseif ($reservation->campus_id == 6)
+                                                                @elseif ($reservation->campus_id_prio_prog_3 == 6)
                                                                     USM MLANG
-                                                                @elseif ($reservation->campus_id == 7)
+                                                                @elseif ($reservation->campus_id_prio_prog_3 == 7)
                                                                     USM Antipas
-                                                                @elseif ($reservation->campus_id == 8)
+                                                                @elseif ($reservation->campus_id_prio_prog_3 == 8)
                                                                     USM Pigcwayan
                                                                 @else
                                                                     Unknown Campus
