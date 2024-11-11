@@ -25,6 +25,68 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // // Validate reCAPTCHA response with a custom error message
+        // $request->validate([
+        //     'g-recaptcha-response' => 'required',
+        // ], [
+        //     'g-recaptcha-response.required' => 'reCAPTCHA field is required.',
+        // ]);
+
+        // // Retrieve the reCAPTCHA token from the request
+        // $recaptchaResponse = $request->input('g-recaptcha-response');
+        // $secretKey = env('RECAPTCHA_SECRET_KEY'); // Your reCAPTCHA secret key
+
+        // // Prepare the data to verify reCAPTCHA
+        // $data = [
+        //     'secret' => $secretKey,
+        //     'response' => $recaptchaResponse,
+        //     'remoteip' => $request->ip(),
+        // ];
+
+        // // Create the context for the HTTP request using file_get_contents
+        // $options = [
+        //     'http' => [
+        //         'method' => 'POST',
+        //         'header' => 'Content-type: application/x-www-form-urlencoded',
+        //         'content' => http_build_query($data),
+        //     ],
+        // ];
+        // $context = stream_context_create($options);
+
+        // // Send the request to the reCAPTCHA verification endpoint
+        // $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+
+        // // Decode the JSON response from Google reCAPTCHA
+        // $responseBody = json_decode($response);
+
+        // // Log the reCAPTCHA response for debugging purposes
+        // Log::info('reCAPTCHA response from Google', (array) $responseBody);
+
+        // // Check if reCAPTCHA verification was successful
+        // if (!$responseBody->success) {
+        //     return redirect()->back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.']);
+        // }
+
+        // // Proceed with the usual login logic
+        // $credentials = $request->only('email', 'password');
+        // $remember = $request->has('remember');
+
+        // if (Auth::attempt($credentials, $remember)) {
+        //     $request->session()->regenerate();
+        //     $role = $request->user()->role;
+
+        //     // Redirect based on user role
+        //     return match ($role) {
+        //         'admin' => redirect()->intended('admin/dashboard'),
+        //         'utdc' => redirect()->intended('utdc/dashboard'),
+        //         'student' => redirect()->intended('student/dashboard'),
+        //         default => redirect()->intended(route('student/dashboard', absolute: false)),
+        //     };
+        // }
+
+        // // If login fails, redirect back with an error message
+        // return redirect()->back()->withErrors(['email' => 'Login failed. Please check your credentials.']);
+
         // Validate reCAPTCHA response with a custom error message
         $request->validate([
             'g-recaptcha-response' => 'required',

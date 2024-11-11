@@ -101,7 +101,7 @@ USMCEE - My Profile
         <div class="card">
             <div class="card-body">
 
-                <h6 class="mb-5 text-15 text-blue-500">School Information</h6>
+                <h6 class="mb-5 text-15 text-blue-500">SCHOOL INFORMATION</h6>
                 {{-- <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details here
                     easily. --}}
                 </p>
@@ -114,39 +114,59 @@ USMCEE - My Profile
                     </div>
                     <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
 
-                        @if (empty($studentdetails->lrn))
-                            <div class="xl:col-span-4 mb-2">
-                                <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
-                                    Picture
-                                    <span class="text-red-500">*</span>
-                                </label>
-                                <input type="file" id="schoolIdPicture" name="image"
-                                    class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
-                                    placeholder="Upload your school id picture">
-                            </div>
+                        {{-- @if (empty($studentdetails->lrn))
+                        <div class="xl:col-span-4 mb-2">
+                            <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
+                                Picture
+                                <span class="text-red-500">*</span>
+                            </label>
+                            <input type="file" id="schoolIdPicture" name="image"
+                                class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                                placeholder="Upload your school id picture">
+                        </div>
                         @else
-                            <div class="xl:col-span-4 mb-2 hidden">
-                                <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
-                                    Picture
-                                    <span class="text-red-500">*</span>
-                                </label>
-                                <input type="file" id="schoolIdPicture" name="image"
-                                    class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
-                                    placeholder="Upload your school id picture">
+                        <div class="xl:col-span-4 mb-2 hidden">
+                            <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
+                                Picture
+                                <span class="text-red-500">*</span>
+                            </label>
+                            <input type="file" id="schoolIdPicture" name="image"
+                                class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                                placeholder="Upload your school id picture">
+                        </div>
+                        @endif --}}
+
+
+                        <div class="xl:col-span-12">
+                            <div
+                                class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
+                                <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                                <div>
+                                    <h6 class="mb-1">Prohibition Against Fraud and Misrepresentation</h6>
+                                    <ul class="ml-2 list-disc list-inside">
+                                        <li>Providing an incorrect LRN or School ID violates university policy,
+                                            compromising academic integrity and the security of student records. </li>
+                                        <li>
+                                            Such misrepresentation may incur penalties under Articles 172 and 315 of the
+                                            Revised Penal Code.
+                                        </li>
+                                        <li>
+                                            USM reserves the right to take disciplinary and legal actions, including
+                                            denial of admission and potential prosecution under Philippine law.
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        @endif
-
-
-                        <div class="xl:col-span-8">
                         </div>
 
 
                         <div class="xl:col-span-6">
                             <label for="lrn" class="inline-block mb-2 text-base font-medium">Learner Reference
-                                Number<sup class="text-blue-500">* read only</sup></label>
-                            <input type="text" id="lrn" name="lrn"
+                                Number<sup class="text-red-500">* required</sup></label>
+                            <input type="number" id="lrn" name="lrn"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}" readonly>
+                                placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}"
+                                onblur="validateLRN()">
                             @error('lrn')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -166,11 +186,13 @@ USMCEE - My Profile
                         <div class="xl:col-span-3">
                             <label for="choices-single-default" class="inline-block mb-2 text-base font-medium">School
                                 ID <sup class="text-red-500">* required</sup></label>
-                            <input type="number" id="school_id" name="school_id"
+                            <input type="text" id="school_id" name="school_id"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 placeholder="School ID" value="{{ $studentdetails->schoolid }}"
                                 onchange="handleChange(this.value)">
-                            </select>
+                            @error('school_id')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div><!--end col-->
 
                         <div class="xl:col-span-3">
@@ -179,6 +201,9 @@ USMCEE - My Profile
                             <input type="text" id="school_name" name="school_name"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 readonly placeholder=" School Name" value="{{ $studentdetails->shs_school }}">
+                            @error('school_name')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div><!--end col-->
 
                         <div class="xl:col-span-6">
@@ -188,13 +213,14 @@ USMCEE - My Profile
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 readonly placeholder="Enter School Address"
                                 value="{{ $studentdetails->school_address }}">
+                            @error('school_address')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div><!--end col-->
 
 
                         <div class="xl:col-span-12">
-                            <h6 class="mb-1 text-15 text-blue-500">Address</h6>
-                            <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details
-                                here easily.</p>
+                            <h6 class="mb-1 text-15 text-blue-500">ADDRESS INFORMATION</h6>
                         </div>
 
                         <div class="xl:col-span-3">
@@ -247,9 +273,10 @@ USMCEE - My Profile
                         <div class="xl:col-span-6">
                             <label for="zipcode" class="inline-block mb-2 text-base font-medium">Zip
                                 Code<span></label>
-                            <input type="text" id="track" name="zipcode"
+                            <input type="text" id="zipcode" name="zipcode"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Enter your zipcode" value="{{ $studentdetails->zipcode }}">
+                                placeholder="Enter your zipcode" value="{{ $studentdetails->zipcode }}"
+                                onblur="validateZipcode()">
                         </div><!--end col-->
 
                         @if (empty($studentdetails->lrn))
@@ -295,8 +322,65 @@ USMCEE - My Profile
             });
         </script>
     @endif
-
     <script>
+
+
+
+
+
+        function validateZipcode() {
+            const lrnInput = document.getElementById('zipcode');
+
+            // Check if the LRN is exactly 12 digits and contains numbers only
+            if (!/^\d{4}$/.test(lrnInput.value)) {
+                Toastify({
+                    text: 'ZIPCODE must be exactly 4 digits.',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
+
+                // Clear the input field
+                lrnInput.value = '';
+            }
+        }
+    </script>
+    <script>
+        function validateLRN() {
+            const lrnInput = document.getElementById('lrn');
+            const lrnValue = lrnInput.value;
+
+            // Check if the LRN is exactly 12 digits and contains numbers only
+            if (!/^\d{12}$/.test(lrnValue)) {
+                Toastify({
+                    text: 'LRN must be exactly 12 digits.',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
+
+                // Clear the input field
+                lrnInput.value = '';
+            }
+            // Check if the LRN contains repeated digits (e.g., 000000000000, 111111111111)
+            else if (/^(\d)\1{11}$/.test(lrnValue)) {
+                Toastify({
+                    text: 'LRN cannot be a sequence of repeated digits.',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
+
+                // Clear the input field
+                lrnInput.value = '';
+            }
+        }
         document.getElementById('profile-img-file-input').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -376,106 +460,149 @@ USMCEE - My Profile
         //     }
         // });
 
-        document.getElementById('schoolIdPicture').addEventListener('change', async function (event) {
-            const imageFile = event.target.files[0];
-            const uploadImageUrl = "{{ route('student.upload_image') }}";
-            const lrn = document.getElementById("lrn"); // Input field for displaying the extracted number
-            const school_id = document.getElementById("school_id");
+        // document.getElementById('schoolIdPicture').addEventListener('change', async function(event) {
+        //     const imageFile = event.target.files[0];
+        //     const uploadImageUrl = "{{ route('student.upload_image') }}";
+        //     const lrn = document.getElementById("lrn"); // Input field for displaying the extracted number
+        //     const school_id = document.getElementById("school_id");
 
-            // Convert the image to grayscale
-            const grayscaleBlob = await convertToGrayscale(imageFile);
+        //     // Convert the image to grayscale
+        //     const grayscaleBlob = await resizeAndConvertToGrayscale(imageFile);
 
-            // Prepare FormData for upload
-            const formData = new FormData();
-            formData.append('image', grayscaleBlob, imageFile.name);
+        //     // Prepare FormData for upload
+        //     const formData = new FormData();
+        //     formData.append('image', grayscaleBlob, imageFile.name);
 
-            // Retrieve the CSRF token from the meta tag
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        //     // Retrieve the CSRF token from the meta tag
+        //     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            try {
-                const response = await fetch(uploadImageUrl, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                });
+        //     try {
+        //         const response = await fetch(uploadImageUrl, {
+        //             method: 'POST',
+        //             body: formData,
+        //             headers: {
+        //                 'X-CSRF-TOKEN': csrfToken,
+        //                 'X-Requested-With': 'XMLHttpRequest'
+        //             }
+        //         });
 
-                const result = await response.json();
+        //         const result = await response.json();
 
-                // Set the extracted 12-digit number to the lrn input field if available
-                if (result.success && result['twelve_digit_number']) {
-                    lrn.value = result['twelve_digit_number'];
-                    school_id.value = result['six_digit_number'];
-                    handleChange(result['six_digit_number']);
-                    Toastify({
-                        text: "LRN: " + result['twelve_digit_number'],
-                        duration: 3000,
-                        gravity: "top",
-                        position: "right",
-                        backgroundColor: "#48bb78", // green for success
-                        className: "success",
-                    }).showToast();
-                } else {
-                    Toastify({
-                        text: result.error,
-                        duration: 3000,
-                        gravity: "top",
-                        position: "right",
-                        backgroundColor: "#f56565", // Red for error
-                        className: "error",
-                    }).showToast();
-                }
+        //         // Set the extracted 12-digit number to the lrn input field if available
+        //         if (result.success && result['twelve_digit_number']) {
+        //             lrn.value = result['twelve_digit_number'];
+        //             school_id.value = result['six_digit_number'];
+        //             handleChange(result['six_digit_number']);
+        //             Toastify({
+        //                 text: "LRN: " + result['twelve_digit_number'],
+        //                 duration: 3000,
+        //                 gravity: "top",
+        //                 position: "right",
+        //                 backgroundColor: "#48bb78", // green for success
+        //                 className: "success",
+        //             }).showToast();
+        //         } else {
+        //             Toastify({
+        //                 text: result.error,
+        //                 duration: 3000,
+        //                 gravity: "top",
+        //                 position: "right",
+        //                 backgroundColor: "#f56565", // Red for error
+        //                 className: "error",
+        //             }).showToast();
+        //         }
 
-            } catch (error) {
-                Toastify({
-                    text: 'An error occurred while processing the image.',
-                    duration: 3000,
-                    gravity: "top",
-                    position: "right",
-                    backgroundColor: "#f56565", // Red for error
-                    className: "error",
-                }).showToast();
-            }
-        });
+        //     } catch (error) {
+        //         Toastify({
+        //             text: 'An error occurred while processing the image.',
+        //             duration: 3000,
+        //             gravity: "top",
+        //             position: "right",
+        //             backgroundColor: "#f56565", // Red for error
+        //             className: "error",
+        //         }).showToast();
+        //     }
+        // });
 
-        // Function to convert image file to grayscale Blob
-        async function convertToGrayscale(imageFile) {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                const reader = new FileReader();
+        // // Function to convert image file to grayscale Blob
+        // async function convertToGrayscale(imageFile) {
+        //     return new Promise((resolve, reject) => {
+        //         const img = new Image();
+        //         const reader = new FileReader();
 
-                reader.onload = function (event) {
-                    img.src = event.target.result;
-                };
+        //         reader.onload = function (event) {
+        //             img.src = event.target.result;
+        //         };
 
-                img.onload = function () {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
+        //         img.onload = function () {
+        //             const canvas = document.createElement('canvas');
+        //             const ctx = canvas.getContext('2d');
+        //             canvas.width = img.width;
+        //             canvas.height = img.height;
 
-                    // Draw the original image
-                    ctx.drawImage(img, 0, 0);
+        //             // Draw the original image
+        //             ctx.drawImage(img, 0, 0);
 
-                    // Get the image data and convert to grayscale
-                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    const data = imageData.data;
-                    for (let i = 0; i < data.length; i += 4) {
-                        const gray = 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
-                        data[i] = data[i + 1] = data[i + 2] = gray;
-                    }
-                    ctx.putImageData(imageData, 0, 0);
+        //             // Get the image data and convert to grayscale
+        //             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        //             const data = imageData.data;
+        //             for (let i = 0; i < data.length; i += 4) {
+        //                 const gray = 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
+        //                 data[i] = data[i + 1] = data[i + 2] = gray;
+        //             }
+        //             ctx.putImageData(imageData, 0, 0);
 
-                    // Convert the canvas to a Blob and resolve it
-                    canvas.toBlob(resolve, imageFile.type);
-                };
+        //             // Convert the canvas to a Blob and resolve it
+        //             canvas.toBlob(resolve, imageFile.type);
+        //         };
 
-                reader.onerror = reject;
-                reader.readAsDataURL(imageFile);
-            });
-        }
+        //         reader.onerror = reject;
+        //         reader.readAsDataURL(imageFile);
+        //     });
+        // }
+
+        // Function to resize image and convert to grayscale Blob
+        // async function resizeAndConvertToGrayscale(imageFile) {
+        //     return new Promise((resolve, reject) => {
+        //         const img = new Image();
+        //         const reader = new FileReader();
+
+        //         reader.onload = function(event) {
+        //             img.src = event.target.result;
+        //         };
+
+        //         img.onload = function() {
+        //             // Set target width and calculate height to maintain aspect ratio
+        //             const targetWidth = 500; // You can adjust this value
+        //             const scaleFactor = targetWidth / img.width;
+        //             const targetHeight = img.height * scaleFactor;
+
+        //             const canvas = document.createElement('canvas');
+        //             const ctx = canvas.getContext('2d');
+        //             canvas.width = targetWidth;
+        //             canvas.height = targetHeight;
+
+        //             // Draw the resized image
+        //             ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+        //             // Get the image data and convert to grayscale
+        //             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        //             const data = imageData.data;
+        //             for (let i = 0; i < data.length; i += 4) {
+        //                 const gray = 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
+        //                 data[i] = data[i + 1] = data[i + 2] = gray;
+        //             }
+        //             ctx.putImageData(imageData, 0, 0);
+
+        //             // Convert the canvas to a Blob and resolve it
+        //             canvas.toBlob(resolve, imageFile.type);
+        //         };
+
+        //         reader.onerror = reject;
+        //         reader.readAsDataURL(imageFile);
+        //     });
+        // }
+
         async function handleChange(schoolid) {
             const school_name = document.getElementById("school_name");
             const school_address = document.getElementById("school_address");
@@ -494,10 +621,20 @@ USMCEE - My Profile
                     populateSchoolFields(school, school_name, school_address);
                 } else {
                     handleSchoolNotFound(school_name, school_address);
+                    school_name.value = '';
+                    school_address.value = '';
                 }
             } catch (error) {
                 school_name.value = '';
                 school_address.value = '';
+                Toastify({
+                    text: 'Invalid School ID',
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#f56565", // Red for error
+                    className: "error",
+                }).showToast();
             }
         }
 
