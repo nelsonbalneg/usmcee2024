@@ -250,7 +250,7 @@
                         </label>
                     </div>
 
-                    <div class="g-recaptcha mt-5" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                    <div class="cf-turnstile mt-5" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div>
 
                     <div class="mt-5 text-center">
                         <button type="submit" id="submitButton" disabled
@@ -424,7 +424,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- cleave.js -->
         <script src="{{ asset('backend/assets/libs/cleave.js/cleave.min.js') }}"></script>
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
         <script>
             if (document.querySelector("#cleavePhone")) {
                 var cleaveBlocks = new Cleave('#cleavePhone', {

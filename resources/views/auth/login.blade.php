@@ -138,8 +138,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                        <input type="password" id="password" name="password" required
-                            autocomplete="current-password"
+                        <input type="password" id="password" name="password" required autocomplete="current-password"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Enter password">
                         <div id="password-error" class="hidden mt-1 text-sm text-red-500">Password must be at least 8
@@ -168,7 +167,7 @@
                     </div>
 
                     <!-- Error message for Remember Me -->
-                    <div class="g-recaptcha mt-5" data-sitekey="{{ config('services.recaptcha.site') }}"></div>
+                    <div class="cf-turnstile mt-5" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div>
                     <div class="mt-5 text-center">
                         <button type="submit"
                             class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Sign
@@ -192,12 +191,12 @@
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const emailInput = document.getElementById("email");
 
-            emailInput.addEventListener("blur", function() {
+            emailInput.addEventListener("blur", function () {
                 const email = emailInput.value.trim(); // Trim whitespace
                 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
