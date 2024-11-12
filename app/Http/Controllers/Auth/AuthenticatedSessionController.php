@@ -164,11 +164,13 @@ class AuthenticatedSessionController extends Controller
         $secretKey = env('TURNSTILE_SECRET_KEY'); // Your Turnstile secret key
 
         // Send the Turnstile response for verification
-        $verifyResponse = Http::asForm()->post("https://challenges.cloudflare.com/turnstile/v0/siteverify", [
-            'secret' => $secretKey,
-            'response' => $turnstileResponse,
-            'remoteip' => $request->ip(),
-        ]);
+        $verifyResponse = Http::asForm()
+            ->timeout(seconds: 60) // Set timeout to 20 seconds
+            ->post("https://challenges.cloudflare.com/turnstile/v0/siteverify", [
+                'secret' => $secretKey,
+                'response' => $turnstileResponse,
+                'remoteip' => $request->ip(),
+            ]);
 
         $result = $verifyResponse->json();
 
