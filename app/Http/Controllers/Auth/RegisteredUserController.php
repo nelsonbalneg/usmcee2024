@@ -116,11 +116,13 @@ class RegisteredUserController extends Controller
 
         // Send the Turnstile response for verification
         try {
-            $verifyResponse = Http::asForm()->post("https://challenges.cloudflare.com/turnstile/v0/siteverify", [
-                'secret' => $secretKey,
-                'response' => $turnstileResponse,
-                'remoteip' => $request->ip(),
-            ]);
+            $verifyResponse = Http::asForm()
+                ->timeout(seconds: 60) // Set timeout to 20 seconds
+                ->post("https://challenges.cloudflare.com/turnstile/v0/siteverify", [
+                    'secret' => $secretKey,
+                    'response' => $turnstileResponse,
+                    'remoteip' => $request->ip(),
+                ]);
 
             $result = $verifyResponse->json();
 
