@@ -20,6 +20,28 @@ class StudentCeeReserveController extends Controller
 
     public function index()
     {
+        // Retrieve the current authenticated user details
+        $studentdetails = Auth::user();
+
+        // Check if the student's profile is complete
+        if (
+            !$studentdetails->lrn ||
+            !$studentdetails->schoolid ||
+            !$studentdetails->birthdate ||
+            !$studentdetails->shs_school ||
+            !$studentdetails->school_address ||
+            !$studentdetails->region ||
+            !$studentdetails->province ||
+            !$studentdetails->city ||
+            !$studentdetails->brgy ||
+            !$studentdetails->street ||
+            !$studentdetails->zipcode ||
+            !$studentdetails->photo
+        ) {
+            // Redirect to the dashboard if the profile is incomplete
+            return redirect()->route('student.dashboard');
+        }
+
         $response = Http::get('http://172.16.0.60/academic/api/v2/Campus/list');
 
         if ($response->successful()) {

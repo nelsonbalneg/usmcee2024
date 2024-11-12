@@ -2,19 +2,42 @@
 
 namespace App\Http\Controllers\Student;
 
+use DB;
 use PDF;
 use Carbon\Carbon;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
-use DB;
 
 class CeeSlipController extends Controller
 {
 
     public function generateceeExamSlip(Request $request)
     {
+        // Retrieve the current authenticated user details
+        $studentdetails = Auth::user();
+
+        // Check if the student's profile is complete
+        if (
+            !$studentdetails->lrn ||
+            !$studentdetails->schoolid ||
+            !$studentdetails->birthdate ||
+            !$studentdetails->shs_school ||
+            !$studentdetails->school_address ||
+            !$studentdetails->region ||
+            !$studentdetails->province ||
+            !$studentdetails->city ||
+            !$studentdetails->brgy ||
+            !$studentdetails->street ||
+            !$studentdetails->zipcode ||
+            !$studentdetails->photo
+        ) {
+            // Redirect to the dashboard if the profile is incomplete
+            return redirect()->route('student.dashboard');
+        }
+
         $app_no = Crypt::decryptString($request->app_no);
         // $cee_reservation = Reservation::where('app_no',$app_no)->first();
         $cee_reservation = DB::table('reservations')
