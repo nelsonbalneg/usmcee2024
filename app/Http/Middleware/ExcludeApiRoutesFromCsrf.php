@@ -10,6 +10,7 @@ class ExcludeApiRoutesFromCsrf
 {
     protected $except = [
         'api/*', // Exclude all routes under /api from CSRF protection
+        'reservation-details'
     ];
 
     /**
