@@ -3,7 +3,6 @@
     data-mode="light" data-topbar="light" data-skin="default" data-navbar="sticky" data-content="fluid" dir="ltr">
 
 <head>
-
     <meta charset="utf-8">
     <title>Open in External Browser</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -14,10 +13,7 @@
     <!-- Layout config Js -->
     <script src="{{asset('backend/assets/js/layout.js')}}"></script>
     <!-- Icons CSS -->
-
     <!-- Tailwind CSS -->
-
-
     <link rel="stylesheet" href="{{asset('backend/assets/css/tailwind2.css')}}">
 </head>
 
@@ -43,9 +39,31 @@
                 <p class="mb-6 text-slate-500 dark:text-zink-200">To do this, tap on the menu options and select "Open
                     in Browser."</p>
 
+                <!-- Add button for opening in external browser -->
+                <button id="openInBrowserBtn" class="px-4 py-2 mt-4 text-white bg-purple-500 rounded">
+                    Open in External Browser
+                </button>
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('openInBrowserBtn').addEventListener('click', function () {
+            const externalUrl = 'https://cee.usm.edu.ph'; // Replace with your desired URL
+
+            // Check if the browser is likely to be a WebView (e.g., Facebook or Instagram)
+            const isWebView = /FBAN|FBAV|Instagram/.test(navigator.userAgent);
+
+            if (isWebView) {
+                // On Android WebView, attempt to open in the default browser using an intent
+                const androidUrl = `intent://${externalUrl.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+                window.location.href = androidUrl;
+            } else {
+                // For other browsers, open in a new tab
+                window.open(externalUrl, '_blank');
+            }
+        });
+    </script>
 
     <script src='{{asset('backend/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}'></script>
     <script src="{{asset('backend/assets/libs/@popperjs/core/umd/popper.min.js')}}"></script>
