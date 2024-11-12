@@ -6,10 +6,16 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentCeeReserveController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReservationDetailsController;
+use App\Http\Middleware\DetectWebView;
+
+
+// Route::get('/', function () {
+//     return view('auth.login');
+// })->middleware('guest'); // Apply 'guest' middleware here
 
 Route::get('/', function () {
     return view('auth.login');
-})->middleware('guest'); // Apply 'guest' middleware here
+})->middleware(['guest', DetectWebView::class]);
 
 // Route::get('/', function () {
 //     // return view('info');
@@ -50,7 +56,9 @@ Route::get('reservation/{id}/{app_no}', [ReservationController::class, 'getReser
 Route::post('reservation-details', [ReservationDetailsController::class, 'store']);
 
 
-
+Route::get('/webview-instruction', function () {
+    return view('webview.instruction');
+})->name('webview.instruction');
 
 require __DIR__ . '/auth.php';
 
