@@ -462,12 +462,12 @@ USMCEE - My Profile
                                 <h6 class="mb-1 text-15">USM Interactive Map</h6>
                             </div>
                             <div class="card-body">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.0913334125385!2d124.83410507650434!3d7.115413992888201!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f88d6eb36848a5%3A0x284e2a004693d67b!2sUniversity%20of%20Southern%20Mindanao!5e0!3m2!1sen!2sph!4v1730724031596!5m2!1sen!2sph"
-                                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
+                                <iframe src="https://studentportal.usm.edu.ph/geomap/" width="100%" height="700" style="border:0;"
+                                    allow="geolocation" allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
 
+                            </div>
                         </div>
             @else
                 <div class="card">
@@ -745,6 +745,24 @@ USMCEE - My Profile
         </script>
 
         <script>
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        console.log("Latitude:", position.coords.latitude);
+                        console.log("Longitude:", position.coords.longitude);
+                    },
+                    (error) => {
+                        if (error.code === error.PERMISSION_DENIED) {
+                            alert("Please enable location access for a better experience.");
+                            // Optionally, provide instructions or a link to help users enable location.
+                        }
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+
             $(document).ready(function () {
                 $('form').on('submit', function (event) {
                     event.preventDefault(); // Prevent default submission
