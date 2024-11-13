@@ -324,7 +324,34 @@ USMCEE - My Profile
     @endif
     <script>
 
+        document.addEventListener('DOMContentLoaded', function () {
+            // Call the duplicate check endpoint
+            fetch("{{ route('student.check.duplicate.records') }}")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.hasDuplicates) {
+                        Swal.fire({
+                            title: 'Warning',
+                            html: "It appears that you may have multiple accounts registered in the system. Please refer to our <a href='https://www.facebook.com/theUSMofficial/posts/pfbid023dhP2MebE75xskEstWatNpjLBQH6CWh3XG6HWDYEMBk7QPHv4DAYpk2KvDBi4cFgl?rdid=BrbqOM3Yujlp2Z1p#' target='_blank'>Facebook announcement</a> for reference.",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: '',
+                            showConfirmButton: false,
+                            showCancelButton: false,
+                            cancelButtonText: 'Close',
+                            allowOutsideClick: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Action after confirmation if needed
+                            }
+                        });
 
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
 
 
 

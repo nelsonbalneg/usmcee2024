@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Student;
 
+use DB;
 use Auth;
 use App\Models\Room;
 use App\Models\CeeSession;
+use App\Models\PastCeeData;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
-use App\Models\PastCeeData;
-use DB;
 
 class StudentCeeReserveController extends Controller
 {
@@ -101,6 +102,24 @@ class StudentCeeReserveController extends Controller
 
         return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'reservation', 'isRetaker'));
     }
+
+    // In your controller
+    public function checkForDuplicateRecords()
+    {
+        $user = Auth::user();
+
+        // Find other users with the same firstname, lastname, and birthdate
+        $duplicates = User::where('firstname', $user->firstname)
+            ->where('lastname', $user->lastname)
+            ->where('birthdate', $user->birthdate)
+            ->where('id', '!=', $user->id) // Exclude the current user
+            ->exists();
+
+        return response()->json([
+            'hasDuplicates' => $duplicates,
+        ]);
+    }
+
 
     public function getProgramsByTenant(Request $request)
     {
