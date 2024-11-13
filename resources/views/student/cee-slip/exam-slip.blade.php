@@ -7,6 +7,8 @@ New Report Machine Ledger
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEE Examination Slip </title>
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
     <style>
         @page {
             size: 8.5in 13in;
@@ -60,6 +62,14 @@ New Report Machine Ledger
         .header .left-logo {
             left: 0;
             margin-left: 100px;
+        }
+
+        .header .right-logo {
+            left: 0;
+            margin-left: 590px;
+            margin-top: 410px;
+            width: 120px;
+            height: 120px;
         }
 
         table {
@@ -150,6 +160,7 @@ New Report Machine Ledger
 
             <img src="{{ public_path('backend/assets/images/logo/OFFICIAL_USM_LOGO.png') }}" alt="University Logo"
                 class="left-logo">
+            <img src="data:image/png;base64,{{ $base64QrCode }}" alt="University Logo" class="right-logo" />
             <div>University of Southern Mindanao</div>
             <div>UNIVERSITY TEST DEVELOPMENT CENTER</div>
             <div style="font-size: 10pt;">Kabacan, Cotabato</div>
@@ -163,9 +174,8 @@ New Report Machine Ledger
         <div class="row d-flex justify-content-center" style="margin-bottom: 10px; margin-top:40px;">
             <div class="col">
                 <div class="text-left">
-                    <span class="info-item"><b>Congratulations!</b>You have successfully reserved a slot for the USMCEE.
-                        Below are your reservation details:</span>
-                    <span class="info-item"><b>Congratulations!</b>You have successfully reserved a slot for the USMCEE.
+                    <span class="info-item"><b>Congratulations!</b> You have successfully reserved a slot for the
+                        USMCEE.
                         Below are your reservation details:</span>
                 </div>
 
@@ -214,9 +224,9 @@ New Report Machine Ledger
                             <th style="text-align: left; width: 100px;">Examinee Type:</th>
                             <td>
                                 @if ($cee_reservation->is_repeat_exam === 'Yes')
-                                    Retaker
+                                Retaker
                                 @else
-                                    New
+                                New
                                 @endif
                             </td>
                         </tr>
@@ -253,14 +263,15 @@ New Report Machine Ledger
                         </tr>
                         <tr>
                             <th style="text-align: left; width: 100px;">Test Venue:</th>
-                            <td> ({{ $cee_reservation->campus }}) {{ $cee_reservation->college_name }} -
+                            <td> ({{ $cee_reservation->campus }}) {{ $cee_reservation->college_name }} /
                                 {{ $cee_reservation->room_name }}
                             </td>
                         </tr>
                         <tr>
                             <th style="text-align: left; width: 100px;">Date and Time:</th>
-                            <td> {{ \Carbon\Carbon::parse($cee_reservation->schedule)->format('F j, Y') }} -
-                                {{ $cee_reservation->time }}</td>
+                            <td> {{ \Carbon\Carbon::parse($cee_reservation->schedule)->format('F j, Y') }} /
+                                {{ $cee_reservation->time }}
+                            </td>
                         </tr>
                         <tr>
                             <th style="text-align: left; width: 100px;">CEE Applicant Type:</th>
@@ -306,13 +317,15 @@ New Report Machine Ledger
                 <p>USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }}
                     USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }} USMCEE -2024
                     {{ $app_no }}
-                    USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }} USMCEE -2024 USMCEE -2024</p>
+                    USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }} USMCEE -2024 USMCEE -2024
+                </p>
             @endfor
         </div>
 
         <div class="footer">
             <p>Downloaded Date and Time: {{ \Carbon\Carbon::now('Asia/Manila')->format('Y-m-d H:i:s') }}</p>
-            <p style="margin-top:-8px;"> <i>University of Southern Mindanao - College Entrance Examination Reservation System v4.0 | <b>
+            <p style="margin-top:-8px;"> <i>University of Southern Mindanao - College Entrance Examination Reservation
+                    System v4.0 | <b>
                         Powered by: UICTO</b></i></p>
         </div>
 

@@ -10,10 +10,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 
 class CeeSlipController extends Controller
 {
-
     public function generateceeExamSlip(Request $request)
     {
         // Retrieve the current authenticated user details
@@ -39,7 +40,7 @@ class CeeSlipController extends Controller
         }
 
         $app_no = Crypt::decryptString($request->app_no);
-        // $cee_reservation = Reservation::where('app_no',$app_no)->first();
+
         $cee_reservation = DB::table('reservations')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
             ->join('users', 'reservations.user_id', '=', 'users.id')
@@ -60,6 +61,7 @@ class CeeSlipController extends Controller
                 'rooms.schedule',
                 'users.firstname',
                 'users.lastname',
+                'users.middlename',
                 'users.email',
                 'users.sex',
                 'users.phone',
@@ -68,7 +70,30 @@ class CeeSlipController extends Controller
             )
             ->first();
 
-        $pdf = PDF::loadView('student.cee-slip.exam-slip', compact('cee_reservation'));
+        // Generate QR code with app_no, firstname, and lastname
+        $qrData = $cee_reservation->app_no . ',' . $cee_reservation->firstname . ' ';
+
+        if (!empty($cee_reservation->middlename)) {
+            $qrData .= $cee_reservation->middlename . ' ';
+        }
+
+        $qrData .= $cee_reservation->lastname;
+
+
+        // Create the QR code
+        $qrCode = new QrCode($qrData);
+
+        // Create a PNG writer
+        $writer = new PngWriter();
+
+        // Generate the QR code image and encode it as a string
+        $qrImage = $writer->write($qrCode)->getString();
+
+        // Encode the QR code image to base64
+        $base64QrCode = base64_encode($qrImage);
+
+        // Pass the base64 QR code string to the view for inclusion in the PDF
+        $pdf = PDF::loadView('student.cee-slip.exam-slip', compact('cee_reservation', 'base64QrCode'));
 
         // Stream the PDF instead of downloading it
         return $pdf->stream('usmcee-slip.pdf');
