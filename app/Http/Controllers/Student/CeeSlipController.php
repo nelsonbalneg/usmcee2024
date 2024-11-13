@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Student;
 
 use DB;
-use PDF;
 use Carbon\Carbon;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -12,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class CeeSlipController extends Controller
 {
