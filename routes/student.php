@@ -34,8 +34,8 @@ Route::get('cee/upload-image-form', function () {
 //route for report
 Route::get('/cee/exam-slip', [CeeSlipController::class, 'generateceeExamSlip'])->name('cee.exam-slip');
 
-//route for
+//route for CEE result
 Route::get('cee/result', [ResultController::class, 'index'])->name('cee.result');
 
-
+//route for checking duplicate records
 Route::get('/check-duplicate-records', [StudentCeeReserveController::class, 'checkForDuplicateRecords'])->name('check.duplicate.records');

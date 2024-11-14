@@ -32,7 +32,7 @@ class CeeSlipController extends Controller
             !$studentdetails->province ||
             !$studentdetails->city ||
             !$studentdetails->brgy ||
-            !$studentdetails->street ||
+            // !$studentdetails->street ||
             !$studentdetails->zipcode ||
             !$studentdetails->photo
         ) {
