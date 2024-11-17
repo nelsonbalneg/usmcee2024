@@ -11,6 +11,7 @@ use App\Trait\ImageUploadTrait;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class StudentProfileController extends Controller
 {
@@ -68,24 +69,56 @@ class StudentProfileController extends Controller
     public function update(Request $request, string $id)
     {
         // validation
-        $request->validate(
-            [
-                'lrn' => ['required', 'size:12', 'unique:users,lrn'],
-                'track' => ['required', 'string', 'max:100'],
-                'school_id' => ['required'],
-                'school_name' => ['required'],
-                'school_address' => ['required'],
-                'region_text' => ['required'],
-                'province_text' => ['required'],
-                'city_text' => ['required'],
-                'barangay_text' => ['required'],
+        if (
+            $request->apptype == 'transferee' ||
+            $request->apptype == 'second_courser' ||
+            $request->apptype == 'hs_grad' ||
+            $request->apptype == 'shiftee'
+        ) {
+            $request->validate(
+                [
+                    'lrn' => ['required', 'size:12'],
+                    'track' => ['required', 'string', 'max:100'],
+                    'school_id' => ['required'],
+                    'school_name' => ['required'],
+                    'school_address' => ['required'],
+                    'region_text' => ['required'],
+                    'province_text' => ['required'],
+                    'city_text' => ['required'],
+                    'barangay_text' => ['required'],
+                    'apptype' => ['required']
 
-            ],
-            [
-                'lrn.size' => 'The LRN must be exactly 12 digits.',
-                'lrn.unique' => 'The LRN has already been taken.'
-            ]
-        );
+                ],
+                [
+                    'lrn.size' => 'The LRN must be exactly 12 digits.',
+                    'apptype.required' => 'Please select an applicant type.',
+                ]
+            );
+        } else {
+            $request->validate(
+                [
+                    'lrn' => [
+                        'required',
+                        'size:12',
+                        Rule::unique('users', 'lrn')->ignore($id),
+                    ],
+                    'track' => ['required', 'string', 'max:100'],
+                    'school_id' => ['required'],
+                    'school_name' => ['required'],
+                    'school_address' => ['required'],
+                    'region_text' => ['required'],
+                    'province_text' => ['required'],
+                    'city_text' => ['required'],
+                    'barangay_text' => ['required'],
+
+                ],
+                [
+                    'lrn.size' => 'The LRN must be exactly 12 digits.',
+                    'lrn.unique' => 'The LRN has already been taken.'
+                ]
+            );
+        }
+
 
         $user = User::findOrFail($id);
 
@@ -100,6 +133,7 @@ class StudentProfileController extends Controller
         $user->brgy = trim($request->barangay_text);
         $user->street = trim($request->street);
         $user->zipcode = trim($request->zipcode);
+        $user->applicant_type = trim($request->apptype);
 
         // // Handle photo upload
         // $imagePath = $this->updateImage($request, 'photo', 'uploads', $user->photo);
