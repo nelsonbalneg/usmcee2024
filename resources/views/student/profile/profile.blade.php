@@ -328,11 +328,11 @@
 
     @if (empty($studentdetails->applicant_type))
         <!-- Modal Structure -->
-        <div id="apptypeModal" class="fixed inset-0 flex items-center justify-center hidden z-50">
+        <div id="apptypeModal" class="fixed inset-0 flex items-center justify-center hidden z-50 ">
             <div class="bg-gray-900 bg-opacity-50 absolute inset-0"></div> <!-- Overlay -->
             <div class="relative w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zinc-600 z-10">
-                <div class="flex items-center justify-center p-4 border-b dark:border-zinc-500">
-                    <h5 class="text-16 text-center">Announcement</h5>
+                <div class="flex items-center justify-center p-4 border-b dark:border-zinc-500 bg-green-500">
+                    <h5 class="text-16 text-center text-white">Announcement</h5>
                 </div>
                 <div class="p-4 text-center">
                     <div class="xl:col-span-12">
@@ -364,8 +364,8 @@
                         </div>
                     </div>
                     <button id="okButton"
-                        class="mt-4 px-6 py-2 text-white bg-custom-500 hover:bg-custom-600 rounded-md focus:ring focus:ring-custom-300 focus:outline-none">
-                        OK
+                        class="mt-4 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                        Let's Go!
                     </button>
                 </div>
             </div>
