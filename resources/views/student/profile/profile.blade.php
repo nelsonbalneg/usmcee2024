@@ -856,8 +856,7 @@
                     lrnContainer.forEach(container => container.style.display = 'none');
                     break;
                 case 'shs':
-                    lrnInput.readOnly = true;
-                    lrnInput.readOnly = true; // Allow editing for SHS
+                    lrnInput.readOnly = false; // Allow editing for SHS
                     trackInput.readOnly = false; // Allow editing for SHS
                     lrnSup.textContent = '* required'; // Change to required
                     trackSup.textContent = '* required'; // Change to required
