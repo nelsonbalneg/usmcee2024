@@ -865,6 +865,7 @@
                 default:
                     lrnInput.value = '';
                     lrnInput.readOnly = false;
+                    trackInput.readOnly = false;
                     break;
             }
         }
