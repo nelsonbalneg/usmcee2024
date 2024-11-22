@@ -8,6 +8,7 @@ use App\Models\Room;
 use App\Models\CeeSession;
 use App\Models\PastCeeData;
 use App\Models\Reservation;
+use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
@@ -100,7 +101,10 @@ class StudentCeeReserveController extends Controller
             ->where('birthdate', $birthdate)
             ->exists();
 
-        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'reservation', 'isRetaker'));
+        $siteSetting = SiteSetting::first();
+        $endofreservation = $siteSetting ? $siteSetting->endreservation : null;
+
+        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'reservation', 'isRetaker','endofreservation'));
     }
 
     // In your controller

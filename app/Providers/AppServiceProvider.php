@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,5 +25,9 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') !== 'local') {
             URL::forceScheme('https');
         }
+
+        // View::composer('*', function ($view) {
+        //     $view->with('errors', session()->get('errors', new MessageBag()));
+        // });
     }
 }

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\View\View;
+use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Support\Facades\Http;
 
 
 class AuthenticatedSessionController extends Controller
@@ -19,7 +20,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        $siteSetting = SiteSetting::first();
+        $endofreservation = $siteSetting ? $siteSetting->endreservation : null;
+        return view('auth.login', compact('endofreservation'));
     }
 
     /**

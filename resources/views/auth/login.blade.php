@@ -34,6 +34,12 @@
 </head>
 
 <body
+    @php
+use App\Models\SiteSetting;
+use Carbon\Carbon;
+
+$endofreservation = $endofreservation ?? optional(SiteSetting::first())->endreservation; @endphp
+
     class="flex items-center justify-center min-h-screen py-16 lg:py-10 bg-slate-50 dark:bg-zink-800 dark:text-zink-100 font-public">
 
     <div class="relative">
@@ -149,7 +155,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                        <input type="password" id="password" name="password" required autocomplete="current-password"
+                        <input type="password" id="password" name="password" required
+                            autocomplete="current-password"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Enter password">
                         <div id="password-error" class="hidden mt-1 text-sm text-red-500">Password must be at least 8
@@ -188,12 +195,22 @@
                 </form>
 
 
-                <div class="mt-10 text-center">
-                    <p class="mb-0 text-slate-500 dark:text-zink-200">Don't have an account ? <a
-                            href="{{ route('register') }}"
-                            class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">
-                            Sign Up</a> </p>
-                </div>
+                @if ($endofreservation && Carbon::parse($endofreservation)->isFuture())
+                    <div class="mt-10 text-center">
+                        <p class="mb-0 text-slate-500 dark:text-zink-200">Don't have an account ? <a
+                                href="{{ route('register') }}"
+                                class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">
+                                Sign Up</a> </p>
+                    </div>
+
+                    @else
+                    <div class="card mt-4">
+                        <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
+                            <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                                <p class="mb-0">Please be informed that the USMCEE <b>account registration and slot reservation </b> is officially closed.</p>
+                        </div>
+                    </div>
+                @endif
 
             </div>
         </div>
@@ -204,10 +221,10 @@
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const emailInput = document.getElementById("email");
 
-            emailInput.addEventListener("blur", function () {
+            emailInput.addEventListener("blur", function() {
                 const email = emailInput.value.trim(); // Trim whitespace
                 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 

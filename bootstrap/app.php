@@ -2,6 +2,8 @@
 
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Middleware\CheckMaintenanceMode;
+use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\ExcludeApiRoutesFromCsrf;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -31,7 +33,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'role' => RoleMiddleware::class,
-            'csrf.except.api' => ExcludeApiRoutesFromCsrf::class, // Register the CSRF exclusion middleware
+            'csrf.except.api' => ExcludeApiRoutesFromCsrf::class,
+            'check.maintenance' => CheckMaintenanceMode::class, 
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
