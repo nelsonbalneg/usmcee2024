@@ -64,6 +64,7 @@ class CeeSlipController extends Controller
                 'users.lastname',
                 'users.middlename',
                 'users.email',
+                'users.suffix',
                 'users.sex',
                 'users.phone',
                 'users.photo',
