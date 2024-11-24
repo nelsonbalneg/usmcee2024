@@ -195,7 +195,7 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                 </form>
 
 
-                @if ($endofreservation && Carbon::parse($endofreservation)->isFuture())
+                @if ($endofreservation && Carbon::parse($endofreservation)->isPast())
                     <div class="mt-10 text-center">
                         <p class="mb-0 text-slate-500 dark:text-zink-200">Don't have an account ? <a
                                 href="{{ route('register') }}"
