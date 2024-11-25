@@ -474,7 +474,7 @@ use Carbon\Carbon;
                 </div>
             @else
                 {{-- check the endofreservation --}}
-                @if ($endofreservation && Carbon::parse($endofreservation, 'Asia/Manila')->isFuture())
+                {{-- @if ($endofreservation && Carbon::parse($endofreservation, 'Asia/Manila')->isFuture()) --}}
                     <div class="card">
                         <div class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
                             <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
@@ -662,7 +662,7 @@ use Carbon\Carbon;
                         </div>
                     </div>
                     {{-- If the reservation Closesd --}}
-                @else
+                {{-- @else
                 <div class="card">
                     <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
                         <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
@@ -673,7 +673,7 @@ use Carbon\Carbon;
                         </div>
                     </div>
                 </div>
-                @endif
+                @endif --}}
             @endif
 
         </div><!--end col-->
