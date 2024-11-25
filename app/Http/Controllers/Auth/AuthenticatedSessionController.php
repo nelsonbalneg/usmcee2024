@@ -21,8 +21,9 @@ class AuthenticatedSessionController extends Controller
     public function create(): View
     {
         $siteSetting = SiteSetting::first();
-        $endofreservation = $siteSetting ? $siteSetting->endreservation : null;
-        return view('auth.login', compact('endofreservation'));
+        $endofregistration = $siteSetting ? $siteSetting->endregistration : null;
+
+        return view('auth.login', compact('endofregistration'));
     }
 
     /**

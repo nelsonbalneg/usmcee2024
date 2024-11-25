@@ -16,33 +16,16 @@ use App\Http\Controllers\Student\StudentCeeReserveController;
 //     return view('auth.login');
 // })->middleware(['guest', DetectWebView::class]);
 
+// Route::middleware(['guest', DetectWebView::class, 'check.maintenance'])->group(function () {
+//     Route::get('/', function () {
+//         return view('auth.login');
+//     });
+// });
+
 Route::middleware(['guest', DetectWebView::class, 'check.maintenance'])->group(function () {
-    Route::get('/', function () {
-        return view('auth.login');
-    });
+    Route::get('/', [AuthenticatedSessionController::class, 'create']);
 });
 
-
-// Route::get('/dashboard', function () {
-//     $user = auth()->user();
-//     if ($user) {
-//         // Check the user's role and redirect accordingly
-//         return match ($user->role) {
-//             'admin' => redirect()->route('admin.dashboard'),
-//             'utdc' => redirect()->route('utdc.dashboard'),
-//             'student' => redirect()->route('student.dashboard'),
-//             default => redirect()->route('dashboard.default'),
-//         };
-//     }
-//     return redirect()->route('login');
-
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
 
 Route::middleware(['auth', 'verified', 'check.maintenance'])->group(function () {
     Route::get('/dashboard', function () {
@@ -64,22 +47,6 @@ Route::middleware(['auth', 'verified', 'check.maintenance'])->group(function () 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// // API-like Route Group
-// Route::prefix('api')
-//     ->middleware(['csrf.except.api'])
-//     ->group(function () {
-//         Route::get('programs', [StudentCeeReserveController::class, 'getProgramsByTenant']);
-//     });
-
-
-// Route::get('reservation/{id}/{app_no}', [ReservationController::class, 'getReservationByIdAndAppNo']);
-// // In routes/web.php
-// Route::post('reservation-details', [ReservationDetailsController::class, 'store']);
-
-
-// Route::get('/webview-instruction', function () {
-//     return view('webview.instruction');
-// })->name('webview.instruction');
 
 // API-like Route Group
 Route::prefix('api')

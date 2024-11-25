@@ -104,6 +104,7 @@ class StudentCeeReserveController extends Controller
         $siteSetting = SiteSetting::first();
         $endofreservation = $siteSetting ? $siteSetting->endreservation : null;
 
+
         return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'reservation', 'isRetaker','endofreservation'));
     }
 
