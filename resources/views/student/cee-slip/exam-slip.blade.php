@@ -256,6 +256,7 @@ New Report Machine Ledger
 
                 <!-- Right Column -->
                 <td style="vertical-align: top; width: 50%;">
+                    
                     <table style="width: 100%;">
                         <tr>
                             <th style="text-align: left; width: 100px;">Test Session:</th>
@@ -296,13 +297,12 @@ New Report Machine Ledger
                 <td style=" border: none;">
                     <h3>Requirements upon entry to the testing center/venue:</h3>
                     <ul>
-                        <li>USMCEE Entrance Examination Slip</li>
+                        <li>Printed examination slip (generated after successful registration)</li>
                         <li>One (1) Valid ID (Government-Issued ID, High School ID, Company ID, and National ID)</li>
-                        <li>Face mask</li>
-                        <li>Personal alcohol/sanitizer</li>
                         <li>Personal ballpen (not sign pen)</li>
                         <li>Pencil and sharpener</li>
-                        <li>Snacks</li>
+                        <li>Snacks and water (no single-use plastic containers; tumblers only)</li>
+                        <li>Transparent bag or envelope for personal items</li>
                     </ul>
                 </td>
             </tr>
@@ -323,7 +323,7 @@ New Report Machine Ledger
         </div>
 
         <div class="footer">
-            <p>Downloaded Date and Time: {{ \Carbon\Carbon::now('Asia/Manila')->format('Y-m-d H:i:s') }}</p>
+            <p>Downloaded Date and Time: {{ \Carbon\Carbon::now()->setTimezone('Asia/Manila')->format('Y-m-d h:i:s A') }}</p>
             <p style="margin-top:-8px;"> <i>University of Southern Mindanao - College Entrance Examination Reservation
                     System v4.0 | <b>
                         Powered by: UICTO</b></i></p>
