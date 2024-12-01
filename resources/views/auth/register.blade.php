@@ -400,6 +400,7 @@
 
             </div>
         </div>
+        
         <script src='{{ asset('backend/assets/libs/choices/public/assets/scripts/choices.min.js') }}'></script>
         <script src="{{ asset('backend/assets/libs/@popperjs/core/umd/popper.min.js') }}"></script>
         <script src="{{ asset('backend/assets/libs/tippy.js/tippy-bundle.umd.min.js') }}"></script>
