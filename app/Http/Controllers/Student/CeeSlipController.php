@@ -58,6 +58,7 @@ class CeeSlipController extends Controller
                 'rooms.college_name',
                 'rooms.campus',
                 'rooms.exam_session',
+                'rooms.map_file',
                 'rooms.time',
                 'rooms.schedule',
                 'users.firstname',

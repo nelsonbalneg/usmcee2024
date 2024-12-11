@@ -81,6 +81,7 @@ class StudentCeeReserveController extends Controller
                 'reservations.campus_id_prio_prog_3',
                 'reservations.is_repeat_exam',
                 'rooms.room_name',
+                'rooms.map_file',
                 'rooms.college_name',
                 'rooms.exam_session',
                 'rooms.campus',
@@ -278,17 +279,11 @@ class StudentCeeReserveController extends Controller
             $application->campus_id_prio_prog_2 = trim($request->campus2);
             $application->campus_id_prio_prog_3 = trim($request->campus3);
             $application->firstpriorty = trim($request->firstprioprog);
-
             $application->firstpriorty_desc = trim($request->firstprioprog_desc);
-
             $application->secondpriorty = trim($request->secondprioprog);
-
             $application->secondpriority_desc = trim($request->secondprioprog_desc);
-
             $application->thirdpriorty = trim($request->thirdprioprog);
-
             $application->thirdpriorty_desc = trim($request->thirdprioprog_desc);
-
             $application->exam_session = trim($request->ceeexamsession);
             $application->room_id = trim($request->room);
             $application->is_repeat_exam = trim($request->is_repeat_exam);

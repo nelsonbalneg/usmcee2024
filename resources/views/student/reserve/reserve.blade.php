@@ -1,6 +1,6 @@
 @php
-use Carbon\Carbon;
- @endphp
+    use Carbon\Carbon;
+@endphp
 @extends('student.layouts.master')
 @section('title')
     USMCEE - My Profile
@@ -460,7 +460,7 @@ use Carbon\Carbon;
 
 
 
-                <div class="card">
+                {{-- <div class="card">
                     <div class="bg-slate-200 card-body rounded-t-md dark:bg-zink-600">
                         <h6 class="mb-1 text-15">USM Interactive Map</h6>
                     </div>
@@ -469,6 +469,28 @@ use Carbon\Carbon;
                             style="border:0;" allow="geolocation" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
+
+                    </div>
+                </div> --}}
+                <div class="card">
+                    <div class="bg-slate-200 card-body rounded-t-md dark:bg-zink-600">
+                        <h6 class="mb-1 text-15">USM Map</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="relative overflow-hidden rounded-md group/gallery">
+
+                            <img src="{{ asset('backend/assets/images/map/'.Str::lower($reservation->map_file)  . '.png') }}" alt="{{ $reservation->map_file}}" class="rounded-md">
+                            <div
+                                class="absolute inset-0 transition-all duration-300 ease-linear opacity-0 group-hover/gallery:opacity-50 bg-gradient-to-t from-gray-900 to-transparent">
+                            </div>
+                            <div
+                                class="absolute bottom-0 transition-all duration-300 ease-linear opacity-0 left-3 right-3 group-hover/gallery:opacity-100 group-hover/gallery:bottom-3">
+                                <h5 class="font-normal text-white"><a href="#!"> {{ $reservation->campus }} <br>
+                                        {{ $reservation->college_name }}
+                                        ({{ $reservation->room_name }})</a></h5>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
@@ -663,16 +685,17 @@ use Carbon\Carbon;
                     </div>
                     {{-- If the reservation Closesd --}}
                 @else
-                <div class="card">
-                    <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
-                        <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                        <div>
-                            <h6 class="mb-1">Hi there, {{Auth::user()->firstname}} !</h6>
-                            <p class="mb-0">Please be informed that the USMCEE Slot Reservation is officially closed.</p>
-                            <p class="mb-2">Thank you!</p>
+                    <div class="card">
+                        <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
+                            <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                            <div>
+                                <h6 class="mb-1">Hi there, {{ Auth::user()->firstname }} !</h6>
+                                <p class="mb-0">Please be informed that the USMCEE Slot Reservation is officially closed.
+                                </p>
+                                <p class="mb-2">Thank you!</p>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
             @endif
 

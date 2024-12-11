@@ -182,59 +182,6 @@ New Report Machine Ledger
             </div>
         </div>
 
-        {{-- <table style="margin-bottom: 10px; width: 100%;">
-            <tr>
-                <th colspan="2" style="text-align: center;">CEE RESERVATION DETAILS</th>
-            </tr>
-            <tr>
-                <!-- Left Column -->
-                <td style="vertical-align: top; width: 50%;">
-                    <table style="width: 100%;">
-                        @if ($cee_reservation->photo)
-                        @endif
-                        <img src="{{ public_path($cee_reservation->applicant->photo) }}" alt="Applicant Photo"
-                            style="width: 100px; height: 100px; margin-left: 120px;">
-                        <p style="text-align: center;">App No.: <b> {{ $cee_reservation->app_no }}</b><br>
-                            Full Name: <b>{{ $cee_reservation->applicant->lastname }},
-                                {{ $cee_reservation->applicant->firstname }}
-                                {{ $cee_reservation->applicant->middlename }}
-                                {{ $cee_reservation->applicant->suffix }}</b> </p>
-                    </table>
-                </td>
-
-                <!-- Right Column -->
-                <td style="vertical-align: top; width: 50%;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <th style="text-align: left; width: 100px;">Batch:</th>
-                            <td>{{ $cee_reservation->exam_session }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left; width: 100px;">Test Venue:</th>
-                            <td> ({{ $cee_reservation->room->campus }}) {{ $cee_reservation->room->college_name }} -
-                                {{ $cee_reservation->room->room_name }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left; width: 100px;">Date and Time:</th>
-                            <td> {{ \Carbon\Carbon::parse($cee_reservation->room->schedule)->format('F j, Y') }} -
-                                {{ $cee_reservation->room->time }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left; width: 100px;">Examinee Type:</th>
-                            <td>
-                                @if ($cee_reservation->is_repeat_exam === 'Yes')
-                                Retaker
-                                @else
-                                New
-                                @endif
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table> --}}
-
         <table style="margin-bottom: 10px; width: 100%;">
             <tr>
                 <th colspan="2" style="text-align: center;">CEE RESERVATION DETAILS</th>
@@ -256,7 +203,7 @@ New Report Machine Ledger
 
                 <!-- Right Column -->
                 <td style="vertical-align: top; width: 50%;">
-                    
+
                     <table style="width: 100%;">
                         <tr>
                             <th style="text-align: left; width: 100px;">Test Session:</th>
@@ -288,10 +235,6 @@ New Report Machine Ledger
                 </td>
             </tr>
         </table>
-
-
-
-
         <table class="table table-borderless">
             <tr>
                 <td style=" border: none;">
@@ -307,6 +250,12 @@ New Report Machine Ledger
                 </td>
             </tr>
         </table>
+
+        <div style="page-break-before: always;">
+            <img src="{{ public_path('backend/assets/images/map/' . Str::lower($cee_reservation->map_file) . '.png') }}"
+                 alt="{{ $cee_reservation->map_file }}"
+                 style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
 
         @php
             $app_no = $cee_reservation->app_no;
