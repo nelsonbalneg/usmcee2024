@@ -1,5 +1,3 @@
-New Report Machine Ledger
-
 <!DOCTYPE html>
 <html lang="en">
 

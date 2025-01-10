@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Student;
 
-use DB;
-use Auth;
 use App\Models\Room;
 use App\Models\CeeSession;
 use App\Models\PastCeeData;
@@ -11,8 +9,10 @@ use App\Models\Reservation;
 use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 

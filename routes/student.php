@@ -36,8 +36,11 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::get('/cee/exam-slip', [CeeSlipController::class, 'generateceeExamSlip'])->name('cee.exam-slip');
 
     //route for CEE result
+    Route::get('cee/result-slip/{app_no}', [ResultController::class, 'generateceeResultSlip'])->name('cee.result-slip');
     Route::get('cee/result', [ResultController::class, 'index'])->name('cee.result');
 
     //route for checking duplicate records
     Route::get('/check-duplicate-records', [StudentCeeReserveController::class, 'checkForDuplicateRecords'])->name('check.duplicate.records');
+
+
 });

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Student;
 
-use Auth;
 use File;
 use App\Models\User;
 use App\Models\SchoolName;
 use Illuminate\Http\Request;
 use App\Trait\ImageUploadTrait;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 
 class StudentProfileController extends Controller
 {

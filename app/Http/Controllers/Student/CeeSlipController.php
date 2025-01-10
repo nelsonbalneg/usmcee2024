@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Student;
 
-use DB;
 use Carbon\Carbon;
+use Endroid\QrCode\QrCode;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Writer\PngWriter;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class CeeSlipController extends Controller
@@ -32,7 +32,6 @@ class CeeSlipController extends Controller
             !$studentdetails->province ||
             !$studentdetails->city ||
             !$studentdetails->brgy ||
-            // !$studentdetails->street ||
             !$studentdetails->zipcode ||
             !$studentdetails->photo
         ) {

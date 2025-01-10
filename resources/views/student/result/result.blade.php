@@ -20,11 +20,94 @@
     </div>
 
     <div class="grid grid-cols-1 2xl:grid-cols-12">
-        <div class="flex flex-col gap-3 col-span-1 2xl:col-span-12">
-            <div class="px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-                <span class="font-bold">Hi!</span> No Result yet.
+        {{-- check if repeater exam --}}
+
+        @if (optional($reservation)->is_repeat_exam === 'Yes')
+            <div class="relative p-3 pr-12 mb-4 text-sm border border-transparent rounded-md text-custom-50 bg-custom-500">
+                <button
+                    class="absolute top-0 bottom-0 right-0 p-3 transition text-custom-200 hover:text-custom-100"></button>
+                <span class="font-bold">Active Term: </span> {{ $cee_term->name }}
             </div>
+
+            <div class="flex flex-col col-span-1 gap-3 card 2xl:col-span-12">
+                <div class="card-body">
+                    <h6 class="mb-4 text-15">USM-CEE Result for
+                        {{ $reservation->applicant->lastname . ', ' . $reservation->applicant->firstname . ' ' . $reservation->applicant->middlename . ', ' . $reservation->applicant->suffix }}
+                    </h6>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-separate table-custom border-spacing-y-1">
+                            <thead class="ltr:text-left rtl:text-right">
+                                <tr
+                                    class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                    <th class="px-3.5 py-2.5 font-semibold">App #</th>
+                                    <th class="px-3.5 py-2.5 font-semibold">Mathematics</th>
+                                    <th class="px-3.5 py-2.5 font-semibold">Science</th>
+                                    <th class="px-3.5 py-2.5 font-semibold">Humanities</th>
+                                    <th class="px-3.5 py-2.5 font-semibold">Inductive Reasoning</th>
+                                    <th class="px-3.5 py-2.5 font-semibold">Composite Scholastic Ability (CSA)</th>
+                                    <th class="px-3.5 py-2.5 font-semibold">CEE Term</th>
+                                    <th class="px-3.5 py-2.5 font-semibold">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($cee_result->isNotEmpty())
+                                    @foreach ($cee_result as $result)
+                                        <tr
+                                            class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                            <td class="px-3.5 py-2.5">
+                                                <a href="{{ route('student.cee.result-slip', encrypt($result->app_no)) }}"
+                                                    class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"
+                                                    target="_blank">
+                                                    {{ $result->app_no }}
+                                                </a>
+                                            </td>
+                                            <td class="px-3.5 py-2.5">{{ intval($result->math) }}</td>
+                                            <td class="px-3.5 py-2.5">{{ intval($result->science) }}</td>
+                                            <td class="px-3.5 py-2.5">{{ intval($result->humanities) }}</td>
+                                            <td class="px-3.5 py-2.5">{{ intval($result->inductive) }}</td>
+                                            <td class="px-3.5 py-2.5">{{ intval($result->csa) }}</td>
+                                            <td class="px-3.5 py-2.5">{{ $result->cee_term->name }}</td>
+                                            <td class="px-3.5 py-2.5">
+                                                <a href="{{ route('student.cee.result-slip', encrypt($result->app_no)) }}"
+                                                    class="flex items-center justify-center w-[37.5px] h-[37.5px] transition-all duration-200 ease-linear text-sky-500 btn bg-sky-100 hover:text-white hover:bg-sky-600 focus:text-white focus:bg-sky-600 focus:ring focus:ring-sky-100 active:text-white active:bg-sky-600 active:ring active:ring-sky-100 dark:bg-sky-500/20 dark:text-sky-400 dark:hover:bg-sky-500 dark:hover:text-white dark:focus:bg-sky-500 dark:focus:text-white dark:active:bg-sky-500 dark:active:text-white dark:ring-sky-400/20"
+                                                    target="_blank">
+                                                    <i class="ri-download-2-line"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="8" class="px-3.5 py-2.5 text-center text-gray-500">
+                                            No results available.
+                                        </td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!--end card-->
+
+    </div>
+@elseif (optional($reservation)->is_repeat_exam === 'No')
+    <div class="flex flex-col col-span-1 gap-3 2xl:col-span-12">
+        <div
+            class="px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+            <span class="font-bold">Hi!</span> No Result yet for incoming Freshmen.
         </div>
     </div>
+@else
+    <div class="flex flex-col col-span-1 gap-3 2xl:col-span-12">
+        <div
+            class="px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+            <span class="font-bold">Hi!</span> No Result yet.
+        </div>
+    </div>
+    @endif
 
+    {{-- end check if repeater exam --}}
+
+    </div>
 @endsection
