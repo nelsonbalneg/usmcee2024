@@ -20,21 +20,12 @@
     </div>
 
     <div class="grid grid-cols-1 2xl:grid-cols-12">
-        {{-- check if repeater exam --}}
-
-        @if (optional($reservation)->is_repeat_exam === 'Yes')
-            <div class="relative p-3 pr-12 mb-4 text-sm border border-transparent rounded-md text-custom-50 bg-custom-500">
-                <button
-                    class="absolute top-0 bottom-0 right-0 p-3 transition text-custom-200 hover:text-custom-100"></button>
-                <span class="font-bold">Active Term: </span> {{ $cee_term->name }}
-            </div>
-
+        @if (optional($cee_result))
             <div class="flex flex-col col-span-1 gap-3 card 2xl:col-span-12">
                 <div class="card-body">
-                    <h6 class="mb-4 text-15">USM-CEE Result for
-                        {{ $reservation->applicant->lastname . ', ' . $reservation->applicant->firstname . ' ' . $reservation->applicant->middlename . ', ' . $reservation->applicant->suffix }}
+                    <h6 class="mb-4 text-15">USM-CEE RESULT OF
+                        {{ strtoupper($reservation->lastname . ', ' . $reservation->firstname . ' ' . $reservation->middlename . ', ' . $reservation->suffix) }}
                     </h6>
-
                     <div class="overflow-x-auto">
                         <table class="w-full border-separate table-custom border-spacing-y-1">
                             <thead class="ltr:text-left rtl:text-right">
@@ -89,25 +80,13 @@
                     </div>
                 </div>
             </div><!--end card-->
-
-    </div>
-@elseif (optional($reservation)->is_repeat_exam === 'No')
-    <div class="flex flex-col col-span-1 gap-3 2xl:col-span-12">
-        <div
-            class="px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-            <span class="font-bold">Hi!</span> No Result yet for incoming Freshmen.
-        </div>
-    </div>
-@else
-    <div class="flex flex-col col-span-1 gap-3 2xl:col-span-12">
-        <div
-            class="px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
-            <span class="font-bold">Hi!</span> No Result yet.
-        </div>
-    </div>
-    @endif
-
-    {{-- end check if repeater exam --}}
-
+        @else
+            <div class="flex flex-col col-span-1 gap-3 2xl:col-span-12">
+                <div
+                    class="px-4 py-3 text-sm bg-white border rounded-md border-custom-300 text-custom-500 dark:bg-zink-700 dark:border-custom-500">
+                    <span class="font-bold">Hi!</span> No Result yet.
+                </div>
+            </div>
+        @endif
     </div>
 @endsection

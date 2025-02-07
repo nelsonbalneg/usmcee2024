@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Student;
 
+use App\Models\User;
 use App\Models\Result;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Models\CeeSession;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -11,24 +11,26 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class ResultController extends Controller
 {
     public function index()
     {
 
-        $cee_term = CeeSession::where('status', 'active')->first();
-        $cee_term_active = $cee_term->id;
+        // $cee_term = CeeSession::where('status', 'active')->first();
+        // $cee_term_active = $cee_term->id;
 
-        $reservation = Reservation::where('user_id', Auth::user()->id)
-            ->where('cee_session_id', $cee_term_active)
-            ->first();
+        // $reservation = Reservation::where('user_id', Auth::user()->id)
+        //     ->where('cee_session_id', $cee_term_active)
+        //     ->first();
 
-        $cee_result = Result::where('app_no', $reservation->app_no)
-            ->where('user_id', Auth::user()->id)
+        $reservation = User::where('id', Auth::user()->id)->first();
+
+        $cee_result = Result::where('user_id', Auth::user()->id)
             ->where('status', 'posted')->get();
 
-        return view("student.result.result", compact('reservation', 'cee_result','cee_term'));
+        return view("student.result.result", compact( 'cee_result','reservation'));
     }
 
     public function generateceeResultSlip($encryptedAppNo)

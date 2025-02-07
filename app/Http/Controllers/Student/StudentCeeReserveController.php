@@ -36,7 +36,7 @@ class StudentCeeReserveController extends Controller
             !$studentdetails->province ||
             !$studentdetails->city ||
             !$studentdetails->brgy ||
-           // !$studentdetails->street ||
+            // !$studentdetails->street ||
             !$studentdetails->zipcode ||
             !$studentdetails->photo
         ) {
@@ -106,7 +106,7 @@ class StudentCeeReserveController extends Controller
         $endofreservation = $siteSetting ? $siteSetting->endreservation : null;
 
 
-        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'reservation', 'isRetaker','endofreservation'));
+        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'reservation', 'isRetaker', 'endofreservation'));
     }
 
     // In your controller
@@ -214,91 +214,158 @@ class StudentCeeReserveController extends Controller
 
     public function store(Request $request)
     {
+        // $request->validate([
+        //     'ceesession' => 'required|integer',
+        //     'campus' => 'required|string|max:100',
+        //     'firstprioprog' => 'required|string|max:100',
+
+        //     'secondprioprog' => 'required|string|max:100',
+
+        //     'thirdprioprog' => 'required|string|max:100',
+
+        //     'ceeexamsession' => 'required|string|max:50',
+        //     'room' => 'required|string|max:100',
+        // ]);
+
+        // //check if record exists
+        // $isReserved = Reservation::where('user_id', Auth::user()->id)->exists();
+        // if ($isReserved) {
+        //     return redirect()->back()->with([
+        //         'message' => 'You have reserved a slot already!',
+        //         'status' => 'error'
+        //     ]);
+        // }
+
+        // // Check room availability
+        // $checkifzero = Room::where('exam_session', $request->room)
+        //     ->where('status', 'active')
+        //     ->where('capacity', '<=', 0)
+        //     ->exists();
+
+        // if ($checkifzero) {
+        //     return redirect()->back()->with([
+        //         'message' => 'We are sorry! No more slots are available for this room. Please select a different session or room.',
+        //         'status' => 'error'
+        //     ]);
+        // } else {
+        //     $userId = Auth::user()->id;
+        //     $ceeSession = $request->ceesession;
+        //     $lastRow = Reservation::find(Reservation::max('id'));
+        //     $lastId = $lastRow ? $lastRow->id : 0; // If no rows, start with 0
+
+        //     // Format the date
+        //     $formattedDate = Carbon::parse($request->created_at)->format('Ymd');
+
+        //     // Concatenate the formatted date with the last ID incremented by 1
+        //     $appno = 'CEE-' . $formattedDate . $userId . $ceeSession . ($lastId + 1);
+
+        //     $checkifzero = Room::where('id', $request->room)
+        //         ->where('status', 'active')
+        //         ->where('capacity', '<=', 0)
+        //         ->exists();
+
+        //     if ($checkifzero) {
+        //         return redirect()->back()->with([
+        //             'message' => 'We are sorry! No more slots are available for this room. Please select a different session or room.',
+        //             'status' => 'error'
+        //         ]);
+        //     }
+
+        //     $application = new Reservation();
+        //     $application->cee_session_id = trim($ceeSession);
+        //     $application->user_id = trim($userId);
+        //     $application->app_no = trim($appno);
+        //     $application->campus_id = trim($request->campus);
+        //     $application->campus_id_prio_prog_2 = trim($request->campus2);
+        //     $application->campus_id_prio_prog_3 = trim($request->campus3);
+        //     $application->firstpriorty = trim($request->firstprioprog);
+        //     $application->firstpriorty_desc = trim($request->firstprioprog_desc);
+        //     $application->secondpriorty = trim($request->secondprioprog);
+        //     $application->secondpriority_desc = trim($request->secondprioprog_desc);
+        //     $application->thirdpriorty = trim($request->thirdprioprog);
+        //     $application->thirdpriorty_desc = trim($request->thirdprioprog_desc);
+        //     $application->exam_session = trim($request->ceeexamsession);
+        //     $application->room_id = trim($request->room);
+        //     $application->is_repeat_exam = trim($request->is_repeat_exam);
+        //     $application->save();
+
+        //     // Update room quantity
+        //     $room = Room::findOrFail($request->room);
+        //     $roomCap = $room->capacity;
+        //     $newRoomcap = $roomCap - 1;
+        //     $room->capacity = $newRoomcap;
+        //     $room->save();
+        // }
+
+        // return redirect()->back()->with([
+        //     'message' => 'Congratulations! USMCEE Slot reservation Successful.',
+        //     'status' => 'success'
+        // ]);
+
         $request->validate([
             'ceesession' => 'required|integer',
             'campus' => 'required|string|max:100',
             'firstprioprog' => 'required|string|max:100',
-
             'secondprioprog' => 'required|string|max:100',
-
             'thirdprioprog' => 'required|string|max:100',
-
             'ceeexamsession' => 'required|string|max:50',
-            'room' => 'required|string|max:100',
         ]);
 
-        //check if record exists
-        $isReserved = Reservation::where('user_id', Auth::user()->id)->exists();
-        if ($isReserved) {
+        // Check if user has already reserved a slot
+        if (Reservation::where('user_id', Auth::user()->id)->exists()) {
             return redirect()->back()->with([
-                'message' => 'You have reserved a slot already!',
+                'message' => 'You have already reserved a slot!',
                 'status' => 'error'
             ]);
         }
 
-        // Check room availability
-        $checkifzero = Room::where('exam_session', $request->room)
+        // Find an available room based on campus, cee examsession, and cee session
+        $room = Room::where('campus', $request->campus)
+            ->where('exam_session', $request->ceeexamsession)
+            ->where('cee_session_id', $request->ceesession)
             ->where('status', 'active')
-            ->where('capacity', '<=', 0)
-            ->exists();
+            ->where('capacity', '>', 0)
+            // ->orderBy('capacity', 'desc') // Prefer rooms with the most space
+            ->first();
 
-        if ($checkifzero) {
+        if (!$room) {
             return redirect()->back()->with([
-                'message' => 'We are sorry! No more slots are available for this room. Please select a different session or room.',
+                'message' => 'We are sorry! No available rooms for this selection. Please choose a different campus or examination batch.',
                 'status' => 'error'
             ]);
-        } else {
-            $userId = Auth::user()->id;
-            $ceeSession = $request->ceesession;
-            $lastRow = Reservation::find(Reservation::max('id'));
-            $lastId = $lastRow ? $lastRow->id : 0; // If no rows, start with 0
-
-            // Format the date
-            $formattedDate = Carbon::parse($request->created_at)->format('Ymd');
-
-            // Concatenate the formatted date with the last ID incremented by 1
-            $appno = 'CEE-' . $formattedDate . $userId . $ceeSession . ($lastId + 1);
-
-            $checkifzero = Room::where('id', $request->room)
-                ->where('status', 'active')
-                ->where('capacity', '<=', 0)
-                ->exists();
-
-            if ($checkifzero) {
-                return redirect()->back()->with([
-                    'message' => 'We are sorry! No more slots are available for this room. Please select a different session or room.',
-                    'status' => 'error'
-                ]);
-            }
-
-            $application = new Reservation();
-            $application->cee_session_id = trim($ceeSession);
-            $application->user_id = trim($userId);
-            $application->app_no = trim($appno);
-            $application->campus_id = trim($request->campus);
-            $application->campus_id_prio_prog_2 = trim($request->campus2);
-            $application->campus_id_prio_prog_3 = trim($request->campus3);
-            $application->firstpriorty = trim($request->firstprioprog);
-            $application->firstpriorty_desc = trim($request->firstprioprog_desc);
-            $application->secondpriorty = trim($request->secondprioprog);
-            $application->secondpriority_desc = trim($request->secondprioprog_desc);
-            $application->thirdpriorty = trim($request->thirdprioprog);
-            $application->thirdpriorty_desc = trim($request->thirdprioprog_desc);
-            $application->exam_session = trim($request->ceeexamsession);
-            $application->room_id = trim($request->room);
-            $application->is_repeat_exam = trim($request->is_repeat_exam);
-            $application->save();
-
-            // Update room quantity
-            $room = Room::findOrFail($request->room);
-            $roomCap = $room->capacity;
-            $newRoomcap = $roomCap - 1;
-            $room->capacity = $newRoomcap;
-            $room->save();
         }
+
+        // Generate Application Number
+        $userId = Auth::user()->id;
+        $ceeSession = $request->ceesession;
+        $lastId = Reservation::max('id') ?? 0; // Get max ID, default to 0 if none exist
+        $formattedDate = Carbon::now()->format('Ymd'); // Use current date
+        $appno = 'CEE-' . $formattedDate . $userId . $ceeSession . ($lastId + 1);
+
+        // Save reservation
+        $application = new Reservation();
+        $application->cee_session_id = trim($ceeSession);
+        $application->user_id = trim($userId);
+        $application->app_no = trim($appno);
+        $application->campus_id = trim($request->campus);
+        $application->campus_id_prio_prog_2 = trim($request->campus2 ?? '');
+        $application->campus_id_prio_prog_3 = trim($request->campus3 ?? '');
+        $application->firstpriorty = trim($request->firstprioprog);
+        $application->firstpriorty_desc = trim($request->firstprioprog_desc ?? '');
+        $application->secondpriorty = trim($request->secondprioprog);
+        $application->secondpriority_desc = trim($request->secondprioprog_desc ?? '');
+        $application->thirdpriorty = trim($request->thirdprioprog);
+        $application->thirdpriorty_desc = trim($request->thirdprioprog_desc ?? '');
+        $application->exam_session = trim($request->ceeexamsession);
+        $application->room_id = $room->id; // Assign found room
+        $application->is_repeat_exam = trim($request->is_repeat_exam ?? 0);
+        $application->save();
+
+        // Reduce room capacity
+        $room->decrement('capacity');
 
         return redirect()->back()->with([
-            'message' => 'Congratulations! USMCEE Slot reservation Successful.',
+            'message' => 'Congratulations! Your USMCEE Slot reservation was successful. Assigned Room: ' . $room->room_name,
             'status' => 'success'
         ]);
     }
