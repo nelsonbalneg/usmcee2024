@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEE Examination Slip </title>
+    <title>USMCEE Examination Slip </title>
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
     <style>
@@ -26,12 +26,12 @@
 
         .container {
             width: 100%;
-            height: 100%;
             padding: 0;
             /* Remove padding */
             box-sizing: border-box;
-            page-break-inside: avoid;
-            /* Avoid page break inside */
+            position: relative;
+            margin-bottom: 30px;
+            /* Space for footer */
         }
 
         .header,
@@ -110,11 +110,11 @@
         }
 
         .watermark {
-            position: absolute;
+            position: fixed;
+            /* Changed from absolute to fixed */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
-            /* font-size: 100px; */
             color: rgba(0, 0, 0, 0.1);
             white-space: nowrap;
             z-index: -1;
@@ -142,20 +142,78 @@
         }
 
         .footer {
-            position: absolute;
-            /* Change to absolute instead of fixed */
+            position: fixed;
             bottom: 0;
+            left: 0;
             width: 100%;
-            color: rgb(46, 46, 46);
+            text-align: center;
             font-size: 7pt;
+            color: rgb(46, 46, 46);
+            background-color: white;
+            padding-bottom: 10px;
+        }
+
+        .map-page {
+            position: relative;
+            page-break-before: always;
+            margin-bottom: 40px;
+            /* Space for footer */
+        }
+
+        .map-image {
+            width: 100%;
+            height: auto;
+            max-height: 85%;
+            object-fit: contain;
+        }
+
+        @media print {
+
+            .watermark,
+            .footer {
+                position: fixed;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+
+            .page-content {
+                margin-bottom: 40px;
+                /* Space for footer on each page */
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
+    <!-- Watermark that appears on all pages -->
+    <div class="watermark">
+        @php
+            $app_no = $cee_reservation->app_no;
+        @endphp
 
+        @for ($i = 0; $i < 55; $i++)
+            <p>USMCEE -2025 {{ $app_no }} USMCEE -2025 {{ $app_no }} USMCEE -2025 {{ $app_no }}
+                USMCEE -2025 {{ $app_no }} USMCEE -2025 {{ $app_no }} USMCEE -2025
+                {{ $app_no }}
+                USMCEE -2025 {{ $app_no }} USMCEE -2025 {{ $app_no }} USMCEE -2025 USMCEE -2025
+            </p>
+        @endfor
+    </div>
+
+    <!-- Footer that appears on all pages -->
+    <div class="footer">
+        <p>Downloaded Date and Time:
+            {{ \Carbon\Carbon::now()->setTimezone('Asia/Manila')->format('F j, Y h:i:s A') }} | {{ request()->ip() }}
+        </p>
+        <p style="margin-top:-8px;">Browser Agent: {{ request()->header('User-Agent') }}</p>
+        <p style="margin-top:-8px; color:green"> University of Southern Mindanao - College Entrance Examination
+            Reservation
+            System v4.0 | <b>Powered by: UICTO</b></p>
+    </div>
+
+    <!-- First page content -->
+    <div class="container page-content">
+        <div class="header">
             <img src="{{ public_path('backend/assets/images/logo/OFFICIAL_USM_LOGO.png') }}" alt="University Logo"
                 class="left-logo">
             <img src="data:image/png;base64,{{ $base64QrCode }}" alt="University Logo" class="right-logo" />
@@ -164,8 +222,8 @@
             <div style="font-size: 10pt;">Kabacan, Cotabato</div>
             <br>
 
-            <div style="color: blue;">UNIVERSITY OF SOUTHERN MINDANAO <br>
-                COLLEGE ENTRANCE EXAMINATION</div>
+            <div style="color: green;">UNIVERSITY OF SOUTHERN MINDANAO <br>
+                COLLEGE ENTRANCE EXAMINATION (USMCEE)</div>
             <div class="title">Entrance Examination Slip</div>
         </div>
 
@@ -176,13 +234,12 @@
                         USMCEE.
                         Below are your reservation details:</span>
                 </div>
-
             </div>
         </div>
 
         <table style="margin-bottom: 10px; width: 100%;">
             <tr>
-                <th colspan="2" style="text-align: center;">CEE RESERVATION DETAILS</th>
+                <th colspan="2" style="text-align: center;">USMCEE RESERVATION DETAILS</th>
             </tr>
             <tr>
                 <!-- Left Column -->
@@ -201,7 +258,6 @@
 
                 <!-- Right Column -->
                 <td style="vertical-align: top; width: 50%;">
-
                     <table style="width: 100%;">
                         <tr>
                             <th style="text-align: left; width: 100px;">Test Session:</th>
@@ -235,7 +291,7 @@
         </table>
         <table class="table table-borderless">
             <tr>
-                <td style=" border: none;">
+                <td style="border: none;">
                     <h3>Requirements upon entry to the testing center/venue:</h3>
                     <ul>
                         <li>Printed examination slip (generated after successful registration)</li>
@@ -248,34 +304,13 @@
                 </td>
             </tr>
         </table>
+    </div>
 
-        <div style="page-break-before: always;">
-            <img src="{{ public_path('backend/assets/images/map/' . Str::lower($cee_reservation->map_file) . '.png') }}"
-                 alt="{{ $cee_reservation->map_file }}"
-                 style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-
-        @php
-            $app_no = $cee_reservation->app_no;
-        @endphp
-
-        <div class="watermark">
-            @for ($i = 0; $i < 55; $i++)
-                <p>USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }}
-                    USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }} USMCEE -2024
-                    {{ $app_no }}
-                    USMCEE -2024 {{ $app_no }} USMCEE -2024 {{ $app_no }} USMCEE -2024 USMCEE -2024
-                </p>
-            @endfor
-        </div>
-
-        <div class="footer">
-            <p>Downloaded Date and Time: {{ \Carbon\Carbon::now()->setTimezone('Asia/Manila')->format('Y-m-d h:i:s A') }}</p>
-            <p style="margin-top:-8px;"> <i>University of Southern Mindanao - College Entrance Examination Reservation
-                    System v4.0 | <b>
-                        Powered by: UICTO</b></i></p>
-        </div>
-
+    <!-- Second page content -->
+    <div class="map-page page-content">
+        <img src="{{ public_path('backend/assets/images/map/' . Str::lower($cee_reservation->map_file) . '.png') }}"
+            alt="{{ $cee_reservation->map_file }}" class="map-image">
+    </div>
 </body>
 
 </html>

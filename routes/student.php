@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Student\ProgramController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\ResultController;
 use App\Http\Controllers\Backend\StudentController;
@@ -41,6 +42,9 @@ Route::middleware(['check.maintenance'])->group(function () {
 
     //route for checking duplicate records
     Route::get('/check-duplicate-records', [StudentCeeReserveController::class, 'checkForDuplicateRecords'])->name('check.duplicate.records');
+
+    //route for programs
+    Route::get('/programs/index', [ProgramController::class, 'index'])->name('programs.index');
 
 
 });

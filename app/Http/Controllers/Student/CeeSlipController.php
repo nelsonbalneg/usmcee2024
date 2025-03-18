@@ -98,6 +98,6 @@ class CeeSlipController extends Controller
         $pdf = PDF::loadView('student.cee-slip.exam-slip', compact('cee_reservation', 'base64QrCode'));
 
         // Stream the PDF instead of downloading it
-        return $pdf->stream('usmcee-slip.pdf');
+        return $pdf->stream($cee_reservation->app_no . '-usmcee-slip.pdf');
     }
 }

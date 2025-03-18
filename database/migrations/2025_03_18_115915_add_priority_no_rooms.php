@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('result_templates', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->integer('sequence_no')->nullable();
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('result_templates');
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->dropColumn(columns: 'sequence_no');
+        });
     }
 };

@@ -41,7 +41,7 @@
                         <div class="2xl:col-span-12">
                             <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
 
-                                <div class="text-center card bg-custom-500 xl:col-span-3">
+                                <div class="text-center bg-green-400 card xl:col-span-3">
                                     <div class="flex flex-col h-full card-body">
                                         <img src="{{ asset(Auth::user()->photo) }}" alt=""
                                             class="w-2/6 mx-auto rounded-full">
@@ -49,14 +49,15 @@
                                             <h5 class="mb-1 text-white">Congratulations!
                                                 {{ $reservation->firstname }}
                                             </h5>
-                                            <p class="text-custom-200">You have successfully reserved a slot. Kindly
+                                            <p class="text-green-100">You have successfully reserved a slot. Kindly
                                                 click
                                                 the <b>Download Slip</b> button to download your CEE slip.</p>
                                         </div>
-                                        <div class="p-3 mt-5 rounded-md bg-custom-600">
+                                        <div class="p-3 mt-5 rounded-md">
                                             @if (!empty(Auth::user()->photo))
                                                 <a href="{{ route('student.cee.exam-slip', ['app_no' => $encryptedAppNo]) }}"
-                                                    class="text-decoration-none" target="_blank">
+                                                    class="block p-3 mt-5 text-center text-white transition bg-green-600 rounded-md hover:bg-green-600"
+                                                    target="_blank">
                                                     <h4 class="mb-1 text-white">Download Slip</h4>
                                                 </a>
                                             @else
@@ -313,7 +314,7 @@
                                     </div><!--end col-->
 
                                     <div class="xl:col-span-12">
-                                        <h6 class=" text-5">Priority Programs</h6>
+                                        <h6 class="text-blue-500 text-5">PRIORITY PROGRAMS</h6>
 
                                     </div>
 
@@ -419,11 +420,12 @@
 
 
                                     <div class="xl:col-span-12">
-                                        <h6 class="mt-2 text-5">Examination Details</h6>
+                                        <h6 class="mt-2 text-blue-500 text-5">EXAMINATION VENUE</h6>
                                     </div>
 
-                                    <div class="xl:col-span-6">
-                                        <label for="campus" class="inline-block mb-2 text-base font-medium">Campus
+                                    <div class="xl:col-span-12">
+                                        <label for="campus" class="inline-block mb-2 text-base font-medium">Select
+                                            Examination Venue
                                             <sup class="text-red-500">* required</sup></label>
 
                                         <select
@@ -438,9 +440,15 @@
                                             <option value="USM PALMA">USM PALMA
                                             </option>
                                         </select>
+
+                                        <label for="campus"
+                                            class="inline-block mt-2 text-base font-medium text-green-500">
+                                            Note: The system will automatically select and assign a room for your
+                                            reservation.
+                                        </label>
                                     </div><!--end col-->
 
-                                    <div class="xl:col-span-6">
+                                    {{-- <div class="xl:col-span-6">
                                         <label for="ceesession" class="inline-block mb-2 text-base font-medium">USMCEE
                                             Batch
                                             <sup class="text-red-500">* required</sup></label>
@@ -449,14 +457,16 @@
                                             id="ceeexamsession" name="ceeexamsession">
                                             <option value="" selected>-Select Campus
                                             </option>
-                                            <option value="Batch 1">Batch 1 (6:00 AM - 9:00 AM)
+                                            <option value="Batch 1">Batch 1 (8:00 AM - 9:00 AM)
                                             </option>
                                             <option value="Batch 2">Batch 2 (10:00 AM - 1:00 PM)
                                             </option>
                                             <option value="Batch 3">Batch 3 (1:30 PM - 4:30 PM)
                                             </option>
                                         </select>
-                                    </div><!--end col-->
+                                    </div> --}}
+
+                                    <!--end col-->
 
                                     {{-- <div class="xl:col-span-6">
                                         <label for="room" class="inline-block mb-2 text-base font-medium">Room
@@ -585,22 +595,22 @@
     </script>
 
     <script>
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    console.log("Latitude:", position.coords.latitude);
-                    console.log("Longitude:", position.coords.longitude);
-                },
-                (error) => {
-                    if (error.code === error.PERMISSION_DENIED) {
-                        alert("Please enable location access for a better experience.");
-                        // Optionally, provide instructions or a link to help users enable location.
-                    }
-                }
-            );
-        } else {
-            alert("Geolocation is not supported by this browser.");
-        }
+        // if (navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition(
+        //         (position) => {
+        //             console.log("Latitude:", position.coords.latitude);
+        //             console.log("Longitude:", position.coords.longitude);
+        //         },
+        //         (error) => {
+        //             if (error.code === error.PERMISSION_DENIED) {
+        //                 alert("Please enable location access for a better experience.");
+        //                 // Optionally, provide instructions or a link to help users enable location.
+        //             }
+        //         }
+        //     );
+        // } else {
+        //     alert("Geolocation is not supported by this browser.");
+        // }
 
         $(document).ready(function() {
             $('form').on('submit', function(event) {

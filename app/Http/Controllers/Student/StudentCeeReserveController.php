@@ -300,6 +300,7 @@ class StudentCeeReserveController extends Controller
         // return redirect()->back()->with([
         //     'message' => 'Congratulations! USMCEE Slot reservation Successful.',
         //     'status' => 'success'
+        // 'ceeexamsession' => 'required|string|max:50',
         // ]);
 
         $request->validate([
@@ -308,7 +309,7 @@ class StudentCeeReserveController extends Controller
             'firstprioprog' => 'required|string|max:100',
             'secondprioprog' => 'required|string|max:100',
             'thirdprioprog' => 'required|string|max:100',
-            'ceeexamsession' => 'required|string|max:50',
+
         ]);
 
         // Check if user has already reserved a slot
@@ -321,16 +322,19 @@ class StudentCeeReserveController extends Controller
 
         // Find an available room based on campus, cee examsession, and cee session
         $room = Room::where('campus', $request->campus)
-            ->where('exam_session', $request->ceeexamsession)
+            // ->where('exam_session', $request->ceeexamsession)
             ->where('cee_session_id', $request->ceesession)
             ->where('status', 'active')
             ->where('capacity', '>', 0)
-            // ->orderBy('capacity', 'desc') // Prefer rooms with the most space
+            ->orderBy('sequence_no', 'asc') // Prefer rooms with the most space
             ->first();
+
+        //Get the room batch
+        $exam_batch = $room->exam_session;
 
         if (!$room) {
             return redirect()->back()->with([
-                'message' => 'We are sorry! No available rooms for this selection. Please choose a different campus or examination batch.',
+                'message' => 'We are sorry! No available rooms for this selection. Please choose a different examination venue.',
                 'status' => 'error'
             ]);
         }
@@ -356,7 +360,8 @@ class StudentCeeReserveController extends Controller
         $application->secondpriority_desc = trim($request->secondprioprog_desc ?? '');
         $application->thirdpriorty = trim($request->thirdprioprog);
         $application->thirdpriorty_desc = trim($request->thirdprioprog_desc ?? '');
-        $application->exam_session = trim($request->ceeexamsession);
+        // $application->exam_session = trim($request->ceeexamsession);
+        $application->exam_session = trim($exam_batch);
         $application->room_id = $room->id; // Assign found room
         $application->is_repeat_exam = trim($request->is_repeat_exam ?? 0);
         $application->save();

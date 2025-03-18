@@ -31,6 +31,7 @@
                             <thead class="ltr:text-left rtl:text-right">
                                 <tr
                                     class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                    <th class="px-3.5 py-2.5 font-semibold">Action</th>
                                     <th class="px-3.5 py-2.5 font-semibold">App #</th>
                                     <th class="px-3.5 py-2.5 font-semibold">Mathematics</th>
                                     <th class="px-3.5 py-2.5 font-semibold">Science</th>
@@ -38,7 +39,7 @@
                                     <th class="px-3.5 py-2.5 font-semibold">Inductive Reasoning</th>
                                     <th class="px-3.5 py-2.5 font-semibold">Composite Scholastic Ability (CSA)</th>
                                     <th class="px-3.5 py-2.5 font-semibold">CEE Term</th>
-                                    <th class="px-3.5 py-2.5 font-semibold">Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,6 +47,19 @@
                                     @foreach ($cee_result as $result)
                                         <tr
                                             class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                            <td class="px-3.5 py-2.5">
+                                                <div class="flex space-x-2">
+                                                    <a href="{{ route('student.programs.index', ['app_no' => encrypt($result->app_no)]) }}"
+                                                        class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
+                                                        Programs
+                                                    </a>
+                                                    <a href="{{ route('student.cee.result-slip', encrypt($result->app_no)) }}"
+                                                        class="flex items-center justify-center w-[37.5px] h-[37.5px] transition-all duration-200 ease-linear text-sky-500 btn bg-sky-100 hover:text-white hover:bg-sky-600 focus:text-white focus:bg-sky-600 focus:ring focus:ring-sky-100 active:text-white active:bg-sky-600 active:ring active:ring-sky-100 dark:bg-sky-500/20 dark:text-sky-400 dark:hover:bg-sky-500 dark:hover:text-white dark:focus:bg-sky-500 dark:focus:text-white dark:active:bg-sky-500 dark:active:text-white dark:ring-sky-400/20"
+                                                        target="_blank">
+                                                        <i class="ri-download-2-line"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
                                             <td class="px-3.5 py-2.5">
                                                 <a href="{{ route('student.cee.result-slip', encrypt($result->app_no)) }}"
                                                     class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"
@@ -59,13 +73,8 @@
                                             <td class="px-3.5 py-2.5">{{ intval($result->inductive) }}</td>
                                             <td class="px-3.5 py-2.5">{{ intval($result->csa) }}</td>
                                             <td class="px-3.5 py-2.5">{{ $result->cee_term->name }}</td>
-                                            <td class="px-3.5 py-2.5">
-                                                <a href="{{ route('student.cee.result-slip', encrypt($result->app_no)) }}"
-                                                    class="flex items-center justify-center w-[37.5px] h-[37.5px] transition-all duration-200 ease-linear text-sky-500 btn bg-sky-100 hover:text-white hover:bg-sky-600 focus:text-white focus:bg-sky-600 focus:ring focus:ring-sky-100 active:text-white active:bg-sky-600 active:ring active:ring-sky-100 dark:bg-sky-500/20 dark:text-sky-400 dark:hover:bg-sky-500 dark:hover:text-white dark:focus:bg-sky-500 dark:focus:text-white dark:active:bg-sky-500 dark:active:text-white dark:ring-sky-400/20"
-                                                    target="_blank">
-                                                    <i class="ri-download-2-line"></i>
-                                                </a>
-                                            </td>
+
+
                                         </tr>
                                     @endforeach
                                 @else
