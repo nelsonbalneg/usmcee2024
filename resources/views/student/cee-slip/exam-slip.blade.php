@@ -22,6 +22,14 @@
             /* Slightly smaller to avoid overflow */
             box-sizing: border-box;
             font-size: 9pt;
+            -webkit-user-select: none;
+            /* Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE/Edge */
+            user-select: none;
+            /* Standard */
         }
 
         .container {
@@ -156,14 +164,14 @@
         .map-page {
             position: relative;
             page-break-before: always;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             /* Space for footer */
         }
 
         .map-image {
             width: 100%;
             height: auto;
-            max-height: 85%;
+            max-height: 95%;
             object-fit: contain;
         }
 
@@ -177,7 +185,7 @@
             }
 
             .page-content {
-                margin-bottom: 40px;
+                margin-bottom: 20px;
                 /* Space for footer on each page */
             }
         }
