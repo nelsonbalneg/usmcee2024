@@ -168,7 +168,7 @@ class StudentCeeReserveController extends Controller
 
         // Cache the response for 60 minutes
         $programs = Cache::remember($cacheKey, 60, function () use ($termId, $realCampusId) {
-            $response = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/list/term/{$termId}/realcampus/{$realCampusId}");
+            $response = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/cee-list/term/{$termId}/realcampus/{$realCampusId}");
 
             if ($response->successful()) {
                 return collect($response->json());
@@ -210,6 +210,20 @@ class StudentCeeReserveController extends Controller
         //     // Handle the error
         //     $campusList = [];
         // }
+    }
+
+    public function countActiveSlots(Request $request)
+    {
+        $campus = $request->input('campus');
+
+        $activeSlots = DB::table('rooms')
+            ->join('cee_sessions', 'rooms.cee_session_id', '=', 'cee_sessions.id') // Join cee_session table
+            ->where('rooms.campus', $campus)
+            ->where('cee_sessions.status', 'active') // Check if the session is active
+            ->where('rooms.status', 'active')
+            ->sum('rooms.capacity');
+
+        return response()->json(['activeSlots' => $activeSlots]);
     }
 
     public function store(Request $request)
@@ -329,8 +343,7 @@ class StudentCeeReserveController extends Controller
             ->orderBy('sequence_no', 'asc') // Prefer rooms with the most space
             ->first();
 
-        //Get the room batch
-        $exam_batch = $room->exam_session;
+
 
         if (!$room) {
             return redirect()->back()->with([
@@ -338,6 +351,9 @@ class StudentCeeReserveController extends Controller
                 'status' => 'error'
             ]);
         }
+
+        //Get the room batch
+        $exam_batch = $room->exam_session;
 
         // Generate Application Number
         $userId = Auth::user()->id;
@@ -360,6 +376,11 @@ class StudentCeeReserveController extends Controller
         $application->secondpriority_desc = trim($request->secondprioprog_desc ?? '');
         $application->thirdpriorty = trim($request->thirdprioprog);
         $application->thirdpriorty_desc = trim($request->thirdprioprog_desc ?? '');
+
+        $application->firstprogram_policy_id = trim($request->firstprogram_policy_id ?? '');
+        $application->secondprogram_policy_id = trim($request->secondprogram_policy_id ?? '');
+        $application->thirdprogram_policy_id = trim($request->thirdprogram_policy_id ?? '');
+
         // $application->exam_session = trim($request->ceeexamsession);
         $application->exam_session = trim($exam_batch);
         $application->room_id = $room->id; // Assign found room

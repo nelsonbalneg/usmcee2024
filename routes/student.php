@@ -41,6 +41,7 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::get('cee/result', [ResultController::class, 'index'])->name('cee.result');
 
     //route for checking duplicate records
+    Route::get('count-active-slots', [StudentCeeReserveController::class, 'countActiveSlots'])->name('count-active-slots');
     Route::get('/check-duplicate-records', [StudentCeeReserveController::class, 'checkForDuplicateRecords'])->name('check.duplicate.records');
 
     //route for programs

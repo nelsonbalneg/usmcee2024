@@ -343,6 +343,7 @@
                                             <option selected="true" disabled>Choose Program</option>
                                         </select>
                                         <input type="hidden" name="firstprioprog_desc" id="firstprioprog_desc">
+                                        <input type="hidden" name="firstprogram_policy_id" id="firstprogram_policy_id">
                                     </div>
 
 
@@ -372,6 +373,8 @@
                                             <option selected="true" disabled>Choose Program</option>
                                         </select>
                                         <input type="hidden" name="secondprioprog_desc" id="secondprioprog_desc">
+                                        <input type="hidden" name="secondprogram_policy_id"
+                                            id="secondprogram_policy_id">
                                     </div>
 
 
@@ -416,6 +419,7 @@
                                             <option selected="true" disabled>Choose Program</option>
                                         </select>
                                         <input type="hidden" name="thirdprioprog_desc" id="thirdprioprog_desc">
+                                        <input type="hidden" name="thirdprogram_policy_id" id="thirdprogram_policy_id">
                                     </div>
 
 
@@ -435,14 +439,19 @@
                                             </option>
                                             <option value="Main Campus">Main Campus
                                             </option>
-                                            <option value="USM KCC">USM KCC
+                                            {{-- <option value="USM KCC">USM KCC
                                             </option>
                                             <option value="USM PALMA">USM PALMA
-                                            </option>
+                                            </option> --}}
                                         </select>
 
-                                        <label for="campus"
-                                            class="inline-block mt-2 text-base font-medium text-green-500">
+                                        <label id="activeSlotsLabel"
+                                            class="hidden block mt-2 text-base font-medium text-blue-500">
+                                            Active Slots for <span id="selectedCampus"></span>: <span
+                                                id="activeSlots">0</span>
+                                        </label>
+
+                                        <label for="campus" class="block mt-2 text-base font-medium text-green-500">
                                             Note: The system will automatically select and assign a room for your
                                             reservation.
                                         </label>
@@ -595,6 +604,40 @@
     </script>
 
     <script>
+        let selectedCampus = '';
+
+        // Function to fetch and update active slots
+        function fetchActiveSlots() {
+            if (selectedCampus) {
+                fetch("{{ route('student.count-active-slots') }}?campus=" + encodeURIComponent(selectedCampus))
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('activeSlots').innerText = data.activeSlots;
+                    })
+                    .catch(error => console.error('Error fetching slots:', error));
+            }
+        }
+
+        document.getElementById('examcampus').addEventListener('change', function() {
+            selectedCampus = this.value;
+            let activeSlotsLabel = document.getElementById('activeSlotsLabel');
+            let selectedCampusSpan = document.getElementById('selectedCampus');
+
+            if (selectedCampus) {
+                selectedCampusSpan.innerText = selectedCampus;
+                activeSlotsLabel.classList.remove('hidden'); // Show label
+                fetchActiveSlots(); // Fetch immediately when user selects a campus
+            } else {
+                activeSlotsLabel.classList.add('hidden'); // Hide label if no campus selected
+            }
+        });
+
+        // Automatically fetch active slots every 5 seconds
+        setInterval(fetchActiveSlots, 5000);
+    </script>
+
+
+    <script>
         // if (navigator.geolocation) {
         //     navigator.geolocation.getCurrentPosition(
         //         (position) => {
@@ -645,14 +688,17 @@
             const campusSelect1 = document.getElementById('campus-select');
             const programSelect1 = document.getElementById('program-select');
             const firstPriorityDescInput = document.getElementById('firstprioprog_desc');
+            const firstprogram_policy_id_Input = document.getElementById('firstprogram_policy_id');
 
             const campusSelect2 = document.getElementById('campus-select2');
             const programSelect2 = document.getElementById('program-select2');
             const secondPriorityDescInput = document.getElementById('secondprioprog_desc');
+            const secondprogram_policy_id_Input = document.getElementById('secondprogram_policy_id');
 
             const campusSelect3 = document.getElementById('campus-select3');
             const programSelect3 = document.getElementById('program-select3');
             const thirdPriorityDescInput = document.getElementById('thirdprioprog_desc');
+            const thirdprogram_policy_id_Input = document.getElementById('thirdprogram_policy_id');
 
 
             function loadPrograms(campusSelect, programSelect) {
@@ -699,6 +745,7 @@
                                 `${program.programName} - ${program.majorDiscDesc}` : program
                                 .programName;
                             option.setAttribute('data-program-name', program.programName);
+                            option.setAttribute('data-program-policy_id', program.id);
                             programSelect.appendChild(option);
                         });
                     })
@@ -716,16 +763,19 @@
             programSelect1.addEventListener('change', () => {
                 const selectedOption = programSelect1.options[programSelect1.selectedIndex];
                 firstPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
+                firstprogram_policy_id_Input.value = selectedOption.getAttribute('data-program-policy_id');
             });
 
             programSelect2.addEventListener('change', () => {
                 const selectedOption = programSelect2.options[programSelect2.selectedIndex];
                 secondPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
+                secondprogram_policy_id_Input.value = selectedOption.getAttribute('data-program-policy_id');
             });
 
             programSelect3.addEventListener('change', () => {
                 const selectedOption = programSelect3.options[programSelect3.selectedIndex];
                 thirdPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
+                thirdprogram_policy_id_Input.value = selectedOption.getAttribute('data-program-policy_id');
             });
         });
 
