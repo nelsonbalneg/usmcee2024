@@ -39,7 +39,6 @@ use App\Models\SiteSetting;
 use Carbon\Carbon;
 
 $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endreservation; @endphp
-
     class="flex items-center justify-center min-h-screen py-16 lg:py-10 bg-slate-50 dark:bg-zink-800 dark:text-zink-100 font-public">
 
     <div class="relative">
@@ -113,15 +112,14 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                     <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
                         class="hidden h-6 mx-auto dark:block">
                     <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
-                        class="block h-15 mx-auto dark:hidden">
+                        class="block mx-auto h-15 dark:hidden">
                 </a>
 
                 <div class="mt-8 text-center">
                     <h4 class="mb-1 text-yellow-500 dark:text-yellow-500">Welcome Students !</h4>
                     <p class="text-slate-500 dark:text-zink-200">Sign in to continue to USMCEE</p>
                 </div>
-                <div
-                    class="flex gap-3 p-3 text-sm rounded-md text-yellow-500 rounded-md bg-yellow-50 dark:bg-yellow-400/20 mt-5">
+                <div class="flex gap-3 p-3 mt-5 text-sm text-yellow-500 rounded-md bg-yellow-50 dark:bg-yellow-400/20">
                     <div>
                         <h6 class="mb-1">WARNING!</h6>
                         <ul class="ml-2 list-disc list-inside">
@@ -136,7 +134,7 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                     @csrf
                     <div class="mb-3 text-center">
                         @if ($errors->any())
-                            <div class="text-red-500 text-sm mt-2">
+                            <div class="mt-2 text-sm text-red-500">
                                 <ul>
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -178,14 +176,14 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                         <!-- Forgot Password Link -->
                         <div>
                             <a href="{{ route('password.request') }}"
-                                class="text-base font-medium cursor-pointer text-blue-600 hover:underline">
+                                class="text-base font-medium text-blue-600 cursor-pointer hover:underline">
                                 Forgot Password?
                             </a>
                         </div>
                     </div>
 
                     <!-- Error message for Remember Me -->
-                    <div class="cf-turnstile mt-5" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div>
+                    <div class="mt-5 cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div>
                     <div class="mt-5 text-center">
                         <button type="submit"
                             class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Sign
@@ -202,12 +200,12 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                                 class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">
                                 Sign Up</a> </p>
                     </div>
-
-                    @else
-                    <div class="card mt-4">
+                @else
+                    <div class="mt-4 card">
                         <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
                             <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                                <p class="mb-0">Please be informed that the USMCEE <b>account registration and slot reservation </b> is officially closed.</p>
+                            <p class="mb-0">Please be informed that the USMCEE <b>account registration and slot
+                                    reservation </b> will open on March 28, 2025 to April 3, 2025</p>
                         </div>
                     </div>
                 @endif

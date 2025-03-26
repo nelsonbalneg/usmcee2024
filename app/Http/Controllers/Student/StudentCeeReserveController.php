@@ -37,23 +37,11 @@ class StudentCeeReserveController extends Controller
             !$studentdetails->city ||
             !$studentdetails->brgy ||
             // !$studentdetails->street ||
-            !$studentdetails->zipcode ||
+            // !$studentdetails->zipcode ||
             !$studentdetails->photo
         ) {
             // Redirect to the dashboard if the profile is incomplete
             return redirect()->route('student.dashboard');
-        }
-
-        $response = Http::get('http://172.16.0.60/academic/api/v2/Campus/list');
-
-        if ($response->successful()) {
-
-            $campusList = collect($response->json())->filter(function ($campus) {
-                return $campus['campusName'] !== 'USM-ULS';
-            })->values()->all();
-        } else {
-
-            $campusList = [];
         }
 
         $firstname = Auth::user()->firstname;
@@ -62,13 +50,21 @@ class StudentCeeReserveController extends Controller
         $userId = Auth::user()->id;
 
         $ceeSession = CeeSession::where('status', 'active')->first();
-        $application = Reservation::where('user_id', Auth::user()->id)->exists();
 
 
-        // $existingReservation = Reservation::where('user_id', Auth::user()->id)->first();
-        $reservation = DB::table('reservations')
+
+        $reservation_details = Reservation::where('user_id', Auth::id())
+            ->orderByRaw("CASE
+                            WHEN status = 'confirmed' THEN 1
+                            WHEN status = 'pending' THEN 2
+                            WHEN status = 'cancelled' THEN 3
+                            ELSE 3
+                          END")
+            ->orderBy('created_at', 'desc') // Get the latest reservation
+            ->first();
+
+        $cee_reservation_records = DB::table('reservations')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-            ->join('users', 'reservations.user_id', '=', 'users.id')
             ->where('reservations.user_id', $userId)
             ->select(
                 'reservations.user_id',
@@ -80,21 +76,18 @@ class StudentCeeReserveController extends Controller
                 'reservations.campus_id_prio_prog_2',
                 'reservations.campus_id_prio_prog_3',
                 'reservations.is_repeat_exam',
+                'reservations.status',
+                'reservations.created_at',
+                'reservations.cee_session_id',
                 'rooms.room_name',
-                'rooms.map_file',
                 'rooms.college_name',
                 'rooms.exam_session',
                 'rooms.campus',
                 'rooms.time',
-                'rooms.schedule',
-                'users.firstname',
-                'users.lastname',
-                'users.email',
-                'users.sex',
-                'users.phone',
-                'users.birthdate'
+                'rooms.schedule'
             )
-            ->first();
+            ->orderBy('reservations.created_at', 'desc')
+            ->get();
 
         //check if name exist in the past cee data session
         $isRetaker = PastCeeData::where('firstname', $firstname)
@@ -106,7 +99,7 @@ class StudentCeeReserveController extends Controller
         $endofreservation = $siteSetting ? $siteSetting->endreservation : null;
 
 
-        return view("student.reserve.reserve", compact('ceeSession', 'campusList', 'application', 'reservation', 'isRetaker', 'endofreservation'));
+        return view("student.reserve.reserve", compact('ceeSession', 'isRetaker', 'endofreservation', 'cee_reservation_records', 'reservation_details'));
     }
 
     // In your controller
@@ -327,15 +320,27 @@ class StudentCeeReserveController extends Controller
         ]);
 
         // Check if user has already reserved a slot
-        if (Reservation::where('user_id', Auth::user()->id)->exists()) {
+        // if (Reservation::where('user_id', Auth::user()->id)->exists()) {
+        //     return redirect()->back()->with([
+        //         'message' => 'You have already reserved a slot!',
+        //         'status' => 'error'
+        //     ]);
+        // }
+
+        // Check if user has already reserved a confirmed slot
+        if (
+            Reservation::where('user_id', Auth::id())
+                ->where('status', 'confirmed')
+                ->exists()
+        ) {
             return redirect()->back()->with([
-                'message' => 'You have already reserved a slot!',
+                'message' => 'You have already reserved a confirmed slot!',
                 'status' => 'error'
             ]);
         }
 
         // Find an available room based on campus, cee examsession, and cee session
-        $room = Room::where('campus', $request->campus)
+        $room = Room::where('campus', $request->venue_campus)
             // ->where('exam_session', $request->ceeexamsession)
             ->where('cee_session_id', $request->ceesession)
             ->where('status', 'active')
@@ -385,6 +390,7 @@ class StudentCeeReserveController extends Controller
         $application->exam_session = trim($exam_batch);
         $application->room_id = $room->id; // Assign found room
         $application->is_repeat_exam = trim($request->is_repeat_exam ?? 0);
+        $application->status = 'pending';
         $application->save();
 
         // Reduce room capacity

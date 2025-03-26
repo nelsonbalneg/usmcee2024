@@ -39,7 +39,8 @@ class CeeSlipController extends Controller
             return redirect()->route('student.dashboard');
         }
 
-        $app_no = Crypt::decryptString($request->app_no);
+        // $app_no = Crypt::decryptString($request->app_no);
+        $app_no  = unserialize(Crypt::decryptString($request->app_no));
 
         $cee_reservation = DB::table('reservations')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
