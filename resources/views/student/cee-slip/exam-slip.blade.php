@@ -224,7 +224,9 @@
         <div class="header">
             <img src="{{ public_path('backend/assets/images/logo/OFFICIAL_USM_LOGO.png') }}" alt="University Logo"
                 class="left-logo">
-            <img src="data:image/png;base64,{{ $base64QrCode }}" alt="University Logo" class="right-logo" />
+                <img src="{{ $qrCodeUrl }}" alt="QR Code" class="right-logo" />
+
+
             <div>University of Southern Mindanao</div>
             <div>UNIVERSITY TEST DEVELOPMENT CENTER</div>
             <div style="font-size: 10pt;">Kabacan, Cotabato</div>
@@ -255,12 +257,11 @@
                     <table style="width: 100%;">
                         <img src="{{ public_path($cee_reservation->photo) }}" alt="Applicant Photo"
                             style="width: 100px; height: 100px; margin-left: 120px;">
-                        <p style="text-align: center;">App No.: <b>{{ $cee_reservation->app_no }}</b><br>
-                            Full Name: <b>{{ $cee_reservation->lastname }},
-                                {{ $cee_reservation->firstname }}
-                                {{ $cee_reservation->middlename ?? '' }}
-                                {{ $cee_reservation->suffix ?? '' }}</b>
-                        </p>
+                        <p style="text-align: center;"><b>{{ $cee_reservation->app_no }}</b><br>
+                            <b>{{ strtoupper($cee_reservation->lastname) }},
+                                {{ strtoupper($cee_reservation->firstname) }}
+                                {{ strtoupper($cee_reservation->middlename ?? '') }}
+                                {{ strtoupper($cee_reservation->suffix ?? '') }}</b>
                     </table>
                 </td>
 

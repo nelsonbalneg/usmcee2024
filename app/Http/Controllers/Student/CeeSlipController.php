@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers\Student;
 
-use Carbon\Carbon;
+
 use Endroid\QrCode\QrCode;
-use App\Models\Reservation;
+
 use Illuminate\Http\Request;
+use Endroid\QrCode\Logo\Logo;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Label\Label;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Endroid\QrCode\Encoding\Encoding;
 use Illuminate\Support\Facades\Crypt;
+use Endroid\QrCode\RoundBlockSizeMode;
+use Illuminate\Support\Facades\Storage;
+use Endroid\QrCode\ErrorCorrectionLevel;
+
 
 
 class CeeSlipController extends Controller
@@ -35,13 +44,13 @@ class CeeSlipController extends Controller
             !$studentdetails->zipcode ||
             !$studentdetails->photo
         ) {
-            // Redirect to the dashboard if the profile is incomplete
             return redirect()->route('student.dashboard');
         }
 
-        // $app_no = Crypt::decryptString($request->app_no);
-        $app_no  = unserialize(Crypt::decryptString($request->app_no));
+        // Decrypt application number
+        $app_no = unserialize(Crypt::decryptString($request->app_no));
 
+        // Fetch reservation details
         $cee_reservation = DB::table('reservations')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
             ->join('users', 'reservations.user_id', '=', 'users.id')
@@ -73,6 +82,11 @@ class CeeSlipController extends Controller
             )
             ->first();
 
+        // Ensure we have valid reservation data
+        if (!$cee_reservation) {
+            return redirect()->route('student.dashboard')->with('error', 'Reservation not found.');
+        }
+
         // Generate QR code with app_no, firstname, and lastname
         $qrData = $cee_reservation->app_no . ',' . $cee_reservation->firstname . ' ';
 
@@ -82,22 +96,46 @@ class CeeSlipController extends Controller
 
         $qrData .= $cee_reservation->lastname;
 
-
-        // Create the QR code
-        $qrCode = new QrCode($qrData);
-
-        // Create a PNG writer
         $writer = new PngWriter();
 
-        // Generate the QR code image and encode it as a string
-        $qrImage = $writer->write($qrCode)->getString();
+        $qrCode = new QrCode(
+            data: $qrData,
+            encoding: new Encoding('UTF-8'),
+            errorCorrectionLevel: ErrorCorrectionLevel::Low,
+            size: 300,
+            margin: 10,
+            roundBlockSizeMode: RoundBlockSizeMode::Margin,
+            foregroundColor: new Color(0, 0, 0),
+            backgroundColor: new Color(255, 255, 255)
+        );
 
-        // Encode the QR code image to base64
-        $base64QrCode = base64_encode($qrImage);
+        // // Create the QR code
+        // $qrCode = new QrCode($qrData);
 
-        // Pass the base64 QR code string to the view for inclusion in the PDF
-        $pdf = PDF::loadView('student.cee-slip.exam-slip', compact('cee_reservation', 'base64QrCode'));
+        // // Create a PNG writer
+        // $writer = new PngWriter();
 
+        // // Generate the QR code image and encode it as a string
+        // $qrImage = $writer->write($qrCode)->getString();
+
+        // // Encode the QR code image to base64
+        // $base64QrCode = base64_encode($qrImage);
+        $result = $writer->write($qrCode);
+
+        // Define file path for QR Code
+        $qrFilePath = 'qrcodes/' . $cee_reservation->app_no . '.png';
+        Storage::disk('public')->put($qrFilePath, $result->getString());
+
+        $qrCodeUrl = storage_path('app/public/' . $qrFilePath);
+
+
+
+        // Generate the PDF
+        $pdf = PDF::loadView('student.cee-slip.exam-slip', compact('cee_reservation', 'qrCodeUrl'))
+            ->setOption('isHtml5ParserEnabled', true)
+            ->setOption('isRemoteEnabled', true);
+
+        //return view('student.cee-slip.exam-slip', compact('cee_reservation', 'base64QrCode'));
         // Stream the PDF instead of downloading it
         return $pdf->stream($cee_reservation->app_no . '-usmcee-slip.pdf');
     }
