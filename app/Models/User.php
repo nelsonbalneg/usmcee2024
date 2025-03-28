@@ -28,6 +28,7 @@ class User extends Authenticatable
         'birthdate',
         'sex',
         'last_seen',
+        'exam_session_id'
 
     ];
 

@@ -109,17 +109,6 @@ class CeeSlipController extends Controller
             backgroundColor: new Color(255, 255, 255)
         );
 
-        // // Create the QR code
-        // $qrCode = new QrCode($qrData);
-
-        // // Create a PNG writer
-        // $writer = new PngWriter();
-
-        // // Generate the QR code image and encode it as a string
-        // $qrImage = $writer->write($qrCode)->getString();
-
-        // // Encode the QR code image to base64
-        // $base64QrCode = base64_encode($qrImage);
         $result = $writer->write($qrCode);
 
         // Define file path for QR Code
@@ -127,8 +116,6 @@ class CeeSlipController extends Controller
         Storage::disk('public')->put($qrFilePath, $result->getString());
 
         $qrCodeUrl = storage_path('app/public/' . $qrFilePath);
-
-
 
         // Generate the PDF
         $pdf = PDF::loadView('student.cee-slip.exam-slip', compact('cee_reservation', 'qrCodeUrl'))

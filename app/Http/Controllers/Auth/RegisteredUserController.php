@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\CeeSession;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -81,6 +82,11 @@ class RegisteredUserController extends Controller
             ]
         );
 
+        //get the active cee_session
+        $active_cee_session = CeeSession::where('status', 'active')->first();
+
+        // dd($active_cee_session->id);
+
         // Create the user
         $user = User::create([
             'firstname' => $request->firstname,
@@ -91,6 +97,7 @@ class RegisteredUserController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'birthdate' => $request->birthdate,
+            'exam_session_id' => $active_cee_session->id,
             'password' => Hash::make($request->password),
         ]);
 

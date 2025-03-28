@@ -12,6 +12,7 @@
         "laravel/framework": "12.3.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "ryangjchandler/laravel-cloudflare-turnstile": "^2.0",
         "setasign/fpdf": "^1.8",
         "yajra/laravel-datatables-oracle": "12.0"
     },
