@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\CeeSession;
 use App\Models\User;
+use App\Models\CeeSession;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,19 +26,48 @@ class StudentController extends Controller
             $query->whereNull('lrn')
                 ->orWhere('lrn', '');
         })->exists();
-            // ->where('id', Auth::user()->id)
-            // ->where(function ($query) {
-            //     $query->whereNull('birthdate')
-            //         ->orWhere('birthdate', '');
-            // })
-            // ->exists();
+        // ->where('id', Auth::user()->id)
+        // ->where(function ($query) {
+        //     $query->whereNull('birthdate')
+        //         ->orWhere('birthdate', '');
+        // })
+        // ->exists();
 
         if ($checkEmptyFields) {
 
             $studentdetails = User::where('id', Auth::user()->id)->first();
             $ceeActiveession = CeeSession::where('status', 'active')->first();
 
-            return view("student.profile.profile", compact('studentdetails', 'ceeActiveession'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
+            //check if records exists
+            $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
+
+            $cee_reservation_records = DB::table('reservations')
+                ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                ->where('reservations.user_id', Auth::user()->id)
+                ->select(
+                    'reservations.user_id',
+                    'reservations.app_no',
+                    'reservations.firstpriorty_desc',
+                    'reservations.secondpriority_desc',
+                    'reservations.thirdpriorty_desc',
+                    'reservations.campus_id',
+                    'reservations.campus_id_prio_prog_2',
+                    'reservations.campus_id_prio_prog_3',
+                    'reservations.is_repeat_exam',
+                    'reservations.status',
+                    'reservations.created_at',
+                    'reservations.cee_session_id',
+                    'rooms.room_name',
+                    'rooms.college_name',
+                    'rooms.exam_session',
+                    'rooms.campus',
+                    'rooms.time',
+                    'rooms.schedule'
+                )
+                ->orderBy('reservations.created_at', 'desc')
+                ->get();
+
+            return view("student.profile.profile", compact('studentdetails', 'ceeActiveession', 'isreservation_exist', 'cee_reservation_records'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
         } else {
 
 
