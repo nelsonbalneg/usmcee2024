@@ -104,12 +104,15 @@
                                                     </td>
                                                     <td class="px-3.5 py-2.5">{{ $data->app_no }}</td>
                                                     <td class="px-3.5 py-2.5">
-                                                        {{ $data->exam_session  }} <br>
-                                                        {{  \Carbon\Carbon::parse($data->schedule)->format('F j, Y') }}
+                                                        {{ $data->exam_session }} <br>
+                                                        {{ \Carbon\Carbon::parse($data->schedule)->format('F j, Y') }}
                                                         [{{ $data->time }}]</td>
-                                                    <td class="px-3.5 py-2.5"> {{  $data->college_name . '-' . $data->room_name }}</td>
+                                                    <td class="px-3.5 py-2.5">
+                                                        {{ $data->college_name . '-' . $data->room_name }}</td>
                                                     <td class="px-3.5 py-2.5">{{ $data->cee_session_id }}</td>
-                                                    <td class="px-3.5 py-2.5"> {{ \Carbon\Carbon::parse($data->created_at)->setTimezone('Asia/Manila')->format('F j, Y h:i A') }}</td>
+                                                    <td class="px-3.5 py-2.5">
+                                                        {{ \Carbon\Carbon::parse($data->created_at)->setTimezone('Asia/Manila')->format('F j, Y h:i A') }}
+                                                    </td>
 
 
 
@@ -375,6 +378,245 @@
                     @endif
                 @endif
             @else
+                {{-- check the endofreservation --}}
+                @if ($endofreservation && Carbon::parse($endofreservation, 'Asia/Manila')->isFuture())
+                    <div class="card">
+                        <div class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
+                            <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                            <div>
+                                <h6 class="mb-1">Kindly read this note before proceeding to CEE Slot Reservation</h6>
+                                <p><b>Note:</b> Please ensure that you provide accurate and correct information.
+                                    Double-check
+                                    all details before submitting, as you will not be able to edit them once saved. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form action="{{ route('student.reserve.store') }}" method="POST">
+                                @csrf
+                                <h6 class="mb-1 text-5">RESERVATION DETAILS</h6>
+                                <hr class="mb-4" />
+
+                                <div class="xl:col-span-6">
+                                    <input type="hidden" name="ceesession"
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                        value="{{ $ceeSession->id }}" @readonly(true)>
+                                </div><!--end col-->
+
+                                <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
+
+                                    <div class="xl:col-span-6">
+                                        <label for="is_repeat_exam" class="inline-block mb-2 text-base font-medium">CEE
+                                            Retaker?<sup class="text-blue-500">* read only</sup></label>
+                                        <input type="text" id="is_repeat_exam" name="is_repeat_exam"
+                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            value="<?php echo $isRetaker ? 'Yes' : 'No'; ?>" @readonly(true)>
+                                    </div><!--end col-->
+
+                                    <div class="xl:col-span-12">
+                                        <h6 class="text-blue-500 text-5">PRIORITY PROGRAMS</h6>
+
+                                    </div>
+
+                                    <div class="xl:col-span-4">
+                                        <label for="campus" class="inline-block mb-2 text-base font-medium">Select
+                                            Campus<sup class="text-red-500">* required</sup></label>
+                                        <select id="campus-select" name="campus" data-choices
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                            <option selected="true" disabled>Choose Campus</option>
+                                            <option value="1">USM Main</option>
+                                            <option value="3">USM KCC</option>
+                                            <option value="5">USM PALMA CLUSTER</option>
+                                            <option value="6">USM MLANG</option>
+                                            <option value="7">USM Antipas</option>
+                                            <option value="8">USM Pigcwayan</option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="xl:col-span-8">
+                                        <label for="firstprioprog" class="inline-block mb-2 text-base font-medium">First
+                                            Priority
+                                            Program <sup class="text-red-500">* required</sup></label>
+                                        <select id="program-select" name="firstprioprog" data-choices
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                            <option selected="true" disabled>Choose Program</option>
+                                        </select>
+                                        <input type="hidden" name="firstprioprog_desc" id="firstprioprog_desc">
+                                        <input type="hidden" name="firstprogram_policy_id" id="firstprogram_policy_id">
+                                    </div>
+
+
+                                    <div class="xl:col-span-4">
+                                        <label for="campus2" class="inline-block mb-2 text-base font-medium">Select
+                                            Campus<sup class="text-red-500">* required</sup></label>
+                                        <select id="campus-select2" name="campus2" data-choices
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                            <option selected="true" disabled>Choose Campus</option>
+                                            <option value="1">USM Main</option>
+                                            <option value="3">USM KCC</option>
+                                            <option value="5">USM PALMA CLUSTER</option>
+                                            <option value="6">USM MLANG</option>
+                                            <option value="7">USM Antipas</option>
+                                            <option value="8">USM Pigcwayan</option>
+
+                                        </select>
+                                    </div>
+
+
+                                    <div class="xl:col-span-8">
+                                        <label for="secondprioprog" class="inline-block mb-2 text-base font-medium">Second
+                                            Priority
+                                            Program <sup class="text-red-500">* required</sup></label>
+                                        <select id="program-select2" name="secondprioprog" data-choices
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                            <option selected="true" disabled>Choose Program</option>
+                                        </select>
+                                        <input type="hidden" name="secondprioprog_desc" id="secondprioprog_desc">
+                                        <input type="hidden" name="secondprogram_policy_id"
+                                            id="secondprogram_policy_id">
+                                    </div>
+
+
+                                    <div class="xl:col-span-4">
+                                        <label for="campus3" class="inline-block mb-2 text-base font-medium">Select
+                                            Campus<sup class="text-red-500">* required</sup></label>
+                                        <select id="campus-select3" name="campus3" data-choices
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                            <option selected="true" disabled>Choose Campus</option>
+                                            <option value="1">USM Main</option>
+                                            <option value="3">USM KCC</option>
+                                            <option value="5">USM PALMA CLUSTER</option>
+                                            <option value="6">USM MLANG</option>
+                                            <option value="7">USM Antipas</option>
+                                            <option value="8">USM Pigcwayan</option>
+
+                                        </select>
+                                    </div>
+
+                                    <!-- Modal overlay for loading spinner -->
+                                    <div id="loading-modal"
+                                        class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-800 bg-opacity-50">
+                                        <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg">
+                                            <svg class="w-10 h-10 mb-4 animate-spin text-custom-500"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                    stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0a12 12 0 100 24v-4a8 8 0 01-8-8z"></path>
+                                            </svg>
+                                            <p class="font-medium text-gray-700">Loading programs, please wait...</p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="xl:col-span-8">
+                                        <label for="thirdprioprog" class="inline-block mb-2 text-base font-medium">Third
+                                            Priority
+                                            Program <sup class="text-red-500">* required</sup></label>
+                                        <select id="program-select3" name="thirdprioprog" data-choices
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
+                                            <option selected="true" disabled>Choose Program</option>
+                                        </select>
+                                        <input type="hidden" name="thirdprioprog_desc" id="thirdprioprog_desc">
+                                        <input type="hidden" name="thirdprogram_policy_id" id="thirdprogram_policy_id">
+                                    </div>
+
+
+                                    <div class="xl:col-span-12">
+                                        <h6 class="mt-2 text-blue-500 text-5">EXAMINATION VENUE</h6>
+                                    </div>
+
+                                    <div class="xl:col-span-12">
+                                        <label for="campus" class="inline-block mb-2 text-base font-medium">Select
+                                            Examination Venue
+                                            <sup class="text-red-500">* required</sup></label>
+
+                                        <select
+                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
+                                            id="examcampus" name="venue_campus">
+                                            <option value="" selecteds>-Select
+                                            </option>
+                                            <option value="Main Campus">Main Campus
+                                            </option>
+                                            {{-- <option value="USM KCC">USM KCC
+                                  </option>
+                                  <option value="USM PALMA">USM PALMA
+                                  </option> --}}
+                                        </select>
+
+                                        <label id="activeSlotsLabel"
+                                            class="hidden block mt-2 text-base font-medium text-blue-500">
+                                            Active Slots for <span id="selectedCampus"></span>: <span
+                                                id="activeSlots">0</span>
+                                        </label>
+
+                                        <label for="campus" class="block mt-2 text-base font-medium text-green-500">
+                                            Note: The system will automatically select and assign a room for your
+                                            reservation.
+                                        </label>
+                                    </div><!--end col-->
+
+                                    {{-- <div class="xl:col-span-6">
+                              <label for="ceesession" class="inline-block mb-2 text-base font-medium">USMCEE
+                                  Batch
+                                  <sup class="text-red-500">* required</sup></label>
+                              <select
+                                  class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
+                                  id="ceeexamsession" name="ceeexamsession">
+                                  <option value="" selected>-Select Campus
+                                  </option>
+                                  <option value="Batch 1">Batch 1 (8:00 AM - 9:00 AM)
+                                  </option>
+                                  <option value="Batch 2">Batch 2 (10:00 AM - 1:00 PM)
+                                  </option>
+                                  <option value="Batch 3">Batch 3 (1:30 PM - 4:30 PM)
+                                  </option>
+                              </select>
+                          </div> --}}
+
+                                    <!--end col-->
+
+                                    {{-- <div class="xl:col-span-6">
+                              <label for="room" class="inline-block mb-2 text-base font-medium">Room
+                                  Assignment<sup class="text-red-500">* required</sup></label>
+                              <select id="room-select" name="room"
+                                  class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
+                                  data-choices>
+                                  <option selected="true" disabled>Choose Room</option>
+                              </select>
+                          </div> --}}
+
+                                    <div class="flex justify-end gap-2 xl:col-span-12">
+                                        <button type="button"
+                                            class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10"><i
+                                                data-lucide="x" class="inline-block size-4"></i> <span
+                                                class="align-middle">Cancel</span></button>
+                                        <button type="submit"
+                                            class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100">Submit</button>
+                                    </div><!--end col-->
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    {{-- If the reservation Closesd --}}
+                @else
+                    <div class="card">
+                        <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
+                            <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                            <div>
+                                <h6 class="mb-1">Hi there, {{ Auth::user()->firstname }} !</h6>
+                                <p class="mb-0">Please be informed that the USMCEE Slot Reservation is officially
+                                    closed.
+                                </p>
+                                <p class="mb-2">Thank you!</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             @endif
 
         </div><!--end col-->
