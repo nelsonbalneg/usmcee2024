@@ -324,7 +324,7 @@
         @if ($isreservation_exist > 0)
             <div class="card">
                 <div class="card-body">
-                    <h6 class="mb-4 text-15">YOUR USMCEE RESERVATIONS HISTORY
+                    <h6 class="mb-4 text-15">YOUR USMCEE RESERVATION HISTORY
                     </h6>
                     <div class="overflow-x-auto">
                         <table class="w-full border-separate table-custom border-spacing-y-1">
