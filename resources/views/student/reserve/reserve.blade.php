@@ -85,8 +85,8 @@
                                                     <td class="px-3.5 py-2.5">
                                                         @if ($data->status === 'pending')
                                                             <span
-                                                                class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent"><i
-                                                                    data-lucide="circle-dashed"
+                                                                class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">
+                                                                <i data-lucide="circle-dashed"
                                                                     class="size-3 ltr:mr-1 rtl:ml-1"></i>
                                                                 Reserved</span>
                                                         @elseif ($data->status === 'cancelled')

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Student;
 use File;
 use App\Models\User;
 use App\Models\SchoolName;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Trait\ImageUploadTrait;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +30,36 @@ class StudentProfileController extends Controller
         $studentdetails->city = $studentdetails->city ?? '';
         $studentdetails->brgy = $studentdetails->brgy ?? '';
 
-        return view("student.profile.profile", compact('studentdetails'));
+        //check if records exists
+        $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
+
+        $cee_reservation_records = DB::table('reservations')
+        ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+        ->where('reservations.user_id', Auth::user()->id)
+        ->select(
+            'reservations.user_id',
+            'reservations.app_no',
+            'reservations.firstpriorty_desc',
+            'reservations.secondpriority_desc',
+            'reservations.thirdpriorty_desc',
+            'reservations.campus_id',
+            'reservations.campus_id_prio_prog_2',
+            'reservations.campus_id_prio_prog_3',
+            'reservations.is_repeat_exam',
+            'reservations.status',
+            'reservations.created_at',
+            'reservations.cee_session_id',
+            'rooms.room_name',
+            'rooms.college_name',
+            'rooms.exam_session',
+            'rooms.campus',
+            'rooms.time',
+            'rooms.schedule'
+        )
+        ->orderBy('reservations.created_at', 'desc')
+        ->get();
+
+        return view("student.profile.profile", compact('studentdetails','cee_reservation_records', 'isreservation_exist'));
     }
 
     /**

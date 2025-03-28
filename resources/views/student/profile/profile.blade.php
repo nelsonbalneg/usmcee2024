@@ -106,7 +106,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h6 class="mb-5 text-15 text-blue-500">SCHOOL INFORMATION</h6>
+                    <h6 class="mb-5 text-blue-500 text-15">SCHOOL INFORMATION</h6>
                     {{-- <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details here
                     easily. --}}
                     </p>
@@ -118,7 +118,7 @@
                         <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
 
                             {{-- @if (empty($studentdetails->lrn)) --}}
-                            {{-- <div class="xl:col-span-4 mb-2">
+                            {{-- <div class="mb-2 xl:col-span-4">
                             <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
                                 Picture
                                 <span class="text-red-500">*</span>
@@ -153,12 +153,12 @@
                                 </div>
                             </div>
 
-                            <div class="xl:col-span-6 mb-4">
-                                <label for="apptype" class="block text-base font-medium mb-2">
+                            <div class="mb-4 xl:col-span-6">
+                                <label for="apptype" class="block mb-2 text-base font-medium">
                                     Applicant Type<sup class="text-red-500">* required</sup>
                                 </label>
                                 <select id="apptype-select" name="apptype"
-                                    class="w-full rounded-md border border-slate-300 focus:ring-custom-500 focus:border-custom-500 transition ease-in-out duration-200 p-2"
+                                    class="w-full p-2 transition duration-200 ease-in-out border rounded-md border-slate-300 focus:ring-custom-500 focus:border-custom-500"
                                     onchange="setLRNBasedOnApplicantType()" data-choices>
                                     <option value="" {{ $studentdetails->applicant_type == '' ? 'selected' : '' }}
                                         disabled>--Select--</option>
@@ -191,7 +191,7 @@
                                         placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}"
                                         onblur="validateLRN()">
                                     @error('lrn')
-                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                     @enderror
                                 </div><!--end col-->
 
@@ -203,7 +203,7 @@
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         placeholder="Enter your SHS track" value="{{ $studentdetails->track }}">
                                     @error('track')
-                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                     @enderror
                                 </div><!--end col-->
                             @endif
@@ -217,7 +217,7 @@
                                     placeholder="School ID" value="{{ $studentdetails->schoolid }}"
                                     onchange="handleChange(this.value)">
                                 @error('school_id')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div><!--end col-->
 
@@ -228,7 +228,7 @@
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     readonly placeholder=" School Name" value="{{ $studentdetails->shs_school }}">
                                 @error('school_name')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div><!--end col-->
 
@@ -240,13 +240,13 @@
                                     readonly placeholder="Enter School Address"
                                     value="{{ $studentdetails->school_address }}">
                                 @error('school_address')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div><!--end col-->
 
 
                             <div class="xl:col-span-12">
-                                <h6 class="mb-1 text-15 text-blue-500">ADDRESS INFORMATION</h6>
+                                <h6 class="mb-1 text-blue-500 text-15">ADDRESS INFORMATION</h6>
                             </div>
 
                             <div class="xl:col-span-3">
@@ -306,7 +306,7 @@
                             </div><!--end col-->
 
                             @if (empty($studentdetails->applicant_type) || empty($studentdetails->lrn))
-                                <div class="xl:col-span-12 flex justify-end gap-2">
+                                <div class="flex justify-end gap-2 xl:col-span-12">
                                     <button type="button"
                                         class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10"><i
                                             data-lucide="x" class="inline-block size-4"></i> <span
@@ -318,21 +318,114 @@
 
                     </form><!--end form-->
                 </div>
-
-
-
-
             </div><!--end card-->
         </div><!--end col-->
+
+        @if ($isreservation_exist > 0)
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="mb-4 text-15">YOUR USMCEE RESERVATIONS HISTORY
+                    </h6>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-separate table-custom border-spacing-y-1">
+                            <thead class="">
+                                <tr
+                                    class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                    <th class="px-3.5 py-2.5 font-semibold justify-center">Action</th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Status</th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">App #</th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Schedule
+                                    </th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Venue</th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">CEE Term
+                                    </th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Date
+                                        Created</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($cee_reservation_records->isNotEmpty())
+                                    @foreach ($cee_reservation_records as $data)
+                                        <tr
+                                            class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                            <td class="px-3.5 py-2.5">
+                                                @if ($data->status === 'cancelled')
+                                                    <a href="#"
+                                                        class="flex items-center justify-center transition-all duration-200 ease-linear bg-slate-100 text-slate-500 btn hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-green-100 active:text-white active:bg-slate-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20">
+                                                        Not Available
+                                                    </a>
+                                                @elseif($data->status === 'pending')
+                                                    <a href="{{ route('student.cee.exam-slip', ['app_no' => encrypt($data->app_no)]) }}"
+                                                        target="_blank"
+                                                        class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
+                                                        CEE Slip
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('student.cee.result') }}" target="_blank"
+                                                        class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
+                                                        Result
+                                                    </a>
+                                                @endif
+                                            </td>
+
+                                            <td class="px-3.5 py-2.5">
+                                                @if ($data->status === 'pending')
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">
+                                                        <i data-lucide="circle-dashed"
+                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                        Reserved</span>
+                                                @elseif ($data->status === 'cancelled')
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent"><i
+                                                            data-lucide="x-circle" class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                        Cancelled</span>
+                                                @elseif($data->status === 'confirmed')
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent"><i
+                                                            data-lucide="check-circle-2"
+                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i> Confirmed</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-3.5 py-2.5">{{ $data->app_no }}</td>
+                                            <td class="px-3.5 py-2.5">
+                                                {{ $data->exam_session }} <br>
+                                                {{ \Carbon\Carbon::parse($data->schedule)->format('F j, Y') }}
+                                                [{{ $data->time }}]</td>
+                                            <td class="px-3.5 py-2.5">
+                                                {{ $data->college_name . '-' . $data->room_name }}</td>
+                                            <td class="px-3.5 py-2.5">{{ $data->cee_session_id }}</td>
+                                            <td class="px-3.5 py-2.5">
+                                                {{ \Carbon\Carbon::parse($data->created_at)->setTimezone('Asia/Manila')->format('F j, Y h:i A') }}
+                                            </td>
+
+
+
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="8" class="px-3.5 py-2.5 text-center text-gray-500">
+                                            No reservations available.
+                                        </td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @else
+        @endif
     </div><!--end grid-->
 
     @if (empty($studentdetails->applicant_type))
         <!-- Modal Structure -->
-        <div id="apptypeModal" class="fixed inset-0 flex items-center justify-center hidden z-50 ">
-            <div class="bg-gray-900 bg-opacity-50 absolute inset-0"></div> <!-- Overlay -->
+        <div id="apptypeModal" class="fixed inset-0 z-50 flex items-center justify-center hidden ">
+            <div class="absolute inset-0 bg-gray-900 bg-opacity-50"></div> <!-- Overlay -->
             <div class="relative w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zinc-600 z-10">
-                <div class="flex items-center justify-center p-4 border-b dark:border-zinc-500 bg-green-500">
-                    <h5 class="text-16 text-center text-white">Announcement</h5>
+                <div class="flex items-center justify-center p-4 bg-green-500 border-b dark:border-zinc-500">
+                    <h5 class="text-center text-white text-16">Announcement</h5>
                 </div>
                 <div class="p-4 text-center">
                     <div class="xl:col-span-12">
