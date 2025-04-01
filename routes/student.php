@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Student\ProgramController;
+use App\Http\Controllers\Student\StudentApplicantProfileController;
+use App\Http\Controllers\Student\StudentRequirementsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\ResultController;
 use App\Http\Controllers\Backend\StudentController;
@@ -47,5 +49,12 @@ Route::middleware(['check.maintenance'])->group(function () {
     //route for programs
     Route::get('/programs/index', [ProgramController::class, 'index'])->name('programs.index');
 
+    //routes for Preregitration
+    //route for Student Profile
+    Route::post('student-profile/publish', [StudentApplicantProfileController::class, 'publish'])->name('student-profile.publish');
+    Route::resource('applicant-profile', StudentApplicantProfileController::class);
+
+    //route for uploading of requirements
+    Route::resource('applicant-requirements', StudentRequirementsController::class);
 
 });

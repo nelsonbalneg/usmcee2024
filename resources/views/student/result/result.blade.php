@@ -22,28 +22,31 @@
     <div class="grid grid-cols-1 2xl:grid-cols-12">
         @if (optional($cee_result))
             <div class="flex flex-col col-span-1 gap-3 card 2xl:col-span-12">
-                <div class="card-body">
-                    <h6 class="mb-4 text-15">USM-CEE RESULT OF
-                        {{ strtoupper($reservation->lastname . ', ' . $reservation->firstname . ' ' . $reservation->middlename . ', ' . $reservation->suffix) }}
-                    </h6>
-                    <div class="overflow-x-auto">
-                        <table class="w-full border-separate table-custom border-spacing-y-1">
-                            <thead class="ltr:text-left rtl:text-right">
-                                <tr
-                                    class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
-                                    <th class="px-3.5 py-2.5 font-semibold">Action</th>
-                                    <th class="px-3.5 py-2.5 font-semibold">App #</th>
-                                    <th class="px-3.5 py-2.5 font-semibold">Mathematics</th>
-                                    <th class="px-3.5 py-2.5 font-semibold">Science</th>
-                                    <th class="px-3.5 py-2.5 font-semibold">Humanities</th>
-                                    <th class="px-3.5 py-2.5 font-semibold">Inductive Reasoning</th>
-                                    <th class="px-3.5 py-2.5 font-semibold">Composite Scholastic Ability (CSA)</th>
-                                    <th class="px-3.5 py-2.5 font-semibold">CEE Term</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($cee_result->isNotEmpty())
+                @if ($cee_result->isNotEmpty())
+                    <div class="card-body">
+                        <h6 class="mb-4 text-15">USM-CEE RESULT OF
+                            {{ strtoupper($reservation->lastname . ', ' . $reservation->firstname . ' ' . $reservation->middlename . ', ' . $reservation->suffix) }}
+                        </h6>
+                        <div class="overflow-x-auto">
+
+                            <table class="w-full border-separate table-custom border-spacing-y-1">
+                                <thead class="ltr:text-left rtl:text-right">
+                                    <tr
+                                        class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                        <th class="px-3.5 py-2.5 font-semibold">Action</th>
+                                        <th class="px-3.5 py-2.5 font-semibold">App #</th>
+                                        <th class="px-3.5 py-2.5 font-semibold">Mathematics</th>
+                                        <th class="px-3.5 py-2.5 font-semibold">Science</th>
+                                        <th class="px-3.5 py-2.5 font-semibold">Humanities</th>
+                                        <th class="px-3.5 py-2.5 font-semibold">Inductive Reasoning</th>
+                                        <th class="px-3.5 py-2.5 font-semibold">Composite Scholastic Ability (CSA)</th>
+                                        <th class="px-3.5 py-2.5 font-semibold">CEE Term</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- @if ($cee_result->isNotEmpty()) --}}
                                     @foreach ($cee_result as $result)
                                         <tr
                                             class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
@@ -77,17 +80,17 @@
 
                                         </tr>
                                     @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="8" class="px-3.5 py-2.5 text-center text-gray-500">
-                                            No results available.
-                                        </td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
+                @else
+                <div class="card-body">
+                    <h6 class="text-red-500 text-15">Result is not yet available.</h6>
                 </div>
+
+                @endif
             </div><!--end card-->
         @else
             <div class="flex flex-col col-span-1 gap-3 2xl:col-span-12">

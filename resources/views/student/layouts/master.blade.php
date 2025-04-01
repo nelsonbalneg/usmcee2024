@@ -529,10 +529,10 @@
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <!--apexchart js-->
-    <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    {{-- <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
 
     <!--dashboard ecommerce init js-->
-    <script src="{{ asset('backend/assets/js/pages/dashboards-ecommerce.init.js') }}"></script>
+    {{-- <script src="{{ asset('backend/assets/js/pages/dashboards-ecommerce.init.js') }}"></script> --}}
 
     <!-- App js -->
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
