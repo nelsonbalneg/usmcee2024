@@ -204,8 +204,7 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                     <div class="mt-4 card">
                         <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
                             <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                            <p class="mb-0">Please be informed that the USMCEE <b>account registration and slot
-                                    reservation </b> will open on March 28, 2025 to April 3, 2025</p>
+                            <p class="mb-0">Please be informed that USMCEE <b>account registration and slot reservation</b> are now closed.</p>
                         </div>
                     </div>
                 @endif

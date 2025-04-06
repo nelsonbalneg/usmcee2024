@@ -29,7 +29,38 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
-        @if ($app_no)
+        @if ($app_no && $result->csa >= 25)
+
+            <div class="xl:col-span-3">
+                <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
+                    <div class="card-body">
+                        <h6 class="mb-4 text-15">MY PROFILE INFORMATION</h6>
+
+                        <div class="px-5 py-8 rounded-md bg-sky-50 dark:bg-zinc-600">
+                            <img src="{{ asset($cee_profile->photo) }}" alt="Student Photo"
+                                class="block mx-auto border border-gray-300 rounded-full h-s">
+                        </div>
+                        <div class="mt-3">
+                            <h5 class="mb-0 text-blue-500 uppercase">{{ $cee_profile->lastname }},
+                                {{ $cee_profile->firstname }}
+                                {{ $cee_profile->middlename }} {{ $cee_profile->suffix }}</h5>
+                            <p class="text-slate-500 dark:text-zink-200">
+                                <i data-lucide="mail" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
+                                {{ $cee_profile->email }}
+                            </p>
+                            <p class="text-slate-500 dark:text-zink-200">
+                                <i data-lucide="phone" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
+                                {{ $cee_profile->phone }}
+                            </p>
+                            <p class="text-slate-500 dark:text-zink-200">
+                                <i data-lucide="calendar" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
+                                {{ \Carbon\Carbon::parse($cee_profile->birthdate)->format('F j, Y') }}
+                            </p>
+                        </div>
+                    </div>
+                </div><!--end card-->
+            </div><!--end col-->
+
             <div class="xl:col-span-9">
                 <form id="studentProfileForm" action="{{ route('student.applicant-profile.store') }}" method="POST">
                     @csrf
@@ -1335,38 +1366,8 @@
 
 
             </div><!--end col-->
-            <div class="xl:col-span-3">
-                <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
-                    <div class="card-body">
-                        <h6 class="mb-4 text-15">MY PROFILE INFORMATION</h6>
-
-                        <div class="px-5 py-8 rounded-md bg-sky-50 dark:bg-zinc-600">
-                            <img src="{{ asset($cee_profile->photo) }}" alt="Student Photo"
-                                class="block mx-auto border border-gray-300 rounded-full h-s">
-                        </div>
-                        <div class="mt-3">
-                            <h5 class="mb-0 text-blue-500 uppercase">{{ $cee_profile->lastname }},
-                                {{ $cee_profile->firstname }}
-                                {{ $cee_profile->middlename }} {{ $cee_profile->suffix }}</h5>
-                            <p class="text-slate-500 dark:text-zink-200">
-                                <i data-lucide="mail" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                {{ $cee_profile->email }}
-                            </p>
-                            <p class="text-slate-500 dark:text-zink-200">
-                                <i data-lucide="phone" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                {{ $cee_profile->phone }}
-                            </p>
-                            <p class="text-slate-500 dark:text-zink-200">
-                                <i data-lucide="calendar"
-                                    class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                {{ \Carbon\Carbon::parse($cee_profile->birthdate)->format('F j, Y') }}
-                            </p>
-                        </div>
-                    </div>
-                </div><!--end card-->
-            </div><!--end col-->
         @else
-        <h1>Forbidden</h1>
+            <h1>Forbidden</h1>
         @endif
 
 
@@ -1445,7 +1446,7 @@
                             .then(data => {
                                 if (data.success) {
                                     Swal.fire("Success!",
-                                            "Your profile has been published. Click Proceed to Next /Step to Upload Pre-registration Requirements",
+                                            "Your profile has been published. Click Proceed to Next Step to Upload Pre-registration Requirements",
                                             "success")
                                         .then(() => location.reload()); // Reload the page
                                 } else {
@@ -1460,51 +1461,6 @@
                 });
             });
         });
-
-        //     document.addEventListener("DOMContentLoaded", function() {
-        //         let publishButton = document.getElementById("publishButton");
-        //         if (publishButton) {
-        //             publishButton.addEventListener("click", function(event) {
-        //                 event.preventDefault();
-        //                 Swal.fire({
-        //                     title: "Are you sure?",
-        //                     text: "Submitting this will publish your application...",
-        //                     icon: "warning",
-        //                     showCancelButton: true,
-        //                     confirmButtonColor: "#3085d6",
-        //                     cancelButtonColor: "#d33",
-        //                     confirmButtonText: "Yes, publish it!",
-        //                     cancelButtonText: "Cancel"
-        //                 }).then((result) => {
-        //                     if (result.isConfirmed) {
-        //                         fetch("{{ route('student.student-profile.publish') }}", {
-        //                                 method: "POST",
-        //                                 headers: {
-        //                                     "X-CSRF-TOKEN": "45HlBiYLL1oUxDlTK02tGpiTmMyoHgdTzmQGimUr",
-        //                                     "Content-Type": "application/json"
-        //                                 },
-        //                                 body: JSON.stringify({})
-        //                             })
-        //                             .then(response => response.json())
-        //                             .then(data => {
-        //                                 if (data.success) {
-        //                                     Swal.fire("Success!",
-        //                                             "Your profile has been published.", "success")
-        //                                         .then(() => location.reload());
-        //                                 } else {
-        //                                     Swal.fire("Error!", data.message, "error");
-        //                                 }
-        //                             })
-        //                             .catch(error => {
-        //                                 Swal.fire("Error!",
-        //                                     "Something went wrong. Please try again.", "error");
-        //                             });
-        //                     }
-        //                 });
-        //             });
-        //         }
-        //     });
-        //
     </script>
 
 

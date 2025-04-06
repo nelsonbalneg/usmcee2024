@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use File;
 use App\Models\User;
+use App\Models\Result;
 use App\Models\SchoolName;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -59,7 +60,10 @@ class StudentProfileController extends Controller
         ->orderBy('reservations.created_at', 'desc')
         ->get();
 
-        return view("student.profile.profile", compact('studentdetails','cee_reservation_records', 'isreservation_exist'));
+        //check if it has result
+        $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+
+        return view("student.profile.profile", compact('studentdetails','cee_reservation_records', 'isreservation_exist', 'cee_result'));
     }
 
     /**

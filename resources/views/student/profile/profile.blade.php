@@ -318,6 +318,16 @@
 
                     </form><!--end form-->
                 </div>
+                {{-- view more --}}
+
+                @if ($cee_result)
+                    <div class="flex gap-2 mt-4">
+                        <a type="button" href="{{ route('student.ched-applicant-profile.index') }}"
+                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                            Complete Your Profile <i data-lucide="move-right" class="inline-block h-4 align-middle"></i>
+                        </a>
+                    </div>
+                @endif
             </div><!--end card-->
         </div><!--end col-->
 
@@ -583,7 +593,7 @@
                 // Clear the input field
                 lrnInput.value = '';
             }
-          
+
         }
         document.getElementById('profile-img-file-input').addEventListener('change', function(event) {
             const file = event.target.files[0];

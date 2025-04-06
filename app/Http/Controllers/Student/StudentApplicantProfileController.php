@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Models\User;
+use App\Models\Result;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\StundentProfile;
@@ -25,6 +26,9 @@ class StudentApplicantProfileController extends Controller
         $cee_profile = User::where('id', Auth::user()->id)->first();
         $app_no = Reservation::where('user_id', Auth::user()->id)
             ->where('status', 'confirmed')->first();
+
+        //check if there is a result
+        $result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
 
         // Read religions.json file
         $religions = [];
@@ -73,7 +77,7 @@ class StudentApplicantProfileController extends Controller
         // dd($applicant);
 
 
-        return view('student.profile.applicant-profile', compact('cee_profile', 'religions', 'nationalities', 'tribes', 'app_no', 'applicant', 'is_applicant_exist'));
+        return view('student.profile.applicant-profile', compact('cee_profile', 'religions', 'nationalities', 'tribes', 'app_no', 'applicant', 'is_applicant_exist', 'result'));
     }
 
     /**
@@ -84,94 +88,6 @@ class StudentApplicantProfileController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(StoreStudentProfileRequest $request)
-    // {
-    //     try {
-    //         DB::beginTransaction();
-
-    //         $userId = Auth::user()->id;
-
-    //         // Check if user already has a profile
-    //         $existingProfile = StundentProfile::where('user_id', $userId)->first();
-    //         if ($existingProfile) {
-    //             return redirect()->back()
-    //                 ->with('error', 'You already have a student profile.')
-    //                 ->withInput();
-    //         }
-
-    //         $data = array_map(fn($value) => is_string($value) ? trim(preg_replace('/\s+/', ' ', $value)) : $value, $request->validated());
-
-    //         $data['blood_type'] = trim($data['blood_type']); // Ensure no extra spaces in blood_type
-
-    //         // Extract first letter of middle name and append a dot (if middle name exists)
-    //         $data['middle_initial'] = $request->input('middle_name')
-    //             ? strtoupper(substr($request->input('middle_name'), 0, 1)) . '.'
-    //             : null;
-
-    //         $data['res_region'] = $data['region_text-res'];
-    //         $data['res_province'] = $data['province_text-res'];
-    //         $data['res_towncity'] = $data['city_text-res'];
-    //         $data['res_barangay'] = $data['barangay_text-res'];
-
-    //         // Concatenate and remove extra spaces
-    //         $data['res_address'] = implode(', ', array_filter([
-    //             $request->input('res_street'),
-    //             $request->input('barangay_text-res'),
-    //             $request->input('city_text-res'),
-    //             $request->input('province_text-res'),
-    //             $request->input('res_zipcode')
-    //         ]));
-
-    //         $data['perm_region'] = $data['region_text-perm'];
-    //         $data['perm_province'] = $data['province_text-perm'];
-    //         $data['perm_towncity'] = $data['city_text-perm'];
-    //         $data['perm_barangay'] = $data['barangay_text-perm'];
-
-    //         // Concatenate and remove extra spaces
-    //         $data['perm_address'] = implode(', ', array_filter([
-    //             $request->input('perm_street'),
-    //             $request->input('barangay_text-perm'),
-    //             $request->input('city_text-perm'),
-    //             $request->input('province_text-perm'),
-    //             $request->input('perm_zipcode')
-    //         ]));
-
-    //         // Concatenate and remove extra spaces
-    //         $data['guardian_address'] = implode(', ', array_filter([
-    //             $request->input('guardian_street'),
-    //             $request->input('barangay_text-guardian'),
-    //             $request->input('city_text-guardian'),
-    //             $request->input('province_text-guardian'),
-    //             $request->input('guardian_zipcode')
-    //         ]));
-
-    //         $data['guardian_region'] = $data['region_text-guardian'];
-    //         $data['guardian_province'] = $data['province_text-guardian'];
-    //         $data['guardian_towncity'] = $data['city_text-guardian'];
-    //         $data['guardian_barangay'] = $data['barangay_text-guardian'];
-
-    //         $data['user_id'] = $userId;  // Set user_id directly
-    //         StundentProfile::create($data);
-
-    //         DB::commit();
-
-    //         return redirect()->back()->with('success', 'Applicant profile saved successfully!');
-
-    //     } catch (ValidationException $e) {
-    //         DB::rollBack();
-    //         return redirect()->back()
-    //             ->withErrors($e->validator) // Returns validation errors
-    //             ->withInput();
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-    //         return redirect()->back()
-    //             ->with('error', 'Error creating profile: ' . $e->getMessage())
-    //             ->withInput();
-    //     }
-    // }
 
     public function store(StoreStudentProfileRequest $request)
     {
@@ -257,13 +173,6 @@ class StudentApplicantProfileController extends Controller
             Log::info('Data for creation:', $data);
 
             try {
-                // $profile_exist = StundentProfile::where('user_id', $userId)->count();
-
-                // if ($profile_exist == 0) {
-                //     $profile = StundentProfile::create($data);
-                // } else {
-                //     $profile = StundentProfile::update($data);
-                // }
 
                 $profile = StundentProfile::updateOrCreate(
                     ['user_id' => $userId],
@@ -300,80 +209,6 @@ class StudentApplicantProfileController extends Controller
                 ->withInput();
         }
     }
-
-    // public function store(StoreStudentProfileRequest $request)
-    // {
-    //     try {
-    //         Log::info('Starting profile creation');
-    //         DB::beginTransaction();
-
-    //         $userId = Auth::user()->id;
-    //         Log::info('User ID: ' . $userId);
-
-    //         // Use validated request data
-    //         $data = array_map(fn($value) => is_string($value) ? trim(preg_replace('/\s+/', ' ', $value)) : $value, $request->validated());
-
-    //         // Ensure blood_type has no extra spaces
-    //         $data['blood_type'] = isset($data['blood_type']) ? trim($data['blood_type']) : null;
-
-    //         // Middle initial logic
-    //         $data['middle_initial'] = $request->input('middle_name')
-    //             ? strtoupper(substr($request->input('middle_name'), 0, 1)) . '.'
-    //             : null;
-
-    //         // Map address fields properly
-    //         $data['res_address'] = implode(', ', array_filter([
-    //             $request->input('res_street'),
-    //             $request->input('barangay_text-res'),
-    //             $request->input('city_text-res'),
-    //             $request->input('province_text-res'),
-    //             $request->input('res_zipcode')
-    //         ]));
-
-    //         $data['perm_address'] = implode(', ', array_filter([
-    //             $request->input('perm_street'),
-    //             $request->input('barangay_text-perm'),
-    //             $request->input('city_text-perm'),
-    //             $request->input('province_text-perm'),
-    //             $request->input('perm_zipcode')
-    //         ]));
-
-    //         $data['guardian_address'] = implode(', ', array_filter([
-    //             $request->input('guardian_street'),
-    //             $request->input('barangay_text-guardian'),
-    //             $request->input('city_text-guardian'),
-    //             $request->input('province_text-guardian'),
-    //             $request->input('guardian_zipcode')
-    //         ]));
-
-    //         // Set user ID
-    //         $data['user_id'] = $userId;
-
-    //         Log::info('Attempting to create or update profile', $data);
-
-    //         // Use updateOrCreate for cleaner logic
-    //         $profile = StundentProfile::updateOrCreate(
-    //             ['user_id' => $userId],
-    //             $data
-    //         );
-
-    //         Log::info('Profile created/updated with ID: ' . $profile->id);
-
-    //         DB::commit();
-    //         Log::info('Transaction committed');
-
-    //         return redirect()->back()->with('success', 'Applicant profile saved successfully!');
-    //     } catch (ValidationException $e) {
-    //         DB::rollBack();
-    //         Log::error('Validation exception: ' . $e->getMessage());
-    //         return redirect()->back()->withErrors($e->validator)->withInput();
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-    //         Log::error('Exception: ' . $e->getMessage());
-    //         return redirect()->back()->with('error', 'Error creating profile: ' . $e->getMessage())->withInput();
-    //     }
-    // }
-
 
     public function publish(Request $request)
     {

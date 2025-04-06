@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Student\ChedApplicantProfileController;
 use App\Http\Controllers\Student\ProgramController;
 use App\Http\Controllers\Student\StudentApplicantProfileController;
 use App\Http\Controllers\Student\StudentRequirementsController;
@@ -40,6 +41,7 @@ Route::middleware(['check.maintenance'])->group(function () {
 
     //route for CEE result
     Route::get('cee/result-slip/{app_no}', [ResultController::class, 'generateceeResultSlip'])->name('cee.result-slip');
+    Route::get('cee/result-message/{app_no}', [ResultController::class, 'viewResultMessageIndex'])->name('cee.result-message');
     Route::get('cee/result', [ResultController::class, 'index'])->name('cee.result');
 
     //route for checking duplicate records
@@ -51,10 +53,22 @@ Route::middleware(['check.maintenance'])->group(function () {
 
     //routes for Preregitration
     //route for Student Profile
-    Route::post('student-profile/publish', [StudentApplicantProfileController::class, 'publish'])->name('student-profile.publish');
-    Route::resource('applicant-profile', StudentApplicantProfileController::class);
+    Route::post('pre-registration/student-profile/publish', [StudentApplicantProfileController::class, 'publish'])->name('student-profile.publish');
+    Route::resource('pre-registration/applicant-profile', StudentApplicantProfileController::class);
 
     //route for uploading of requirements
-    Route::resource('applicant-requirements', StudentRequirementsController::class);
+    Route::put('pre-registration/applicant-requirements/publish', [StudentRequirementsController::class, 'publishRequirements'])->name('requirements.publish');
+    Route::post('pre-registration/applicant-requirements/gmc', [StudentRequirementsController::class, 'storeGmc'])->name('requirements.gmc.store');
+    Route::post('pre-registration/applicant-requirements/certification', [StudentRequirementsController::class, 'storecertification'])->name('requirements.certification.store');
+    Route::post('pre-registration/applicant-requirements/honorable-dismissal', [StudentRequirementsController::class, 'storeDismissal'])->name('requirements.honorable-dismissal.store');
+    Route::post('pre-registration/applicant-requirements/tor', [StudentRequirementsController::class, 'storeTOR'])->name('requirements.tor.store');
+    Route::post('pre-registration/applicant-requirements/card', [StudentRequirementsController::class, 'storeCard'])->name('requirements.card.store');
+    Route::resource('pre-registration/applicant-requirements', StudentRequirementsController::class);
+
+
+    //route for USMCEE applicant Profile
+    Route::post('cee/ched-applicant-profile/publish', [ChedApplicantProfileController::class, 'publish'])->name('cee.ched-applicant-profile.publish');
+    //Route::get('cee/ched-applicant-profile/family-background', [ChedApplicantProfileController::class, 'familybgIndex'])->name('ched.applicant-profile.fam-gb.index');
+    Route::resource('cee/ched-applicant-profile', ChedApplicantProfileController::class);
 
 });

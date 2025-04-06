@@ -9,6 +9,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\ChedApplicantProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -30,7 +31,10 @@ class ResultController extends Controller
         $cee_result = Result::where('user_id', Auth::user()->id)
             ->where('status', 'posted')->get();
 
-        return view("student.result.result", compact( 'cee_result','reservation'));
+        $is_ched_applicant_profile = ChedApplicantProfile::where('user_id', Auth::user()->id)
+        ->where('status', '1')->first();
+
+        return view("student.result.result", compact('cee_result', 'reservation', 'is_ched_applicant_profile'));
     }
 
     public function generateceeResultSlip($encryptedAppNo)
@@ -78,5 +82,49 @@ class ResultController extends Controller
 
         // Stream the PDF instead of downloading it
         return $pdf->stream("{$ceeresult->app_no}-usmcee-result.pdf");
+    }
+
+    public function viewResultMessageIndex($encryptedAppNo)
+    {
+        $decryptapp_no = unserialize(Crypt::decryptString($encryptedAppNo));
+
+        $cee_result = DB::table('reservations')
+            ->join('results', 'reservations.app_no', '=', 'results.app_no')
+            ->join('users', 'reservations.user_id', '=', 'users.id')
+            ->join('cee_sessions', 'reservations.cee_session_id', '=', 'cee_sessions.id')
+            ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+            ->where('reservations.app_no', '=', $decryptapp_no)
+            ->select(
+                'reservations.user_id',
+                'reservations.app_no',
+                'reservations.firstpriorty_desc',
+                'reservations.secondpriority_desc',
+                'reservations.thirdpriorty_desc',
+                'reservations.campus_id',
+                'reservations.is_repeat_exam',
+                'users.email',
+                'users.sex',
+                'users.phone',
+                'users.photo',
+                'users.birthdate',
+                'users.created_at as user_created_at',
+                'results.fullname',
+                'users.lastname',
+                'users.firstname',
+                'users.middlename',
+                'users.suffix',
+                'results.science',
+                'results.math',
+                'results.humanities',
+                'results.inductive',
+                'results.csa',
+                'results.created_at',
+                'cee_sessions.name',
+                'rooms.schedule',
+            )
+            ->first();
+
+
+        return view('student.result.result-message', compact('cee_result'));
     }
 }
