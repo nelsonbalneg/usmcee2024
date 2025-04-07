@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
+use App\Models\Result;
 use App\Models\CeeSession;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -41,6 +42,9 @@ class StudentController extends Controller
             //check if records exists
             $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
 
+             //check if it has result
+        $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+
             $cee_reservation_records = DB::table('reservations')
                 ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
                 ->where('reservations.user_id', Auth::user()->id)
@@ -67,7 +71,7 @@ class StudentController extends Controller
                 ->orderBy('reservations.created_at', 'desc')
                 ->get();
 
-            return view("student.profile.profile", compact('studentdetails', 'ceeActiveession', 'isreservation_exist', 'cee_reservation_records'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
+            return view("student.profile.profile", compact('studentdetails', 'ceeActiveession', 'isreservation_exist', 'cee_reservation_records','cee_result'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
         } else {
 
 
