@@ -1170,20 +1170,22 @@
                                             <i data-lucide="save-all" class="inline-block h-4 align-middle"></i> Submit
                                             and Publish </button>
                                     </div>
-                                @else
+                                @elseif($applicant->status == 1)
                                     <button type="button"
                                         class="text-green-500 bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
                                         <i data-lucide="circle-check-big"
                                             class="inline-block size-4 dark:text-zink-200"></i>
                                         Published</button>
+                                @else
+                                    <div class="flex gap-2 mt-4">
+                                        <button type="submit"
+                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            <i data-lucide="save-all" class="inline-block h-4 align-middle"></i> Save
+                                            Information </button>
+                                    </div>
                                 @endif
                             </div>
-                            {{-- <div class="flex gap-2 mt-4">
-                                <button type="submit"
-                                    class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                    <i data-lucide="save-all" class="inline-block h-4 align-middle"></i> Save
-                                    Information </button>
-                            </div> --}}
+
 
                         </div>
                     </div>
