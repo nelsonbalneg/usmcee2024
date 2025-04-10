@@ -731,6 +731,7 @@
                                             {{ $applicant->father_occupation == 'ELEMENTARY OCCUPATIONS' ? 'selected' : '' }}>
                                             ELEMENTARY OCCUPATIONS (cleaners, helpers, laborers, and assistants)
                                         </option>
+                                        <option value="Not Applicable"{{ $applicant->mother_occupation == 'Not Applicable' ? 'selected' : '' }}> Not Applicable</option>
                                     </select>
                                 </div><!--end col-->
 
@@ -907,6 +908,7 @@
                                             {{ $applicant->mother_occupation == 'ELEMENTARY OCCUPATIONS' ? 'selected' : '' }}>
                                             ELEMENTARY OCCUPATIONS (cleaners, helpers, laborers, and assistants)
                                         </option>
+                                        <option value="Not Applicable"{{ $applicant->mother_occupation == 'Not Applicable' ? 'selected' : '' }}> Not Applicable</option>
                                     </select>
                                 </div><!--end col-->
 
