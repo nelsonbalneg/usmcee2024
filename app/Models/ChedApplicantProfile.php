@@ -39,7 +39,6 @@ class ChedApplicantProfile extends Model
         'birthdate',
         'birthplace',
         'civil_status',
-        // 'civil_status_others',
 
         'religion',
         'citizenship',
@@ -67,7 +66,6 @@ class ChedApplicantProfile extends Model
         'father_age',
         'father_citizenship',
         'father_highest_educational_attainment',
-        // 'father_highest_educational_attainment_others',
         'father_employment_status',
         'father_occupation',
 
@@ -77,7 +75,6 @@ class ChedApplicantProfile extends Model
         'mother_age',
         'mother_citizenship',
         'mother_highest_educational_attainment',
-        // 'mother_highest_educational_attainment_others',
         'mother_employment_status',
         'mother_occupation',
         'family_size',

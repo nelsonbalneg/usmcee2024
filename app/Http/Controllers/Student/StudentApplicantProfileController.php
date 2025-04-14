@@ -10,6 +10,7 @@ use App\Models\StundentProfile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\ChedApplicantProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +30,11 @@ class StudentApplicantProfileController extends Controller
 
         //check if there is a result
         $result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+
+
+        // get the data from chedprofile
+        $ched_profile = ChedApplicantProfile::where('user_id', Auth::user()->id)
+            ->where('status', '1')->first();
 
         // Read religions.json file
         $religions = [];
@@ -113,7 +119,6 @@ class StudentApplicantProfileController extends Controller
             }
             Log::info('Validation passed');
 
-            //   $data = array_map(fn($value) => is_string($value) ? trim(preg_replace('/\s+/', ' ', $value)) : $value, $request->validated());
             // Use validated request data
             $data = array_map(fn($value) => is_string($value) ? trim(preg_replace('/\s+/', ' ', $value)) : $value, $request->validated());
             Log::info('Data transformed');

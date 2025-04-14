@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\CeeSession;
 use App\Models\User;
 use Illuminate\View\View;
+use App\Models\CeeSession;
+use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Http;
 
 class RegisteredUserController extends Controller
 {
@@ -22,7 +23,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $siteSetting = SiteSetting::first();
+        $endofregistration = $siteSetting ? $siteSetting->endregistration : null;
+
+        return view('auth.register', compact('endofregistration'));
     }
 
     /**

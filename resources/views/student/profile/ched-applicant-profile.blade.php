@@ -568,7 +568,7 @@
                                     <input type="text" name="father_name"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('father_name', $applicant->father_name ?? '') }}"
-                                        placeholder="Enter your Father's Full Name" required>
+                                        placeholder="Enter your Father's Full Name">
                                 </div><!--end col-->
 
                                 <div class="xl:col-span-4">
@@ -577,14 +577,12 @@
                                     <input type="text" name="father_age"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('father_age', $applicant->father_age ?? '') }}"
-                                        placeholder="Enter your Father's Age" required>
+                                        placeholder="Enter your Father's Age">
                                 </div><!--end col-->
 
                                 <div class="xl:col-span-4">
                                     <label for="father_citizenship"
-                                        class="inline-block mb-2 text-base font-medium">Father's Citizenship<sup
-                                            class="text-red-500">*
-                                            required</sup></label>
+                                        class="inline-block mb-2 text-base font-medium">Father's Citizenship</label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         name="father_citizenship" data-choices data-choices-search-false>
@@ -602,8 +600,7 @@
                                 <div class="xl:col-span-4">
                                     <label for="father_highest_educational_attainment"
                                         class="inline-block mb-2 text-base font-medium">What is your Fathers's Highest
-                                        Educational Attainment?
-                                        <sup class="text-red-500">* required</sup></label>
+                                        Educational Attainment?</label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         name="father_highest_educational_attainment" data-choices
@@ -640,8 +637,7 @@
                                 <div class="xl:col-span-4">
                                     <label for="father_employment_status"
                                         class="inline-block mb-2 text-base font-medium">What is your Fathers's Employment
-                                        Status?
-                                        <sup class="text-red-500">* required</sup></label>
+                                        Status?</label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         name="father_employment_status" data-choices data-choices-search-false>
@@ -669,8 +665,7 @@
 
                                 <div class="xl:col-span-4">
                                     <label for="father_occupation" class="inline-block mb-2 text-base font-medium">What is
-                                        your Father's Occupation?
-                                        <sup class="text-red-500">* required</sup></label>
+                                        your Father's Occupation?</label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         name="father_occupation" data-choices data-choices-search-false>
@@ -745,7 +740,7 @@
                                     <input type="text" name="mother_name"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('mother_name', $applicant->mother_name ?? '') }}"
-                                        placeholder="Enter your Mother's Full Name" required>
+                                        placeholder="Enter your Mother's Full Name">
                                 </div><!--end col-->
 
                                 <div class="xl:col-span-4">
@@ -754,14 +749,12 @@
                                     <input type="text" name="mother_age"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('mother_age', $applicant->mother_age ?? '') }}"
-                                        placeholder="Enter your Mother's Age" required>
+                                        placeholder="Enter your Mother's Age">
                                 </div><!--end col-->
 
                                 <div class="xl:col-span-4">
                                     <label for="mother_citizenship"
-                                        class="inline-block mb-2 text-base font-medium">Mother's Citizenship<sup
-                                            class="text-red-500">*
-                                            required</sup></label>
+                                        class="inline-block mb-2 text-base font-medium">Mother's Citizenship</label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         name="mother_citizenship" data-choices data-choices-search-false>
@@ -779,8 +772,7 @@
                                 <div class="xl:col-span-4">
                                     <label for="mother_highest_educational_attainment"
                                         class="inline-block mb-2 text-base font-medium">What is your Mother's Highest
-                                        Educational Attainment?
-                                        <sup class="text-red-500">* required</sup></label>
+                                        Educational Attainment?</label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         name="mother_highest_educational_attainment" data-choices
@@ -817,8 +809,7 @@
                                 <div class="xl:col-span-4">
                                     <label for="mother_employment_status"
                                         class="inline-block mb-2 text-base font-medium">What is your Mother's Employment
-                                        Status?
-                                        <sup class="text-red-500">* required</sup></label>
+                                        Status?</label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         name="mother_employment_status" data-choices data-choices-search-false>
@@ -846,8 +837,7 @@
 
                                 <div class="xl:col-span-4">
                                     <label for="mother_occupation" class="inline-block mb-2 text-base font-medium">What is
-                                        your Mother's Occupation?
-                                        <sup class="text-red-500">* required</sup></label>
+                                        your Mother's Occupation?</label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         name="mother_occupation" data-choices data-choices-search-false>

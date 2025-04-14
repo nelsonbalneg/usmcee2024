@@ -22,6 +22,9 @@
 </head>
 
 <body
+@php
+use Carbon\Carbon;
+@endphp
     class="flex items-center justify-center min-h-screen py-16 lg:py-10 bg-slate-50 dark:bg-zink-800 dark:text-zink-100 font-public">
 
     <div class="relative">
@@ -95,7 +98,7 @@
                     <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
                         class="hidden h-6 mx-auto dark:block">
                     <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
-                        class="block h-15 mx-auto dark:hidden">
+                        class="block mx-auto h-15 dark:hidden">
                 </a>
 
                 <div class="mt-8 text-center">
@@ -105,7 +108,7 @@
                     @csrf
                     <div class="mb-3 text-left">
                         @if ($errors->any())
-                            <div class="text-red-500 text-sm mt-2">
+                            <div class="mt-2 text-sm text-red-500">
                                 <ul>
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -114,7 +117,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="mb-3 flex flex-col md:flex-row gap-4">
+                    <div class="flex flex-col gap-4 mb-3 md:flex-row">
                         <div class="flex-1">
                             <label for="firstname" class="inline-block mb-2 text-base font-medium">First Name <sup
                                     class="text-red-500">* required</sup></label>
@@ -132,7 +135,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 flex flex-col md:flex-row gap-4">
+                    <div class="flex flex-col gap-4 mb-3 md:flex-row">
 
                         <div class="flex-1">
                             <label for="lastname" class="inline-block mb-2 text-base font-medium">Last Name<sup
@@ -162,7 +165,7 @@
                         </div><!--end col-->
                     </div>
 
-                    <div class="mb-3 flex flex-col md:flex-row gap-4">
+                    <div class="flex flex-col gap-4 mb-3 md:flex-row">
 
                         <div class="xl:col-span-3">
                             <label for="birthdate" class="inline-block mb-2 text-base font-medium">Birthdate<sup
@@ -195,10 +198,10 @@
                         <div id="email-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email
                             address.</div>
                         @error('email')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
-                    <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
+                    <div class="flex gap-4 mb-3 flex-col-2 md:flex-row">
                         <span class="text-base font-small text-sky-600">* Please use a valid and active email. This
                             email will be essential for password resets and other important updates.</span>
                     </div>
@@ -210,11 +213,11 @@
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 placeholder="xxxx-xxx-xxxx">
                             @error('phone')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
-                    <div class="mb-3 flex flex-col-2 md:flex-row gap-4">
+                    <div class="flex gap-4 mb-3 flex-col-2 md:flex-row">
                         <span class="text-base font-small text-sky-600">* Please use a valid and active cellphone
                             number. This number is essential for receiving SMS notifications, including entrance exam
                             information and other important updates.</span>
@@ -239,10 +242,10 @@
                             class="mt-1 text-sm text-red-500" />
                     </div>
 
-                    <div class="flex items-start space-x-2 mt-5">
+                    <div class="flex items-start mt-5 space-x-2">
                         <input type="checkbox" id="defaultCheck1"
-                            class="form-checkbox h-4 w-4 text-green-600 border-gray-300 rounded focus:ring focus:ring-green-500 focus:ring-opacity-50">
-                        <label for="defaultCheck1" class="text-gray-500 font-normal text-sm">By creating an account,
+                            class="w-4 h-4 text-green-600 border-gray-300 rounded form-checkbox focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                        <label for="defaultCheck1" class="text-sm font-normal text-gray-500">By creating an account,
                             you agree to our
                             <a href="#" class="text-green-600 underline" data-drawer-target="drawerterms">Terms
                                 &
@@ -250,13 +253,22 @@
                         </label>
                     </div>
 
-                    <div class="cf-turnstile mt-5" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div>
+                    <div class="mt-5 cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div>
 
+                    @if ($endofregistration && Carbon::parse($endofregistration, 'Asia/Manila')->isFuture())
                     <div class="mt-5 text-center">
                         <button type="submit" id="submitButton" disabled
                             class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                             Create Account</button>
                     </div>
+                    @else
+                    <div class="mt-4 card">
+                        <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
+                            <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                            <p class="mb-0">Please be informed that USMCEE <b>account registration and slot reservation</b> are now closed.</p>
+                        </div>
+                    </div>
+                @endif
                 </form>
 
                 <div class="mt-8 text-center">
@@ -285,11 +297,11 @@
                             </p>
                             <br>
                             <div
-                                class="flex gap-1 px-3 py-3 text-sm border rounded-md md:items-center border-yellow-200 text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50 mb-5">
-                                <h6 class="font-bold mb-1">Eligibility and Accurate Information</h6>
+                                class="flex gap-1 px-3 py-3 mb-5 text-sm border border-yellow-200 rounded-md md:items-center text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50">
+                                <h6 class="mb-1 font-bold">Eligibility and Accurate Information</h6>
                             </div>
 
-                            <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
+                            <ul class="px-3 space-y-3 text-justify list-disc list-inside rounded-md">
                                 <li>Only eligible applicants, specifically senior high school students, may use this
                                     website to register for the USM College Entrance Examination.
                                 </li>
@@ -303,12 +315,12 @@
 
                             </ul>
                             <div
-                                class="flex gap-1 px-3 mt-5 py-3 text-sm border rounded-md md:items-center border-yellow-200 text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50 mb-5">
-                                <h6 class="font-bold mb-1">Data Privacy and Confidentiality
+                                class="flex gap-1 px-3 py-3 mt-5 mb-5 text-sm border border-yellow-200 rounded-md md:items-center text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50">
+                                <h6 class="mb-1 font-bold">Data Privacy and Confidentiality
                                 </h6>
                             </div>
 
-                            <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
+                            <ul class="px-3 space-y-3 text-justify list-disc list-inside rounded-md">
                                 <li>Your information will be used solely for processing your application, in compliance
                                     with the Data Privacy Act of 2012 (Republic Act No. 10173). USM is committed to
                                     handling your data according to principles of transparency, legitimate purpose, and
@@ -328,12 +340,12 @@
                             </ul>
 
                             <div
-                                class="flex gap-1 px-3 mt-5 py-3 text-sm border rounded-md md:items-center border-yellow-200 text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50 mb-5">
-                                <h6 class="font-bold mb-1">Prohibition Against Fraud and Misrepresentation
+                                class="flex gap-1 px-3 py-3 mt-5 mb-5 text-sm border border-yellow-200 rounded-md md:items-center text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50">
+                                <h6 class="mb-1 font-bold">Prohibition Against Fraud and Misrepresentation
                                 </h6>
                             </div>
 
-                            <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
+                            <ul class="px-3 space-y-3 text-justify list-disc list-inside rounded-md">
                                 <li>Any form of fraud or misrepresentation, including the submission of falsified
                                     documents or impersonation, is strictly prohibited. Violations may result in
                                     penalties under Article 172 (Falsification by Private Individuals) and Article 315
@@ -345,12 +357,12 @@
                                 </li>
                             </ul>
                             <div
-                                class="flex gap-1 px-3 mt-5 py-3 text-sm border rounded-md md:items-center border-yellow-200 text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50 mb-5">
-                                <h6 class="font-bold mb-1">Use of the Web Application
+                                class="flex gap-1 px-3 py-3 mt-5 mb-5 text-sm border border-yellow-200 rounded-md md:items-center text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50">
+                                <h6 class="mb-1 font-bold">Use of the Web Application
                                 </h6>
                             </div>
 
-                            <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
+                            <ul class="px-3 space-y-3 text-justify list-disc list-inside rounded-md">
                                 <li>This application is intended exclusively for entrance examination applications.
                                     Unauthorized uses, including disruptive or damaging activities, may constitute
                                     violations of Republic Act No. 8792 (Electronic Commerce Act of 2000) and Republic
@@ -363,12 +375,12 @@
                             </ul>
 
                             <div
-                                class="flex gap-1 px-3 mt-5 py-3 text-sm border rounded-md md:items-center border-yellow-200 text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50 mb-5">
-                                <h6 class="font-bold mb-1">Acceptance and Changes to Terms
+                                class="flex gap-1 px-3 py-3 mt-5 mb-5 text-sm border border-yellow-200 rounded-md md:items-center text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50">
+                                <h6 class="mb-1 font-bold">Acceptance and Changes to Terms
                                 </h6>
                             </div>
 
-                            <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
+                            <ul class="px-3 space-y-3 text-justify list-disc list-inside rounded-md">
                                 <li>By submitting your application, you acknowledge that you have read, understood, and
                                     agree to these Terms and Conditions.
                                 </li>
@@ -379,12 +391,12 @@
                             </ul>
 
                             <div
-                                class="flex gap-1 px-3 mt-5 py-3 text-sm border rounded-md md:items-center border-yellow-200 text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50 mb-5">
-                                <h6 class="font-bold mb-1">Limitation of Liability
+                                class="flex gap-1 px-3 py-3 mt-5 mb-5 text-sm border border-yellow-200 rounded-md md:items-center text-black-500 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50">
+                                <h6 class="mb-1 font-bold">Limitation of Liability
                                 </h6>
                             </div>
 
-                            <ul class="space-y-3 list-disc list-inside rounded-md text-justify px-3">
+                            <ul class="px-3 space-y-3 text-justify list-disc list-inside rounded-md">
                                 <li>USM will not be liable for any damages, losses, or liabilities arising from your use
                                     of this website, including errors, interruptions, or technical malfunctions, except
                                     as required by law. This limitation of liability applies to the fullest extent
@@ -400,7 +412,7 @@
 
             </div>
         </div>
-        
+
         <script src='{{ asset('backend/assets/libs/choices/public/assets/scripts/choices.min.js') }}'></script>
         <script src="{{ asset('backend/assets/libs/@popperjs/core/umd/popper.min.js') }}"></script>
         <script src="{{ asset('backend/assets/libs/tippy.js/tippy-bundle.umd.min.js') }}"></script>
