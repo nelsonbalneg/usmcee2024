@@ -144,7 +144,7 @@ class ResultController extends Controller
                 //compare the CSA and to usmceefp from API
                 if ($result && isset($programData['usmceefp']) && $result >= $programData['usmceefp'] && $cee_result->confirmation_batch == 1) {
                     $is_qualified_pre_reg = 1;
-                } elseif($cee_result->confirmation_batch == 2){
+                }elseif($cee_result->confirmation_batch == 2){
                     $is_qualified_pre_reg = 0;
                 }else{
                     $is_qualified_pre_reg = 0;

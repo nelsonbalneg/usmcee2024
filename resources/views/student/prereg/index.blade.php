@@ -29,7 +29,8 @@
             </li>
         </ul>
     </div>
-    @if ($result->confirmation_batch == 1 || (now()->between($start, $end) && $result->confirmation_batch == 2))
+    {{-- || (now()->between($start, $end) && $result->confirmation_batch == 2) --}}
+    @if ($result->confirmation_batch == 1)
 
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
