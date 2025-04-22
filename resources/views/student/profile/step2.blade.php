@@ -214,7 +214,7 @@
 
                                 <div class="xl:col-span-4">
                                     <label for="father_email" class="inline-block mb-2 text-base font-medium">Father's
-                                        Email</label>
+                                        Email (Leave it Blank if no email)</label>
                                     <input type="text" name="father_email"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('father_email', $applicant->father_email ?? '') }}"
@@ -307,7 +307,7 @@
 
                                 <div class="xl:col-span-4">
                                     <label for="mother_email" class="inline-block mb-2 text-base font-medium">Mother's
-                                        Email</label>
+                                        Email (Leave it Blank if no email)</label>
                                     <input type="email" name="mother_email"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('mother_email', $applicant->mother_email ?? '') }}"
@@ -382,7 +382,7 @@
 
                                 <div class="xl:col-span-6">
                                     <label for="guardian_email" class="inline-block mb-2 text-base font-medium">Guardian's
-                                        Email</label>
+                                        Email (Leave it Blank if no email)</label>
                                     <input type="email" name="guardian_email"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('guardian_email', $applicant->guardian_email ?? '') }}"
