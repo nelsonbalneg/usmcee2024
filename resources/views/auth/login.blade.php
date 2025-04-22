@@ -31,6 +31,8 @@
         gtag('config', 'G-EJPB3BXP56');
     </script>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 </head>
 
 <body
@@ -184,6 +186,7 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
 
                     <!-- Error message for Remember Me -->
                     {{-- <div class="mt-5 cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div> --}}
+                    {{-- <div class="mt-5 cf-turnstile" data-sitekey="{{ config('services.turnstile.sitekey') }}"></div> --}}
                     <div class="mt-5 cf-turnstile" data-sitekey="{{ config('services.turnstile.sitekey') }}"></div>
 
                     <div class="mt-5 text-center">
@@ -206,7 +209,8 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                     <div class="mt-4 card">
                         <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
                             <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                            <p class="mb-0">Please be informed that USMCEE <b>account registration and slot reservation</b> are now closed.</p>
+                            <p class="mb-0">Please be informed that USMCEE <b>account registration and slot
+                                    reservation</b> are now closed.</p>
                         </div>
                     </div>
                 @endif
@@ -218,7 +222,7 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    {{-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const emailInput = document.getElementById("email");

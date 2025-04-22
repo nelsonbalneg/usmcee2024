@@ -35,8 +35,7 @@ return [
         ],
     ],
 
-      // Add reCAPTCHA configuration
-  'turnstile' => [
+    'turnstile' => [
         'sitekey' => env('TURNSTILE_SITE_KEY'),
         'secret' => env('TURNSTILE_SECRET_KEY'),
     ],
