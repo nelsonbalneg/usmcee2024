@@ -395,7 +395,7 @@ class StudentApplicantProfileController extends Controller
 
             DB::commit();
 
-            return redirect()->route('student.applicant-profile.step3.show')->with('student_profile_id', $studentProfile->id);
+            return redirect()->route('student.applicant-profile.step3.show');
 
         } catch (\Exception $e) {
             DB::rollBack();
