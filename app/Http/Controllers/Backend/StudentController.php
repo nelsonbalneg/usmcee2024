@@ -75,7 +75,7 @@ class StudentController extends Controller
         } else {
 
 
-            return view('student.dashboard');
+            // return view('student.dashboard');
         }
     }
 

@@ -388,7 +388,7 @@ class StudentApplicantProfileController extends Controller
             $data['current_step'] = 2;
 
             // Save the profile
-            $studentProfile = StundentProfile::updateOrCreate(
+            StundentProfile::updateOrCreate(
                 ['user_id' => $userId],
                 $data
             );
@@ -400,7 +400,7 @@ class StudentApplicantProfileController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error saving personal info: ' . $e->getMessage());
-             return redirect()->back()->with('error', 'Something went wrong while saving.');
+            return redirect()->back()->with('error', 'Something went wrong while saving.');
         }
     }
 

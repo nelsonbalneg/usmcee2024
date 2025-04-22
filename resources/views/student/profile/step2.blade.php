@@ -224,7 +224,7 @@
                                 <div class="xl:col-span-4">
                                     <label for="father_income_from"
                                         class="inline-block mb-2 text-base font-medium">Father's
-                                        Monthly Income</label>
+                                        Monthly Income (Format: 9999 , do not add comma)</label>
                                     <input type="text" name="father_income_from"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('father_income_from', $applicant->father_income_from ?? '') }}"
@@ -317,7 +317,7 @@
                                 <div class="xl:col-span-4">
                                     <label for="mother_income_from"
                                         class="inline-block mb-2 text-base font-medium">Mother's
-                                        Monthly Income</label>
+                                        Monthly Income (Format: 9999 , do not add comma)</label>
                                     <input type="text" name="mother_income_from"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('mother_income_from', $applicant->mother_income_from ?? '') }}"
