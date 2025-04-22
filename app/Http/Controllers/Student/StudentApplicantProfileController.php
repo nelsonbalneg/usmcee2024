@@ -400,7 +400,7 @@ class StudentApplicantProfileController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error saving personal info: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong while saving.');
+             return redirect()->back()->with('error', 'Something went wrong while saving.');
         }
     }
 
