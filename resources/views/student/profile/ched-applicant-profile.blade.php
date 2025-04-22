@@ -726,7 +726,9 @@
                                             {{ $applicant->father_occupation == 'ELEMENTARY OCCUPATIONS' ? 'selected' : '' }}>
                                             ELEMENTARY OCCUPATIONS (cleaners, helpers, laborers, and assistants)
                                         </option>
-                                        <option value="Not Applicable"{{ $applicant->mother_occupation == 'Not Applicable' ? 'selected' : '' }}> Not Applicable</option>
+                                        <option
+                                            value="Not Applicable"{{ $applicant->mother_occupation == 'Not Applicable' ? 'selected' : '' }}>
+                                            Not Applicable</option>
                                     </select>
                                 </div><!--end col-->
 
@@ -898,7 +900,9 @@
                                             {{ $applicant->mother_occupation == 'ELEMENTARY OCCUPATIONS' ? 'selected' : '' }}>
                                             ELEMENTARY OCCUPATIONS (cleaners, helpers, laborers, and assistants)
                                         </option>
-                                        <option value="Not Applicable"{{ $applicant->mother_occupation == 'Not Applicable' ? 'selected' : '' }}> Not Applicable</option>
+                                        <option
+                                            value="Not Applicable"{{ $applicant->mother_occupation == 'Not Applicable' ? 'selected' : '' }}>
+                                            Not Applicable</option>
                                     </select>
                                 </div><!--end col-->
 
@@ -1175,12 +1179,12 @@
                                     @else
                                     @endif
                                 @else
-                                <div class="flex gap-2 mt-4">
-                                    <button type="submit"
-                                        class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                        <i data-lucide="save-all" class="inline-block h-4 align-middle"></i> Save
-                                        Information </button>
-                                </div>
+                                    <div class="flex gap-2 mt-4">
+                                        <button type="submit"
+                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            <i data-lucide="save-all" class="inline-block h-4 align-middle"></i> Save
+                                            Information </button>
+                                    </div>
                                 @endif
 
                             </div>
@@ -1195,7 +1199,8 @@
             </div>
         @else
             <div class="xl:col-span-12">
-                <h1>You have no cee result yet found in our Database</h1>
+                <h1>You have no USMCEE result in our Database. However, if you had taken the exam, please visit the
+                    USM-Testing Development Center (UTDC).</h1>
             </div>
         @endif
 
