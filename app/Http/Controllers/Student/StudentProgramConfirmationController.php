@@ -78,12 +78,15 @@ class StudentProgramConfirmationController extends Controller
                 if ($result->confirmation_batch == 1 && !now()->between($start_batch_2_prereg, $end_batch_2_prereg) || $cee_profile->prereg_status == 'pending') {
                     $is_qualified_pre_reg = 1;
 
+                    // dd($result);
+
                     $slot_remaning = $programData['pendingLimit'] - $total_prereg_by_prog_policy_id;
 
                 } elseif (now()->between($start_batch_2_prereg, $end_batch_2_prereg) && ($result->confirmation_batch == 1 || $result->confirmation_batch == 2)) {
                     $is_qualified_pre_reg = 0;
                 }
             }
+
         } else {
             return redirect()->back()->with('error', 'Unable to fetch program details from the server.');
         }

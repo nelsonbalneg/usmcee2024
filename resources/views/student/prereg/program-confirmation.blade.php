@@ -24,6 +24,7 @@
             </li>
             <li class="text-slate-700 dark:text-zink-100">
                 Program Confirmation
+                {{-- <input type="text" name="program_policy_id" value="{{ $programData['reservationStatus'] }}"> --}}
             </li>
         </ul>
     </div>
@@ -38,8 +39,8 @@
                     <div class="card-body">
 
                         {{-- check if qualified for 1st batch --}}
-                        @if ($is_qualified_pre_reg == 1 &&  $programData['reservationStatus'] == 'Open')
-                            <input type="hidden" name="program_policy_id" value="{{ $programData['id'] }}">
+                        @if ($is_qualified_pre_reg == 1 &&  $programData['reservationStatus'] == "Open")
+                            <input type="text" name="program_policy_id" value="{{ $programData['id'] }}">
                             <input type="hidden" name="user_id" value="{{ $cee_profile->user_id }}">
 
                             <div class="px-4 py-6 mx-auto text-center">
@@ -98,12 +99,12 @@
 
                                                             {{-- start filter if midwife 524, nursing 310, pharma 311, hospitality mgnt 46, nutrition 58, food tech 186 --}}
                                                             @if (
-                                                                $programData['id'] == 524 ||
-                                                                    $programData['id'] == 310 ||
-                                                                    $programData['id'] == 311 ||
-                                                                    $programData['id'] == 46 ||
-                                                                    $programData['id'] == 58 ||
-                                                                    $programData['id'] == 186)
+                                                                $programData['id'] == 783 ||
+                                                                    $programData['id'] == 725 ||
+                                                                    $programData['id'] == 727 ||
+                                                                    $programData['id'] == 812 ||
+                                                                    $programData['id'] == 731 ||
+                                                                    $programData['id'] == 730)
                                                                 {{-- start check if additional Requirements has been uploaded adn published --}}
                                                                 @if ($has_additional_requirement)
                                                                     <button type="submit" id="publishButton"
