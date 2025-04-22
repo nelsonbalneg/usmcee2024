@@ -298,7 +298,6 @@ class StudentApplicantProfileController extends Controller
     //step 2 Address Info
     public function showStep2()
     {
-
         $app_no = Reservation::where('user_id', Auth::user()->id)
             ->where('status', 'confirmed')->first();
 
