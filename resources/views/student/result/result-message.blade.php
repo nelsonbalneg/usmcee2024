@@ -29,24 +29,6 @@
                             class="relative before:absolute before:h-[1px] before:inset-x-0 before:-bottom-2.5 inline-block before:bg-gradient-to-r before:from-white dark:before:from-zink-700 before:via-custom-500 before:to-white dark:before:to-zink-700 dark:before:via-custom-500">
                             USM-CEE RESULT</h5>
                     </div>
-
-                    <div class="mt-16">
-                        <p class="mb-1 text-slate-500 dark:text-zink-200">Full Name: <span
-                                class="font-semibold uppercase text-slate-800 dark:text-zink-50">
-                                {{ $cee_result->firstname }}
-                                {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
-                                {{ $cee_result->lastname }}
-                                {{ $cee_result->suffix }}</span></p>
-                        <p class="mb-1 text-slate-500 dark:text-zink-200">App No.: <span
-                                class="font-semibold text-slate-800 dark:text-zink-50">{{ $cee_result->app_no }}</span></p>
-                        <p class="mb-1 text-slate-500 dark:text-zink-200">Examination Date: <span
-                                class="font-semibold text-slate-800 dark:text-zink-50">
-                                {{ \Carbon\Carbon::parse($cee_result->schedule)->format('F j, Y') }}</span></p>
-                        <p class="mb-1 text-slate-500 dark:text-zink-200">Date Registered: <span
-                                class="font-semibold text-slate-800 dark:text-zink-50">{{ \Carbon\Carbon::parse($cee_result->user_created_at)->format('F j, Y') }}</span>
-                        </p>
-                    </div>
-
                     <div class="mt-10 overflow-x-auto">
                         @if ($cee_result->csa < 25)
                             <p class="text-slate-800">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thank you for your
@@ -64,22 +46,65 @@
                                 educational pathways that may align with your interests and career goals.
                             </p>
                         @elseif($cee_result->csa >= 25)
-                            <p class="text-slate-800">
-                                {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thank you for your interest in pursuing your
-                                tertiary education at the University of Southern Mindanao. We appreciate the time and effort
-                                you invested in our admission process.
+                            @if ($is_qualified_pre_reg == 1)
+                                <h4>Congratulations! You Qualified for Your Priority Program at USM!</h4>
 
-                                <br><br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After careful evaluation of all examination
-                                results, <strong class="text-green-600">we are pleased to inform you that you have
-                                    successfully passed the University of Southern Mindanao College Entrance Examination
-                                    (USMCEE)</strong>. --}}
+                                <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
+                                    {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
+                                    {{ $cee_result->lastname }}
+                                    {{ $cee_result->suffix }},</p>
+                                <p class="text-slate-800">We are pleased to
+                                    inform you that you have qualified for your first priority program, <b
+                                        class="text-custom-500">{{ $programResponse['programName'] }}
+                                        {{ $programResponse['majorDiscDesc'] }}</b>, at the University of Southern Mindanao!
+                                    Congratulations on this achievement!
 
-                                <br><br>
-                            <h4 class="text-blue-500">Please wait for further announcements
-                                regarding the schedule and procedures for the pre-registration process. Kindly monitor the
-                                official USM website and USM official page for updates.</h4>
-                            </p>
+                                    <br><br>
+                                    To begin your enrollment process
+                                    immediately, please click or tap the Confirm button below, <strong>not later than April
+                                        23, 2025:</strong><br>
+
+                                    <a href="{{ route('student.prereg.index') }}"
+                                        class="mt-4 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                        <i data-lucide="thumbs-up" class="inline-block size-4 dark:text-zink-200"></i>
+                                        Confirm</a>
+
+                                    <br><br>
+                                    If you choose not to enroll in your
+                                    priority program, or if you would like to explore other program options, we will be
+                                    sending you a list of other available programs on April 24.
+                                    <br><br>
+                                    Congratulations once again, and we look forward to welcoming you to USM!
+
+                                </p>
+                            @else
+                                <h4>Update on Your USM Enrollment Application</h4>
+
+                                <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
+                                    {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
+                                    {{ $cee_result->lastname }}
+                                    {{ $cee_result->suffix }},</p>
+
+                                <p class="text-slate-800">Thank you for your interest in the University of Southern
+                                    Mindanao. <b> We regret to inform you that you did not qualify for your first priority
+                                        program </b>, <b class="text-custom-500">{{ $programResponse['programName'] }}
+                                        {{ $programResponse['majorDiscDesc'] }}</b>, at the University of Southern
+                                    Mindanao!
+
+                                    <br><br>
+                                    We understand that this may be disappointing. However, we would like to offer you the
+                                    opportunity to explore other programs at USM that may be a good fit for your interests
+                                    and qualifications.
+
+                                    <br><br>
+                                    On April 24, 2025, we will be sending you a list of other available programs that you
+                                    may consider for enrollment.
+                                    <br><br>
+                                    We encourage you to review this list carefully. We are committed to helping you find the
+                                    right academic path at the University of Southern Mindanao.
+
+                                </p>
+                            @endif
                         @endif
                     </div>
 

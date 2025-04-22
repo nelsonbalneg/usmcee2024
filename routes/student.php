@@ -3,6 +3,8 @@
 use App\Http\Controllers\Student\ChedApplicantProfileController;
 use App\Http\Controllers\Student\ProgramController;
 use App\Http\Controllers\Student\StudentApplicantProfileController;
+use App\Http\Controllers\Student\StudentPreregController;
+use App\Http\Controllers\Student\StudentProgramConfirmationController;
 use App\Http\Controllers\Student\StudentRequirementsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\ResultController;
@@ -49,14 +51,34 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::get('/check-duplicate-records', [StudentCeeReserveController::class, 'checkForDuplicateRecords'])->name('check.duplicate.records');
 
     //route for programs
-    Route::get('/programs/index', [ProgramController::class, 'index'])->name('programs.index');
+    // Route::get('/programs/index', [ProgramController::class, 'index'])->name('programs.index');
 
     //routes for Preregitration
+    Route::get('/pre-registration/dasboard', [StudentPreregController::class, 'index'])->name('prereg.index');
+
     //route for Student Profile
     Route::post('pre-registration/student-profile/publish', [StudentApplicantProfileController::class, 'publish'])->name('student-profile.publish');
+    Route::get('pre-registration/student-profile/step1', [StudentApplicantProfileController::class, 'showStep1'])->name('applicant-profile.step1.show');
+    Route::post('pre-registration/student-profile/step1', [StudentApplicantProfileController::class, 'postStep1'])->name('applicant-profile.step1.save');
+    Route::get('pre-registration/student-profile/step2', [StudentApplicantProfileController::class, 'showStep2'])->name('applicant-profile.step2.show');
+    Route::post('pre-registration/student-profile/step2', [StudentApplicantProfileController::class, 'postStep2'])->name('applicant-profile.step2.save');
+    Route::get('pre-registration/student-profile/step3', [StudentApplicantProfileController::class, 'showStep3'])->name('applicant-profile.step3.show');
+    Route::post('pre-registration/student-profile/step3', [StudentApplicantProfileController::class, 'postStep3'])->name('applicant-profile.step3.save');
+    Route::get('pre-registration/student-profile/step4', [StudentApplicantProfileController::class, 'showStep4'])->name('applicant-profile.step4.show');
+    Route::post('pre-registration/student-profile/step4', [StudentApplicantProfileController::class, 'postStep4'])->name('applicant-profile.step4.save');
+    Route::get('pre-registration/student-profile/step5', [StudentApplicantProfileController::class, 'showStep5'])->name('applicant-profile.step5.show');
+    Route::post('pre-registration/student-profile/step5', [StudentApplicantProfileController::class, 'postStep5'])->name('applicant-profile.step5.save');
     Route::resource('pre-registration/applicant-profile', StudentApplicantProfileController::class);
 
     //route for uploading of requirements
+    //delete requirement route
+    Route::delete('/pre-registration/applicant-requirements/delete/{requirement}/{type}', [StudentRequirementsController::class, 'deleteRequirements'])->name('applicant-requirements.delete');
+
+    Route::put('pre-registration/additional-applicant-requirements/publish', [StudentRequirementsController::class, 'publishAdditionalRequirements'])->name('additional-requirements.publish');
+    Route::post('pre-registration/additional-applicant-requirements/pregnancy-test', [StudentRequirementsController::class, 'storePrenancyTest'])->name('additional-applicant-requirements.pregnancy-test.store');
+    Route::post('pre-registration/additional-applicant-requirements/chest-xray', [StudentRequirementsController::class, 'storeChestXray'])->name('additional-applicant-requirements.chest-xray.store');
+    Route::post('pre-registration/additional-applicant-requirements/hepab', [StudentRequirementsController::class, 'storeHepab'])->name('additional-applicant-requirements.hepab.store');
+    Route::get('pre-registration/additional-applicant-requirements', [StudentRequirementsController::class, 'additionalRequiremtIndex'])->name('add-requirements.index');
     Route::put('pre-registration/applicant-requirements/publish', [StudentRequirementsController::class, 'publishRequirements'])->name('requirements.publish');
     Route::post('pre-registration/applicant-requirements/gmc', [StudentRequirementsController::class, 'storeGmc'])->name('requirements.gmc.store');
     Route::post('pre-registration/applicant-requirements/certification', [StudentRequirementsController::class, 'storecertification'])->name('requirements.certification.store');
@@ -66,9 +88,12 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::resource('pre-registration/applicant-requirements', StudentRequirementsController::class);
 
 
+    //route for Program confirmation
+    Route::post('pre-registration/program-confirmation', [StudentProgramConfirmationController::class, 'confirmProgram'])->name('program-confirmation.comfirm');
+    Route::get('pre-registration/program-confirmation', [StudentProgramConfirmationController::class, 'index'])->name('program-confirmation.index');
+
     //route for USMCEE applicant Profile
     Route::post('cee/ched-applicant-profile/publish', [ChedApplicantProfileController::class, 'publish'])->name('cee.ched-applicant-profile.publish');
-    //Route::get('cee/ched-applicant-profile/family-background', [ChedApplicantProfileController::class, 'familybgIndex'])->name('ched.applicant-profile.fam-gb.index');
     Route::resource('cee/ched-applicant-profile', ChedApplicantProfileController::class);
 
 });

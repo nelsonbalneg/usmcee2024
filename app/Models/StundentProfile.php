@@ -135,5 +135,22 @@ class StundentProfile extends Model
         'solo_parent',
         'solo_parent_id',
         'applicant_profile_status',
+        'prereg_status',
+        'policyId',
+        'current_step',
+        'realCampusId',
+        'collegeId',
+        'termId',
+        'campusName',
+        'collegeName',
+        'programName',
+        'term',
+        'majorDiscDesc',
+        'programCode',
+        'remarks',
+        'date_confirmed',
+        'date_enrolled',
+        'date_denied',
+        'date_cancelled'
     ];
 }

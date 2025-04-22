@@ -402,7 +402,7 @@
                                 {{-- Raised by Solo Parent --}}
                                 <div class="xl:col-span-3">
                                     <label for="is_raised_by_solo_parent" class="inline-block mb-2 text-base font-medium">
-                                        Are you raised by a solo parent?
+                                        Were you raised by a solo parent?
                                         <sup class="text-red-500">* required</sup></label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -420,7 +420,7 @@
                                 {{-- Start PWD --}}
                                 <div class="xl:col-span-3" id="is_pwd">
                                     <label for="is_pwd" class="inline-block mb-2 text-base font-medium">
-                                        Are you a PWD?
+                                        Are you a person with a disability (PWD)?
                                         <sup class="text-red-500">* required</sup></label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -457,7 +457,7 @@
                                 {{-- Living in a Geographically Isolated and Disadvantaged Area (GIDA --}}
                                 <div class="xl:col-span-3" id="is_gida">
                                     <label for="is_gida" class="inline-block mb-2 text-base font-medium">
-                                        Are you Living in a Geographically Isolated and Disadvantaged Area (GIDA)?
+                                        Are you living in a Geographically Isolated and Disadvantaged Area (GIDA)?
                                         <sup class="text-red-500">* required</sup></label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -484,7 +484,7 @@
                                 {{-- Member of the indigenous people (IP)  --}}
                                 <div class="xl:col-span-3" id="is_ip">
                                     <label for="is_ip" class="inline-block mb-2 text-base font-medium">
-                                        Are you a Member of the indigenous people (IP)
+                                        Are you a member of the Indigenous Peoples (IP)?
                                         <sup class="text-red-500">* required</sup></label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -510,7 +510,7 @@
                                 {{-- Are you Belong to a family of subsistence farmers or fisherfolks  --}}
                                 <div class="xl:col-span-3">
                                     <label for="is_belong_to_farmer" class="inline-block mb-2 text-base font-medium">
-                                        Are you Belong to a family of subsistence farmers or fisherfolks?
+                                        Do you belong to a family of subsistence farmers or fisherfolk?
                                         <sup class="text-red-500">* required</sup></label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -527,7 +527,7 @@
                                 {{-- Belong to a family of rebel returnees  --}}
                                 <div class="xl:col-span-3">
                                     <label for="is_rebel_returnee" class="inline-block mb-2 text-base font-medium">
-                                        Are you Belong to a family of rebel returnees?
+                                        Do you belong to a family of rebel returnees?
                                         <sup class="text-red-500">* required</sup></label>
                                     <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"

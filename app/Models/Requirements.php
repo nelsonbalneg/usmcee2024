@@ -19,6 +19,11 @@ class Requirements extends Model
         'enrolment_certification',
         'good_moral_char',
         'honorable_dismisal',
-        'req_status'
+        'req_status',
+        'hepa_b_test',
+        'chest_x_ray',
+        'preg_test',
+        'signature',
+        'photo'
     ];
 }

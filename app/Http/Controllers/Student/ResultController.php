@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\ChedApplicantProfile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
@@ -118,13 +119,42 @@ class ResultController extends Controller
                 'results.humanities',
                 'results.inductive',
                 'results.csa',
+                'results.confirmation_batch',
                 'results.created_at',
                 'cee_sessions.name',
                 'rooms.schedule',
+                'reservations.firstprogram_policy_id',
             )
             ->first();
 
+            $programData = null;
+            $is_qualified_pre_reg = null;
 
-        return view('student.result.result-message', compact('cee_result'));
+            $prog_policy_id = $cee_result->firstprogram_policy_id;
+            $result = $cee_result->csa;
+
+
+            //fetch from the API
+            // Fetch program policy data from external API
+            $programResponse = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$prog_policy_id}");
+
+            if ($programResponse->successful()) {
+                $programData = json_decode($programResponse->body(), true);
+
+                //compare the CSA and to usmceefp from API
+                if ($result && isset($programData['usmceefp']) && $result >= $programData['usmceefp'] && $cee_result->confirmation_batch == 1) {
+                    $is_qualified_pre_reg = 1;
+                } elseif($cee_result->confirmation_batch == 2){
+                    $is_qualified_pre_reg = 0;
+                }else{
+                    $is_qualified_pre_reg = 0;
+                }
+
+            } else {
+                return redirect()->back()->with('error', 'Unable to fetch program details from the server.');
+            }
+
+
+        return view('student.result.result-message', compact('cee_result', 'is_qualified_pre_reg','programResponse'));
     }
 }

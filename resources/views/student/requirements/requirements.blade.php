@@ -38,15 +38,14 @@
                         <h6 class="mb-0 text-lg font-semibold text-blue-500 uppercase">Initial Requirement Checklist</h6>
 
                         <p class="font-semibold text-gray-700 rounded-md">
-                            This step is required to activate the Select Program menu.
+                            You must complete this step to confirm your program.
                         </p>
 
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-green-500">FRESHMEN</h3>
                             <ul class="text-gray-700 list-disc list-inside">
                                 <li>Certificate of Good Moral Character</li>
-                                <li>Enrollment Certification (Ongoing Grade 12)</li>
-                                <li>Senior High School Card</li>
+                                <li>Senior High School Card (Form 138 or SF9)</li>
                                 <li>PSA Birth Certificate</li>
                             </ul>
                         </div>
@@ -55,7 +54,7 @@
                             <h3 class="text-lg font-semibold text-green-500">TRANSFEREES</h3>
                             <ul class="text-gray-700 list-disc list-inside">
                                 <li>Certificate of Good Moral Character</li>
-                                <li>Honorable Dismissal</li>
+                                <li>Honorable Dismissal or Certificate of Transfer Credentials</li>
                                 <li>PSA Birth Certificate</li>
                                 <li>TOR for Evaluation</li>
                             </ul>
@@ -118,8 +117,8 @@
                         </h6>
 
                         @if (optional($requirements->first())->req_status == 0)
-                            <p class="mb-4">If PSA i not yet available, download the commitment form at bitly fill out it,
-                                sign, and upload a scanned copy.</p>
+                            {{-- <p class="mb-4">If PSA i not yet available, download the commitment form at bitly fill out it,
+                                sign, and upload a scanned copy.</p> --}}
 
                             <form action="{{ route('student.applicant-requirements.store') }}" method="POST"
                                 enctype="multipart/form-data">
@@ -161,9 +160,19 @@
                                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                     <td>
                                                         @if ($requirement->req_status == 0)
-                                                            <a class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent"
-                                                                href="#">
-                                                                Delete</a>
+                                                            <form
+                                                                action="{{ route('student.applicant-requirements.delete', ['requirement' => $requirement->id, 'type' => 'psa']) }}"
+                                                                method="POST"
+                                                                onsubmit="return confirm('Are you sure you want to delete this file?');"
+                                                                style="display: inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent">
+                                                                    Delete
+                                                                </button>
+                                                            </form>
+
                                                             <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
                                                                 href="{{ Storage::url(str_replace('doc/', 'psa/', $file)) }}"
                                                                 target="_blank">View</a>
@@ -188,50 +197,10 @@
                                 </tbody>
                             </table>
                         @endif
-                    </div>
-                </div><!--end card-->
-
-
-                <div class="card">
-
-                    <div class="card-body">
-                        <h6 class="mb-4 text-blue-500 uppercase text-15"><i data-lucide="upload"
-                                class="inline-block text-blue-500 size-4 dark:text-zink-200"></i> ADDITIONAL
-                            PRE-REGISTRATION REQUIREMENTS</h6>
-
-                        <div class="mb-5 xl:col-span-12">
-                            <div
-                                class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
-                                <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                                <div>
-                                    <h6 class="mb-1 font-semibold">Please take time to read this before proceeding.</h6>
-                                    <ul class="ml-2 list-disc list-inside">
-                                        <li>
-                                            If the mentioned documents are unavailable, kindly download the Affidavit and
-                                            Enrollment Certification via the following links:
-                                        </li>
-                                        <li>
-                                            <strong>Affidavit:</strong>
-                                            <a href="https://bit.ly/3NUgsAU"
-                                                class="text-blue-600 underline hover:text-blue-800" target="_blank">
-                                                https://bit.ly/3NUgsAU
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <strong>Enrollment Certification:</strong>
-                                            <a href="https://bit.ly/4440mIT"
-                                                class="text-blue-600 underline hover:text-blue-800" target="_blank">
-                                                https://bit.ly/4440mIT
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
 
                         {{-- GMC --}}
 
-                        <h6 class="text-15">Certificate of Good Moral Character <sup class="text-red-500">*
+                        <h6 class="mt-10 text-15">Certificate of Good Moral Character <sup class="text-red-500">*
                                 required</sup></h6>
                         </h6>
 
@@ -282,10 +251,18 @@
                                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td class="px-4 py-2 whitespace-nowrap">
                                                             @if ($requirement->req_status == 0)
-                                                                <a class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent"
-                                                                    href="#">
-                                                                    Delete
-                                                                </a>
+                                                                <form
+                                                                    action="{{ route('student.applicant-requirements.delete', ['requirement' => $requirement->id, 'type' => 'gmc']) }}"
+                                                                    method="POST"
+                                                                    onsubmit="return confirm('Are you sure you want to delete this file?');"
+                                                                    style="display: inline;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent">
+                                                                        Delete
+                                                                    </button>
+                                                                </form>
                                                                 <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
                                                                     href="{{ Storage::url(str_replace('doc/', 'gmc/', $file)) }}"
                                                                     target="_blank">
@@ -318,91 +295,106 @@
 
                         {{-- end GMC --}}
 
-                        {{-- SHS Card --}}
-                        <h6 class="mt-10 text-15">Senior High School Card <sup class="text-red-500">*
-                                required</sup></h6>
+                        @if ($applicant->student_type == 1)
+                            {{-- SHS Card --}}
+                            <h6 class="mt-10 text-15">Senior High School Card <sup class="text-red-500">*
+                                    required</sup></h6>
 
-                        {{-- show if the re_sttuss i not published --}}
-                        @if (optional($requirements->first())->req_status == 0)
-                            <form action="{{ route('student.requirements.card.store') }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
+                            {{-- show if the re_sttuss i not published --}}
+                            @if (optional($requirements->first())->req_status == 0)
+                                <form action="{{ route('student.requirements.card.store') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
 
-                                @error('shs_files.*')
-                                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                                @enderror
-                                <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
+                                    @error('shs_files.*')
+                                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                                    @enderror
+                                    <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
 
-                                    <input type="file" name="shs_files[]" multiple="multiple" required
-                                        class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+                                        <input type="file" name="shs_files[]" multiple="multiple" required
+                                            class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
 
-                                    <button type="submit" id="uploadButton"
-                                        class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                        <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
-                                        Upload Card</button>
+                                        <button type="submit" id="uploadButton"
+                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
+                                            Upload Card</button>
+                                    </div>
+                                </form>
+                            @endif
+
+                            @if ($requirements->isNotEmpty())
+                                <div class="w-full overflow-x-auto">
+
+                                    <table class="w-full mt-4 border-separate table-custom border-spacing-y-1 min-w-max">
+                                        <thead>
+                                            <tr
+                                                class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                                <th
+                                                    class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right whitespace-nowrap">
+                                                    Details</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach ($requirements as $requirement)
+                                                @php
+                                                    $shs_files = json_decode($requirement->shs_card, true);
+                                                @endphp
+
+                                                @if (!empty($shs_files))
+                                                    @foreach ($shs_files as $file)
+                                                        <tr
+                                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <td class="px-4 py-2 whitespace-nowrap">
+                                                                @if ($requirement->req_status == 0)
+                                                                    <form
+                                                                        action="{{ route('student.applicant-requirements.delete', ['requirement' => $requirement->id, 'type' => 'card']) }}"
+                                                                        method="POST"
+                                                                        onsubmit="return confirm('Are you sure you want to delete this file?');"
+                                                                        style="display: inline;">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent">
+                                                                            Delete
+                                                                        </button>
+                                                                    </form>
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                        href="{{ Storage::url(str_replace('doc/', 'card/', $file)) }}"
+                                                                        target="_blank">View</a>
+
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
+                                                                        href="#"><i data-lucide="circle-dashed"
+                                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                        Pending</a>
+                                                                @else
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                        href="{{ Storage::url(str_replace('doc/', 'card/', $file)) }}"
+                                                                        target="_blank">View</a>
+
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                        href="#"><i data-lucide="check-circle-2"
+                                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                        Submitted</a>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </form>
-                        @endif
+                            @endif
+                            {{-- END SHS CARD --}}
 
-                        @if ($requirements->isNotEmpty())
-                            <div class="w-full overflow-x-auto">
+                            {{-- Start Enrollment Certification --}}
+                            {{-- <h6 class="mt-10 text-15">Enrollment Certification (On-going Grade 12) <sup
+                                class="text-green-500">*
+                                optional</sup></h6> --}}
 
-                                <table class="w-full mt-4 border-separate table-custom border-spacing-y-1 min-w-max">
-                                    <thead>
-                                        <tr
-                                            class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
-                                            <th
-                                                class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right whitespace-nowrap">
-                                                Details</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @foreach ($requirements as $requirement)
-                                            @php
-                                                $shs_files = json_decode($requirement->shs_card, true);
-                                            @endphp
-
-                                            @if (!empty($shs_files))
-                                                @foreach ($shs_files as $file)
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                        <td class="px-4 py-2 whitespace-nowrap">
-                                                            @if ($requirement->req_status == 0)
-                                                                <a class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent"
-                                                                    href="#">Delete</a>
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                    href="{{ Storage::url(str_replace('doc/', 'card/', $file)) }}"
-                                                                    target="_blank">View</a>
-
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
-                                                                    href="#"><i data-lucide="circle-dashed"
-                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Pending</a>
-                                                            @else
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                    href="{{ Storage::url(str_replace('doc/', 'card/', $file)) }}"
-                                                                    target="_blank">View</a>
-
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                    href="#"><i data-lucide="check-circle-2"
-                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Submitted</a>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @endif
-                        {{-- END SHS CARD --}}
-
-                        {{-- Start Enrollment Certification --}}
-                        <h6 class="mt-10 text-15">Enrollment Certification (On-going Grade 12) <sup class="text-red-500">*
-                                required</sup></h6>
-
-                        {{-- show if the re_sttuss i not published --}}
-                        @if (optional($requirements->first())->req_status == 0)
+                            {{-- show if the re_sttuss i not published --}}
+                            {{-- @if (optional($requirements->first())->req_status == 0)
                             <form action="{{ route('student.requirements.certification.store') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
@@ -413,7 +405,8 @@
 
                                 <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
 
-                                    <input type="file" name="enrollment_certification[]" multiple="multiple" required
+                                    <input type="file" name="enrollment_certification[]" multiple="multiple"
+                                        required
                                         class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
 
                                     <button type="submit" id="uploadButton"
@@ -447,13 +440,22 @@
 
                                             @if (!empty($enrollment_certification_files))
                                                 @foreach ($enrollment_certification_files as $file)
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                    <tr
+                                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                         <td class="px-4 py-2 whitespace-nowrap">
                                                             @if ($requirement->req_status == 0)
-                                                                <a class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent"
-                                                                    href="#">
-                                                                    Delete
-                                                                </a>
+                                                                <form
+                                                                    action="{{ route('student.applicant-requirements.delete', ['requirement' => $requirement->id, 'type' => 'certification']) }}"
+                                                                    method="POST"
+                                                                    onsubmit="return confirm('Are you sure you want to delete this file?');"
+                                                                    style="display: inline;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent">
+                                                                        Delete
+                                                                    </button>
+                                                                </form>
                                                                 <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
                                                                     href="{{ Storage::url(str_replace('doc/', 'certification/', $file)) }}"
                                                                     target="_blank">
@@ -461,7 +463,8 @@
                                                                 </a>
                                                                 <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
                                                                     href="#"><i data-lucide="circle-dashed"
-                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Pending</a>
+                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                    Pending</a>
                                                             @else
                                                                 <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
                                                                     href="{{ Storage::url(str_replace('doc/', 'certification/', $file)) }}"
@@ -470,7 +473,8 @@
                                                                 </a>
                                                                 <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
                                                                     href="#"><i data-lucide="check-circle-2"
-                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Submitted</a>
+                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                    Submitted</a>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -480,177 +484,203 @@
                                     </tbody>
                                 </table>
                             </div>
+                        @endif --}}
+                            {{-- End Enrollment Certification --}}
+
                         @endif
-                        {{-- End Enrollment Certification --}}
 
-                        {{-- start Horable dismissal --}}
 
-                        <h6 class="mt-10 text-15">Honorable Dismissal (Transferee) <sup class="text-red-500">*
-                                required</sup></h6>
+                        @if ($applicant->student_type != 1)
+                            {{-- start Horable dismissal --}}
+                            <h6 class="mt-10 text-15">Honorable Dismissal (Transferee) <sup class="text-red-500">*
+                                    required</sup></h6>
 
-                        {{-- show if the re_sttuss i not published --}}
-                        @if (optional($requirements->first())->req_status == 0)
-                            <form action="{{ route('student.requirements.honorable-dismissal.store') }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
+                            {{-- show if the re_sttuss i not published --}}
+                            @if (optional($requirements->first())->req_status == 0)
+                                <form action="{{ route('student.requirements.honorable-dismissal.store') }}"
+                                    method="POST" enctype="multipart/form-data">
+                                    @csrf
 
-                                @error('honorable_dismisal_files.*')
-                                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                                @enderror
+                                    @error('honorable_dismisal_files.*')
+                                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                                    @enderror
 
-                                <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
+                                    <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
 
-                                    <input type="file" name="honorable_dismisal_files[]" multiple="multiple"
-                                        class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
-                                        placeholder="Enter your name">
+                                        <input type="file" name="honorable_dismisal_files[]" multiple="multiple"
+                                            class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                                            placeholder="Enter your name">
 
-                                    <button type="submit" id="uploadButton"
-                                        class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                        <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
-                                        Upload Honorable Dismissal</button>
+                                        <button type="submit" id="uploadButton"
+                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
+                                            Upload Honorable Dismissal</button>
+                                    </div>
+                                </form>
+                            @endif
+
+                            @if ($requirements->isNotEmpty())
+                                <div class="w-full overflow-x-auto">
+                                    <table class="w-full mt-4 border-separate table-custom border-spacing-y-1 min-w-max">
+                                        <thead>
+                                            <tr
+                                                class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                                <th
+                                                    class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right whitespace-nowrap">
+                                                    Details</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach ($requirements as $requirement)
+                                                @php
+                                                    $honorable_dismisal_files = json_decode(
+                                                        $requirement->honorable_dismisal,
+                                                        true,
+                                                    );
+                                                @endphp
+
+                                                @if (!empty($honorable_dismisal_files))
+                                                    @foreach ($honorable_dismisal_files as $file)
+                                                        <tr
+                                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <td class="px-4 py-2 whitespace-nowrap">
+                                                                @if ($requirement->req_status == 0)
+                                                                    <form
+                                                                        action="{{ route('student.applicant-requirements.delete', ['requirement' => $requirement->id, 'type' => 'honorable-dismissal']) }}"
+                                                                        method="POST"
+                                                                        onsubmit="return confirm('Are you sure you want to delete this file?');"
+                                                                        style="display: inline;">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent">
+                                                                            Delete
+                                                                        </button>
+                                                                    </form>
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                        href="{{ Storage::url(str_replace('doc/', 'honorable-dismissal/', $file)) }}"
+                                                                        target="_blank">
+                                                                        View
+                                                                    </a>
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
+                                                                        href="#"><i data-lucide="circle-dashed"
+                                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                        Pending</a>
+                                                                @else
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                        href="{{ Storage::url(str_replace('doc/', 'honorable-dismissal/', $file)) }}"
+                                                                        target="_blank">
+                                                                        View
+                                                                    </a>
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                        href="#"><i data-lucide="check-circle-2"
+                                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                        Submitted</a>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </form>
-                        @endif
+                            @endif
+                            {{-- end Honorable dismissal --}}
 
-                        @if ($requirements->isNotEmpty())
-                            <div class="w-full overflow-x-auto">
-                                <table class="w-full mt-4 border-separate table-custom border-spacing-y-1 min-w-max">
-                                    <thead>
-                                        <tr
-                                            class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
-                                            <th
-                                                class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right whitespace-nowrap">
-                                                Details</th>
-                                        </tr>
-                                    </thead>
+                            {{-- start TOR --}}
 
-                                    <tbody>
-                                        @foreach ($requirements as $requirement)
-                                            @php
-                                                $honorable_dismisal_files = json_decode(
-                                                    $requirement->honorable_dismisal,
-                                                    true,
-                                                );
-                                            @endphp
+                            <h6 class="mt-10 text-15">Transcript of Records - TOR (Transferee) <sup class="text-red-500">*
+                                    required</sup></h6>
+                            @if (optional($requirements->first())->req_status == 0)
+                                <form action="{{ route('student.requirements.tor.store') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
 
-                                            @if (!empty($honorable_dismisal_files))
-                                                @foreach ($honorable_dismisal_files as $file)
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                        <td class="px-4 py-2 whitespace-nowrap">
-                                                            @if ($requirement->req_status == 0)
-                                                                <a class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent"
-                                                                    href="#">
-                                                                    Delete
-                                                                </a>
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                    href="{{ Storage::url(str_replace('doc/', 'honorable-dismissal/', $file)) }}"
-                                                                    target="_blank">
-                                                                    View
-                                                                </a>
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
-                                                                    href="#"><i data-lucide="circle-dashed"
-                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Pending</a>
-                                                            @else
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                    href="{{ Storage::url(str_replace('doc/', 'honorable-dismissal/', $file)) }}"
-                                                                    target="_blank">
-                                                                    View
-                                                                </a>
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                    href="#"><i data-lucide="check-circle-2"
-                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Submitted</a>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @endif
-                        {{-- end Honorable dismissal --}}
+                                    @error('tor_files.*')
+                                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                                    @enderror
+                                    <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
 
-                        {{-- start TOR --}}
+                                        <input type="file" name="tor_files[]" multiple="multiple"
+                                            class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                                            placeholder="Enter your name">
 
-                        <h6 class="mt-10 text-15">Transcript of Records - TOR (Transferee) <sup class="text-red-500">*
-                                required</sup></h6>
+                                        <button type="submit" id="uploadButton"
+                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
+                                            Upload TOR</button>
+                                    </div>
+                                </form>
+                            @endif
 
-                        @if (optional($requirements->first())->req_status == 0)
-                            <form action="{{ route('student.requirements.tor.store') }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
+                            @if ($requirements->isNotEmpty())
+                                <div class="w-full overflow-x-auto">
+                                    <table class="w-full mt-4 border-separate border-spacing-y-1 min-w-max">
+                                        <thead>
+                                            <tr
+                                                class="relative rounded-md bg-slate-50 dark:bg-zink-600 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent">
+                                                <th class="px-3.5 py-2 font-semibold text-left whitespace-nowrap">Details
+                                                </th>
+                                            </tr>
+                                        </thead>
 
-                                @error('tor_files.*')
-                                    <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
-                                @enderror
-                                <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
+                                        <tbody>
+                                            @foreach ($requirements as $requirement)
+                                                @php
+                                                    $tor_files = json_decode($requirement->tor, true);
+                                                @endphp
 
-                                    <input type="file" name="tor_files[]" multiple="multiple"
-                                        class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
-                                        placeholder="Enter your name">
-
-                                    <button type="submit" id="uploadButton"
-                                        class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                        <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
-                                        Upload TOR</button>
+                                                @if (!empty($tor_files))
+                                                    @foreach ($tor_files as $file)
+                                                        <tr
+                                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <td class="px-4 py-2 whitespace-nowrap">
+                                                                @if ($requirement->req_status == 0)
+                                                                    <form
+                                                                        action="{{ route('student.applicant-requirements.delete', ['requirement' => $requirement->id, 'type' => 'tor']) }}"
+                                                                        method="POST"
+                                                                        onsubmit="return confirm('Are you sure you want to delete this file?');"
+                                                                        style="display: inline;">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent">
+                                                                            Delete
+                                                                        </button>
+                                                                    </form>
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                        href="{{ Storage::url(str_replace('doc/', 'tor/', $file)) }}"
+                                                                        target="_blank">
+                                                                        View
+                                                                    </a>
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
+                                                                        href="#"><i data-lucide="circle-dashed"
+                                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                        Pending</a>
+                                                                @else
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                        href="{{ Storage::url(str_replace('doc/', 'tor/', $file)) }}"
+                                                                        target="_blank">
+                                                                        View
+                                                                    </a>
+                                                                    <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                        href="#"><i data-lucide="check-circle-2"
+                                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                        Submitted</a>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </form>
+                            @endif
+                            {{-- end Honorable dismissal --}}
                         @endif
-
-                        @if ($requirements->isNotEmpty())
-                            <div class="w-full overflow-x-auto">
-                                <table class="w-full mt-4 border-separate border-spacing-y-1 min-w-max">
-                                    <thead>
-                                        <tr
-                                            class="relative rounded-md bg-slate-50 dark:bg-zink-600 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent">
-                                            <th class="px-3.5 py-2 font-semibold text-left whitespace-nowrap">Details</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @foreach ($requirements as $requirement)
-                                            @php
-                                                $tor_files = json_decode($requirement->tor, true);
-                                            @endphp
-
-                                            @if (!empty($tor_files))
-                                                @foreach ($tor_files as $file)
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                        <td class="px-4 py-2 whitespace-nowrap">
-                                                            @if ($requirement->req_status == 0)
-                                                                <a class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent"
-                                                                    href="#">
-                                                                    Delete
-                                                                </a>
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                    href="{{ Storage::url(str_replace('doc/', 'tor/', $file)) }}"
-                                                                    target="_blank">
-                                                                    View
-                                                                </a>
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
-                                                                    href="#"><i data-lucide="circle-dashed"
-                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Pending</a>
-                                                            @else
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                    href="{{ Storage::url(str_replace('doc/', 'tor/', $file)) }}"
-                                                                    target="_blank">
-                                                                    View
-                                                                </a>
-                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                    href="#"><i data-lucide="check-circle-2"
-                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Submitted</a>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @endif
-                        {{-- end Honorable dismissal --}}
 
                         <div class="grid grid-cols-1 gap-5 mt-5 lg:grid-cols-2 xl:grid-cols-12">
                         </div>
@@ -663,17 +693,14 @@
                                     <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
                                     Submit Requirements</button>
                             @elseif($requirements->isNotEmpty() && optional($requirements->first())->req_status == 1)
-                                <a type="button" href="{{ route('student.applicant-requirements.index') }}"
+                                <a type="button" href="{{ route('student.program-confirmation.index') }}"
                                     class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                                     Proceed to Next Step <i data-lucide="move-right"
                                         class="inline-block size-4 dark:text-zink-200"></i></a>
                             @endif
                         </div>
                     </div>
-
-
-                </div>
-
+                </div><!--end card-->
             </div>
 
 
@@ -685,7 +712,7 @@
                 <h6 class="mb-1">Something is very wrong!</h6>
                 <p class="mb-2">Upon checking your profile status, it has not been submitted or finalized yet and remains
                     in draft mode.</p>
-                <a href="{{ route('student.applicant-profile.index') }}"
+                <a href="{{ route('student.applicant-profile.step1.show') }}"
                     class="font-semibold text-red-600 transition hover:text-red-700"><i data-lucide="move-left"
                         class="inline-block h-4 align-middle"></i> Go Back </a>
             </div>

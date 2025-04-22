@@ -8,6 +8,7 @@ use App\Models\Result;
 use App\Models\SchoolName;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Models\StundentProfile;
 use App\Trait\ImageUploadTrait;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\JsonResponse;
@@ -35,36 +36,38 @@ class StudentProfileController extends Controller
         $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
 
         $cee_reservation_records = DB::table('reservations')
-        ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-        ->where('reservations.user_id', Auth::user()->id)
-        ->select(
-            'reservations.user_id',
-            'reservations.app_no',
-            'reservations.firstpriorty_desc',
-            'reservations.secondpriority_desc',
-            'reservations.thirdpriorty_desc',
-            'reservations.campus_id',
-            'reservations.campus_id_prio_prog_2',
-            'reservations.campus_id_prio_prog_3',
-            'reservations.is_repeat_exam',
-            'reservations.status',
-            'reservations.created_at',
-            'reservations.cee_session_id',
-            'rooms.room_name',
-            'rooms.college_name',
-            'rooms.exam_session',
-            'rooms.campus',
-            'rooms.time',
-            'rooms.schedule'
-        )
-        ->orderBy('reservations.created_at', 'desc')
-        ->get();
+            ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+            ->where('reservations.user_id', Auth::user()->id)
+            ->select(
+                'reservations.user_id',
+                'reservations.app_no',
+                'reservations.firstpriorty_desc',
+                'reservations.secondpriority_desc',
+                'reservations.thirdpriorty_desc',
+                'reservations.campus_id',
+                'reservations.campus_id_prio_prog_2',
+                'reservations.campus_id_prio_prog_3',
+                'reservations.is_repeat_exam',
+                'reservations.status',
+                'reservations.created_at',
+                'reservations.cee_session_id',
+                'rooms.room_name',
+                'rooms.college_name',
+                'rooms.exam_session',
+                'rooms.campus',
+                'rooms.time',
+                'rooms.schedule'
+            )
+            ->orderBy('reservations.created_at', 'desc')
+            ->get();
 
         //check if it has result
         $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
 
-        return view("student.profile.profile", compact('studentdetails','cee_reservation_records', 'isreservation_exist', 'cee_result'));
+        return view("student.profile.profile", compact('studentdetails', 'cee_reservation_records', 'isreservation_exist', 'cee_result'));
     }
+
+   
 
     /**
      * Show the form for creating a new resource.
