@@ -37,36 +37,6 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
         @if ($app_no && $result->csa >= 25)
-            {{-- <div class="xl:col-span-3">
-                <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
-                    <div class="card-body">
-                        <h6 class="mb-4 text-15">MY PROFILE INFORMATION</h6>
-
-                        <div class="px-5 py-8 rounded-md bg-sky-50 dark:bg-zinc-600">
-                            <img src="{{ asset($cee_profile->photo) }}" alt="Student Photo"
-                                class="block mx-auto border border-gray-300 rounded-full h-s">
-                        </div>
-                        <div class="mt-3">
-                            <h5 class="mb-0 text-blue-500 uppercase">{{ $cee_profile->lastname }},
-                                {{ $cee_profile->firstname }}
-                                {{ $cee_profile->middlename }} {{ $cee_profile->suffix }}</h5>
-                            <p class="text-slate-500 dark:text-zink-200">
-                                <i data-lucide="mail" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                {{ $cee_profile->email }}
-                            </p>
-                            <p class="text-slate-500 dark:text-zink-200">
-                                <i data-lucide="phone" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                {{ $cee_profile->phone }}
-                            </p>
-                            <p class="text-slate-500 dark:text-zink-200">
-                                <i data-lucide="calendar" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                {{ \Carbon\Carbon::parse($cee_profile->birthdate)->format('F j, Y') }}
-                            </p>
-                        </div>
-                    </div>
-                </div><!--end card-->
-            </div><!--end col--> --}}
-
             <div class="xl:col-span-12">
                 <form id="studentProfileForm" action="{{ route('student.applicant-profile.step2.save') }}" method="POST">
                     @csrf
@@ -161,7 +131,7 @@
                                     </label>
                                     <input type="date" name="father_birth_date"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        value="{{ old('father_birth_date', isset($applicant) ? \Carbon\Carbon::parse($applicant->father_birth_date)->format('Y-m-d') : '') }}"
+                                        value="{{ old('father_birth_date', isset($applicant) && $applicant->father_birth_date ? \Carbon\Carbon::parse($applicant->father_birth_date)->format('Y-m-d') : '') }}"
                                         placeholder="Enter Father's Birthdate">
                                 </div><!--end col-->
 
@@ -221,17 +191,40 @@
                                         placeholder="Enter Father's email">
                                 </div><!--end col-->
 
-                                <div class="xl:col-span-4">
+                                <div class="mb-4 xl:col-span-4">
                                     <label for="father_income_from"
-                                        class="inline-block mb-2 text-base font-medium">Father's
-                                        Monthly Income (Format: 9999 , do not add comma)</label>
-                                    <input type="text" name="father_income_from"
+                                        class="inline-block mb-2 text-base font-medium">Father's Monthly Income
+                                        <sup class="text-red-500">* required</sup></label>
+                                    <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        value="{{ old('father_income_from', $applicant->father_income_from ?? '') }}"
-                                        placeholder="Enter Father's monthly income">
+                                        name="father_income_from">
+                                        <option value="">Select</option>
+                                        <option value="1"
+                                            {{ isset($applicant) && $applicant->father_income_from == 1 ? 'selected' : '' }}>
+                                            Less than 9,100</option>
+                                        <option value="2"
+                                            {{ isset($applicant) && $applicant->father_income_from == 2 ? 'selected' : '' }}>
+                                            9,100 to 18,200</option>
+                                        <option value="3"
+                                            {{ isset($applicant) && $applicant->father_income_from == 3 ? 'selected' : '' }}>
+                                            18,200 to 36,400</option>
+                                        <option value="4"
+                                            {{ isset($applicant) && $applicant->father_income_from == 4 ? 'selected' : '' }}>
+                                            36,400 to 63,700</option>
+                                        <option value="5"
+                                            {{ isset($applicant) && $applicant->father_income_from == 5 ? 'selected' : '' }}>
+                                            63,700 to 109,200</option>
+                                        <option value="6"
+                                            {{ isset($applicant) && $applicant->father_income_from == 6 ? 'selected' : '' }}>
+                                            109,200 to 182,000</option>
+                                        <option value="7"
+                                            {{ isset($applicant) && $applicant->father_income_from == 7 ? 'selected' : '' }}>
+                                            Above 182,000</option>
+                                        <option value="0"
+                                            {{ isset($applicant) && $applicant->father_income_from == 0 ? 'selected' : '' }}>
+                                            Not Applicable</option>
+                                    </select>
                                 </div><!--end col-->
-
-
                                 <div class="xl:col-span-4">
                                     <label for="mother" class="inline-block mb-2 text-base font-medium">Mother's
                                         Name <sup class="text-red-500">* required</sup></label>
@@ -314,14 +307,39 @@
                                         placeholder="Enter Mother's email">
                                 </div><!--end col-->
 
-                                <div class="xl:col-span-4">
+                                <div class="mb-4 xl:col-span-4">
                                     <label for="mother_income_from"
-                                        class="inline-block mb-2 text-base font-medium">Mother's
-                                        Monthly Income (Format: 9999 , do not add comma)</label>
-                                    <input type="text" name="mother_income_from"
+                                        class="inline-block mb-2 text-base font-medium">Mother's Monthly Income
+                                        <sup class="text-red-500">* required</sup></label>
+                                    <select
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        value="{{ old('mother_income_from', $applicant->mother_income_from ?? '') }}"
-                                        placeholder="Enter Mother's monthly income">
+                                        name="mother_income_from">
+                                        <option value="">Select</option>
+                                        <option value="1"
+                                            {{ isset($applicant) && $applicant->mother_income_from == 1 ? 'selected' : '' }}>
+                                            Less than 9,100</option>
+                                        <option value="2"
+                                            {{ isset($applicant) && $applicant->mother_income_from == 2 ? 'selected' : '' }}>
+                                            9,100 to 18,200</option>
+                                        <option value="3"
+                                            {{ isset($applicant) && $applicant->mother_income_from == 3 ? 'selected' : '' }}>
+                                            18,200 to 36,400</option>
+                                        <option value="4"
+                                            {{ isset($applicant) && $applicant->mother_income_from == 4 ? 'selected' : '' }}>
+                                            36,400 to 63,700</option>
+                                        <option value="5"
+                                            {{ isset($applicant) && $applicant->mother_income_from == 5 ? 'selected' : '' }}>
+                                            63,700 to 109,200</option>
+                                        <option value="6"
+                                            {{ isset($applicant) && $applicant->mother_income_from == 6 ? 'selected' : '' }}>
+                                            109,200 to 182,000</option>
+                                        <option value="7"
+                                            {{ isset($applicant) && $applicant->mother_income_from == 7 ? 'selected' : '' }}>
+                                            Above 182,000</option>
+                                        <option value="0"
+                                            {{ isset($applicant) && $applicant->mother_income_from == 0 ? 'selected' : '' }}>
+                                            Not Applicable</option>
+                                    </select>
                                 </div><!--end col-->
 
                                 {{-- Guardian Information --}}
@@ -451,7 +469,7 @@
 
                                 <div class="xl:col-span-6">
                                     <label for="guardian_zipcode" class="inline-block mb-2 text-base font-medium">Zip
-                                        Code<span></label>
+                                        Code (Number only)<span></label>
                                     <input type="text" id="guardian_zipcode" name="guardian_zipcode"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('guardian_telno', $applicant->guardian_zipcode ?? '') }}"

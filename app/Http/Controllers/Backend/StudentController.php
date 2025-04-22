@@ -23,10 +23,11 @@ class StudentController extends Controller
 
     public function dashboard()
     {
-        $checkEmptyFields = User::where(function ($query) {
-            $query->whereNull('lrn')
-                ->orWhere('lrn', '');
-        })->exists();
+        $checkEmptyLRN = User::where('id', Auth::id())
+            ->where(function ($query) {
+                $query->whereNull('lrn')
+                    ->orWhere('lrn', '');
+            })->exists();
         // ->where('id', Auth::user()->id)
         // ->where(function ($query) {
         //     $query->whereNull('birthdate')
@@ -34,7 +35,7 @@ class StudentController extends Controller
         // })
         // ->exists();
 
-        if ($checkEmptyFields) {
+        if ($checkEmptyLRN) {
 
             $studentdetails = User::where('id', Auth::user()->id)->first();
             $ceeActiveession = CeeSession::where('status', 'active')->first();
@@ -42,8 +43,8 @@ class StudentController extends Controller
             //check if records exists
             $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
 
-             //check if it has result
-        $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+            //check if it has result
+            $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
 
             $cee_reservation_records = DB::table('reservations')
                 ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
@@ -71,11 +72,49 @@ class StudentController extends Controller
                 ->orderBy('reservations.created_at', 'desc')
                 ->get();
 
-            return view("student.profile.profile", compact('studentdetails', 'ceeActiveession', 'isreservation_exist', 'cee_reservation_records','cee_result'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
+            return view("student.profile.profile", compact('studentdetails', 'ceeActiveession', 'isreservation_exist', 'cee_reservation_records', 'cee_result'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
         } else {
 
+            $studentdetails = User::where('id', Auth::user()->id)->first();
 
-            // return view('student.dashboard');
+            //check if records exists
+            $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
+
+            //check if it has result
+            $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+
+            $cee_reservation_records = DB::table('reservations')
+                ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                ->where('reservations.user_id', Auth::user()->id)
+                ->select(
+                    'reservations.user_id',
+                    'reservations.app_no',
+                    'reservations.firstpriorty_desc',
+                    'reservations.secondpriority_desc',
+                    'reservations.thirdpriorty_desc',
+                    'reservations.campus_id',
+                    'reservations.campus_id_prio_prog_2',
+                    'reservations.campus_id_prio_prog_3',
+                    'reservations.is_repeat_exam',
+                    'reservations.status',
+                    'reservations.created_at',
+                    'reservations.cee_session_id',
+                    'rooms.room_name',
+                    'rooms.college_name',
+                    'rooms.exam_session',
+                    'rooms.campus',
+                    'rooms.time',
+                    'rooms.schedule'
+                )
+                ->orderBy('reservations.created_at', 'desc')
+                ->get();
+
+            return view('student.dashboard', compact(
+                'studentdetails',
+                'isreservation_exist',
+                'cee_result',
+                'cee_reservation_records'
+            ));
         }
     }
 

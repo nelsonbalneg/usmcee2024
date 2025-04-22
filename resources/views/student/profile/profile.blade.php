@@ -331,7 +331,7 @@
             </div><!--end card-->
         </div><!--end col-->
 
-        @if ($isreservation_exist > 0)
+        {{-- @if ($isreservation_exist > 0)
             <div class="card">
                 <div class="card-body">
                     <h6 class="mb-4 text-15">YOUR USMCEE RESERVATION HISTORY
@@ -426,7 +426,7 @@
                 </div>
             </div>
         @else
-        @endif
+        @endif --}}
     </div><!--end grid-->
 
     @if (empty($studentdetails->applicant_type))
