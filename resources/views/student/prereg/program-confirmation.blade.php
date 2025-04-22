@@ -70,11 +70,11 @@
                                                 <th
                                                     class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                                     Action</th>
-                                                @if ($cee_profile->prereg_status != 'pending')
+                                                {{-- @if ($cee_profile->prereg_status != 'pending')
                                                     <th
                                                         class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                                         Slot</th>
-                                                @endif
+                                                @endif --}}
                                                 <th
                                                     class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                                     Program Name</th>
@@ -144,12 +144,12 @@
 
                                                 </td>
                                                 {{-- hide if the program has been reserved --}}
-                                                @if ($cee_profile->prereg_status != 'pending')
+                                                {{-- @if ($cee_profile->prereg_status != 'pending')
                                                     <td
                                                         class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                                         {{ $slot_remaning }}
                                                     </td>
-                                                @endif
+                                                @endif --}}
                                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                                     {{ $programData['programName'] }} -
                                                     {{ $programData['majorDiscDesc'] }}
