@@ -324,7 +324,7 @@ class StudentApplicantProfileController extends Controller
         $userId = Auth::user()->id;
 
         $validated = $request->validate([
-            'father' => 'required|string|max:50',
+            'father' => 'nullable|string|max:50',
             'father_birth_date' => 'nullable|date|before:today',
             'father_educ_attain' => 'nullable|string|max:100',
             'father_occupation' => 'nullable|string|max:50',
@@ -332,9 +332,9 @@ class StudentApplicantProfileController extends Controller
             'father_company_address' => 'nullable|string|max:200',
             'father_tel_no' => 'nullable|string|max:20',
             'father_email' => 'nullable|string|max:50',
-            'father_income_from' => 'nullable|integer',
+            'father_income_from' => 'nullable|string',
 
-            'mother' => 'required|string|max:50',
+            'mother' => 'nullable|string|max:50',
             'mother_birth_date' => 'nullable|date|before:today',
             'mother_educ_attain' => 'nullable|string|max:100',
             'mother_occupation' => 'nullable|string|max:50',
@@ -342,10 +342,10 @@ class StudentApplicantProfileController extends Controller
             'mother_company_address' => 'nullable|string|max:200',
             'mother_tel_no' => 'nullable|string|max:20',
             'mother_email' => 'nullable|string|max:50',
-            'mother_income_from' => 'nullable|integer',
+            'mother_income_from' => 'nullable|string',
 
-            'father_income_to' => 'nullable|integer',
-            'mother_income_to' => 'nullable|integer',
+            'father_income_to' => 'nullable|string',
+            'mother_income_to' => 'nullable|string',
 
             // Guardian Information
             'guardian' => 'required|string|max:100',
