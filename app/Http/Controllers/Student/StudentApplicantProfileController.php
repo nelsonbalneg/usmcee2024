@@ -331,7 +331,7 @@ class StudentApplicantProfileController extends Controller
             'father_company' => 'nullable|string|max:100',
             'father_company_address' => 'nullable|string|max:200',
             'father_tel_no' => 'nullable|string|max:20',
-            'father_email' => 'nullable|email|max:50',
+            'father_email' => 'nullable|string|max:50',
             'father_income_from' => 'nullable|integer',
 
             'mother' => 'required|string|max:50',
@@ -341,7 +341,7 @@ class StudentApplicantProfileController extends Controller
             'mother_company' => 'nullable|string|max:100',
             'mother_company_address' => 'nullable|string|max:200',
             'mother_tel_no' => 'nullable|string|max:20',
-            'mother_email' => 'nullable|email|max:50',
+            'mother_email' => 'nullable|string|max:50',
             'mother_income_from' => 'nullable|integer',
 
             'father_income_to' => 'nullable|integer',
@@ -353,7 +353,7 @@ class StudentApplicantProfileController extends Controller
             'guardian_occupation' => 'nullable|string|max:100',
             'guardian_company' => 'nullable|string|max:100',
             'guardian_telno' => 'nullable|string|max:100',
-            'guardian_email' => 'nullable|email|max:100',
+            'guardian_email' => 'nullable|string|max:100',
 
             'guardian_address' => 'nullable|string|max:100',
             'guardian_street' => 'required|string|max:100',
