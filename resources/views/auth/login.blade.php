@@ -31,7 +31,7 @@
         gtag('config', 'G-EJPB3BXP56');
     </script>
 
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 </head>
 
@@ -177,10 +177,14 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
 
                         <!-- Forgot Password Link -->
                         <div>
-                            <a href="{{ route('password.request') }}"
+                            <a href="{{ route('student.forgot-password') }}"
                                 class="text-base font-medium text-blue-600 cursor-pointer hover:underline">
                                 Forgot Password?
                             </a>
+                            {{-- <a href="{{ route('password.request') }}"
+                                class="text-base font-medium text-blue-600 cursor-pointer hover:underline">
+                                Forgot Password?
+                            </a> --}}
                         </div>
                     </div>
 

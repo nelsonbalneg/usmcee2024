@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
+use App\Models\User;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Password as PasswordRule;
 
 class PasswordResetLinkController extends Controller
 {
@@ -34,8 +37,47 @@ class PasswordResetLinkController extends Controller
         );
 
         return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+            ? back()->with('status', __($status))
+            : back()->withInput($request->only('email'))
+                ->withErrors(['email' => __($status)]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        // Step 1: Validate the inputs
+        $request->validate([
+            'email' => ['required', 'email', 'exists:users,email'],
+            'phone' => ['required', 'digits:4'],
+            'new_password' => ['required', 'confirmed', 'min:8'],
+        ], [
+            'new_password.min' => 'The password must be at least 8 characters.',
+            'email.exists' => 'The email does not exist in our records.',
+        ]);
+
+        // Step 2: Find the user by email
+        $user = User::where('email', $request->email)->first();
+
+        // Step 3: Extract the last 4 digits of the stored phone number
+        $storedLastFour = substr(preg_replace('/[^0-9]/', '', $user->phone), -4);
+
+        // Step 4: Check if the last 4 digits match
+        if ($storedLastFour !== $request->phone) {
+            return redirect()->route('student.forgot-password')
+                ->withErrors(['phone' => 'The phone number does not match our records.'])
+                ->withInput();
+        }
+
+        // Step 5: Update the user's password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        // Step 6: Redirect with success message
+        return redirect()->route('student.forgot-password')->with('status', 'Password reset successful. You can now log in.');
+    }
+
+
+    public function forgotPassword()
+    {
+        return view('student.profile.forgot-password');
     }
 }

@@ -16,6 +16,8 @@ use App\Http\Controllers\Student\StudentCeeReserveController;
 Route::middleware(['check.maintenance'])->group(function () {
     Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
 
+  
+
     Route::put('/test-update/{id}', [StudentProfileController::class, 'update']);
     Route::put('cee/update-photo/{id}', [StudentProfileController::class, 'uploadPhoto'])->name('cee.update-photo');
     Route::resource('profile', StudentProfileController::class);
@@ -96,6 +98,6 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::post('cee/ched-applicant-profile/publish', [ChedApplicantProfileController::class, 'publish'])->name('cee.ched-applicant-profile.publish');
     Route::resource('cee/ched-applicant-profile', ChedApplicantProfileController::class);
 
-    
+
 
 });
