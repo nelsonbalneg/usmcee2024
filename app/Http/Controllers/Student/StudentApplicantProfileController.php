@@ -291,7 +291,7 @@ class StudentApplicantProfileController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error saving personal info: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong while saving.');
+            return redirect()->route('student.applicant-profile.step1.show')->with('error', 'Something went wrong while saving.');
         }
     }
 
@@ -399,7 +399,7 @@ class StudentApplicantProfileController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error saving personal info: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong while saving.');
+            return redirect()->route('student.applicant-profile.step2.show')->with('error', 'Something went wrong while saving.');
         }
     }
 
@@ -471,7 +471,7 @@ class StudentApplicantProfileController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error Educational Background info: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong while saving.');
+            return redirect()->route('student.applicant-profile.step3.show')->with('error', 'Something went wrong while saving.');
         }
     }
 
@@ -524,7 +524,7 @@ class StudentApplicantProfileController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error Educational Background info: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Something went wrong while saving.');
+            return redirect()->route('student.applicant-profile.step3.show')->with('error', 'Something went wrong while saving.');
         }
     }
 
