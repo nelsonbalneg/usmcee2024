@@ -19,6 +19,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('backend/assets/css/tailwind2.css') }}">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
 <body
@@ -162,6 +163,7 @@
                         <x-input-error :messages="$errors->get('new_password_confirmation')" class="mt-2 text-sm text-red-500" />
                     </div>
 
+                    <div class="mt-5 cf-turnstile" data-sitekey="{{ config('services.turnstile.sitekey') }}"></div>
                     <!-- Submit Button -->
                     <div class="mt-10">
                         <button type="submit" id="resetPasswordBtn"

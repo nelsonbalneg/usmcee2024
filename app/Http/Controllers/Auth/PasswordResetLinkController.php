@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules\Password as PasswordRule;
@@ -44,6 +46,37 @@ class PasswordResetLinkController extends Controller
 
     public function resetPassword(Request $request)
     {
+         // Validate that the Turnstile response is present
+         $request->validate([
+            'cf-turnstile-response' => 'required',
+        ], [
+            'cf-turnstile-response.required' => 'Turnstile verification is required.',
+        ]);
+
+        // Retrieve the Turnstile response from the request
+        $turnstileResponse = $request->input('cf-turnstile-response');
+        // $secretKey = env('TURNSTILE_SECRET_KEY'); // Your Turnstile secret key
+        $secretKey = config('services.turnstile.secret');
+
+        // Send the Turnstile response for verification
+        $verifyResponse = Http::asForm()
+            ->timeout(seconds: 60) // Set timeout to 20 seconds
+            ->post("https://challenges.cloudflare.com/turnstile/v0/siteverify", [
+                'secret' => $secretKey,
+                'response' => $turnstileResponse,
+                'remoteip' => $request->ip(),
+            ]);
+
+        $result = $verifyResponse->json();
+        // Log::info('Turnstile secret key used', ['key' => env('TURNSTILE_SECRET_KEY')]);
+
+        // Log the Turnstile response for debugging
+        Log::info('Turnstile response from Cloudflare', (array) $result);
+
+        // Check if Turnstile verification was successful
+        if (!$result['success']) {
+            return redirect()->back()->withErrors(['turnstile' => 'Turnstile verification failed. Please try again.']);
+        }
         // Step 1: Validate the inputs
         $request->validate([
             'email' => ['required', 'email', 'exists:users,email'],
