@@ -42,37 +42,6 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
         @if ($app_no && $result->csa >= 25)
-            {{-- <div class="xl:col-span-3">
-                <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
-                    <div class="card-body">
-                        <h6 class="mb-4 text-15">MY PROFILE INFORMATION</h6>
-
-                        <div class="px-5 py-8 rounded-md bg-sky-50 dark:bg-zinc-600">
-                            <img src="{{ asset($cee_profile->photo) }}" alt="Student Photo"
-                                class="block mx-auto border border-gray-300 rounded-full h-s">
-                        </div>
-                        <div class="mt-3">
-                            <h5 class="mb-0 text-blue-500 uppercase">{{ $cee_profile->lastname }},
-                                {{ $cee_profile->firstname }}
-                                {{ $cee_profile->middlename }} {{ $cee_profile->suffix }}</h5>
-                            <p class="text-slate-500 dark:text-zink-200">
-                                <i data-lucide="mail" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                {{ $cee_profile->email }}
-                            </p>
-                            <p class="text-slate-500 dark:text-zink-200">
-                                <i data-lucide="phone" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                {{ $cee_profile->phone }}
-                            </p>
-                            <p class="text-slate-500 dark:text-zink-200">
-                                <i data-lucide="calendar" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                {{ \Carbon\Carbon::parse($cee_profile->birthdate)->format('F j, Y') }}
-                            </p>
-                        </div>
-                    </div>
-                </div><!--end card-->
-            </div><!--end col--> --}}
-
-
             <div class="xl:col-span-12">
                 <form id="studentProfileForm" action="{{ route('student.applicant-profile.step3.save') }}" method="POST">
                     @csrf
@@ -143,7 +112,12 @@
                                     </div>
                                 </div>
 
-                                <h6 class="text-green-500 uppercase text-15 xl:col-span-12">Elementary Education</h6>
+                                <div class="xl:col-span-12">
+                                    <h6 class="text-green-500 uppercase text-15 ">Elementary Education</h6>
+                                    <p class="text-custom-500">Enter N/A in the fields that are not applicable to you.</p>
+                                </div>
+
+
                                 {{-- Elementary --}}
                                 <input type="hidden" name="user_id" value="{{ $cee_profile->id }}">
                                 <div class="xl:col-span-4">
@@ -186,7 +160,11 @@
                                 {{-- end Elementary --}}
 
                                 {{-- High school --}}
-                                <h6 class="mt-4 text-green-500 uppercase text-15 xl:col-span-12">Secondary Education</h6>
+
+                                <div class="xl:col-span-12">
+                                    <h6 class="mt-4 text-green-500 uppercase text-15">Secondary Education</h6>
+                                    <p class="text-custom-500">Enter N/A in the fields that are not applicable to you.</p>
+                                </div>
                                 <div class="xl:col-span-4">
                                     <label for="hs_school" class="inline-block mb-2 text-base font-medium">High School
                                         <sup class="text-red-500">* required</sup></label>
@@ -272,7 +250,12 @@
                                 {{-- end Senior High school --}}
 
                                 {{-- Vocational school --}}
-                                <h6 class="mt-4 text-green-500 uppercase text-15 xl:col-span-12">Vocational/Trade Course
+                                <div class="xl:col-span-12">
+                                    <h6 class="mt-4 text-green-500 uppercase text-15">Vocational/Trade Course</h6>
+                                        <p class="text-custom-500">Enter N/A in the fields that are not applicable to you.
+                                        </p>
+                                </div>
+
                                 </h6>
                                 <div class="xl:col-span-4">
                                     <label for="vocational" class="inline-block mb-2 text-base font-medium">Vocational
@@ -320,7 +303,10 @@
                                 {{-- ends Vocational school --}}
 
                                 {{-- College school --}}
-                                <h6 class="mt-4 text-green-500 uppercase text-15 xl:col-span-12">College</h6>
+                                <div class="xl:col-span-12">
+                                    <h6 class="mt-4 text-green-500 uppercase text-15">College</h6>
+                                    <p class="text-custom-500">Enter N/A in the fields that are not applicable to you.</p>
+                                </div>
                                 <div class="xl:col-span-4">
                                     <label for="college_school"
                                         class="inline-block mb-2 text-base font-medium">College/University

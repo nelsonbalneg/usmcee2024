@@ -587,7 +587,7 @@
 
                                         <div class="col-span-2">
                                             <label for="res_zipcode" class="inline-block mb-2 text-base font-medium">Zip
-                                                Code</label>
+                                                Code (Number only)</label>
                                             <input type="text" id="res_zipcode" name="res_zipcode"
                                                 class="w-full form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                 placeholder="Enter your zipcode"
@@ -664,7 +664,7 @@
 
                                         <div class="col-span-2">
                                             <label for="perm_zipcode" class="inline-block mb-2 text-base font-medium">Zip
-                                                Code</label>
+                                                Code (Number only)</label>
                                             <input type="text" id="perm_zipcode" name="perm_zipcode"
                                                 class="w-full form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                 placeholder="Enter your zipcode"

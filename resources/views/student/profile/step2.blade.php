@@ -111,6 +111,7 @@
 
                                 <div class="xl:col-span-12">
                                     <h6 class="text-green-500 uppercase text-15 xl:col-span-12">PARENT INFORMATION</h6>
+                                    <p class="text-custom-500">Enter N/A in the fields that are not applicable to you.</p>
                                 </div>
                                 <input type="hidden" name="user_id" value="{{ $cee_profile->id }}">
 
@@ -272,7 +273,7 @@
 
                                 <div class="xl:col-span-4">
                                     <label for="mother_company" class="inline-block mb-2 text-base font-medium">Mother's
-                                        Occupation</label>
+                                        Company Name</label>
                                     <input type="text" name="mother_company"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ old('mother_company', $applicant->mother_company ?? '') }}"
@@ -345,6 +346,7 @@
                                 {{-- Guardian Information --}}
                                 <div class="xl:col-span-12">
                                     <h6 class="text-green-500 uppercase text-15 xl:col-span-12">GUARDIAN INFORMATION</h6>
+                                    <p class="text-custom-500">Enter N/A in the fields that are not applicable to you.</p>
                                 </div>
 
                                 <div class="xl:col-span-6">

@@ -116,8 +116,7 @@ class StudentProgramConfirmationController extends Controller
         $total_prereg_by_prog_policy_id = StundentProfile::where('policyId', $prog_policy_id)
             ->where('prereg_status', '==', 'pending')
             ->count();
-
-
+            
         try {
             Log::info("Fetching program policy for user_id: {$userId}, policy_id: {$prog_policy_id}");
 
