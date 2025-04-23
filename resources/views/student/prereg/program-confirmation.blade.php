@@ -40,7 +40,7 @@
 
                         {{-- check if qualified for 1st batch --}}
                         @if ($is_qualified_pre_reg == 1 &&  $programData['reservationStatus'] == "Open")
-                            <input type="text" name="program_policy_id" value="{{ $programData['id'] }}">
+                            <input type="hidden" name="program_policy_id" value="{{ $programData['id'] }}">
                             <input type="hidden" name="user_id" value="{{ $cee_profile->user_id }}">
 
                             <div class="px-4 py-6 mx-auto text-center">

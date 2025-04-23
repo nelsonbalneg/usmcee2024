@@ -124,6 +124,7 @@
                             <h6>University of Southern Mindanao</h6>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
