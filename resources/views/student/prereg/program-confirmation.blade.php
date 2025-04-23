@@ -39,130 +39,141 @@
                     <div class="card-body">
 
                         {{-- check if qualified for 1st batch --}}
-                        @if ($is_qualified_pre_reg == 1 &&  $programData['reservationStatus'] == "Open")
-                            <input type="hidden" name="program_policy_id" value="{{ $programData['id'] }}">
-                            <input type="hidden" name="user_id" value="{{ $cee_profile->user_id }}">
+                        {{-- @if ($is_qualified_pre_reg == 1 && $programData['reservationStatus'] == 'Open') --}}
+                        {{-- start id prereg 1 --}}
+                        @if ($is_qualified_pre_reg == 1)
+                            @if ($programData['reservationStatus'] == 'Open')
+                                <input type="hidden" name="program_policy_id" value="{{ $programData['id'] }}">
+                                <input type="hidden" name="user_id" value="{{ $cee_profile->user_id }}">
 
-                            <div class="px-4 py-6 mx-auto text-center">
+                                <div class="px-4 py-6 mx-auto text-center">
 
-                                @if ($cee_profile->prereg_status != 'pending')
-                                    <div
-                                        class="px-4 py-3 text-sm text-green-500 border border-green-200 rounded-md bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
-                                        <span class="font-bold">Yahoo!</span> You belong to the first batch of qualifiers
-                                        for
-                                        Pre-registration.
-                                        Kindly click the <b class="text-green-800">'Confirm'</b> button to confirm your
-                                        interest
-                                        in
-                                        enrolling in the program.
-                                    </div>
-                                @else
-                                    <h5 class="mb-2 uppercase">Congratulations, <b
-                                            class="text-custom-500">{{ $cee_profile->first_name }}
-                                            {{ $cee_profile->middle_initial }}
-                                            {{ $cee_profile->last_name }} {{ $cee_profile->ext_name }}!</b> Pre-registration
-                                        is successful.</h5>
-                                @endif
+                                    @if ($cee_profile->prereg_status != 'pending')
+                                        <div
+                                            class="px-4 py-3 text-sm text-green-500 border border-green-200 rounded-md bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
+                                            <span class="font-bold">Yahoo!</span> You belong to the first batch of
+                                            qualifiers
+                                            for
+                                            Pre-registration.
+                                            Kindly click the <b class="text-green-800">'Confirm'</b> button to confirm your
+                                            interest
+                                            in
+                                            enrolling in the program.
+                                        </div>
+                                    @else
+                                        <h5 class="mb-2 uppercase">Congratulations, <b
+                                                class="text-custom-500">{{ $cee_profile->first_name }}
+                                                {{ $cee_profile->middle_initial }}
+                                                {{ $cee_profile->last_name }} {{ $cee_profile->ext_name }}!</b>
+                                            Pre-registration
+                                            is successful.</h5>
+                                    @endif
 
-                                <div class="mt-5 overflow-x-auto">
-                                    <table class="w-full">
-                                        <thead class="ltr:text-left rtl:text-right">
-                                            <tr>
-                                                <th
-                                                    class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                    Action</th>
-                                                {{-- @if ($cee_profile->prereg_status != 'pending')
+                                    <div class="mt-5 overflow-x-auto">
+                                        <table class="w-full">
+                                            <thead class="ltr:text-left rtl:text-right">
+                                                <tr>
                                                     <th
                                                         class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                        Slot</th>
-                                                @endif --}}
+                                                        Action</th>
+                                                    {{-- @if ($cee_profile->prereg_status != 'pending')
                                                 <th
                                                     class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                    Program Name</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                    Campus & College</th>
+                                                    Slot</th>
+                                            @endif --}}
+                                                    <th
+                                                        class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
+                                                        Program Name</th>
+                                                    <th
+                                                        class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
+                                                        Campus & College</th>
 
 
-                                            </tr>
-                                        </thead>
-                                        <tbody class="ltr:text-left rtl:text-right">
-                                            <tr
-                                                class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
-                                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                </tr>
+                                            </thead>
+                                            <tbody class="ltr:text-left rtl:text-right">
+                                                <tr
+                                                    class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
+                                                    <td
+                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
 
-                                                    {{-- start check if there is slot remaning --}}
-                                                    @if ($slot_remaning > 0 || $cee_profile->prereg_status == 'pending')
+                                                        {{-- start check if there is slot remaning --}}
+                                                        @if ($slot_remaning > 0 || $cee_profile->prereg_status == 'pending')
 
-                                                        {{-- start check if user already confirmed --}}
-                                                        @if ($cee_profile->prereg_status != 'pending')
+                                                            {{-- start check if user already confirmed --}}
+                                                            @if ($cee_profile->prereg_status != 'pending')
 
-                                                            {{-- start filter if midwife 524, nursing 310, pharma 311, hospitality mgnt 46, nutrition 58, food tech 186 --}}
-                                                            @if (
-                                                                $programData['id'] == 783 ||
-                                                                    $programData['id'] == 725 ||
-                                                                    $programData['id'] == 727 ||
-                                                                    $programData['id'] == 812 ||
-                                                                    $programData['id'] == 731 ||
-                                                                    $programData['id'] == 730)
-                                                                {{-- start check if additional Requirements has been uploaded adn published --}}
-                                                                @if ($has_additional_requirement)
+                                                                {{-- start filter if midwife 524, nursing 310, pharma 311, hospitality mgnt 46, nutrition 58, food tech 186 --}}
+                                                                @if (
+                                                                    $programData['id'] == 783 ||
+                                                                        $programData['id'] == 725 ||
+                                                                        $programData['id'] == 727 ||
+                                                                        $programData['id'] == 812 ||
+                                                                        $programData['id'] == 731 ||
+                                                                        $programData['id'] == 730)
+                                                                    {{-- start check if additional Requirements has been uploaded adn published --}}
+                                                                    @if ($has_additional_requirement)
+                                                                        <button type="submit" id="publishButton"
+                                                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                                                            <i data-lucide="thumbs-up"
+                                                                                class="inline-block size-4 dark:text-zink-200"></i>
+                                                                            Confirm</button>
+                                                                    @else
+                                                                        <a href="{{ route('student.add-requirements.index') }}"
+                                                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                                                            <i data-lucide="upload"
+                                                                                class="inline-block size-4 dark:text-zink-200"></i>
+                                                                            Submit Additional Requirements</a>
+                                                                    @endif
+                                                                    {{-- end check if additional Requirements has been uploaded adn published --}}
+                                                                @else
                                                                     <button type="submit" id="publishButton"
                                                                         class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                                                                         <i data-lucide="thumbs-up"
                                                                             class="inline-block size-4 dark:text-zink-200"></i>
                                                                         Confirm</button>
-                                                                @else
-                                                                    <a href="{{ route('student.add-requirements.index') }}"
-                                                                        class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                                        <i data-lucide="upload"
-                                                                            class="inline-block size-4 dark:text-zink-200"></i>
-                                                                        Submit Additional Requirements</a>
                                                                 @endif
-                                                                {{-- end check if additional Requirements has been uploaded adn published --}}
+                                                                {{-- end filter if midwife 524, nursing 310, pharma 311, hospitality mgnt 46, nutrition 58, food tech 186 --}}
                                                             @else
-                                                                <button type="submit" id="publishButton"
-                                                                    class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                                    <i data-lucide="thumbs-up"
+                                                                <a type="button" href="{{ route('student.prereg.index') }}"
+                                                                    class="text-green-500 bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
+                                                                    <i data-lucide="check-circle"
                                                                         class="inline-block size-4 dark:text-zink-200"></i>
-                                                                    Confirm</button>
+                                                                    Confirmed</a>
                                                             @endif
-                                                            {{-- end filter if midwife 524, nursing 310, pharma 311, hospitality mgnt 46, nutrition 58, food tech 186 --}}
+                                                            {{-- end check if user already confirmed --}}
                                                         @else
-                                                            <a type="button" href="{{ route('student.prereg.index') }}"
-                                                                class="text-green-500 bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
-                                                                <i data-lucide="check-circle"
-                                                                    class="inline-block size-4 dark:text-zink-200"></i>
-                                                                Confirmed</a>
+                                                            <button type="button"
+                                                                class="text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20">
+                                                                No more slots available</button>
                                                         @endif
-                                                        {{-- end check if user already confirmed --}}
-                                                    @else
-                                                        <button type="button"
-                                                            class="text-red-500 bg-red-100 btn hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:ring active:ring-red-100 dark:bg-red-500/20 dark:text-red-500 dark:hover:bg-red-500 dark:hover:text-white dark:focus:bg-red-500 dark:focus:text-white dark:active:bg-red-500 dark:active:text-white dark:ring-red-400/20">
-                                                            No more slots available</button>
-                                                    @endif
-                                                    {{-- end check if there is slot remaning --}}
+                                                        {{-- end check if there is slot remaning --}}
 
+                                                    </td>
+                                                    {{-- hide if the program has been reserved --}}
+                                                    {{-- @if ($cee_profile->prereg_status != 'pending')
+                                                <td
+                                                    class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                    {{ $slot_remaning }}
                                                 </td>
-                                                {{-- hide if the program has been reserved --}}
-                                                {{-- @if ($cee_profile->prereg_status != 'pending')
+                                            @endif --}}
                                                     <td
                                                         class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        {{ $slot_remaning }}
+                                                        {{ $programData['programName'] }} -
+                                                        {{ $programData['majorDiscDesc'] }}
                                                     </td>
-                                                @endif --}}
-                                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                    {{ $programData['programName'] }} -
-                                                    {{ $programData['majorDiscDesc'] }}
-                                                </td>
-                                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                    {{ $programData['campusName'] }}<br>{{ $programData['collegeName'] }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                    <td
+                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                        {{ $programData['campusName'] }}<br>{{ $programData['collegeName'] }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <h2>Program is not yet offered.</h2>
+                            @endif
                         @else
                             {{-- check the date range for second batch qualifiers --}}
                             @if (now()->between($start, $end))

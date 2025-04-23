@@ -447,6 +447,8 @@ class StudentApplicantProfileController extends Controller
             'shs_award_honor' => 'nullable|string|max:100',
         ]);
 
+        
+
         DB::beginTransaction();
 
         try {
