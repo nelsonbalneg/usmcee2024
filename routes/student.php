@@ -96,4 +96,6 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::post('cee/ched-applicant-profile/publish', [ChedApplicantProfileController::class, 'publish'])->name('cee.ched-applicant-profile.publish');
     Route::resource('cee/ched-applicant-profile', ChedApplicantProfileController::class);
 
+    
+
 });

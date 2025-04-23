@@ -84,7 +84,7 @@ class StudentRequirementsController extends Controller
             'psa' => json_encode($filePaths),
         ]);
 
-        return back()->with('success', 'PSA files uploaded successfully.');
+        return redirect()->route('student.add-requirements.index')->with('success', 'PSA files uploaded successfully.');
     }
 
     public function storeGmc(Request $request)
@@ -210,7 +210,7 @@ class StudentRequirementsController extends Controller
             'enrolment_certification' => json_encode($filePaths),
         ]);
 
-        return back()->with('success', 'Enrollment Certification files uploaded successfully.');
+        return redirect()->route('student.add-requirements.index')->with('success', 'Enrollment Certification files uploaded successfully.');
     }
 
     public function storeDismissal(Request $request)
@@ -294,7 +294,7 @@ class StudentRequirementsController extends Controller
             'tor' => json_encode($filePaths),
         ]);
 
-        return back()->with('success', 'Trancript of Records uploaded successfully.');
+        return redirect()->route('student.add-requirements.index')->with('success', 'Trancript of Records uploaded successfully.');
     }
 
 
@@ -379,7 +379,8 @@ class StudentRequirementsController extends Controller
             'hepa_b_test' => json_encode($filePaths),
         ]);
 
-        return back()->with('success', 'Hepa B Test Result uploaded successfully.');
+        // student.requirements.additional-requirements
+        return redirect()->route('student.requirements.additional-requirements')->with('success', 'Hepa B Test Result uploaded successfully.');
     }
 
     public function storeChestXray(Request $request)
@@ -421,7 +422,7 @@ class StudentRequirementsController extends Controller
             'chest_x_ray' => json_encode($filePaths),
         ]);
 
-        return back()->with('success', 'Chest X-Rays Result uploaded successfully.');
+        return redirect()->route('student.requirements.additional-requirements')->with('success', 'Chest X-Rays Result uploaded successfully.');
     }
     /**
      * Display the specified resource.
@@ -467,7 +468,7 @@ class StudentRequirementsController extends Controller
             'preg_test' => json_encode($filePaths),
         ]);
 
-        return back()->with('success', 'Pregnancy Test uploaded successfully.');
+        return redirect()->route('student.requirements.additional-requirements')->with('success', 'Pregnancy Test uploaded successfully.');
     }
 
     public function publishAdditionalRequirements(Request $request)
@@ -553,6 +554,6 @@ class StudentRequirementsController extends Controller
         // Remove the field or delete the whole record
         $requirement->delete(); // or $requirement->update([$type => null]);
 
-        return back()->with('success', ucfirst(str_replace('_', ' ', $type)) . ' requirement deleted successfully.');
+        return redirect()->route('student.requirements.additional-requirements')->with('success', ucfirst(str_replace('_', ' ', $type)) . ' requirement deleted successfully.');
     }
 }

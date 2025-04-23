@@ -12,17 +12,6 @@ use App\Http\Controllers\Student\StudentCeeReserveController;
 
 
 
-
-// Route::get('/', function () {
-//     return view('auth.login');
-// })->middleware(['guest', DetectWebView::class]);
-
-// Route::middleware(['guest', DetectWebView::class, 'check.maintenance'])->group(function () {
-//     Route::get('/', function () {
-//         return view('auth.login');
-//     });
-// });
-
 Route::middleware(['guest', DetectWebView::class, 'check.maintenance'])->group(function () {
     Route::get('/', [AuthenticatedSessionController::class, 'create']);
 });
@@ -30,7 +19,7 @@ Route::middleware(['guest', DetectWebView::class, 'check.maintenance'])->group(f
 
 Route::middleware(['auth', 'verified', 'check.maintenance'])->group(function () {
     Route::get('/dashboard', function () {
-        $user = auth()->user();
+        $user = Auth::user()->id;
         if ($user) {
             // Check the user's role and redirect accordingly
             return match ($user->role) {
