@@ -173,6 +173,7 @@ class ResultController extends Controller
                     }
             }
             // dd($programData_batch2);
+         //  dd(now(), $start_batch_2_prereg, $end_batch_2_prereg, now()->between($start_batch_2_prereg, $end_batch_2_prereg));
 
         return view('student.result.result-message', compact('cee_result', 'is_qualified_pre_reg','programResponse','site_settings'));
     }

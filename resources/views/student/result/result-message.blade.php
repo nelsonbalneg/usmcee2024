@@ -7,6 +7,9 @@
     $start = Carbon::parse($site_settings->start_prereg_second_batch);
     $end = Carbon::parse($site_settings->end_prereg_second_batch);
 @endphp
+
+
+
 @section('contents')
     <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
         <div class="grow">
@@ -82,7 +85,7 @@
 
                                 </p>
                             @else
-                                @if ($is_qualified_pre_reg == 1 || ($is_qualified_pre_reg == 2 && now()->between($start, $end)))
+                                @if (($is_qualified_pre_reg == 1 || $is_qualified_pre_reg == 0) && now()->between($start, $end))
                                     <h4>Update on Your USM Enrollment Application</h4>
 
                                     <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
@@ -94,22 +97,27 @@
                                     {{-- <h1>Will be uploaded soon.</h1> --}}
 
                                     <p class="text-slate-800">Thank you for your interest in the University of Southern
-                                        Mindanao. <b> We regret to inform you that you did not qualify for your first priority
+                                        Mindanao. <b> We regret to inform you that you did not qualify for your first
+                                            priority
                                             program </b>, <b class="text-custom-500">{{ $programResponse['programName'] }}
                                             {{ $programResponse['majorDiscDesc'] }}</b>, at the University of Southern
                                         Mindanao!
 
                                         <br><br>
-                                        We understand that this may be disappointing. However, we would like to offer you the
-                                        opportunity to explore other programs at USM that may be a good fit for your interests
+                                        We understand that this may be disappointing. However, we would like to offer you
+                                        the
+                                        opportunity to explore other programs at USM that may be a good fit for your
+                                        interests
                                         and qualifications.
 
                                         <br><br>
-                                        On April 26, 2025 to April 29, 2025, we will be sending you a list of other available programs that you
+                                        On April 26, 2025 to April 29, 2025, we will be sending you a list of other
+                                        available programs that you
                                         may consider for enrollment.
-                                    <br><br>
-                                    We encourage you to review this list carefully. We are committed to helping you find the
-                                    right academic path at the University of Southern Mindanao.
+                                        <br><br>
+                                        We encourage you to review this list carefully. We are committed to helping you find
+                                        the
+                                        right academic path at the University of Southern Mindanao.
 
                                     </p>
                                 @else
