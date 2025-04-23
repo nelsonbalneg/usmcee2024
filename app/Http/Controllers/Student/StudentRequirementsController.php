@@ -84,7 +84,7 @@ class StudentRequirementsController extends Controller
             'psa' => json_encode($filePaths),
         ]);
 
-        return redirect()->route('student.add-requirements.index')->with('success', 'PSA files uploaded successfully.');
+        return redirect()->route('student.applicant-requirements.index')->with('success', 'PSA files uploaded successfully.');
     }
 
     public function storeGmc(Request $request)
@@ -126,7 +126,7 @@ class StudentRequirementsController extends Controller
             'good_moral_char' => json_encode($filePaths),
         ]);
 
-        return back()->with('success', 'GMC files uploaded successfully.');
+      return redirect()->route('student.applicant-requirements.index')->with('success', 'GMC files uploaded successfully.');
     }
 
     public function storeCard(Request $request)
@@ -168,7 +168,7 @@ class StudentRequirementsController extends Controller
             'shs_card' => json_encode($filePaths),
         ]);
 
-        return back()->with('success', 'Card files uploaded successfully.');
+        return redirect()->route('student.applicant-requirements.index')->with('success', 'Card files uploaded successfully.');
     }
 
     public function storecertification(Request $request)
@@ -210,7 +210,7 @@ class StudentRequirementsController extends Controller
             'enrolment_certification' => json_encode($filePaths),
         ]);
 
-        return redirect()->route('student.add-requirements.index')->with('success', 'Enrollment Certification files uploaded successfully.');
+        return redirect()->route('student.applicant-requirements.index')->with('success', 'Enrollment Certification files uploaded successfully.');
     }
 
     public function storeDismissal(Request $request)
@@ -252,7 +252,7 @@ class StudentRequirementsController extends Controller
             'honorable_dismisal' => json_encode($filePaths),
         ]);
 
-        return back()->with('success', 'Honorable Dismissal files uploaded successfully.');
+        return redirect()->route('student.applicant-requirements.index')->with('success', 'Honorable Dismissal files uploaded successfully.');
     }
 
     public function storeTOR(Request $request)
@@ -294,7 +294,7 @@ class StudentRequirementsController extends Controller
             'tor' => json_encode($filePaths),
         ]);
 
-        return redirect()->route('student.add-requirements.index')->with('success', 'Trancript of Records uploaded successfully.');
+        return redirect()->route('student.applicant-requirements.index')->with('success', 'Trancript of Records uploaded successfully.');
     }
 
 
