@@ -30,7 +30,7 @@
         </ul>
     </div>
     {{-- || (now()->between($start, $end) && $result->confirmation_batch == 2) --}}
-    @if ($result->confirmation_batch == 1)
+    @if ($result->confirmation_batch == 1 || (now()->between($start, $end) && $result->confirmation_batch == 2))
 
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
@@ -91,7 +91,7 @@
                                             <p class="mb-2 text-slate-500 dark:text-zink-200">Confirmation of Enrollment for
                                                 qualified applicants. Encoding of personal information, including address,
                                                 parent/guardian details, educational background, and other important
-                                                information. <br><b>April 21, 2025 - April 23, 2025</b></p>
+                                                information. <br><b>April 21, 2025 - April 29, 2025</b></p>
 
                                             <a type="button" href="{{ route('student.applicant-profile.step1.show') }}"
                                                 class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">

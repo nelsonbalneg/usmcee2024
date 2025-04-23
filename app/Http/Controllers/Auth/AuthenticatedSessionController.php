@@ -54,7 +54,7 @@ class AuthenticatedSessionController extends Controller
             ]);
 
         $result = $verifyResponse->json();
-        Log::info('Turnstile secret key used', ['key' => env('TURNSTILE_SECRET_KEY')]);
+        // Log::info('Turnstile secret key used', ['key' => env('TURNSTILE_SECRET_KEY')]);
 
         // Log the Turnstile response for debugging
         Log::info('Turnstile response from Cloudflare', (array) $result);

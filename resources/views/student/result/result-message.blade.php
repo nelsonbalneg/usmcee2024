@@ -2,7 +2,11 @@
 @section('title')
     USM-CEE | Result
 @endsection
-
+@php
+    use Carbon\Carbon;
+    $start = Carbon::parse($site_settings->start_prereg_second_batch);
+    $end = Carbon::parse($site_settings->end_prereg_second_batch);
+@endphp
 @section('contents')
     <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
         <div class="grow">
@@ -46,7 +50,7 @@
                                 educational pathways that may align with your interests and career goals.
                             </p>
                         @elseif($cee_result->csa >= 25)
-                            @if ($is_qualified_pre_reg == 1)
+                            @if ($is_qualified_pre_reg == 1 && !now()->between($start, $end))
                                 <h4>Congratulations! You Qualified for Your Priority Program at USM!</h4>
 
                                 <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
@@ -62,7 +66,7 @@
                                     <br><br>
                                     To begin your enrollment process
                                     immediately, please click or tap the Confirm button below, <strong>not later than April
-                                        23, 2025:</strong><br>
+                                        25, 2025:</strong><br>
 
                                     <a href="{{ route('student.prereg.index') }}"
                                         class="mt-4 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
@@ -78,32 +82,39 @@
 
                                 </p>
                             @else
-                                <h4>Update on Your USM Enrollment Application</h4>
+                                @if ($is_qualified_pre_reg == 1 || ($is_qualified_pre_reg == 2 && now()->between($start, $end)))
+                                    <h4>Update on Your USM Enrollment Application</h4>
 
-                                <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
-                                    {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
-                                    {{ $cee_result->lastname }}
-                                    {{ $cee_result->suffix }},</p>
-
-                                <p class="text-slate-800">Thank you for your interest in the University of Southern
-                                    Mindanao. <b> We regret to inform you that you did not qualify for your first priority
-                                        program </b>, <b class="text-custom-500">{{ $programResponse['programName'] }}
-                                        {{ $programResponse['majorDiscDesc'] }}</b>, at the University of Southern
-                                    Mindanao!
+                                    <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
+                                        {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
+                                        {{ $cee_result->lastname }}
+                                        {{ $cee_result->suffix }},</p>
 
                                     <br><br>
-                                    We understand that this may be disappointing. However, we would like to offer you the
-                                    opportunity to explore other programs at USM that may be a good fit for your interests
-                                    and qualifications.
+                                    {{-- <h1>Will be uploaded soon.</h1> --}}
 
-                                    <br><br>
-                                    On April 24, 2025, we will be sending you a list of other available programs that you
-                                    may consider for enrollment.
+                                    <p class="text-slate-800">Thank you for your interest in the University of Southern
+                                        Mindanao. <b> We regret to inform you that you did not qualify for your first priority
+                                            program </b>, <b class="text-custom-500">{{ $programResponse['programName'] }}
+                                            {{ $programResponse['majorDiscDesc'] }}</b>, at the University of Southern
+                                        Mindanao!
+
+                                        <br><br>
+                                        We understand that this may be disappointing. However, we would like to offer you the
+                                        opportunity to explore other programs at USM that may be a good fit for your interests
+                                        and qualifications.
+
+                                        <br><br>
+                                        On April 26, 2025 to April 29, 2025, we will be sending you a list of other available programs that you
+                                        may consider for enrollment.
                                     <br><br>
                                     We encourage you to review this list carefully. We are committed to helping you find the
                                     right academic path at the University of Southern Mindanao.
 
-                                </p>
+                                    </p>
+                                @else
+                                    <h2>Prereg is closed!</h2>
+                                @endif
                             @endif
                         @endif
                     </div>
@@ -124,7 +135,7 @@
                             <h6>University of Southern Mindanao</h6>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

@@ -335,7 +335,7 @@
                                     and qualifications.
 
                                     <br><br>
-                                    On April 24, 2025, we will be sending you a list of other available programs that you
+                                    On April 26, 2025 to April 29, 2025, we will be sending you a list of other available programs that you
                                     may consider for enrollment.
                                     <br><br>
                                     We encourage you to review this list carefully. We are committed to helping you find the

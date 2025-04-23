@@ -21,10 +21,8 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/tailwind2.css') }}">
 </head>
 
-<body
-@php
-use Carbon\Carbon;
-@endphp
+<body @php
+use Carbon\Carbon; @endphp
     class="flex items-center justify-center min-h-screen py-16 lg:py-10 bg-slate-50 dark:bg-zink-800 dark:text-zink-100 font-public">
 
     <div class="relative">
@@ -238,8 +236,7 @@ use Carbon\Carbon;
                             autocomplete="new-password"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             placeholder="Confirm password">
-                        <x-input-error :messages="$errors->get('password_confirmation')"
-                            class="mt-1 text-sm text-red-500" />
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1 text-sm text-red-500" />
                     </div>
 
                     <div class="flex items-start mt-5 space-x-2">
@@ -253,22 +250,24 @@ use Carbon\Carbon;
                         </label>
                     </div>
 
-                    <div class="mt-5 cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div>
+                    {{-- <div class="mt-5 cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div> --}}
+                    <div class="mt-5 cf-turnstile" data-sitekey="{{ config('services.turnstile.sitekey') }}"></div>
 
                     @if ($endofregistration && Carbon::parse($endofregistration, 'Asia/Manila')->isFuture())
-                    <div class="mt-5 text-center">
-                        <button type="submit" id="submitButton" disabled
-                            class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                            Create Account</button>
-                    </div>
-                    @else
-                    <div class="mt-4 card">
-                        <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
-                            <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                            <p class="mb-0">Please be informed that USMCEE <b>account registration and slot reservation</b> are now closed.</p>
+                        <div class="mt-5 text-center">
+                            <button type="submit" id="submitButton" disabled
+                                class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                Create Account</button>
                         </div>
-                    </div>
-                @endif
+                    @else
+                        <div class="mt-4 card">
+                            <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
+                                <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                                <p class="mb-0">Please be informed that USMCEE <b>account registration and slot
+                                        reservation</b> are now closed.</p>
+                            </div>
+                        </div>
+                    @endif
                 </form>
 
                 <div class="mt-8 text-center">
@@ -447,11 +446,11 @@ use Carbon\Carbon;
                 });
             }
 
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 const phoneInput = document.getElementById("cleavePhone");
 
                 // Validate phone input on blur
-                phoneInput.addEventListener("blur", function () {
+                phoneInput.addEventListener("blur", function() {
                     const phone = phoneInput.value.trim(); // Trim whitespace
 
                     // Check if phone number is complete (e.g., xxxx-xxx-xxxx format, 12 characters including dashes)
@@ -471,7 +470,7 @@ use Carbon\Carbon;
                 });
             });
 
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 flatpickr("#birthdate", {
                     dateFormat: "M d, Y", // Display format for the date
                     maxDate: "2009-12-31", // Limit selection to November 6, 2010, for 14 years or older
@@ -479,10 +478,10 @@ use Carbon\Carbon;
                         from: "2009-12-31", // Disable all dates from November 7, 2010, onwards
                         to: new Date() // Current date or any future date
                     }],
-                    onReady: function (selectedDates, dateStr, instance) {
+                    onReady: function(selectedDates, dateStr, instance) {
                         instance.jumpToDate("2009-12-31"); // Opens calendar at the last allowed date
                     },
-                    onChange: function (selectedDates, dateStr, instance) {
+                    onChange: function(selectedDates, dateStr, instance) {
                         const selectedDate = selectedDates[0];
                         if (selectedDate && selectedDate > new Date("2009-12-31")) {
                             instance.clear(); // Clears selection if date is beyond November 6, 2010
@@ -499,10 +498,10 @@ use Carbon\Carbon;
                 });
             });
 
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 const emailInput = document.getElementById("email");
 
-                emailInput.addEventListener("blur", function () {
+                emailInput.addEventListener("blur", function() {
                     const email = emailInput.value.trim(); // Trim whitespace
                     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -525,7 +524,7 @@ use Carbon\Carbon;
             const submitButton = document.getElementById("submitButton");
 
             // Enable/disable submit button based on checkbox state
-            checkbox.addEventListener("change", function () {
+            checkbox.addEventListener("change", function() {
                 submitButton.disabled = !checkbox.checked;
             });
 

@@ -78,7 +78,6 @@ class StudentProgramConfirmationController extends Controller
                 if ($result->confirmation_batch == 1 && !now()->between($start_batch_2_prereg, $end_batch_2_prereg) || $cee_profile->prereg_status == 'pending') {
                     $is_qualified_pre_reg = 1;
 
-                    // dd($result);
 
                     $slot_remaning = $programData['pendingLimit'] - $total_prereg_by_prog_policy_id;
 
@@ -87,9 +86,24 @@ class StudentProgramConfirmationController extends Controller
                 }
             }
 
+
+
         } else {
             return redirect()->back()->with('error', 'Unable to fetch program details from the server.');
         }
+
+        $programData_batch2 = null;
+
+        //fetch all the programs for batch 2
+        if (now()->between($start_batch_2_prereg, $end_batch_2_prereg)) {
+            $programsfor_batch_2 = Http::get("http://172.16.0.60/academic/api/v2/CeeV/get-qualified-programs/{$result->csa}");
+
+                if ($programsfor_batch_2->successful()) {
+                    $programData_batch2 = json_decode($programsfor_batch_2->body(), true);
+                }
+        }
+
+        // dd($programData_batch2);
 
         return view('student.prereg.program-confirmation', compact(
             'reservation',
@@ -100,7 +114,8 @@ class StudentProgramConfirmationController extends Controller
             'slot_remaning',
             'has_additional_requirement',
             'site_settings',
-            'result'
+            'result',
+            'programData_batch2'
         ));
     }
 
@@ -116,7 +131,7 @@ class StudentProgramConfirmationController extends Controller
         $total_prereg_by_prog_policy_id = StundentProfile::where('policyId', $prog_policy_id)
             ->where('prereg_status', '==', 'pending')
             ->count();
-            
+
         try {
             Log::info("Fetching program policy for user_id: {$userId}, policy_id: {$prog_policy_id}");
 

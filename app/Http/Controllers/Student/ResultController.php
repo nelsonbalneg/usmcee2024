@@ -7,6 +7,7 @@ use App\Models\Result;
 use App\Models\CeeSession;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\ChedApplicantProfile;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+
 
 class ResultController extends Controller
 {
@@ -89,6 +91,11 @@ class ResultController extends Controller
     {
         $decryptapp_no = unserialize(Crypt::decryptString($encryptedAppNo));
 
+           //fetch the Sitesettings
+           $site_settings = DB::table('site_settings')->first();
+           $start_batch_2_prereg = Carbon::parse($site_settings->start_prereg_second_batch);
+           $end_batch_2_prereg = Carbon::parse($site_settings->end_prereg_second_batch);
+
         $cee_result = DB::table('reservations')
             ->join('results', 'reservations.app_no', '=', 'results.app_no')
             ->join('users', 'reservations.user_id', '=', 'users.id')
@@ -154,7 +161,19 @@ class ResultController extends Controller
                 return redirect()->back()->with('error', 'Unable to fetch program details from the server.');
             }
 
+            $programData_batch2 = null;
+            $csa = (float) $result;
 
-        return view('student.result.result-message', compact('cee_result', 'is_qualified_pre_reg','programResponse'));
+            // fetch all the programs for batch 2
+            if (now()->between($start_batch_2_prereg, $end_batch_2_prereg)) {
+                $programsfor_batch_2 = Http::get("http://172.16.0.60/academic/api/v2/CeeV/get-qualified-programs/{$csa}");
+
+                    if ($programsfor_batch_2->successful()) {
+                        $programData_batch2 = json_decode($programsfor_batch_2->body(), true);
+                    }
+            }
+            // dd($programData_batch2);
+
+        return view('student.result.result-message', compact('cee_result', 'is_qualified_pre_reg','programResponse','site_settings'));
     }
 }
