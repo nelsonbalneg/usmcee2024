@@ -554,6 +554,6 @@ class StudentRequirementsController extends Controller
         // Remove the field or delete the whole record
         $requirement->delete(); // or $requirement->update([$type => null]);
 
-        return redirect()->route('student.requirements.additional-requirements')->with('success', ucfirst(str_replace('_', ' ', $type)) . ' requirement deleted successfully.');
+        return redirect()->route('student.applicant-requirements.index')->with('success', ucfirst(str_replace('_', ' ', $type)) . ' requirement deleted successfully.');
     }
 }
