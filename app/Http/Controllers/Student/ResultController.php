@@ -161,20 +161,20 @@ class ResultController extends Controller
                 return redirect()->back()->with('error', 'Unable to fetch program details from the server.');
             }
 
-            $programData_batch2 = null;
+            $qualifiedCampuses = null;
             $csa = (float) $result;
+
 
             // fetch all the programs for batch 2
             if (now()->between($start_batch_2_prereg, $end_batch_2_prereg)) {
                 $programsfor_batch_2 = Http::get("http://172.16.0.60/academic/api/v2/CeeV/get-qualified-programs/{$csa}");
 
                     if ($programsfor_batch_2->successful()) {
-                        $programData_batch2 = json_decode($programsfor_batch_2->body(), true);
+                        $qualifiedCampuses = json_decode($programsfor_batch_2->body(), true);
                     }
             }
-            // dd($programData_batch2);
-         //  dd(now(), $start_batch_2_prereg, $end_batch_2_prereg, now()->between($start_batch_2_prereg, $end_batch_2_prereg));
 
-        return view('student.result.result-message', compact('cee_result', 'is_qualified_pre_reg','programResponse','site_settings'));
+         //   dd($qualifiedCampuses);
+        return view('student.result.result-message', compact('cee_result', 'is_qualified_pre_reg','programResponse','site_settings', 'qualifiedCampuses'));
     }
 }

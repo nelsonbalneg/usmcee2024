@@ -94,7 +94,6 @@
                                         {{ $cee_result->suffix }},</p>
 
                                     <br><br>
-                                    {{-- <h1>Will be uploaded soon.</h1> --}}
 
                                     <p class="text-slate-800">Thank you for your interest in the University of Southern
                                         Mindanao. <b> We regret to inform you that you did not qualify for your first
@@ -114,14 +113,98 @@
                                         On April 26, 2025 to April 29, 2025, we will be sending you a list of other
                                         available programs that you
                                         may consider for enrollment.
-                                        <br><br>
+
+                                        <!-- result-message.blade.php -->
+
+                                        @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
+                                            <div class="overflow-x-auto">
+                                                <h4 class="mt-4 mb-1">List of Programs that your are Qualified.</h4>
+
+                                                @foreach ($qualifiedCampuses['qualifiedCampuses'] as $campus)
+                                                    <div class="w-full mb-4 whitespace-nowrap">
+                                                        <h5
+                                                            class="p-2 text-left text-green-500 bg-green-100 dark:bg-zink-600 dark:text-zink-200">
+                                                            {{ $campus['campusName'] }}</h5>
+
+                                                        <div class="overflow-x-auto">
+                                                            <table class="w-full whitespace-nowrap">
+                                                                <thead
+                                                                    class="text-left bg-slate-100 text-slate-500 dark:bg-zink-600 dark:text-zink-200">
+                                                                    <tr>
+                                                                        <th
+                                                                            class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
+                                                                            Policy ID</th>
+                                                                        <th>CEE Slots</th>
+                                                                        <th>Program</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($campus['qualifiedPrograms'] as $program)
+                                                                        <tr
+                                                                            class="even:bg-slate-50 hover:bg-slate-50 even:hover:bg-slate-100 dark:even:bg-zink-600/50 dark:hover:bg-zink-600 dark:even:hover:bg-zink-600">
+                                                                            <td
+                                                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                                {{ $program['policyId'] }}</td>
+                                                                            <td
+                                                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                                {{ $program['ceeSlotsRemaining'] }}</td>
+                                                                            <td
+                                                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                                {{ $program['program'] }}{{ !empty($program['major']) ? ' - ' . $program['major'] : '' }}
+                                                                            </td>
+
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <div class="alert alert-info">
+                                                No qualified programs found.
+                                            </div>
+                                        @endif
                                         We encourage you to review this list carefully. We are committed to helping you find
                                         the
                                         right academic path at the University of Southern Mindanao.
 
                                     </p>
                                 @else
-                                    <h2>Prereg is closed!</h2>
+                                    <h4>Update on Your USM Enrollment Application</h4>
+
+                                    <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
+                                        {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
+                                        {{ $cee_result->lastname }}
+                                        {{ $cee_result->suffix }},</p>
+
+                                    <br>
+
+                                    <p class="text-slate-800">Thank you for your interest in the University of Southern
+                                        Mindanao. <b> We regret to inform you that you did not qualify for your first
+                                            priority
+                                            program </b>, <b class="text-custom-500">{{ $programResponse['programName'] }}
+                                            {{ $programResponse['majorDiscDesc'] }}</b>, at the University of Southern
+                                        Mindanao!
+
+                                        <br><br>
+                                        We understand that this may be disappointing. However, we would like to offer you
+                                        the
+                                        opportunity to explore other programs at USM that may be a good fit for your
+                                        interests
+                                        and qualifications.
+
+                                        <br><br>
+                                        On April 26, 2025 to April 29, 2025, we will be sending you a list of other
+                                        available programs that you
+                                        may consider for enrollment.
+
+                                        We encourage you to review this list carefully. We are committed to helping you find
+                                        the
+                                        right academic path at the University of Southern Mindanao.
+                                    </p>
                                 @endif
                             @endif
                         @endif
