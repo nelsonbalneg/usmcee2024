@@ -90,7 +90,7 @@
                                 class="inline-block text-blue-500 size-4 dark:text-zink-200"></i> PRE-REGISTRATION
                             REQUIREMENTS</h6>
 
-                        <div class="mb-5 xl:col-span-12">
+                        <div class="mb-2 xl:col-span-12">
                             <div
                                 class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
                                 <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
@@ -110,6 +110,20 @@
                                     </ul>
                                 </div>
                             </div>
+                        </div>
+
+                        <div
+                            class="px-4 py-3 mb-6 text-sm text-orange-500 border border-orange-200 rounded-md bg-orange-50 dark:bg-orange-400/20 dark:border-orange-500/50">
+                            <span class="font-bold">If credentials are not yet available,</span> please download the
+                            affidavit of undertaking, fill it out, sign, and upload the scanned copy.<br>
+
+                            <a href="https://bit.ly/usm-cee-affidavit-2025"
+                                class="mt-2 mb-2 text-white bg-orange-500 border-orange-500 btn hover:text-white hover:bg-orange-600 hover:yellow-orange-600 focus:text-white focus:bg-orange-600 focus:border-orange-600 focus:ring focus:ring-orange-100 active:text-white active:bg-orange-600 active:border-orange-600 active:ring active:ring-orange-100 dark:ring-orange-400/10">
+                                <i data-lucide="download" class="inline-block h-4 align-middle"></i>Download Affidavit of
+                                undertaking </a>
+
+                            <br class="mb-2"> Note: No enrollment will be processed with incomplete admission
+                            requirements.
                         </div>
 
                         <h6 class="mb-0 text-15">Original PSA Birth Certificate <sup class="text-red-500">*

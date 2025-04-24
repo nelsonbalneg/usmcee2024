@@ -324,7 +324,7 @@ class StudentApplicantProfileController extends Controller
 
         $validated = $request->validate([
             'father' => 'nullable|string|max:50',
-            'father_birth_date' => 'nullable|date|before:today',
+            'father_birth_date' => 'nullable',
             'father_educ_attain' => 'nullable|string|max:100',
             'father_occupation' => 'nullable|string|max:50',
             'father_company' => 'nullable|string|max:100',
@@ -334,7 +334,7 @@ class StudentApplicantProfileController extends Controller
             'father_income_from' => 'nullable|string',
 
             'mother' => 'nullable|string|max:50',
-            'mother_birth_date' => 'nullable|date|before:today',
+            'mother_birth_date' => 'nullable',
             'mother_educ_attain' => 'nullable|string|max:100',
             'mother_occupation' => 'nullable|string|max:50',
             'mother_company' => 'nullable|string|max:100',
@@ -447,7 +447,7 @@ class StudentApplicantProfileController extends Controller
             'shs_award_honor' => 'nullable|string|max:100',
         ]);
 
-        
+
 
         DB::beginTransaction();
 
