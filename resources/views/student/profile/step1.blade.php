@@ -43,7 +43,9 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
-        @if (($app_no && $result->csa >= 25 && $result->confirmation_batch == 1) || (now()->between($start, $end) && $result->confirmation_batch == 2))
+        @if (
+            ($app_no && $result->csa >= 25 && $result->confirmation_batch == 1) ||
+                (now()->between($start, $end) && $result->confirmation_batch == 2))
             <div class="xl:col-span-12">
                 <form id="studentProfileForm" action="{{ route('student.applicant-profile.step1.save') }}" method="POST">
                     @csrf
@@ -175,7 +177,7 @@
                                         <sup class="text-blue-500">* Read Only</sup></label>
                                     <input type="text" name="middle_name"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        value={{ old('middle_name', $cee_profile->middlename) }} readonly>
+                                        value="{{ old('middle_name', $cee_profile->middlename) }}" readonly>
                                 </div><!--end col-->
 
                                 <div class="xl:col-span-4">
@@ -701,19 +703,22 @@
 
             </div><!--end col-->
         @else
-        <div class="xl:col-span-12">
-            <div class="flex gap-3 p-4 text-sm rounded-md text-sky-500 bg-sky-50 dark:bg-sky-400/20">
-                <i data-lucide="check-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                <div>
-                    <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.</h6>
-                    <ul class="ml-2 list-disc list-inside">
-                        <li>Please visit this page between <b> {{ \Carbon\Carbon::parse($start)->format('F j, Y g:i A') }} to {{ \Carbon\Carbon::parse($end)->format('F j, Y g:i A') }} </b> for the second batch of pre-registration.</li>
+            <div class="xl:col-span-12">
+                <div class="flex gap-3 p-4 text-sm rounded-md text-sky-500 bg-sky-50 dark:bg-sky-400/20">
+                    <i data-lucide="check-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                    <div>
+                        <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.
+                        </h6>
+                        <ul class="ml-2 list-disc list-inside">
+                            <li>Please visit this page between <b>
+                                    {{ \Carbon\Carbon::parse($start)->format('F j, Y g:i A') }} to
+                                    {{ \Carbon\Carbon::parse($end)->format('F j, Y g:i A') }} </b> for the second batch of
+                                pre-registration.</li>
 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-
         @endif
 
 

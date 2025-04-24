@@ -86,39 +86,36 @@
                                 </p>
                             @else
                                 @if (($is_qualified_pre_reg == 1 || $is_qualified_pre_reg == 0) && now()->between($start, $end))
-                                    <h4>Update on Your USM Enrollment Application</h4>
+                                    {{-- <h4>Update on Your USM Enrollment Application</h4> --}}
 
-                                    <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
+                                    <h6 class="mt-4">Dear {{ $cee_result->firstname }}
                                         {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
                                         {{ $cee_result->lastname }}
-                                        {{ $cee_result->suffix }},</p>
+                                        {{ $cee_result->suffix }},</h6>
 
-                                    <br><br>
+                                    <br>
 
-                                    <p class="text-slate-800">Thank you for your interest in the University of Southern
-                                        Mindanao. <b> We regret to inform you that you did not qualify for your first
-                                            priority
-                                            program </b>, <b class="text-custom-500">{{ $programResponse['programName'] }}
-                                            {{ $programResponse['majorDiscDesc'] }}</b>, at the University of Southern
-                                        Mindanao!
+                                    <p class="text-slate-800">
 
-                                        <br><br>
-                                        We understand that this may be disappointing. However, we would like to offer you
-                                        the
-                                        opportunity to explore other programs at USM that may be a good fit for your
-                                        interests
-                                        and qualifications.
 
-                                        <br><br>
-                                        On April 26, 2025 to April 29, 2025, we will be sending you a list of other
-                                        available programs that you
-                                        may consider for enrollment.
+                                        Below is the list of other available programs that you may consider for enrollment.
+                                        We encourage you to review this list carefully. We are committed to helping you find
+                                        the right academic path at the University of Southern Mindanao.<br><br>
 
-                                        <!-- result-message.blade.php -->
+                                        However, please note that you will not be admitted automatically to your chosen
+                                        program as all qualifiers will undergo ranking. <br><br>
+
+                                        <hr><br>
+                                        Narito ang listahan ng iba pang mga akademik program na maaari mong isaalang-alang
+                                        para sa pag-enroll. Hinihikayat ka naming suriing mabuti ang listahang ito. Nakatuon
+                                        kami sa pagtulong sa iyo upang mahanap mo ang angkop na akademik program sa
+                                        University of Southern Mindanao.<br><br>
+
+                                        Gayunpaman, pakatandaan na hindi awtomatikong ibibigay ang napili mong program
+                                        sapagkat lahat ng kwalipikado ay daraan sa proseso ng ranggohan (ranking).<br><br>
 
                                         @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
                                             <div class="overflow-x-auto">
-                                                <h4 class="mt-4 mb-1">List of Programs that your are Qualified.</h4>
 
                                                 @foreach ($qualifiedCampuses['qualifiedCampuses'] as $campus)
                                                     <div class="w-full mb-4 whitespace-nowrap">
@@ -133,8 +130,9 @@
                                                                     <tr>
                                                                         <th
                                                                             class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                                            Policy ID</th>
-                                                                        <th>CEE Slots</th>
+                                                                            Action</th>
+                                                                        <th>Ranking Slot</th>
+                                                                        <th>Policy ID</th>
                                                                         <th>Program</th>
 
                                                                     </tr>
@@ -145,10 +143,18 @@
                                                                             class="even:bg-slate-50 hover:bg-slate-50 even:hover:bg-slate-100 dark:even:bg-zink-600/50 dark:hover:bg-zink-600 dark:even:hover:bg-zink-600">
                                                                             <td
                                                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                                                {{ $program['policyId'] }}</td>
+                                                                                <button id="selectProgram"
+                                                                                    class="text-white border-custom-500 bg-custom-500 btn hover:text-white hover:bg-custom-600 hover:yellow-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/10">
+                                                                                    Select</button>
+                                                                            </td>
                                                                             <td
                                                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                                                {{ $program['ceeSlotsRemaining'] }}</td>
+                                                                                {{ $program['rankingOpenSlotsRemaining'] }}
+                                                                            </td>
+                                                                            <td
+                                                                            class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                            {{ $program['policyId'] }}
+                                                                        </td>
                                                                             <td
                                                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                                                                 {{ $program['program'] }}{{ !empty($program['major']) ? ' - ' . $program['major'] : '' }}
@@ -167,10 +173,6 @@
                                                 No qualified programs found.
                                             </div>
                                         @endif
-                                        We encourage you to review this list carefully. We are committed to helping you find
-                                        the
-                                        right academic path at the University of Southern Mindanao.
-
                                     </p>
                                 @else
                                     <h4>Update on Your USM Enrollment Application</h4>
