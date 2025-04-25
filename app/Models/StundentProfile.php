@@ -151,6 +151,8 @@ class StundentProfile extends Model
         'date_confirmed',
         'date_enrolled',
         'date_denied',
-        'date_cancelled'
+        'date_cancelled',
+        'date_program_selected',
+        'confirmation_batch',
     ];
 }

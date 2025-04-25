@@ -76,11 +76,6 @@
                                                     <th
                                                         class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                                         Action</th>
-                                                    {{-- @if ($cee_profile->prereg_status != 'pending')
-                                                <th
-                                                    class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                    Slot</th>
-                                            @endif --}}
                                                     <th
                                                         class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                                         Program Name</th>
@@ -150,13 +145,6 @@
                                                         {{-- end check if there is slot remaning --}}
 
                                                     </td>
-                                                    {{-- hide if the program has been reserved --}}
-                                                    {{-- @if ($cee_profile->prereg_status != 'pending')
-                                                <td
-                                                    class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                    {{ $slot_remaning }}
-                                                </td>
-                                            @endif --}}
                                                     <td
                                                         class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                                         {{ $programData['programName'] }} -
@@ -177,146 +165,118 @@
                         @else
                             {{-- check the date range for second batch qualifiers --}}
                             @if (now()->between($start, $end))
-                                <div>
+
+                            @if ($has_policy_id == 1)
                                     <div
                                         class="flex gap-3 p-4 text-sm rounded-md text-sky-500 bg-sky-50 dark:bg-sky-400/20">
                                         <i data-lucide="check-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
                                         <div>
-                                            <h6 class="mb-1"> <span class="font-bold">Yahoo!</span> You belong to the
-                                                second batch qualifiers for pre-registration.</h6>
+                                            <h6 class="mb-1"> <span class="font-bold">Important!</span> Kindly read the
+                                                statements below.</h6>
                                             <ul class="ml-2 list-disc list-inside">
-                                                <li>The table below shows the programs you are qualified to enroll in.
+                                                <li> Below are the details of your selected program.
+                                                    Please note that <b class="text-sky-800"> admission is not
+                                                        automatic,</b> as all qualifiers will undergo a
+                                                    ranking process
                                                 </li>
-                                                <li> Kindly click the <b class="text-sky-800">'Select'</b> button, then
-                                                    click <b class="text-sky-800">'Confirm'</b> to finalize your
-                                                    interest in enrolling in the program.</li>
+                                                <li>
+                                                    Narito ang detalye ng iyong napiling program. Pakatandaan na <b
+                                                        class="text-sky-800"> hindi awtomatikong
+                                                        ibibigay ang napili mong program </b>
+                                                    sapagkat lahat ng kwalipikado ay daraan sa proseso ng ranggohan
+                                                    (ranking).
+                                                </li>
+
+
                                             </ul>
                                         </div>
                                     </div>
+                                    <div class="card-body">
+                                        <div class="flex flex-col gap-3">
+                                            <div class="border rounded-md border-slate-200 dark:border-zink-500">
+                                                <div class="flex flex-wrap items-center gap-3 p-2">
+                                                    <div class="rounded-full size-10 shrink-0">
+                                                        <img src="{{ asset(Auth::user()->photo) }}" alt=""
+                                                            class="h-10 rounded-full">
+                                                    </div>
+                                                    <div class="grow">
+                                                        <h6 class="mb-1"><a href="#!">{{ $cee_profile->first_name }}
+                                                                {{ $cee_profile->middle_initial }}
+                                                                {{ $cee_profile->last_name }}
+                                                                {{ $cee_profile->ext_name }}</a></h6>
+                                                        <p class="text-slate-500 dark:text-zink-200">
+                                                            {{ $cee_profile->email }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="p-2 border-t border-slate-200 dark:border-zink-500">
+                                                    <div class="flex flex-col gap-3">
+                                                        <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Program
+                                                                Selected: </b><br><span class="align-middle">
+                                                                {{ $programDataBatch2['programName'] }} -
+                                                                {{ $programDataBatch2['majorDiscDesc'] }}</span></p>
+                                                        <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Campus and
+                                                                College: </b><br><span
+                                                                class="align-middle">{{ $programDataBatch2['campusName'] }}
+                                                                - {{ $programDataBatch2['collegeName'] }}</span></p>
+                                                        <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Date and
+                                                                Time: </b><br><span
+                                                                class="align-middle">{{ \Carbon\Carbon::parse($cee_profile->date_program_selected)->format('F j, Y g:i A') }}</span>
+                                                        </p>
+                                                        <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Status:
+                                                            </b><br>
+                                                            <span class="align-middle">
+                                                                @if ($cee_profile->prereg_status == 'for_ranking')
+                                                                    <span
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">Selected</span>
+                                                                @elseif($cee_profile->prereg_status == 'pending')
+                                                                    <span
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed</span>
+                                                                @elseif($cee_profile->prereg_status == 'cancelled')
+                                                                    <span
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Cancelled</span>
+                                                                @elseif($cee_profile->prereg_status == 'denied')
+                                                                    <span
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Denied</span>
+                                                                @elseif($cee_profile->prereg_status == 'enrolled')
+                                                                    <span
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Enrolled</span>
+                                                                @else
+                                                                    ---
+                                                                @endif
+                                                            </span>
+                                                        </p>
 
-                                    {{-- <input type="hidden" name="second_batch_app_no" value="{{ $cee_profile->app_no }}">
-                                    <input type="hidden" name="second_user_id" value="{{ $cee_profile->user_id }}"> --}}
-                                    <input type="hidden" name="second_csa" value="{{ $result->csa }}">
-                                </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                <div class="card-body">
-                                    <h2>Coming Soon!</h2>
-                                    {{-- <h6 class="mb-4 text-15">Programs You Are Qualified to Pre-register</h6>
+                                            <p class="text-slate-800">
+                                                You have reached the final step for the pre-registration process. Kindly
+                                                click the
+                                                <strong>"Confirm Program for Ranking"</strong> button below.<br>
 
-                                    <div class="overflow-x-auto">
-                                        <table class="w-full">
-                                            <thead class="ltr:text-left rtl:text-right">
-                                                <tr>
-                                                    <th
-                                                        class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                        Action</th>
-                                                    <th
-                                                        class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                        Slot</th>
-                                                    <th
-                                                        class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                        Program Name</th>
-                                                    <th
-                                                        class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                        Campus & College</th>
+                                                <button data-program="{{ $cee_profile['policyId'] }}"
+                                                    class="mt-4 text-white bg-green-500 border-green-500 confirmProgramforRankingBtn btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                                    <i data-lucide="check"
+                                                        class="inline-block size-4 dark:text-zink-200"></i> Confirm Program
+                                                    for Ranking
+                                                </button>
+                                            </p>
+                                        </div>
+                                    @elseif($has_policy_id == 0)
+                                        <p class="text-slate-800">
+                                            Oops! It seems taht you have not confirmed your program yet. Please select your
+                                            program by
+                                            clicking or tapping the button below
+                                            <br>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr
-                                                    class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
-                                                    <td>
-                                                        <button type="submit" id="publishButton"
-                                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                            <i data-lucide="check"
-                                                                class="inline-block size-4 dark:text-zink-200"></i>
-                                                            Select</button>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        <a href="#!"
-                                                            class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">98</a>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        BS Computer Science</td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        Main Campus - CEIT</td>
-
-
-                                                </tr>
-                                                <tr
-                                                    class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
-                                                    <td>
-                                                        <button type="submit" id="publishButton"
-                                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                            <i data-lucide="check"
-                                                                class="inline-block size-4 dark:text-zink-200"></i>
-                                                            Select</button>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        <a href="#!"
-                                                            class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">98</a>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        BS Computer Science</td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        Main Campus - CEIT</td>
-
-
-                                                </tr>
-                                                <tr
-                                                    class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
-                                                    <td>
-                                                        <button type="submit" id="publishButton"
-                                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                            <i data-lucide="check"
-                                                                class="inline-block size-4 dark:text-zink-200"></i>
-                                                            Select</button>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        <a href="#!"
-                                                            class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">98</a>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        BS Computer Science</td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        KCC - Engineering</td>
-
-
-                                                </tr>
-                                                <tr
-                                                    class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
-                                                    <td>
-                                                        <button type="submit" id="publishButton"
-                                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                            <i data-lucide="check"
-                                                                class="inline-block size-4 dark:text-zink-200"></i>
-                                                            Select</button>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        <a href="#!"
-                                                            class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">98</a>
-                                                    </td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        BS Computer Science</td>
-                                                    <td
-                                                        class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                        PPALMA - CED</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div> --}}
-                                </div>
+                                            <a href="{{ route('student.cee.result') }}"
+                                                class="mt-4 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                                <i data-lucide="percent"
+                                                    class="inline-block size-4 dark:text-zink-200"></i>Result
+                                            </a>
+                                        </p>
+                                @endif
                             @else
                                 <p class="mt-4 mb-4">Dear {{ $cee_profile->first_name }}
                                     {{ $cee_profile->middle_name }}
@@ -335,7 +295,8 @@
                                     and qualifications.
 
                                     <br><br>
-                                    On April 26, 2025 to April 29, 2025, we will be sending you a list of other available programs that you
+                                    On April 26, 2025 to April 29, 2025, we will be sending you a list of other available
+                                    programs that you
                                     may consider for enrollment.
                                     <br><br>
                                     We encourage you to review this list carefully. We are committed to helping you find the
@@ -376,7 +337,7 @@
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    {{-- swal confirm --}}
+    {{-- swal confirm first batch --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("publishButton").addEventListener("click", function(event) {
@@ -422,6 +383,65 @@
                                     "error");
                             });
                     }
+                });
+            });
+        });
+    </script>
+
+    {{-- swal confirm second batch --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".confirmProgramforRankingBtn").forEach(button => {
+                button.addEventListener("click", function(event) {
+                    event.preventDefault();
+
+                    const programPolicyId = this.getAttribute("data-program");
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                    //     html: `You're about to confirm the program with <strong>Policy ID: ${programPolicyId}</strong>.<br>
+                    // Submitting this form will confirm your intent to pre-register for the program.`,
+                         text: "Submitting this form will confirm your intent to pre-register for the program you have selected for ranking. Once submitted, your intent cannot be changed or withdrawn.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, I confirm!",
+                        cancelButtonText: "Cancel"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch("{{ route('student.confirm-program-ranking.second-batch') }}", {
+                                    method: "POST",
+                                    headers: {
+                                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        program_policy_id: programPolicyId
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire(
+                                            "Success!",
+                                            "You have successfully pre-registered for your chosen program for ranking. Always monitor the progress of your enrollment through the Pre-registration Dashboard.",
+                                            "success"
+                                        ).then(() => {
+                                            window.location.href =
+                                                "{{ route('student.confirm-program-ranking.second-batch.index') }}";
+                                        });
+                                    } else {
+                                        Swal.fire("Error!", data.message, "error");
+                                    }
+                                })
+                                .catch(error => {
+                                    Swal.fire("Error!",
+                                        "Something went wrong. Please try again or contact the system administrator",
+                                        "error");
+                                });
+                        }
+                    });
                 });
             });
         });

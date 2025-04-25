@@ -16,7 +16,7 @@ use App\Http\Controllers\Student\StudentCeeReserveController;
 Route::middleware(['check.maintenance'])->group(function () {
     Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
 
-  
+
 
     Route::put('/test-update/{id}', [StudentProfileController::class, 'update']);
     Route::put('cee/update-photo/{id}', [StudentProfileController::class, 'uploadPhoto'])->name('cee.update-photo');
@@ -90,7 +90,11 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::resource('pre-registration/applicant-requirements', StudentRequirementsController::class);
 
 
-    //route for Program confirmation
+    //route for Program confirmations
+    //route for ranking second batch
+    Route::get('pre-registration/ranking/program-confirmation',[StudentProgramConfirmationController::class, 'programBatch2index'] )->name('confirm-program-ranking.second-batch.index');
+    Route::post('pre-registration/confirm-program-ranking',[StudentProgramConfirmationController::class, 'storeConfirmProgramBatch2'] )->name('confirm-program-ranking.second-batch');
+    Route::post('pre-registration/ranking',[StudentProgramConfirmationController::class, 'storeSelectProgramBatch2'] )->name('ranking.second-batch');
     Route::post('pre-registration/program-confirmation', [StudentProgramConfirmationController::class, 'confirmProgram'])->name('program-confirmation.comfirm');
     Route::get('pre-registration/program-confirmation', [StudentProgramConfirmationController::class, 'index'])->name('program-confirmation.index');
 

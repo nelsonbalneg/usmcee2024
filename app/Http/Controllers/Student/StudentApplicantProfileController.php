@@ -278,6 +278,9 @@ class StudentApplicantProfileController extends Controller
             ]));
 
             $data['applicant_profile_status'] = 0;
+            $data['current_step'] = 1;
+
+            Log::info('Final data to be saved for user ' . $userId, $data);
 
             // Save the profile
             $studentProfile = StundentProfile::updateOrCreate(
@@ -385,6 +388,8 @@ class StudentApplicantProfileController extends Controller
 
             // Set current_step
             $data['current_step'] = 2;
+
+            Log::info('Final data to be saved for user ' . $userId, $data);
 
             // Save the profile
             StundentProfile::updateOrCreate(

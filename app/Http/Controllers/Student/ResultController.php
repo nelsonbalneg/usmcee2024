@@ -8,6 +8,7 @@ use App\Models\CeeSession;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\StundentProfile;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\ChedApplicantProfile;
@@ -35,7 +36,7 @@ class ResultController extends Controller
             ->where('status', 'posted')->get();
 
         $is_ched_applicant_profile = ChedApplicantProfile::where('user_id', Auth::user()->id)
-        ->where('status', '1')->first();
+            ->where('status', '1')->first();
 
         return view("student.result.result", compact('cee_result', 'reservation', 'is_ched_applicant_profile'));
     }
@@ -91,10 +92,10 @@ class ResultController extends Controller
     {
         $decryptapp_no = unserialize(Crypt::decryptString($encryptedAppNo));
 
-           //fetch the Sitesettings
-           $site_settings = DB::table('site_settings')->first();
-           $start_batch_2_prereg = Carbon::parse($site_settings->start_prereg_second_batch);
-           $end_batch_2_prereg = Carbon::parse($site_settings->end_prereg_second_batch);
+        //fetch the Sitesettings
+        $site_settings = DB::table('site_settings')->first();
+        $start_batch_2_prereg = Carbon::parse($site_settings->start_prereg_second_batch);
+        $end_batch_2_prereg = Carbon::parse($site_settings->end_prereg_second_batch);
 
         $cee_result = DB::table('reservations')
             ->join('results', 'reservations.app_no', '=', 'results.app_no')
@@ -134,47 +135,76 @@ class ResultController extends Controller
             )
             ->first();
 
-            $programData = null;
-            $is_qualified_pre_reg = null;
+        $programData = null;
+        $is_qualified_pre_reg = null;
 
-            $prog_policy_id = $cee_result->firstprogram_policy_id;
-            $result = $cee_result->csa;
+        $prog_policy_id = $cee_result->firstprogram_policy_id;
+        $result = $cee_result->csa;
 
 
-            //fetch from the API
-            // Fetch program policy data from external API
-            $programResponse = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$prog_policy_id}");
+        //fetch from the API
+        // Fetch program policy data from external API
+        $programResponse = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$prog_policy_id}");
 
-            if ($programResponse->successful()) {
-                $programData = json_decode($programResponse->body(), true);
+        if ($programResponse->successful()) {
+            $programData = json_decode($programResponse->body(), true);
 
-                //compare the CSA and to usmceefp from API
-                if ($result && isset($programData['usmceefp']) && $result >= $programData['usmceefp'] && $cee_result->confirmation_batch == 1) {
-                    $is_qualified_pre_reg = 1;
-                }elseif($cee_result->confirmation_batch == 2){
-                    $is_qualified_pre_reg = 0;
-                }else{
-                    $is_qualified_pre_reg = 0;
-                }
+            //compare the CSA and to usmceefp from API
+            if ($result && isset($programData['usmceefp']) && $result >= $programData['usmceefp'] && $cee_result->confirmation_batch == 1) {
+                $is_qualified_pre_reg = 1;
+            } elseif ($cee_result->confirmation_batch == 2) {
+                $is_qualified_pre_reg = 0;
+            } else {
+                $is_qualified_pre_reg = 0;
+            }
 
+        } else {
+            return redirect()->back()->with('error', 'Unable to fetch program details from the server.');
+        }
+
+        $qualifiedCampuses = null;
+        $csa = (float) $result;
+
+
+        // fetch all the programs for batch 2
+        if (now()->between($start_batch_2_prereg, $end_batch_2_prereg)) {
+            $programsfor_batch_2 = Http::get("http://172.16.0.60/academic/api/v2/CeeV/get-qualified-programs/{$csa}");
+
+            if ($programsfor_batch_2->successful()) {
+                $qualifiedCampuses = json_decode($programsfor_batch_2->body(), true);
+            }
+        }
+        $programDataBatch2 = null;
+        $has_policy_id = null;
+        $cee_profile = StundentProfile::where('user_id', Auth::user()->id)->first();
+
+        if (!$cee_profile || $cee_profile->policyId == null) {
+            $has_policy_id = 0;
+        } else {
+            //fetch the selected program for batch 2
+            $programResponseBatch2 = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$cee_profile->policyId}");
+            if ($programResponseBatch2->successful()) {
+                $programDataBatch2 = json_decode($programResponseBatch2->body(), true);
+                $has_policy_id = 1;
             } else {
                 return redirect()->back()->with('error', 'Unable to fetch program details from the server.');
             }
+        }
 
-            $qualifiedCampuses = null;
-            $csa = (float) $result;
+        return view('student.result.result-message', compact(
+            'cee_result',
+            'is_qualified_pre_reg',
+            'programResponse',
+            'site_settings',
+            'qualifiedCampuses',
+            'has_policy_id',
+            'cee_profile',
+            'programDataBatch2'
+        ));
+    }
 
+    public function programFetchforBatch2()
+    {
 
-            // fetch all the programs for batch 2
-            if (now()->between($start_batch_2_prereg, $end_batch_2_prereg)) {
-                $programsfor_batch_2 = Http::get("http://172.16.0.60/academic/api/v2/CeeV/get-qualified-programs/{$csa}");
-
-                    if ($programsfor_batch_2->successful()) {
-                        $qualifiedCampuses = json_decode($programsfor_batch_2->body(), true);
-                    }
-            }
-
-         //   dd($qualifiedCampuses);
-        return view('student.result.result-message', compact('cee_result', 'is_qualified_pre_reg','programResponse','site_settings', 'qualifiedCampuses'));
     }
 }
