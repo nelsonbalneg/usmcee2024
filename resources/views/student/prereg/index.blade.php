@@ -77,9 +77,10 @@
                                         <div
                                             class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
                                             @if (
-                                                $applicant->applicant_profile_status == 0 ||
-                                                    empty($applicant->applicant_profile_status) ||
-                                                    is_null(value: $applicant->applicant_profile_status))
+                                                $applicant &&
+                                                    ($applicant->applicant_profile_status == 0 ||
+                                                        empty($applicant->applicant_profile_status) ||
+                                                        is_null($applicant->applicant_profile_status)))
                                                 <i data-lucide="circle-dot" class="size-4"></i>
                                             @else
                                                 <i data-lucide="circle-check-big" class="size-4"></i>
@@ -105,7 +106,7 @@
                                     class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
                                     <div class="relative flex gap-2">
 
-                                        @if ($applicant->applicant_profile_status == 1)
+                                        @if ($applicant && $applicant->applicant_profile_status == 1)
                                             <div
                                                 class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
                                                 @if (
@@ -159,7 +160,7 @@
                                     class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
                                     <div class="relative flex gap-2">
 
-                                        @if ($applicant->applicant_profile_status == 1)
+                                        @if ($applicant && $applicant->applicant_profile_status == 1)
                                             <div
                                                 class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
                                                 @if (
@@ -253,7 +254,7 @@
                 <div class="card">
                     <div class="flex items-center gap-3 card-body">
 
-                        @if ($applicant->applicant_profile_status == 1)
+                        @if ($applicant && $applicant->applicant_profile_status == 1)
                             <div
                                 class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
                                 <i data-lucide="check-circle"></i>
@@ -284,16 +285,17 @@
                         </div>
                         <div class="grow">
                             <h5 class="mb-1 text-16">
-                                @if ($applicant->policyId == null && $applicant->programName != null)
-                                You did not qualify for <span
-                                    class="text-custom-500">{{ !empty($applicant->programName) ? $applicant->programName : '' }}
-                                    -
-                                    {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}</span>
-                                based on your ranking. <br><br> Tap or Click the <a class="text-green-500" href="{{ route('student.cee.result') }}">Result </a>  Menu to select other program.
-                            @else
-                                {{ !empty($applicant->programName) ? $applicant->programName : '' }} -
-                                {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
-                            @endif
+                                @if ($applicant && $applicant->policyId == null && $applicant->programName != null)
+                                    You did not qualify for <span
+                                        class="text-custom-500">{{ !empty($applicant->programName) ? $applicant->programName : '' }}
+                                        -
+                                        {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}</span>
+                                    based on your ranking. <br><br> Tap or Click the <a class="text-green-500"
+                                        href="{{ route('student.cee.result') }}">Result </a> Menu to select other program.
+                                @else
+                                    {{ !empty($applicant->programName) ? $applicant->programName : '' }} -
+                                    {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
+                                @endif
 
                             </h5>
                             <p class="text-slate-500 dark:text-zink-200">Program Name</p>
@@ -312,14 +314,16 @@
                             {{--  {{ !empty($applicant->prereg_status) ? $applicant->prereg_status : '---' }} --}}
 
                             <h5 class="mb-1 text-16">
-                                @if ($applicant->prereg_status == 'pending')
-                                    Program has been confirmed.
-                                @elseif ($applicant->prereg_status == 'for_ranking')
-                                    Please wait, ranking in progress.
-                                @elseif ($applicant->policyId == null && $applicant->programName != null)
-                                    You did not qualify for the chosen program based on your ranking
-                                @else
-                                    ---
+                                @if ($applicant)
+                                    @if ($applicant->prereg_status == 'pending')
+                                        Program has been confirmed.
+                                    @elseif ($applicant->prereg_status == 'for_ranking')
+                                        Please wait, ranking in progress.
+                                    @elseif ($applicant->policyId == null && $applicant->programName != null)
+                                        You did not qualify for the chosen program based on your ranking
+                                    @else
+                                        ---
+                                    @endif
                                 @endif
                             </h5>
                             <p class="text-slate-500 dark:text-zink-200">Pre-registration Status</p>
