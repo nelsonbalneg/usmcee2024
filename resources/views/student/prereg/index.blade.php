@@ -35,6 +35,12 @@
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
             <div class="xl:col-span-3">
+
+                <a href="https://drive.google.com/file/d/17K7A0XK0fkGALONUxJ28UxNs40-d5zTB/view?usp=sharing"
+                class="block w-full mt-2 mb-2 text-white border-custom-500 bg-custom-500 btn hover:text-white hover:bg-custom-600 hover:yellow-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/10">
+                <i data-lucide="book" class="inline-block h-4 align-middle"></i>
+                Download the Preregistration Guide
+            </a>
                 <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                     <div class="card-body">
                         <h6 class="mb-4 text-15">MY PROFILE INFORMATION</h6>

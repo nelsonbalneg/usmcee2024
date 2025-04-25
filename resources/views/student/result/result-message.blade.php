@@ -175,7 +175,9 @@
                                                     that you did not qualify for the said program based on your ranking.
                                                     Please choose another program from the available options offered to you.
                                                 </strong>
+                                                <br>  <br>
                                             @endif
+
 
                                             Below is the list of other available programs that you may consider for
                                             enrollment.
