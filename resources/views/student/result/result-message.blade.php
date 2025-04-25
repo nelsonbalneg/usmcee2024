@@ -167,6 +167,16 @@
                                             {{ $cee_result->suffix }}</h6>
                                         <br>
                                         <p class="text-slate-800">
+
+                                            @if ($cee_profile->policyId == null && $cee_profile->programName != null)
+                                                <strong class="text-custom-500">
+                                                    We understand that you have selected {{ $cee_profile->programName }}
+                                                    {{ $cee_profile->majorDiscDesc }}. However, we regret to inform you
+                                                    that you did not qualify for the said program based on your ranking.
+                                                    Please choose another program from the available options offered to you.
+                                                </strong>
+                                            @endif
+                                            <br><br>
                                             Below is the list of other available programs that you may consider for
                                             enrollment.
                                             We encourage you to review this list carefully. We are committed to helping you
@@ -207,7 +217,7 @@
                                                                                 Action</th>
                                                                             {{-- <th>Ranking Slot</th>
                                                                             <th>Policy ID</th> --}}
-                                                                            <th>Program</th>
+                                                                            <th>Program Name</th>
 
                                                                         </tr>
                                                                     </thead>
@@ -305,7 +315,8 @@
                                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed</span>
                                                                 @elseif($cee_profile->prereg_status == 'for_ranking' && $cee_profile->campus_id != null)
                                                                     <span
-                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed for Ranking</span>
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed
+                                                                        for Ranking</span>
                                                                 @elseif($cee_profile->prereg_status == 'cancelled')
                                                                     <span
                                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Cancelled</span>

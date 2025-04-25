@@ -351,6 +351,7 @@ class StudentProgramConfirmationController extends Controller
 
         if (!$prereg_profile || $prereg_profile->policyId == null) {
             $has_policy_id = 0;
+            return redirect()->route('student.cee.result');
         } else {
             $has_policy_id = 1;
         }

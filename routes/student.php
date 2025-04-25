@@ -74,6 +74,13 @@ Route::middleware(['check.maintenance'])->group(function () {
 
     //route for uploading of requirements
     //delete requirement route
+
+    //batch2 uplpading or requirements
+    Route::post('pre-registration/additional-applicant-requirements-2/hepab', [StudentRequirementsController::class, 'storeHepabBatch2'])->name('additional-applicant-requirements-2.hepab.store');
+    Route::post('pre-registration/additional-applicant-requirements-2/chest-xray', [StudentRequirementsController::class, 'storeChestXrayBatch2'])->name('additional-applicant-requirements-2.chest-xray.store');
+    Route::post('pre-registration/additional-applicant-requirements-2/pregnancy-test', [StudentRequirementsController::class, 'storePrenancyTestBatch2'])->name('additional-applicant-requirements-2.pregnancy-test.store');
+
+
     Route::delete('/pre-registration/applicant-requirements/delete/{requirement}/{type}', [StudentRequirementsController::class, 'deleteRequirements'])->name('applicant-requirements.delete');
 
     Route::put('pre-registration/additional-applicant-requirements/publish', [StudentRequirementsController::class, 'publishAdditionalRequirements'])->name('additional-requirements.publish');

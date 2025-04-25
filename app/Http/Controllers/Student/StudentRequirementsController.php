@@ -23,7 +23,9 @@ class StudentRequirementsController extends Controller
                 'user_id',
                 'student_type',
                 'freshmen_type',
-                'applicant_profile_status'
+                'applicant_profile_status',
+                'policyId',
+                'gender'
             )
             ->first();
 
@@ -126,7 +128,7 @@ class StudentRequirementsController extends Controller
             'good_moral_char' => json_encode($filePaths),
         ]);
 
-      return redirect()->route('student.applicant-requirements.index')->with('success', 'GMC files uploaded successfully.');
+        return redirect()->route('student.applicant-requirements.index')->with('success', 'GMC files uploaded successfully.');
     }
 
     public function storeCard(Request $request)
@@ -383,6 +385,49 @@ class StudentRequirementsController extends Controller
         return redirect()->route('student.requirements.additional-requirements')->with('success', 'Hepa B Test Result uploaded successfully.');
     }
 
+    public function storeHepabBatch2(Request $request)
+    {
+        $request->validate(
+            [
+                'hepb_files.*' => 'required|file|mimes:jpg,jpeg,png,pdf|max:10048',
+            ],
+            [
+                'hepb_files.*.required' => 'Please upload Hepa B Test Result file.',
+                'hepb_files.*.file' => 'The uploaded file must be a valid file.',
+                'hepb_files.*.mimes' => 'Only jpg, jpeg, png, and pdf files are allowed.',
+                'hepb_files.*.max' => 'Each file must not exceed 10 MB.',
+            ]
+        );
+
+        $filePaths = [];
+
+        if ($request->hasFile('hepb_files')) {
+            foreach ($request->file('hepb_files') as $file) {
+                // Get original filename and remove spaces
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalName = str_replace(' ', '_', $originalName); // Replace spaces with underscores
+
+                // Generate unique filename
+                $filename = $originalName . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                // Store the file
+                $path = $file->storeAs('hepa-b', $filename);
+
+                // Convert to required format (remove 'public/')
+                $filePaths[] = 'doc/' . $filename;
+            }
+        }
+
+        // Save file paths as JSON in database (modify based on your structure)
+        Requirements::create([
+            'user_id' => Auth::id(),
+            'hepa_b_test' => json_encode($filePaths),
+        ]);
+
+        // student.requirements.additional-requirements
+        return redirect()->route('student.applicant-requirements.index')->with('success', 'Hepa B Test Result uploaded successfully.');
+    }
+
     public function storeChestXray(Request $request)
     {
         $request->validate(
@@ -423,6 +468,48 @@ class StudentRequirementsController extends Controller
         ]);
 
         return redirect()->route('student.requirements.additional-requirements')->with('success', 'Chest X-Rays Result uploaded successfully.');
+    }
+
+    public function storeChestXrayBatch2(Request $request)
+    {
+        $request->validate(
+            [
+                'chestxray_files.*' => 'required|file|mimes:jpg,jpeg,png,pdf|max:10048',
+            ],
+            [
+                'chestxray_files.*.required' => 'Please upload Chest X-Ray Test file.',
+                'chestxray_files.*.file' => 'The uploaded file must be a valid file.',
+                'chestxray_files.*.mimes' => 'Only jpg, jpeg, png, and pdf files are allowed.',
+                'chestxray_files.*.max' => 'Each file must not exceed 10 MB.',
+            ]
+        );
+
+        $filePaths = [];
+
+        if ($request->hasFile('chestxray_files')) {
+            foreach ($request->file('chestxray_files') as $file) {
+                // Get original filename and remove spaces
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalName = str_replace(' ', '_', $originalName); // Replace spaces with underscores
+
+                // Generate unique filename
+                $filename = $originalName . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                // Store the file
+                $path = $file->storeAs('chest-xray', $filename);
+
+                // Convert to required format (remove 'public/')
+                $filePaths[] = 'doc/' . $filename;
+            }
+        }
+
+        // Save file paths as JSON in database (modify based on your structure)
+        Requirements::create([
+            'user_id' => Auth::id(),
+            'chest_x_ray' => json_encode($filePaths),
+        ]);
+
+        return redirect()->route('student.applicant-requirements.index')->with('success', 'Chest X-Rays Result uploaded successfully.');
     }
     /**
      * Display the specified resource.
@@ -469,6 +556,48 @@ class StudentRequirementsController extends Controller
         ]);
 
         return redirect()->route('student.requirements.additional-requirements')->with('success', 'Pregnancy Test uploaded successfully.');
+    }
+
+    public function storePrenancyTestBatch2(Request $request)
+    {
+        $request->validate(
+            [
+                'pregnancyTest_files.*' => 'required|file|mimes:jpg,jpeg,png,pdf|max:10048',
+            ],
+            [
+                'pregnancyTest_files.*.required' => 'Please upload Prenancy Test Test Result file.',
+                'pregnancyTest_files.*.file' => 'The uploaded file must be a valid file.',
+                'pregnancyTest_files.*.mimes' => 'Only jpg, jpeg, png, and pdf files are allowed.',
+                'pregnancyTest_files.*.max' => 'Each file must not exceed 10 MB.',
+            ]
+        );
+
+        $filePaths = [];
+
+        if ($request->hasFile('pregnancyTest_files')) {
+            foreach ($request->file('pregnancyTest_files') as $file) {
+                // Get original filename and remove spaces
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalName = str_replace(' ', '_', $originalName); // Replace spaces with underscores
+
+                // Generate unique filename
+                $filename = $originalName . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                // Store the file
+                $path = $file->storeAs('pregnancy-test', $filename);
+
+                // Convert to required format (remove 'public/')
+                $filePaths[] = 'doc/' . $filename;
+            }
+        }
+
+        // Save file paths as JSON in database (modify based on your structure)
+        Requirements::create([
+            'user_id' => Auth::id(),
+            'preg_test' => json_encode($filePaths),
+        ]);
+
+        return redirect()->route('student.applicant-requirements.index')->with('success', 'Pregnancy Test uploaded successfully.');
     }
 
     public function publishAdditionalRequirements(Request $request)
@@ -521,8 +650,8 @@ class StudentRequirementsController extends Controller
     {
         $folderMap = [
             'hepa_b_test' => 'hepa-b',
-            'chest_xray' => 'chest-xray',
-            'pregnancy_test' => 'pregnancy-test',
+            'chest-xray' => 'chest-xray',
+            'pregnancy-test' => 'pregnancy-test',
             'psa' => 'psa',
             'gmc' => 'gmc',
             'card' => 'card',

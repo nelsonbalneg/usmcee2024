@@ -117,7 +117,7 @@
                             <span class="font-bold">If credentials are not yet available,</span> please download the
                             affidavit of undertaking, fill it out, sign, and upload the scanned copy.<br>
 
-                            <a href="https://bit.ly/usm-cee-affidavit-2025"
+                            <a href="https://drive.google.com/file/d/1EaLXVYuxuEj47ShaM38fk9f_41bRdaEb/view?usp=sharing"
                                 class="mt-2 mb-2 text-white bg-orange-500 border-orange-500 btn hover:text-white hover:bg-orange-600 hover:yellow-orange-600 focus:text-white focus:bg-orange-600 focus:border-orange-600 focus:ring focus:ring-orange-100 active:text-white active:bg-orange-600 active:border-orange-600 active:ring active:ring-orange-100 dark:ring-orange-400/10">
                                 <i data-lucide="download" class="inline-block h-4 align-middle"></i>Download Affidavit of
                                 undertaking </a>
@@ -131,9 +131,6 @@
                         </h6>
 
                         @if (optional($requirements->first())->req_status == 0)
-                            {{-- <p class="mb-4">If PSA i not yet available, download the commitment form at bitly fill out it,
-                                sign, and upload a scanned copy.</p> --}}
-
                             <form action="{{ route('student.applicant-requirements.store') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
@@ -696,10 +693,283 @@
                             {{-- end Honorable dismissal --}}
                         @endif
 
-                        <div class="grid grid-cols-1 gap-5 mt-5 lg:grid-cols-2 xl:grid-cols-12">
-                        </div>
+                        {{-- add reqs for   $applicant->policyId == 783 midwifery
+                            $applicant->policyId == 725 nursing
+                            $applicant->policyId == 727 pharmacy
+                            $applicant->policyId == 728 nutrition and dietetics
+                            $applicant->policyId == 812 RadiologicTechnology
+                            $applicant->policyId == 731 food tech
+                            $applicant->policyId == 730 hospitality mgnt
+                            --}}
 
-                        <div class="flex gap-2 mt-4">
+                        @if (in_array($applicant->policyId, [783, 725, 727, 728, 812, 731, 730]))
+                            <h6 class="mt-6 mb-0 text-15">Hepatitis B Test Result <sup class="text-red-500">*
+                                    required</sup>
+                            </h6>
+                            @if (optional($requirements->first())->req_status == 0)
+                                <form action="{{ route('student.additional-applicant-requirements-2.hepab.store') }}"
+                                    method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @error('hepb_files.*')
+                                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                                    @enderror
+                                    <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
+
+                                        <input type="file" name="hepb_files[]" multiple="multiple" required
+                                            class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+
+                                        <button type="submit"
+                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
+                                            Upload Hepatitis B Test Result</button>
+                                    </div>
+                                </form>
+                            @endif
+
+                            @if ($requirements->isNotEmpty())
+                                <table class="w-full border-separate table-custom border-spacing-y-1">
+                                    <thead class="">
+                                        <tr
+                                            class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                            <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Details
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($requirements as $requirement)
+                                            @php
+                                                $hepa_b_test_files = json_decode($requirement->hepa_b_test, true);
+                                            @endphp
+
+                                            @if (!empty($hepa_b_test_files))
+                                                @foreach ($hepa_b_test_files as $file)
+                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                        <td>
+                                                            @if ($requirement->req_status == 0)
+                                                                <form
+                                                                    action="{{ route('student.applicant-requirements.delete', ['requirement' => $requirement->id, 'type' => 'hepa_b_test']) }}"
+                                                                    method="POST"
+                                                                    onsubmit="return confirm('Are you sure you want to delete this file?');"
+                                                                    style="display: inline;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent">
+                                                                        Delete
+                                                                    </button>
+                                                                </form>
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                    href="{{ Storage::url(str_replace('doc/', 'hepa-b/', $file)) }}"
+                                                                    target="_blank">View</a>
+
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
+                                                                    href="#"><i data-lucide="circle-dashed"
+                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Pending</a>
+                                                            @else
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                    href="{{ Storage::url(str_replace('doc/', 'hepa-b/', $file)) }}"
+                                                                    target="_blank">View</a>
+
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                    href="#"><i data-lucide="check-circle-2"
+                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Submitted</a>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
+
+                        @endif
+
+                        {{-- start chest x-ray --}}
+                        {{-- start filter access --}}
+                        @if (in_array($applicant->policyId, [783, 725, 727, 812]))
+
+                            <h6 class="mt-6 mb-0 text-15">Chest X-ray Test <sup class="text-red-500">*
+                                    required</sup>
+                            </h6>
+                            @if (optional($requirements->first())->req_status == 0)
+                                <form action="{{ route('student.additional-applicant-requirements-2.chest-xray.store') }}"
+                                    method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @error('chestxray_files.*')
+                                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                                    @enderror
+                                    <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
+
+                                        <input type="file" name="chestxray_files[]" multiple="multiple" required
+                                            class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+
+                                        <button type="submit"
+                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
+                                            Upload Chest X-Ray Result</button>
+                                    </div>
+                                </form>
+                            @endif
+
+                            @if ($requirements->isNotEmpty())
+                                <table class="w-full border-separate table-custom border-spacing-y-1">
+                                    <thead class="">
+                                        <tr
+                                            class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                            <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Details
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($requirements as $requirement)
+                                            @php
+                                                $chest_x_ray_files = json_decode($requirement->chest_x_ray, true);
+                                            @endphp
+
+                                            @if (!empty($chest_x_ray_files))
+                                                @foreach ($chest_x_ray_files as $file)
+                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                        <td>
+                                                            @if ($requirement->req_status == 0)
+                                                                <form
+                                                                    action="{{ route('student.applicant-requirements.delete', ['requirement' => $requirement->id, 'type' => 'chest-xray']) }}"
+                                                                    method="POST"
+                                                                    onsubmit="return confirm('Are you sure you want to delete this file?');"
+                                                                    style="display: inline;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent">
+                                                                        Delete
+                                                                    </button>
+                                                                </form>
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                    href="{{ Storage::url(str_replace('doc/', 'chest-xray/', $file)) }}"
+                                                                    target="_blank">View</a>
+
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
+                                                                    href="#"><i data-lucide="circle-dashed"
+                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Pending</a>
+                                                            @else
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                    href="{{ Storage::url(str_replace('doc/', 'chest-xray/', $file)) }}"
+                                                                    target="_blank">View</a>
+
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                    href="#"><i data-lucide="check-circle-2"
+                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Submitted</a>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
+                        @endif
+                        {{-- end filter access --}}
+                        {{-- end chest x-ray --}}
+
+
+                        {{-- start prenancy Test --}}
+                        {{-- start filter access --}}
+                        @if ($applicant->gender === 'Female' && in_array($applicant->policyId, [783, 725, 727, 812]))
+
+                            <h6 class="mt-6 mb-0 text-15">Pregnancy Test <sup class="text-red-500">*
+                                    required</sup>
+                            </h6>
+                            @if (optional($requirements->first())->req_status == 0)
+                                <form
+                                    action="{{ route('student.additional-applicant-requirements-2.pregnancy-test.store') }}"
+                                    method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @error('pregnancyTest_files.*')
+                                        <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
+                                    @enderror
+                                    <div class="grid items-center grid-cols-1 gap-2 xl:grid-cols-4">
+
+                                        <input type="file" name="pregnancyTest_files[]" multiple="multiple" required
+                                            class="mb-2 cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500">
+
+                                        <button type="submit"
+                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
+                                            Upload Pregnancy Test</button>
+                                    </div>
+                                </form>
+                            @endif
+
+                            @if ($requirements->isNotEmpty())
+                                <table class="w-full border-separate table-custom border-spacing-y-1">
+                                    <thead class="">
+                                        <tr
+                                            class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                            <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Details
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($requirements as $requirement)
+                                            @php
+                                                $pregnancy_test_files = json_decode($requirement->preg_test, true);
+                                            @endphp
+
+                                            @if (!empty($pregnancy_test_files))
+                                                @foreach ($pregnancy_test_files as $file)
+                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                        <td>
+                                                            @if ($requirement->req_status == 0)
+                                                                <form
+                                                                    action="{{ route('student.applicant-requirements.delete', ['requirement' => $requirement->id, 'type' => 'pregnancy-test']) }}"
+                                                                    method="POST"
+                                                                    onsubmit="return confirm('Are you sure you want to delete this file?');"
+                                                                    style="display: inline;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="inline-flex items-center px-4 py-2 mb-2 text-xs font-medium text-left text-red-500 bg-red-100 border border-transparent rounded dark:bg-red-500/20 dark:border-transparent">
+                                                                        Delete
+                                                                    </button>
+                                                                </form>
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                    href="{{ Storage::url(str_replace('doc/', 'pregnancy-test/', $file)) }}"
+                                                                    target="_blank">View</a>
+
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-yellow-500 bg-yellow-100 border border-transparent rounded dark:bg-yellow-500/20 dark:border-transparent"
+                                                                    href="#"><i data-lucide="circle-dashed"
+                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Pending</a>
+                                                            @else
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                    href="{{ Storage::url(str_replace('doc/', 'pregnancy-test/', $file)) }}"
+                                                                    target="_blank">View</a>
+
+                                                                <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-left text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
+                                                                    href="#"><i data-lucide="check-circle-2"
+                                                                        class="size-3 ltr:mr-1 rtl:ml-1"></i> Submitted</a>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
+
+                        @endif
+                        {{-- end filter access --}}
+                        {{-- end prenancy Test --}}
+
+                        <div class="mt-4 xl:grid-cols-12">
+                            <p>Before clicking the "Submit Requirements" button, please ensure that all required documents have been successfully uploaded.</p>
+                        </div>
+                        <div class="flex gap-2 mt-2 ">
+
 
                             @if ($requirements->isNotEmpty() && optional($requirements->first())->req_status == 0)
                                 <button type="submit" id="submitButton"

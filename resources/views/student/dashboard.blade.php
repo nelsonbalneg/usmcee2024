@@ -25,7 +25,7 @@
     <!--start grid-->
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
-        <div class="xl:col-span-3">
+        <div class="xl:col-span-4">
             <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                 <div class="card-body">
                     <h6 class="mb-4 text-15">MY PROFILE</h6>
@@ -55,7 +55,7 @@
             </div><!--end card-->
         </div><!--end col-->
 
-        <div class="xl:col-span-3">
+        <div class="xl:col-span-4">
             <div
                 class="order-1 md:col-span-6 lg:col-span-3 col-span-12 2xl:order-1 bg-green-100 dark:bg-green-500/20 card 2xl:col-span-2 group-data-[skin=bordered]:border-green-500/20 relative overflow-hidden">
                 <div class="card-body">
@@ -73,21 +73,26 @@
                 </div>
             </div><!--end col-->
 
-            <div class="order-2 md:col-span-6 lg:col-span-3 col-span-12 2xl:order-1 bg-orange-100 dark:bg-orange-500/20 card 2xl:col-span-2 group-data-[skin=bordered]:border-orange-500/20 relative overflow-hidden">
+            <div
+                class="order-2 md:col-span-6 lg:col-span-3 col-span-12 2xl:order-1 bg-orange-100 dark:bg-orange-500/20 card 2xl:col-span-2 group-data-[skin=bordered]:border-orange-500/20 relative overflow-hidden">
                 <div class="card-body">
-                    <i data-lucide="message-circle-more" class="absolute top-0 stroke-1 size-32 text-orange-200/50 dark:text-orange-500/20 ltr:-right-10 rtl:-left-10"></i>
+                    <i data-lucide="message-circle-more"
+                        class="absolute top-0 stroke-1 size-32 text-orange-200/50 dark:text-orange-500/20 ltr:-right-10 rtl:-left-10"></i>
                     <h5 class="mt-1 mb-2">“Education is one thing no one can take away from you.”</h5>
                     <p class="text-slate-500 dark:text-slate-200">Elin Nordegren</p>
                 </div>
             </div><!--end col-->
 
-            <div class="order-3 md:col-span-6 lg:col-span-3 col-span-12 2xl:order-1 bg-sky-100 dark:bg-sky-500/20 card 2xl:col-span-2 group-data-[skin=bordered]:border-sky-500/20 relative overflow-hidden">
+            <div
+                class="order-3 md:col-span-6 lg:col-span-3 col-span-12 2xl:order-1 bg-sky-100 dark:bg-sky-500/20 card 2xl:col-span-2 group-data-[skin=bordered]:border-sky-500/20 relative overflow-hidden">
                 <div class="card-body">
-                    <i data-lucide="list-filter" class="absolute top-0 stroke-1 size-32 text-sky-200/50 dark:text-sky-500/20 ltr:-right-10 rtl:-left-10"></i>
+                    <i data-lucide="list-filter"
+                        class="absolute top-0 stroke-1 size-32 text-sky-200/50 dark:text-sky-500/20 ltr:-right-10 rtl:-left-10"></i>
                     <div class="flex items-center justify-center rounded-md size-12 bg-sky-500 text-15 text-sky-50">
                         <i data-lucide="coins"></i>
                     </div>
-                    <h5 class="mt-5 mb-2">{{ \Carbon\Carbon::parse($studentdetails->last_seen)->format('F j, Y h:i A') }}</h5>
+                    <h5 class="mt-5 mb-2">{{ \Carbon\Carbon::parse($studentdetails->last_seen)->format('F j, Y h:i A') }}
+                    </h5>
                     <p class="text-slate-500 dark:text-slate-200">Last Logged in</p>
                 </div>
             </div><!--end col-->
@@ -95,8 +100,105 @@
 
         </div>
 
+        @if ($applicant)
+            <div class="xl:col-span-4">
+                {{-- Profile Staatuss --}}
+                <h5 class="mb-2 uppercase">Pre-registration Quick Information</h5>
+                <div class="card">
+                    <div class="flex items-center gap-3 card-body">
+
+                        @if ($applicant->applicant_profile_status == 1)
+                            <div
+                                class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
+                                <i data-lucide="check-circle"></i>
+                            </div>
+                            <div class="grow">
+                                <h5 class="mb-1 text-16"><span>Published</span></h5>
+                                <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
+                            </div>
+                        @else
+                            <div
+                                class="flex items-center justify-center text-yellow-500 bg-yellow-100 rounded-md size-12 text-15 dark:bg-yellow-500/20 shrink-0">
+                                <i data-lucide="square-pen"></i>
+                            </div>
+                            <div class="grow">
+                                <h5 class="mb-1 text-16"><span>Draft</span></h5>
+                                <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
+                            </div>
+                        @endif
+
+                    </div>
+                </div>
+                {{-- Program --}}
+                <div class="card">
+                    <div class="flex items-center gap-3 card-body">
+                        <div
+                            class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
+                            <i data-lucide="graduation-cap"></i>
+                        </div>
+                        <div class="grow">
+                            <h5 class="mb-1 text-16">
+                                @if ($applicant->policyId == null && $applicant->programName != null)
+                                    You did not qualify for <span
+                                        class="text-custom-500">{{ !empty($applicant->programName) ? $applicant->programName : '' }}
+                                        -
+                                        {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}</span>
+                                    based on your ranking. <br><br> Tap or Click the <a class="text-green-500" href="{{ route('student.cee.result') }}">Result </a>  Menu to select other program.
+                                @else
+                                    {{ !empty($applicant->programName) ? $applicant->programName : '' }} -
+                                    {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
+                                @endif
+                            </h5>
+                            <p class="text-slate-500 dark:text-zink-200">Program Name</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Prereg staus --}}
+                <div class="card">
+                    <div class="flex items-center gap-3 card-body">
+                        <div
+                            class="flex items-center justify-center text-purple-500 bg-purple-100 rounded-md size-12 text-15 dark:bg-purple-500/20 shrink-0">
+                            <i data-lucide="history"></i>
+                        </div>
+                        <div class="grow">
+                            {{--  {{ !empty($applicant->prereg_status) ? $applicant->prereg_status : '---' }} --}}
+
+                            <h5 class="mb-1 text-16">
+                                @if ($applicant->prereg_status == 'pending')
+                                    Program has been confirmed.
+                                @elseif ($applicant->prereg_status == 'for_ranking')
+                                    Please wait, ranking in progress.
+                                @elseif ($applicant->policyId == null && $applicant->programName != null)
+                                    You did not qualify for the chosen program based on your ranking
+                                @else
+                                    ---
+                                @endif
+                            </h5>
+                            <p class="text-slate-500 dark:text-zink-200">Pre-registration Status</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- id Number --}}
+                <div class="card">
+                    <div class="flex items-center gap-3 card-body">
+                        <div
+                            class="flex items-center justify-center rounded-md size-12 text-sky-500 bg-sky-100 text-15 dark:bg-sky-500/20 shrink-0">
+                            <i data-lucide="id-card"></i>
+                        </div>
+                        <div class="grow">
+                            <h5 class="mb-1 text-16">{{ !empty($applicant->student_no) ? $applicant->student_no : '---' }}
+                            </h5>
+                            <p class="text-slate-500 dark:text-zink-200">Student ID Number</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         @if ($isreservation_exist > 0)
-            <div class="xl:col-span-6">
+            <div class="col-span-6 xl:col-span-12">
                 <div class="card">
                     <div class="card-body">
                         <h6 class="mb-4 text-15">YOUR USMCEE RESERVATION HISTORY
@@ -153,7 +255,8 @@
                                                     @elseif ($data->status === 'cancelled')
                                                         <span
                                                             class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent"><i
-                                                                data-lucide="x-circle" class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                data-lucide="x-circle"
+                                                                class="size-3 ltr:mr-1 rtl:ml-1"></i>
                                                             Cancelled</span>
                                                     @elseif($data->status === 'confirmed')
                                                         <span

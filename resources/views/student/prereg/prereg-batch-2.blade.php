@@ -115,7 +115,7 @@
                             </div>
                         @elseif($has_policy_id == 0)
                             <p class="text-slate-800">
-                                Oops! It seems taht you have not confirmed your program yet. Please select your program by
+                                Oops! It seems that you have not confirmed your program yet. Please select your program by
                                 clicking or tapping the button below
                                 <br>
 

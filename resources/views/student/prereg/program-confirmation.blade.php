@@ -100,11 +100,12 @@
 
                                                                 {{-- start filter if midwife 524, nursing 310, pharma 311, hospitality mgnt 46, nutrition 58, food tech 186 --}}
                                                                 @if (
-                                                                    $programData['id'] == 783 ||
-                                                                        $programData['id'] == 725 ||
-                                                                        $programData['id'] == 727 ||
-                                                                        $programData['id'] == 812 ||
-                                                                        $programData['id'] == 731 ||
+                                                                    $programData['id'] == 783 || //midwifery
+                                                                        $programData['id'] == 725 || //nursing
+                                                                        $programData['id'] == 727 || //pharmacy
+                                                                        $programData['id'] == 812 || //RadiologicTechnology
+                                                                        $programData['id'] == 731 ||//food tech, hospitality mgnt
+                                                                        $programData['id'] == 728 ||//nutrition and dietetics,
                                                                         $programData['id'] == 730)
                                                                     {{-- start check if additional Requirements has been uploaded adn published --}}
                                                                     @if ($has_additional_requirement)

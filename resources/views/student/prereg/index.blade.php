@@ -284,8 +284,17 @@
                         </div>
                         <div class="grow">
                             <h5 class="mb-1 text-16">
+                                @if ($applicant->policyId == null && $applicant->programName != null)
+                                You did not qualify for <span
+                                    class="text-custom-500">{{ !empty($applicant->programName) ? $applicant->programName : '' }}
+                                    -
+                                    {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}</span>
+                                based on your ranking. <br><br> Tap or Click the <a class="text-green-500" href="{{ route('student.cee.result') }}">Result </a>  Menu to select other program.
+                            @else
                                 {{ !empty($applicant->programName) ? $applicant->programName : '' }} -
                                 {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
+                            @endif
+
                             </h5>
                             <p class="text-slate-500 dark:text-zink-200">Program Name</p>
                         </div>
@@ -305,9 +314,12 @@
                             <h5 class="mb-1 text-16">
                                 @if ($applicant->prereg_status == 'pending')
                                     Program has been confirmed.
-                                @elseif(empty($applicant->prereg_status))
-                                    ---
+                                @elseif ($applicant->prereg_status == 'for_ranking')
+                                    Please wait, ranking in progress.
+                                @elseif ($applicant->policyId == null && $applicant->programName != null)
+                                    You did not qualify for the chosen program based on your ranking
                                 @else
+                                    ---
                                 @endif
                             </h5>
                             <p class="text-slate-500 dark:text-zink-200">Pre-registration Status</p>
@@ -342,7 +354,9 @@
             <div>
                 <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.</h6>
                 <ul class="ml-2 list-disc list-inside">
-                    <li>Please visit this page between <b> {{ \Carbon\Carbon::parse($start)->format('F j, Y g:i A') }} to {{ \Carbon\Carbon::parse($end)->format('F j, Y g:i A') }} </b> for the second batch of pre-registration.</li>
+                    <li>Please visit this page between <b> {{ \Carbon\Carbon::parse($start)->format('F j, Y g:i A') }} to
+                            {{ \Carbon\Carbon::parse($end)->format('F j, Y g:i A') }} </b> for the second batch of
+                        pre-registration.</li>
 
                 </ul>
             </div>

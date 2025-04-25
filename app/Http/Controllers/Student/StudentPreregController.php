@@ -31,7 +31,7 @@ class StudentPreregController extends Controller
 
         //get the details from stundent_profile
         $applicant = StundentProfile::where('user_id', $userId)
-            ->first() ?? new StundentProfile();
+            ->first();
 
         $is_applicant_exist = StundentProfile::where('user_id', $userId)
             ->where('applicant_profile_status', 1)
@@ -40,8 +40,8 @@ class StudentPreregController extends Controller
         //get the requirements in general
         $requirements = Requirements::where('user_id', $userId)->first();
 
-          //fetch the Sitesettings
-          $site_settings = DB::table('site_settings')->first();
+        //fetch the Sitesettings
+        $site_settings = DB::table('site_settings')->first();
 
 
         //get the uploded requirements

@@ -7,6 +7,7 @@ use App\Models\Result;
 use App\Models\CeeSession;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Models\StundentProfile;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +78,10 @@ class StudentController extends Controller
 
             $studentdetails = User::where('id', Auth::user()->id)->first();
 
+            $applicant = StundentProfile::where('user_id', Auth::user()->id)
+                ->where('applicant_profile_status', 1)
+                ->first();
+
             //check if records exists
             $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
 
@@ -113,7 +118,8 @@ class StudentController extends Controller
                 'studentdetails',
                 'isreservation_exist',
                 'cee_result',
-                'cee_reservation_records'
+                'cee_reservation_records',
+                'applicant'
             ));
         }
     }
