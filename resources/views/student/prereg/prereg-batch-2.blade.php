@@ -94,7 +94,16 @@
                                                         for Ranking</span>
                                                 @elseif($prereg_profile->prereg_status == 'pending')
                                                     <span
-                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed</span>
+                                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">
+                                                        Confirmed
+                                                    </span>
+                                                    <span
+                                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                        Submit the original copies of
+                                                        pertinent requirements to the <b class="text-purple-500"> Admission
+                                                            and Records
+                                                            Office (ARO) </b>. This may be done face-to-face or via courier.
+                                                    </span>
                                                 @elseif($prereg_profile->prereg_status == 'cancelled')
                                                     <span
                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Cancelled</span>

@@ -104,8 +104,8 @@
                                                                         $programData['id'] == 725 || //nursing
                                                                         $programData['id'] == 727 || //pharmacy
                                                                         $programData['id'] == 812 || //RadiologicTechnology
-                                                                        $programData['id'] == 731 ||//food tech, hospitality mgnt
-                                                                        $programData['id'] == 728 ||//nutrition and dietetics,
+                                                                        $programData['id'] == 731 || //food tech, hospitality mgnt
+                                                                        $programData['id'] == 728 || //nutrition and dietetics,
                                                                         $programData['id'] == 730)
                                                                     {{-- start check if additional Requirements has been uploaded adn published --}}
                                                                     @if ($has_additional_requirement)
@@ -167,7 +167,7 @@
                             {{-- check the date range for second batch qualifiers --}}
                             @if (now()->between($start, $end))
 
-                            @if ($has_policy_id == 1)
+                                @if ($has_policy_id == 1)
                                     <div
                                         class="flex gap-3 p-4 text-sm rounded-md text-sky-500 bg-sky-50 dark:bg-sky-400/20">
                                         <i data-lucide="check-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
@@ -232,6 +232,14 @@
                                                                 @elseif($cee_profile->prereg_status == 'pending')
                                                                     <span
                                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed</span>
+                                                                    <span
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                                        Submit the original copies of
+                                                                        pertinent requirements to the <b
+                                                                            class="text-purple-500"> Admission and Records
+                                                                            Office (ARO) </b>. This may be done face-to-face
+                                                                        or via courier.
+                                                                    </span>
                                                                 @elseif($cee_profile->prereg_status == 'cancelled')
                                                                     <span
                                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Cancelled</span>
@@ -400,9 +408,9 @@
 
                     Swal.fire({
                         title: "Are you sure?",
-                    //     html: `You're about to confirm the program with <strong>Policy ID: ${programPolicyId}</strong>.<br>
+                        //     html: `You're about to confirm the program with <strong>Policy ID: ${programPolicyId}</strong>.<br>
                     // Submitting this form will confirm your intent to pre-register for the program.`,
-                         text: "Submitting this form will confirm your intent to pre-register for the program you have selected for ranking. Once submitted, your intent cannot be changed or withdrawn.",
+                        text: "Submitting this form will confirm your intent to pre-register for the program you have selected for ranking. Once submitted, your intent cannot be changed or withdrawn.",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
