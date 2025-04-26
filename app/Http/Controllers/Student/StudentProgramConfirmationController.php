@@ -224,7 +224,15 @@ class StudentProgramConfirmationController extends Controller
             $app_no = Reservation::where('user_id', $userId)->firstOrFail();
 
             $prog_policy_id = $request->program_policy_id;
+             // Fetch program policy data from external API
+             $programResponse = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$prog_policy_id}");
 
+             if (!$programResponse->successful()) {
+                 Log::warning("API call failed for policy_id: {$prog_policy_id}, status: " . $programResponse->status());
+                 return redirect()->back()->with('error', 'Failed to fetch program data.');
+             }
+
+             $data = $programResponse->json();
 
             Log::info('Incoming program policy ID', ['user_id' => $userId, 'program_policy_id' => $prog_policy_id]);
 
@@ -245,6 +253,10 @@ class StudentProgramConfirmationController extends Controller
                     'mobile_no' => $user_data->phone,
                     'email' => $user_data->email,
                     'policyId' => $prog_policy_id,
+                    'programName' => $data['programName'] ?? null,
+                    'collegeName' => $data['collegeName'] ?? null,
+                    'majorDiscDesc' => $data['majorDiscDesc'] ?? null,
+                    'campusName' => $data['realCampus'] ?? null,
                     'current_step' => 0,
                     'prereg_status' => 'for_ranking',
                     'confirmation_batch' => 2,
