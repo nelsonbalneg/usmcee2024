@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Models\Requirements;
 use Illuminate\Http\Request;
 use App\Models\StundentProfile;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -684,5 +685,43 @@ class StudentRequirementsController extends Controller
         $requirement->delete(); // or $requirement->update([$type => null]);
 
         return redirect()->route('student.applicant-requirements.index')->with('success', ucfirst(str_replace('_', ' ', $type)) . ' requirement deleted successfully.');
+    }
+
+    public function unpostRequirements(Request $request)
+    {
+        try {
+            $userId = Auth::id();
+
+            // First get the requirements
+            $requirements = Requirements::where('user_id', $userId)->get();
+
+            // Get only the top 1 record for the user
+            $requirement = Requirements::where('user_id', $userId)
+                ->first();
+
+            // Check if the requirement has reached the maximum unpost count
+            $currentCount = $requirement->unpost_count ?? 0; // Handle NULL values
+
+            if ($currentCount >= 3) {
+                return response()->json(['success' => false, 'message' => 'You have reached maximum unposting.'], 400);
+            }
+
+            if ($requirements->isEmpty()) {
+                return response()->json(['success' => false, 'message' => 'Requirements is not published.'], 404);
+            }
+
+            // Update each record with proper handling of NULL values
+            foreach ($requirements as $requirement) {
+                $currentCount = $requirement->unpost_count;
+                $requirement->unpost_count = is_null($currentCount) ? 1 : $currentCount + 1;
+                $requirement->req_status = 0;
+                $requirement->save();
+            }
+
+            return response()->json(['success' => true, 'message' => 'Requirements unposted successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()], 500);
+        }
+
     }
 }

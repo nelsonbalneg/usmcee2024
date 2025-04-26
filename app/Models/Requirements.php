@@ -24,6 +24,7 @@ class Requirements extends Model
         'chest_x_ray',
         'preg_test',
         'signature',
-        'photo'
+        'photo',
+        'unpost_count'
     ];
 }

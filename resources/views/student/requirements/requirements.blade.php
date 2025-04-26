@@ -966,10 +966,10 @@
                         {{-- end prenancy Test --}}
 
                         <div class="mt-4 xl:grid-cols-12">
-                            <p>Before clicking the "Submit Requirements" button, please ensure that all required documents have been successfully uploaded.</p>
+                            <p>Before clicking the "Submit Requirements" button, please ensure that all required documents
+                                have been successfully uploaded.</p>
                         </div>
                         <div class="flex gap-2 mt-2 ">
-
 
                             @if ($requirements->isNotEmpty() && optional($requirements->first())->req_status == 0)
                                 <button type="submit" id="submitButton"
@@ -977,6 +977,11 @@
                                     <i data-lucide="upload" class="inline-block size-4 dark:text-zink-200"></i>
                                     Submit Requirements</button>
                             @elseif($requirements->isNotEmpty() && optional($requirements->first())->req_status == 1)
+                                <button type="submit" id="unpostButton"
+                                    class="text-white border-slate-500 bg-slate-500 btn hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">
+                                    <i data-lucide="x" class="inline-block size-4 dark:text-zink-200"></i>
+                                    Unpost Requirements</button>
+
                                 <a type="button" href="{{ route('student.program-confirmation.index') }}"
                                     class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                                     Proceed to Next Step <i data-lucide="move-right"
@@ -1043,6 +1048,57 @@
                                             "Your uploaded requirements has been published. Click Proceed to Next Step",
                                             "success")
                                         .then(() => location.reload()); // Reload the page
+                                } else {
+                                    Swal.fire("Error!", data.message, "error");
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire("Error!", "Something went wrong. Please try again.",
+                                    "error");
+                            });
+                    }
+                });
+            });
+        });
+    </script>
+
+    {{-- sswal unposst --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("unpostButton").addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default action
+
+                Swal.fire({
+                    title: "Are you sure to unpost the requirements?",
+                    text: "Unposting will allow you to edit the requirements again. You are allowed to unpost a requirement up to three times",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, unpost it!",
+                    cancelButtonText: "Cancel"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send AJAX request to publish
+                        fetch("{{ route('student.requirements.unpost') }}", {
+                                method: "PUT",
+                                headers: {
+                                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({})
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire("Success!",
+                                            "Requirements has been unposted. You can now edit the requirements.",
+                                            "success")
+                                        .then(() => {
+                                            // Redirect to the specific route instead of reloading
+                                            window.location.href =
+                                                "{{ route('student.applicant-requirements.index') }}";
+                                        });
                                 } else {
                                     Swal.fire("Error!", data.message, "error");
                                 }

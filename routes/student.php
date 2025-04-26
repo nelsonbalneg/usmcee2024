@@ -83,6 +83,8 @@ Route::middleware(['check.maintenance'])->group(function () {
 
     Route::delete('/pre-registration/applicant-requirements/delete/{requirement}/{type}', [StudentRequirementsController::class, 'deleteRequirements'])->name('applicant-requirements.delete');
 
+    //unpost requirements
+    Route::put('pre-registration/additional-applicant-requirements/unpost', [StudentRequirementsController::class, 'unpostRequirements'])->name('requirements.unpost');
     Route::put('pre-registration/additional-applicant-requirements/publish', [StudentRequirementsController::class, 'publishAdditionalRequirements'])->name('additional-requirements.publish');
     Route::post('pre-registration/additional-applicant-requirements/pregnancy-test', [StudentRequirementsController::class, 'storePrenancyTest'])->name('additional-applicant-requirements.pregnancy-test.store');
     Route::post('pre-registration/additional-applicant-requirements/chest-xray', [StudentRequirementsController::class, 'storeChestXray'])->name('additional-applicant-requirements.chest-xray.store');
