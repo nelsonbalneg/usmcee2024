@@ -152,6 +152,8 @@
                                         {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}</span>
                                     based on your ranking. <br><br> Tap or Click the <a class="text-green-500"
                                         href="{{ route('student.cee.result') }}">Result </a> Menu to select other program.
+                                @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                    ---
                                 @else
                                     {{ !empty($applicant->programName) ? $applicant->programName : '' }} -
                                     {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
@@ -175,8 +177,10 @@
                             <h5 class="mb-1 text-16">
                                 @if ($applicant->prereg_status == 'pending')
                                     Program has been confirmed.
-                                @elseif ($applicant->prereg_status == 'for_ranking')
+                                @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
                                     Please wait, ranking in progress.
+                                @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                    Please confirm the program.
                                 @elseif ($applicant->policyId == null && $applicant->programName != null)
                                     You did not qualify for the chosen program based on your ranking
                                 @else

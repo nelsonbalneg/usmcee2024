@@ -217,7 +217,7 @@
                                                                 {{ $programDataBatch2['majorDiscDesc'] }}</span></p>
                                                         <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Campus and
                                                                 College: </b><br><span
-                                                                class="align-middle">{{ $programDataBatch2['campusName'] }}
+                                                                class="align-middle">{{ $programDataBatch2['realCampus'] }}
                                                                 - {{ $programDataBatch2['collegeName'] }}</span></p>
                                                         <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Date and
                                                                 Time: </b><br><span

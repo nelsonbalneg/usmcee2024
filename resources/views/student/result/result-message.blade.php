@@ -86,7 +86,7 @@
                                                             {{ $programDataBatch2['majorDiscDesc'] }}</span></p>
                                                     <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Campus and
                                                             College: </b><br><span
-                                                            class="align-middle">{{ $programDataBatch2['campusName'] }}
+                                                            class="align-middle">{{ $programDataBatch2['realCampus'] }}
                                                             - {{ $programDataBatch2['collegeName'] }}</span></p>
                                                     <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Date and
                                                             Time: </b><br><span
@@ -201,67 +201,59 @@
                                             (ranking).<br><br>
 
                                             @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
-                                                <div class="overflow-x-auto">
+                                            <div class="overflow-x-auto">
+                                                @foreach ($qualifiedCampuses['qualifiedCampuses'] as $campus)
+                                                    <div class="w-full mb-4 whitespace-nowrap">
+                                                        <h5 class="p-2 text-left text-green-500 bg-green-100 dark:bg-zink-600 dark:text-zink-200">
+                                                            @if (!empty($campus['qualifiedPrograms']))
+                                                                {{ $campus['qualifiedPrograms'][0]['realCampus'] }}
+                                                            @else
+                                                                {{ $campus['campusName'] }}
+                                                            @endif
+                                                        </h5>
 
-                                                    @foreach ($qualifiedCampuses['qualifiedCampuses'] as $campus)
-                                                        <div class="w-full mb-4 whitespace-nowrap">
-                                                            <h5
-                                                                class="p-2 text-left text-green-500 bg-green-100 dark:bg-zink-600 dark:text-zink-200">
-                                                                {{ $campus['campusName'] }}</h5>
-
-                                                            <div class="overflow-x-auto">
-                                                                <table class="w-full whitespace-nowrap">
-                                                                    <thead
-                                                                        class="text-left bg-slate-100 text-slate-500 dark:bg-zink-600 dark:text-zink-200">
-                                                                        <tr>
-                                                                            <th
-                                                                                class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                                                Action</th>
-                                                                            {{-- <th>Ranking Slot</th>
-                                                                            <th>Policy ID</th> --}}
-                                                                            <th>Program Name</th>
-
+                                                        <div class="overflow-x-auto">
+                                                            <table class="w-full whitespace-nowrap">
+                                                                <thead class="text-left bg-slate-100 text-slate-500 dark:bg-zink-600 dark:text-zink-200">
+                                                                    <tr>
+                                                                        <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
+                                                                            Action</th>
+                                                                        {{-- <th>Ranking Slot</th>
+                                                                        <th>Policy ID</th> --}}
+                                                                        <th>Program Name</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($campus['qualifiedPrograms'] as $program)
+                                                                        <tr class="even:bg-slate-50 hover:bg-slate-50 even:hover:bg-slate-100 dark:even:bg-zink-600/50 dark:hover:bg-zink-600 dark:even:hover:bg-zink-600">
+                                                                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                                <button
+                                                                                    data-program="{{ $program['policyId'] }}"
+                                                                                    class="text-white selectProgramBtn border-custom-500 bg-custom-500 btn hover:text-white hover:bg-custom-600 hover:yellow-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/10">
+                                                                                    Select</button>
+                                                                            </td>
+                                                                            {{-- <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                                {{ $program['rankingOpenSlotsRemaining'] }}
+                                                                            </td>
+                                                                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                                {{ $program['policyId'] }}
+                                                                            </td> --}}
+                                                                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                                {{ $program['program'] }}{{ !empty($program['major']) ? ' - ' . $program['major'] : '' }}
+                                                                            </td>
                                                                         </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($campus['qualifiedPrograms'] as $program)
-                                                                            <tr
-                                                                                class="even:bg-slate-50 hover:bg-slate-50 even:hover:bg-slate-100 dark:even:bg-zink-600/50 dark:hover:bg-zink-600 dark:even:hover:bg-zink-600">
-                                                                                <td
-                                                                                    class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-
-
-                                                                                    <button
-                                                                                        data-program="{{ $program['policyId'] }}"
-                                                                                        class="text-white selectProgramBtn border-custom-500 bg-custom-500 btn hover:text-white hover:bg-custom-600 hover:yellow-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/10">
-                                                                                        Select</button>
-                                                                                </td>
-                                                                                {{-- <td
-                                                                                    class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                                                    {{ $program['rankingOpenSlotsRemaining'] }}
-                                                                                </td>
-                                                                                <td
-                                                                                    class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                                                    {{ $program['policyId'] }}
-                                                                                </td> --}}
-                                                                                <td
-                                                                                    class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                                                    {{ $program['program'] }}{{ !empty($program['major']) ? ' - ' . $program['major'] : '' }}
-                                                                                </td>
-
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                    @endforeach
-                                                </div>
-                                            @else
-                                                <div class="alert alert-info">
-                                                    No qualified programs found.
-                                                </div>
-                                            @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <div class="alert alert-info">
+                                                No qualified programs found.
+                                            </div>
+                                        @endif
 
                                         </p>
                                     @elseif($has_policy_id == 1)
@@ -300,7 +292,7 @@
                                                                 {{ $programDataBatch2['majorDiscDesc'] }}</span></p>
                                                         <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Campus and
                                                                 College: </b><br><span
-                                                                class="align-middle">{{ $programDataBatch2['campusName'] }}
+                                                                class="align-middle">{{ $programDataBatch2['realCampus'] }}
                                                                 - {{ $programDataBatch2['collegeName'] }}</span></p>
                                                         <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Date and
                                                                 Time: </b><br><span

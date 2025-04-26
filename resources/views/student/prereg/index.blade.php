@@ -37,10 +37,10 @@
             <div class="xl:col-span-3">
 
                 <a href="https://drive.google.com/file/d/17K7A0XK0fkGALONUxJ28UxNs40-d5zTB/view?usp=sharing"
-                class="block w-full mt-2 mb-2 text-white border-custom-500 bg-custom-500 btn hover:text-white hover:bg-custom-600 hover:yellow-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/10">
-                <i data-lucide="book" class="inline-block h-4 align-middle"></i>
-                Download the Preregistration Guide
-            </a>
+                    class="block w-full mt-2 mb-2 text-white border-custom-500 bg-custom-500 btn hover:text-white hover:bg-custom-600 hover:yellow-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/10">
+                    <i data-lucide="book" class="inline-block h-4 align-middle"></i>
+                    Download the Preregistration Guide
+                </a>
                 <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                     <div class="card-body">
                         <h6 class="mb-4 text-15">MY PROFILE INFORMATION</h6>
@@ -298,6 +298,8 @@
                                         {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}</span>
                                     based on your ranking. <br><br> Tap or Click the <a class="text-green-500"
                                         href="{{ route('student.cee.result') }}">Result </a> Menu to select other program.
+                                @elseif ($applicant && $applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                    ---
                                 @else
                                     {{ !empty($applicant->programName) ? $applicant->programName : '' }} -
                                     {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
@@ -323,8 +325,10 @@
                                 @if ($applicant)
                                     @if ($applicant->prereg_status == 'pending')
                                         Program has been confirmed.
-                                    @elseif ($applicant->prereg_status == 'for_ranking')
+                                    @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
                                         Please wait, ranking in progress.
+                                    @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                        Please confirm the program.
                                     @elseif ($applicant->policyId == null && $applicant->programName != null)
                                         You did not qualify for the chosen program based on your ranking
                                     @else
