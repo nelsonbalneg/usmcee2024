@@ -324,12 +324,11 @@
                             <h5 class="mb-1 text-16">
                                 @if ($applicant)
                                     @if ($applicant->prereg_status == 'pending')
-                                        Program has been confirmed.
-                                        <span
-                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                            Submit the original copies of
-                                            pertinent requirements to the <b class="text-purple-500"> Admission and Records
-                                                Office (ARO) </b>. This may be done face-to-face or via courier.
+                                        Program has been confirmed for enrollment.
+                                        <span class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                            Submit the original copies of the pertinent requirements to the
+                                            <b class="text-purple-500">Admission and Records Office (ARO)</b> on or before May 16, 2025.
+                                            Submission may be done in person or via courier.
                                         </span>
                                     @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
                                         Please wait, ranking in progress.

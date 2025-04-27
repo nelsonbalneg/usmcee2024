@@ -97,7 +97,14 @@
                                                         <span class="align-middle">
                                                             @if ($cee_profile->prereg_status == 'for_ranking')
                                                                 <span
-                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">Selected</span>
+                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">
+                                                                    Selected
+                                                                </span>
+
+                                                                {{-- <span
+                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                                    Kindly finish all the steps to confirm your selected program for ranking.
+                                                                </span> --}}
                                                             @elseif($cee_profile->prereg_status == 'pending')
                                                                 <span
                                                                     class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed</span>
@@ -309,19 +316,28 @@
                                                             <span class="align-middle">
                                                                 @if ($cee_profile->prereg_status == 'for_ranking' && $cee_profile->campus_id == null)
                                                                     <span
-                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">Selected</span>
+                                                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">
+                                                                        Selected
+                                                                    </span>
+                                                                    <span
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                                        Kindly finish all the steps to confirm your selected
+                                                                        program for ranking.
+                                                                    </span>
                                                                 @elseif($cee_profile->prereg_status == 'pending')
                                                                     <span
                                                                         class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">
-                                                                        Confirmed
+                                                                        Confirmed for enrollment
                                                                     </span>
                                                                     <span
-                                                                    class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                                                    Submit the original copies of
-                                                                    pertinent requirements to the <b class="text-purple-500"> Admission
-                                                                        and Records
-                                                                        Office (ARO) </b>. This may be done face-to-face or via courier.
-                                                                </span>
+                                                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                                        Submit the original copies of
+                                                                        pertinent requirements to the <b
+                                                                            class="text-purple-500"> Admission
+                                                                            and Records
+                                                                            Office (ARO) </b>. This may be done face-to-face
+                                                                        or via courier.
+                                                                    </span>
                                                                 @elseif($cee_profile->prereg_status == 'for_ranking' && $cee_profile->campus_id != null)
                                                                     <span
                                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed
