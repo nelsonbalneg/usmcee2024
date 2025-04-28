@@ -447,9 +447,9 @@ class StudentApplicantProfileController extends Controller
             'college_degree' => 'required|string|max:100',
             'college_incldates' => 'required|string|max:60',
             'student_picture' => 'nullable|file',
-            'elem_award_honor' => 'nullable|string|max:100',
-            'hs_award_honor' => 'nullable|string|max:100',
-            'shs_award_honor' => 'nullable|string|max:100',
+            'elem_award_honor' => 'nullable|string|max:1000',
+            'hs_award_honor' => 'nullable|string|max:1000',
+            'shs_award_honor' => 'nullable|string|max:1000',
         ]);
 
 
