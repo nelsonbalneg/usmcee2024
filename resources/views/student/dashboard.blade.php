@@ -260,9 +260,9 @@
                                             <br>
 
                                             <div class="mb-2 xl:col-span-6">
-                                                <label for="nstp" class="block mb-2 text-base font-medium">
+                                                {{-- <label for="nstp" class="block mb-2 text-base font-medium">
                                                     What is your NSTP peference?<sup class="text-red-500">* required</sup>
-                                                </label>
+                                                </label> --}}
                                                 <select name="nstp" id="nstpSelect"
                                                     class="w-full p-2 transition duration-200 ease-in-out border rounded-md border-custom-300 focus:ring-custom-500 focus:border-custom-500"
                                                     data-choices>
