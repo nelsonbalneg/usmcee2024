@@ -335,7 +335,7 @@
                                                                         pertinent requirements to the <b
                                                                             class="text-purple-500"> Admission
                                                                             and Records
-                                                                            Office (ARO) </b>. This may be done face-to-face
+                                                                            Office (ARO) </b> on or before May 16, 2025. This may be done face-to-face
                                                                         or via courier.
                                                                     </span>
                                                                 @elseif($cee_profile->prereg_status == 'for_ranking' && $cee_profile->campus_id != null)
@@ -418,7 +418,7 @@
                         <div class="2xl:col-span-5">
                             <p class="mb-5 text-slate-500 dark:text-zink-200">Sincerely,</p>
                             <p class="mb-2 uppercase text-slate-800 dark:text-zink-200"> <b> LEORENCE C. TANDOG </b></p>
-                            <p class="text-slate-500 dark:text-zink-200">Vice President for Academic Affair</p>
+                            <p class="text-slate-500 dark:text-zink-200">Vice President for Academic Affairs</p>
                             <p class="text-slate-500 dark:text-zink-200">University of Southern Mindanao</p>
                         </div>
 

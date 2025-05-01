@@ -67,6 +67,14 @@
                                                 {{ $cee_profile->last_name }} {{ $cee_profile->ext_name }}!</b>
                                             Pre-registration
                                             is successful.</h5>
+                                            <span
+                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                            Submit the original copies of the pertinent
+                                            requirements to the
+                                            <b class="text-purple-500">Admission and Records
+                                                Office (ARO)</b> on or before May 16, 2025.
+                                            Submission may be done in person or via courier.
+                                        </span>
                                     @endif
 
                                     <div class="mt-5 overflow-x-auto">
@@ -135,7 +143,7 @@
                                                                     class="text-green-500 bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
                                                                     <i data-lucide="check-circle"
                                                                         class="inline-block size-4 dark:text-zink-200"></i>
-                                                                    Confirmed</a>
+                                                                    Confirmed for Enrollment</a>
                                                             @endif
                                                             {{-- end check if user already confirmed --}}
                                                         @else
@@ -232,19 +240,23 @@
                                                                         Selected
                                                                     </span>
                                                                     <span
-                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                                                    Kindly
-                                                                    click the
-                                                                    <strong>"Confirm Program for Ranking"</strong> button below.<br>
-                                                                </span>
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                                        Kindly
+                                                                        click the
+                                                                        <strong>"Confirm Program for Ranking"</strong>
+                                                                        button below.<br>
+                                                                    </span>
                                                                 @elseif($cee_profile->prereg_status == 'pending')
                                                                     <span
                                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed</span>
-                                                                        <span class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                                                            Submit the original copies of the pertinent requirements to the
-                                                                            <b class="text-purple-500">Admission and Records Office (ARO)</b> on or before May 16, 2025.
-                                                                            Submission may be done in person or via courier.
-                                                                        </span>
+                                                                    <span
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                                        Submit the original copies of the pertinent
+                                                                        requirements to the
+                                                                        <b class="text-purple-500">Admission and Records
+                                                                            Office (ARO)</b> on or before May 16, 2025.
+                                                                        Submission may be done in person or via courier.
+                                                                    </span>
                                                                 @elseif($cee_profile->prereg_status == 'cancelled')
                                                                     <span
                                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Cancelled</span>
@@ -279,14 +291,14 @@
                                         </div>
                                     @elseif($has_policy_id == 0)
                                         <p class="text-slate-800">
-                                            Oops! It seems taht you have not confirmed your program yet. Please select your
+                                            Oops! It seems that you have not confirmed your program yet. Please select your
                                             program by
                                             clicking or tapping the button below
                                             <br>
 
                                             <a href="{{ route('student.cee.result') }}"
                                                 class="mt-4 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                <i data-lucide="percent"
+                                                <i data-lucide="s"
                                                     class="inline-block size-4 dark:text-zink-200"></i>Result
                                             </a>
                                         </p>
@@ -323,7 +335,8 @@
                                         <p class="mb-5 text-slate-500 dark:text-zink-200">Sincerely,</p>
                                         <p class="mb-2 uppercase text-slate-800 dark:text-zink-200"> <b> LEORENCE C. TANDOG
                                             </b></p>
-                                        <p class="text-slate-500 dark:text-zink-200">Vice President for Academic Affair</p>
+                                        <p class="text-slate-500 dark:text-zink-200">Vice President for Academic Affairs
+                                        </p>
                                         <p class="text-slate-500 dark:text-zink-200">University of Southern Mindanao</p>
                                     </div>
 

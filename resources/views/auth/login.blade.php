@@ -183,7 +183,7 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                             </a>
                             {{-- <a href="{{ route('password.request') }}"
                                 class="text-base font-medium text-blue-600 cursor-pointer hover:underline">
-                                Forgot Password?
+                                Forgot Password? 
                             </a> --}}
                         </div>
                     </div>
