@@ -59,6 +59,7 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::get('/pre-registration/dasboard', [StudentPreregController::class, 'index'])->name('prereg.index');
 
     //route for Student Profile
+    Route::post('pre-registration/student-profile/nstp-preference', [StudentApplicantProfileController::class, 'saveNSTPPreference'])->name('applicant-profile.nstp-pref.save');
     Route::post('pre-registration/student-profile/publish', [StudentApplicantProfileController::class, 'publish'])->name('student-profile.publish');
     Route::get('pre-registration/student-profile/step1', [StudentApplicantProfileController::class, 'showStep1'])->name('applicant-profile.step1.show');
     Route::post('pre-registration/student-profile/step1', [StudentApplicantProfileController::class, 'postStep1'])->name('applicant-profile.step1.save');

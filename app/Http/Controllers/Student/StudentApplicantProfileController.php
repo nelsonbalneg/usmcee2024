@@ -695,6 +695,31 @@ class StudentApplicantProfileController extends Controller
         }
     }
 
+    public function saveNSTPPreference(Request $request){
+        try {
+            $userId = Auth::id();
+
+            // Find the user's student profile
+            $studentProfile = StundentProfile::where('user_id', $userId)->first();
+
+            if (!$studentProfile) {
+                return response()->json(['success' => false, 'message' => 'Student profile not found.'], 404);
+            }
+
+            // Update profile status to published (1)
+            $studentProfile->update(
+                [
+                    'is_answered_nstp' => 1,
+                    'nstp' =>$request->nstp
+                ]
+            );
+
+            return response()->json(['success' => true, 'message' => 'Your NSTP Prefence has been saved successfully!']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
     /**
      * Display the specified resource.
      */

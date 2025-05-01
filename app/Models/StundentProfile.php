@@ -154,5 +154,7 @@ class StundentProfile extends Model
         'date_cancelled',
         'date_program_selected',
         'confirmation_batch',
+        'nstp',
+        'is_answered_nstp'
     ];
 }

@@ -326,16 +326,25 @@
                                                                     </span>
                                                                 @elseif($cee_profile->prereg_status == 'pending')
                                                                     <span
-                                                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">
+                                                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent uppercase">
                                                                         Confirmed for enrollment
                                                                     </span>
+                                                                    @if ($cee_profile->is_answered_nstp == 1)
+                                                                        <br>
+                                                                        <span
+                                                                            class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                                            NSTP PREFERENCE:
+                                                                            {{ $cee_profile->nstp == 1 ? 'CWTS' : 'ROTC' }}
+                                                                        </span>
+                                                                    @endif
                                                                     <span
                                                                         class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
                                                                         Submit the original copies of
                                                                         pertinent requirements to the <b
                                                                             class="text-purple-500"> Admission
                                                                             and Records
-                                                                            Office (ARO) </b> on or before May 16, 2025. This may be done face-to-face
+                                                                            Office (ARO) </b> on or before May 16, 2025.
+                                                                        This may be done face-to-face
                                                                         or via courier.
                                                                     </span>
                                                                 @elseif($cee_profile->prereg_status == 'for_ranking' && $cee_profile->campus_id != null)

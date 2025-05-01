@@ -325,9 +325,18 @@
                                 @if ($applicant)
                                     @if ($applicant->prereg_status == 'pending')
                                         Program has been confirmed for enrollment.
-                                        <span class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                        @if ($applicant->is_answered_nstp == 1)
+                                            <br>
+                                            <span
+                                                class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                NSTP PREFERENCE: {{ $applicant->nstp == 1 ? 'CWTS' : 'ROTC' }}
+                                            </span>
+                                        @endif
+                                        <span
+                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
                                             Submit the original copies of the pertinent requirements to the
-                                            <b class="text-purple-500">Admission and Records Office (ARO)</b> on or before May 16, 2025.
+                                            <b class="text-purple-500">Admission and Records Office (ARO)</b> on or before
+                                            May 16, 2025.
                                             Submission may be done in person or via courier.
                                         </span>
                                     @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)

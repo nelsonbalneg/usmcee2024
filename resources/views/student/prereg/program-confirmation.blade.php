@@ -67,7 +67,17 @@
                                                 {{ $cee_profile->last_name }} {{ $cee_profile->ext_name }}!</b>
                                             Pre-registration
                                             is successful.</h5>
+
+                                        @if ($cee_profile->is_answered_nstp == 1)
+                                            <br>
                                             <span
+                                                class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                NSTP PREFERENCE:
+                                                {{ $cee_profile->nstp == 1 ? 'CWTS' : 'ROTC' }}
+                                            </span>
+                                        @endif
+
+                                        <span
                                             class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
                                             Submit the original copies of the pertinent
                                             requirements to the
