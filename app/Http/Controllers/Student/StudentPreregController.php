@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use App\Models\Requirements;
 use Illuminate\Http\Request;
 use App\Models\StundentProfile;
+use App\Models\StudentRequirement;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +44,7 @@ class StudentPreregController extends Controller
         //fetch the Sitesettings
         $site_settings = DB::table('site_settings')->first();
 
+        $is_tagged_complete_req = StudentRequirement::where('student_id', $userId)->count();
 
         //get the uploded requirements
 
@@ -52,7 +54,8 @@ class StudentPreregController extends Controller
             'is_applicant_exist',
             'cee_profile',
             'requirements',
-            'site_settings'
+            'site_settings',
+            'is_tagged_complete_req'
         ));
     }
 }

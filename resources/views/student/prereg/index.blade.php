@@ -165,17 +165,16 @@
                                 <div
                                     class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
                                     <div class="relative flex gap-2">
-
+                                        {{-- ||
+                                        empty($applicant->prereg_status) ||
+                                        is_null(value: $applicant->prereg_status) --}}
                                         @if ($applicant && $applicant->applicant_profile_status == 1)
                                             <div
                                                 class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                                @if (
-                                                    $applicant->prereg_status != 'pending' ||
-                                                        empty($applicant->prereg_status) ||
-                                                        is_null(value: $applicant->prereg_status))
-                                                    <i data-lucide="graduation-cap" class="size-4"></i>
-                                                @else
+                                                @if (!empty($applicant->campus_id) && !is_null($applicant->prog_id))
                                                     <i data-lucide="circle-check-big" class="size-4"></i>
+                                                @else
+                                                    <i data-lucide="graduation-cap" class="size-4"></i>
                                                 @endif
                                             </div>
                                             <div>
@@ -209,7 +208,12 @@
                                     <div class="relative flex gap-2">
                                         <div
                                             class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                            <i data-lucide="layers" class="size-4"></i>
+                                            @if ($is_tagged_complete_req == 0)
+                                                <i data-lucide="layers" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="circle-check-big" class="size-4"></i>
+                                            @endif
+
                                         </div>
                                         <div>
                                             <h6 class="mb-1">SUBMISSION OF ORIGINAL COPIES OF REQUIREMENTS</h6>
@@ -228,7 +232,12 @@
                                     <div class="relative flex gap-2">
                                         <div
                                             class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                            <i data-lucide="loader" class="size-4"></i>
+                                            @if ($applicant && $applicant->prereg_status == 'enrolled')
+                                                <i data-lucide="circle-check-big" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="loader" class="size-4"></i>
+                                            @endif
+
                                         </div>
                                         <div>
                                             <h6 class="mb-1">PROCESSING OF ENROLLMENT</h6>
@@ -244,6 +253,12 @@
                                         </div>
                                         <div>
                                             <h6 class="mb-1">DOWNLOADING OF CERTIFICATE OF REGISTRATION</h6>
+                                            @if ($applicant && $applicant->prereg_status == 'enrolled')
+                                                <a type="button" href="#"
+                                                    class="text-white border-slate-500 bg-slate-500 btn hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">
+                                                    Soon to be
+                                                    activated</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -345,6 +360,9 @@
                                         Please confirm the program.
                                     @elseif ($applicant->policyId == null && $applicant->programName != null)
                                         You did not qualify for the chosen program based on your ranking
+                                    @elseif($applicant->prereg_status == 'enrolled')
+                                        <span
+                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Enrolled</span>
                                     @else
                                         ---
                                     @endif

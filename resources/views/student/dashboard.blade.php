@@ -199,6 +199,9 @@
                                     Please confirm the program.
                                 @elseif ($applicant->policyId == null && $applicant->programName != null)
                                     You did not qualify for the chosen program based on your ranking
+                                @elseif($applicant->prereg_status == 'enrolled')
+                                    <span
+                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Enrolled</span>
                                 @else
                                     ---
                                 @endif
