@@ -700,9 +700,10 @@
                             $applicant->policyId == 812 RadiologicTechnology
                             $applicant->policyId == 731 food tech
                             $applicant->policyId == 730 hospitality mgnt
+                             $applicant->policyId == 750 hospitality mgnt lbungan
                             --}}
 
-                        @if (in_array($applicant->policyId, [783, 725, 727, 728, 812, 731, 730]))
+                        @if (in_array($applicant->policyId, [783, 725, 727, 728, 812, 731, 730, 750]))
                             <h6 class="mt-6 mb-0 text-15">Hepatitis B Test Result <sup class="text-red-500">*
                                     required</sup>
                             </h6>
