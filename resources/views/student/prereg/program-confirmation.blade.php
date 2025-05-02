@@ -42,7 +42,7 @@
                         {{-- @if ($is_qualified_pre_reg == 1 && $programData['reservationStatus'] == 'Open') --}}
                         {{-- start id prereg 1 --}}
                         @if ($is_qualified_pre_reg == 1)
-                            @if ($programData['reservationStatus'] == 'Open')
+                            @if ($programData['reservationStatus'] == 'Open' || $cee_profile->prereg_status == 'pending' || $cee_profile->prereg_status == 'enrolled' )
                                 <input type="hidden" name="program_policy_id" value="{{ $programData['id'] }}">
                                 <input type="hidden" name="user_id" value="{{ $cee_profile->user_id }}">
 
