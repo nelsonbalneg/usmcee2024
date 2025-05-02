@@ -101,11 +101,11 @@
                                                         class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">
                                                         Confirmed for Enrollment
                                                     </span>
-                                                    @if ($applicant->is_answered_nstp == 1)
+                                                    @if ($prereg_profile->is_answered_nstp == 1)
                                                         <br>
                                                         <span
                                                             class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                            NSTP PREFERENCE: {{ $applicant->nstp == 1 ? 'CWTS' : 'ROTC' }}
+                                                            NSTP PREFERENCE: {{ $prereg_profile->nstp == 1 ? 'CWTS' : 'ROTC' }}
                                                         </span>
                                                     @endif
                                                     <span
