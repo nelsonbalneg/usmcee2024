@@ -118,7 +118,8 @@
                                                                     class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
                                                                     Tap the <b class="text-purple-600">Pre-registration
                                                                         Menu</b>, then tap the <b
-                                                                        class="text-purple-600">Download COR button</b> to
+                                                                        class="text-purple-600">View Certificate of
+                                                                        Registration </b>button to
                                                                     get your Certificate of
                                                                     Registration.
                                                                 </span>
@@ -361,14 +362,16 @@
                                                                         in progress</span>
                                                                 @elseif($cee_profile->prereg_status == 'enrolled' || $cee_profile->status_id == 1)
                                                                     <span
-                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">You
+                                                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">You
                                                                         are officially enrolled!</span><br>
                                                                     <span
                                                                         class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
                                                                         Tap the <b class="text-purple-600">Pre-registration
-                                                                            Menu</b>, then tap the <b
-                                                                            class="text-purple-600">Download COR button</b>
-                                                                        to get your Certificate of Registration.
+                                                                            Menu</b>, then
+                                                                        tap the <b class="text-purple-600">View Certificate
+                                                                            of Registration </b>button to get
+                                                                        your Certificate of
+                                                                        Registration.
                                                                     </span>
                                                                 @else
                                                                     ---

@@ -260,11 +260,11 @@
                                         <div>
                                             <h6 class="mb-1">DOWNLOADING OF CERTIFICATE OF REGISTRATION</h6>
                                             @if (($applicant && $applicant->prereg_status == 'enrolled') || ($applicant && $applicant->status_id == 1))
-                                               <a type="button"
-                                                    {{-- href="{{ route('student.prereg.cor-pdf.view', ['folder' => 'enrollment', 'reportName' => 'COR']) }}" --}}
-                                                    href="{{ route('student.view-report')}}"
+                                                <a type="button" {{-- href="{{ route('student.prereg.cor-pdf.view', ['folder' => 'enrollment', 'reportName' => 'COR']) }}" --}}
+                                                    href="{{ route('student.view-report') }}"
                                                     class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                      View COR</a>
+                                                     <i data-lucide="eye"
+                                                        class="inline-block size-4 dark:text-zink-200"></i> View Certificate of Registration</a>
                                             @endif
                                         </div>
                                     </div>
@@ -377,7 +377,7 @@
                                             are officially enrolled!</span>
                                         <span
                                             class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
-                                            Tap the <b class="text-purple-600">Download COR button</b> to get your
+                                            Tap the <b class="text-purple-600">View Certificate of Registration </b>button to get your
                                             Certificate of Registration.
                                         </span>
                                     @else
