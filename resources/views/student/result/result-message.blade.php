@@ -100,12 +100,7 @@
                                                                     class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">
                                                                     Selected
                                                                 </span>
-
-                                                                {{-- <span
-                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                                                    Kindly finish all the steps to confirm your selected program for ranking.
-                                                                </span> --}}
-                                                            @elseif($cee_profile->prereg_status == 'pending')
+                                                            @elseif($cee_profile->prereg_status == 'pending' && $cee_profile->status_id == null)
                                                                 <span
                                                                     class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed</span>
                                                             @elseif($cee_profile->prereg_status == 'cancelled')
@@ -113,10 +108,20 @@
                                                                     class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Cancelled</span>
                                                             @elseif($cee_profile->prereg_status == 'denied')
                                                                 <span
-                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Denied</span>
-                                                            @elseif($cee_profile->prereg_status == 'enrolled')
+                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Denied
+                                                                </span>
+                                                            @elseif($cee_profile->prereg_status == 'enrolled' || $cee_profile->status_id == 1)
                                                                 <span
-                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Enrolled</span>
+                                                                    class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">You
+                                                                    are officially enrolled!</span>
+                                                                <span
+                                                                    class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
+                                                                    Tap the <b class="text-purple-600">Pre-registration
+                                                                        Menu</b>, then tap the <b
+                                                                        class="text-purple-600">Download COR button</b> to
+                                                                    get your Certificate of
+                                                                    Registration.
+                                                                </span>
                                                             @else
                                                                 ---
                                                             @endif
@@ -228,8 +233,6 @@
                                                                             <th
                                                                                 class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                                                                 Action</th>
-                                                                            {{-- <th>Ranking Slot</th>
-                                                                        <th>Policy ID</th> --}}
                                                                             <th>Program Name</th>
                                                                         </tr>
                                                                     </thead>
@@ -244,12 +247,6 @@
                                                                                         class="text-white selectProgramBtn border-custom-500 bg-custom-500 btn hover:text-white hover:bg-custom-600 hover:yellow-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/10">
                                                                                         Select</button>
                                                                                 </td>
-                                                                                {{-- <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                                                {{ $program['rankingOpenSlotsRemaining'] }}
-                                                                            </td>
-                                                                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                                                {{ $program['policyId'] }}
-                                                                            </td> --}}
                                                                                 <td
                                                                                     class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                                                                     {{ $program['program'] }}{{ !empty($program['major']) ? ' - ' . $program['major'] : '' }}
@@ -324,7 +321,7 @@
                                                                         Kindly finish all the steps to confirm your selected
                                                                         program for ranking.
                                                                     </span>
-                                                                @elseif($cee_profile->prereg_status == 'pending')
+                                                                @elseif($cee_profile->prereg_status == 'pending' && $cee_profile->status_id == null)
                                                                     <span
                                                                         class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent uppercase">
                                                                         Confirmed for enrollment
@@ -356,10 +353,23 @@
                                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Cancelled</span>
                                                                 @elseif($cee_profile->prereg_status == 'denied')
                                                                     <span
-                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Denied</span>
-                                                                @elseif($cee_profile->prereg_status == 'enrolled')
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Denied
+                                                                    </span>
+                                                                @elseif($cee_profile->status_id == 0)
                                                                     <span
-                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Enrolled</span>
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">Enrollment
+                                                                        in progress</span>
+                                                                @elseif($cee_profile->prereg_status == 'enrolled' || $cee_profile->status_id == 1)
+                                                                    <span
+                                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">You
+                                                                        are officially enrolled!</span><br>
+                                                                    <span
+                                                                        class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
+                                                                        Tap the <b class="text-purple-600">Pre-registration
+                                                                            Menu</b>, then tap the <b
+                                                                            class="text-purple-600">Download COR button</b>
+                                                                        to get your Certificate of Registration.
+                                                                    </span>
                                                                 @else
                                                                     ---
                                                                 @endif

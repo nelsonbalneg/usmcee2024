@@ -96,7 +96,7 @@
                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
                                                         Please wait, ranking on progress.
                                                     </span>
-                                                @elseif($prereg_profile->prereg_status == 'pending')
+                                                @elseif($prereg_profile->prereg_status == 'pending' && $prereg_profile->status_id == null)
                                                     <span
                                                         class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">
                                                         Confirmed for Enrollment
@@ -105,7 +105,8 @@
                                                         <br>
                                                         <span
                                                             class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                            NSTP PREFERENCE: {{ $prereg_profile->nstp == 1 ? 'CWTS' : 'ROTC' }}
+                                                            NSTP PREFERENCE:
+                                                            {{ $prereg_profile->nstp == 1 ? 'CWTS' : 'ROTC' }}
                                                         </span>
                                                     @endif
                                                     <span
@@ -121,9 +122,17 @@
                                                 @elseif($prereg_profile->prereg_status == 'denied')
                                                     <span
                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Denied</span>
-                                                @elseif($prereg_profile->prereg_status == 'enrolled')
+                                                @elseif($prereg_profile->prereg_status == 'enrolled' || $prereg_profile->status_id == 1)
                                                     <span
-                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Enrolled</span>
+                                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">You
+                                                        are officially enrolled!</span>
+                                                    <span
+                                                        class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
+                                                        Tap the <b class="text-purple-600">Pre-registration Menu</b>, then
+                                                        tap the <b class="text-purple-600">Download COR button</b> to get
+                                                        your Certificate of
+                                                        Registration.
+                                                    </span>
                                                 @else
                                                     ---
                                                 @endif

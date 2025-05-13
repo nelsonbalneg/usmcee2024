@@ -177,7 +177,7 @@
                             {{--  {{ !empty($applicant->prereg_status) ? $applicant->prereg_status : '---' }} --}}
 
                             <h5 class="mb-1 text-16">
-                                @if ($applicant->prereg_status == 'pending')
+                                @if ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
                                     Program has been confirmed for enrollment.
                                     @if ($applicant->is_answered_nstp == 1)
                                         <br>
@@ -199,14 +199,25 @@
                                     Please confirm the program.
                                 @elseif ($applicant->policyId == null && $applicant->programName != null)
                                     You did not qualify for the chosen program based on your ranking
-                                @elseif($applicant->prereg_status == 'enrolled')
+                                @elseif($applicant->status_id == 0)
                                     <span
-                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Enrolled</span>
+                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">Enrollment
+                                        in progress</span>
+                                @elseif($applicant->prereg_status == 'enrolled' || $applicant->status_id == 1)
+                                    <span
+                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">You
+                                        are officially enrolled!</span>
+                                    <span
+                                        class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
+                                        Tap the <b class="text-purple-600">Pre-registration Menu</b>, then tap the <b
+                                            class="text-purple-600">Download COR button</b> to get your Certificate of
+                                        Registration.
+                                    </span>
                                 @else
                                     ---
                                 @endif
                             </h5>
-                            <p class="text-slate-500 dark:text-zink-200">Pre-registration Status</p>
+                            <p class="text-slate-500 dark:text-zink-200">Status</p>
                         </div>
                     </div>
                 </div>

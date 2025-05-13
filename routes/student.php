@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\Student\ChedApplicantProfileController;
-use App\Http\Controllers\Student\ProgramController;
-use App\Http\Controllers\Student\StudentApplicantProfileController;
-use App\Http\Controllers\Student\StudentPreregController;
-use App\Http\Controllers\Student\StudentProgramConfirmationController;
-use App\Http\Controllers\Student\StudentRequirementsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\ResultController;
 use App\Http\Controllers\Backend\StudentController;
 use App\Http\Controllers\Student\CeeSlipController;
+use App\Http\Controllers\Student\ProgramController;
+use App\Http\Controllers\Student\StudentCORController;
+use App\Http\Controllers\Student\StudentPreregController;
 use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Student\StudentCeeReserveController;
+use App\Http\Controllers\Student\StudentRequirementsController;
+use App\Http\Controllers\Student\ChedApplicantProfileController;
+use App\Http\Controllers\Student\StudentApplicantProfileController;
+use App\Http\Controllers\Student\StudentProgramConfirmationController;
 
 Route::middleware(['check.maintenance'])->group(function () {
     Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
@@ -102,9 +103,9 @@ Route::middleware(['check.maintenance'])->group(function () {
 
     //route for Program confirmations
     //route for ranking second batch
-    Route::get('pre-registration/ranking/program-confirmation',[StudentProgramConfirmationController::class, 'programBatch2index'] )->name('confirm-program-ranking.second-batch.index');
-    Route::post('pre-registration/confirm-program-ranking',[StudentProgramConfirmationController::class, 'storeConfirmProgramBatch2'] )->name('confirm-program-ranking.second-batch');
-    Route::post('pre-registration/ranking',[StudentProgramConfirmationController::class, 'storeSelectProgramBatch2'] )->name('ranking.second-batch');
+    Route::get('pre-registration/ranking/program-confirmation', [StudentProgramConfirmationController::class, 'programBatch2index'])->name('confirm-program-ranking.second-batch.index');
+    Route::post('pre-registration/confirm-program-ranking', [StudentProgramConfirmationController::class, 'storeConfirmProgramBatch2'])->name('confirm-program-ranking.second-batch');
+    Route::post('pre-registration/ranking', [StudentProgramConfirmationController::class, 'storeSelectProgramBatch2'])->name('ranking.second-batch');
     Route::post('pre-registration/program-confirmation', [StudentProgramConfirmationController::class, 'confirmProgram'])->name('program-confirmation.comfirm');
     Route::get('pre-registration/program-confirmation', [StudentProgramConfirmationController::class, 'index'])->name('program-confirmation.index');
 
@@ -112,6 +113,22 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::post('cee/ched-applicant-profile/publish', [ChedApplicantProfileController::class, 'publish'])->name('cee.ched-applicant-profile.publish');
     Route::resource('cee/ched-applicant-profile', ChedApplicantProfileController::class);
 
+    //route for downloading the COR
+    Route::get('pre-registration/applicant/reports/cor/view', [StudentCORController::class, 'viewPdfReport'])->name('prereg.cor-pdf.view');
+    Route::get('pre-registration/applicant/cor', [StudentCORController::class, 'downloadCOR'])->name('download.cor');
+
+    Route::get('pre-registration/applicant/view-report', [StudentCORController::class, 'showReportView'])->name('view-report');
+
+    Route::get('/download-pdf/{filename}', function ($filename) {
+        $filePath = storage_path('app/public/reports/' . $filename);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        } else {
+            return response()->json(['message' => 'File not found'], 404);
+        }
+    })->name('download-pdf');
+
+    // Route::get('dtr/generate-report', [StudentCORController::class, 'generateDtrReport'])->name('generate-dtr.report');
 
 
 });

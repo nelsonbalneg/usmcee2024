@@ -40,5 +40,10 @@ return [
         'secret' => env('TURNSTILE_SECRET_KEY'),
     ],
 
+    'pdf_api' => [
+        'url' => env('PDF_API_URL', 'http://172.16.0.41'),
+        'timeout' => env('PDF_API_TIMEOUT', 30),
+    ],
+
 
 ];

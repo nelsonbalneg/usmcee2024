@@ -179,8 +179,8 @@
                                             </div>
                                             <div>
                                                 <h6 class="mb-1">PRIORITY PROGRAM CONFIRMATION</h6>
-                                                <p class="mb-2 text-slate-500 dark:text-zink-200">Confirmation of your first
-                                                    priority program.</p>
+                                                <p class="mb-2 text-slate-500 dark:text-zink-200">Confirmation of your
+                                                    program.</p>
                                                 <a type="button" href="{{ route('student.program-confirmation.index') }}"
                                                     class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                                                     <i data-lucide="graduation-cap"
@@ -194,8 +194,8 @@
                                             </div>
                                             <div>
                                                 <h6 class="mb-1">PRIORITY PROGRAM CONFIRMATION</h6>
-                                                <p class="mb-2 text-slate-500 dark:text-zink-200">Confirmation of your first
-                                                    priority program.</p>
+                                                <p class="mb-2 text-slate-500 dark:text-zink-200">Confirmation of your
+                                                    program.</p>
                                             </div>
                                         @endif
 
@@ -206,15 +206,16 @@
                                 <div
                                     class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
                                     <div class="relative flex gap-2">
+
                                         <div
                                             class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                            @if ($is_tagged_complete_req == 0)
-                                                <i data-lucide="layers" class="size-4"></i>
-                                            @else
+                                            @if ($applicant->status_id == 0 || $applicant->status_id == 1)
                                                 <i data-lucide="circle-check-big" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="layers" class="size-4"></i>
                                             @endif
-
                                         </div>
+
                                         <div>
                                             <h6 class="mb-1">SUBMISSION OF ORIGINAL COPIES OF REQUIREMENTS</h6>
                                             <p class=" text-slate-500 dark:text-zink-200">Submission of original copies of
@@ -224,6 +225,7 @@
                                                 <b>April 28, 2025 - May 28, 2025</b>
                                             </p>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -232,7 +234,7 @@
                                     <div class="relative flex gap-2">
                                         <div
                                             class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                            @if ($applicant && $applicant->prereg_status == 'enrolled')
+                                            @if (($applicant && $applicant->status_id == 0) || ($applicant && $applicant->status_id == 1))
                                                 <i data-lucide="circle-check-big" class="size-4"></i>
                                             @else
                                                 <i data-lucide="loader" class="size-4"></i>
@@ -249,15 +251,20 @@
                                     <div class="relative flex gap-2">
                                         <div
                                             class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                            <i data-lucide="download" class="size-4"></i>
+                                            @if ($applicant && $applicant && $applicant->status_id == 1)
+                                                <i data-lucide="download" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="loader" class="size-4"></i>
+                                            @endif
                                         </div>
                                         <div>
                                             <h6 class="mb-1">DOWNLOADING OF CERTIFICATE OF REGISTRATION</h6>
-                                            @if ($applicant && $applicant->prereg_status == 'enrolled')
-                                                <a type="button" href="#"
-                                                    class="text-white border-slate-500 bg-slate-500 btn hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">
-                                                    Soon to be
-                                                    activated</a>
+                                            @if (($applicant && $applicant->prereg_status == 'enrolled') || ($applicant && $applicant->status_id == 1))
+                                               <a type="button"
+                                                    {{-- href="{{ route('student.prereg.cor-pdf.view', ['folder' => 'enrollment', 'reportName' => 'COR']) }}" --}}
+                                                    href="{{ route('student.view-report')}}"
+                                                    class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                                      View COR</a>
                                             @endif
                                         </div>
                                     </div>
@@ -338,7 +345,7 @@
 
                             <h5 class="mb-1 text-16">
                                 @if ($applicant)
-                                    @if ($applicant->prereg_status == 'pending')
+                                    @if ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
                                         Program has been confirmed for enrollment.
                                         @if ($applicant->is_answered_nstp == 1)
                                             <br>
@@ -360,15 +367,25 @@
                                         Please confirm the program.
                                     @elseif ($applicant->policyId == null && $applicant->programName != null)
                                         You did not qualify for the chosen program based on your ranking
-                                    @elseif($applicant->prereg_status == 'enrolled')
+                                    @elseif($applicant->status_id == 0)
                                         <span
-                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Enrolled</span>
+                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">Enrollment
+                                            in progress</span>
+                                    @elseif($applicant->prereg_status == 'enrolled' || $applicant->status_id == 1)
+                                        <span
+                                            class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">You
+                                            are officially enrolled!</span>
+                                        <span
+                                            class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
+                                            Tap the <b class="text-purple-600">Download COR button</b> to get your
+                                            Certificate of Registration.
+                                        </span>
                                     @else
                                         ---
                                     @endif
                                 @endif
                             </h5>
-                            <p class="text-slate-500 dark:text-zink-200">Pre-registration Status</p>
+                            <p class="text-slate-500 dark:text-zink-200">Status</p>
                         </div>
                     </div>
                 </div>
