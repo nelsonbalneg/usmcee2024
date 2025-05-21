@@ -209,7 +209,7 @@
 
                                         <div
                                             class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                            @if ($applicant->status_id == 0 || $applicant->status_id == 1)
+                                            @if ($applicant && ($applicant->status_id == 0 || $applicant->status_id == 1))
                                                 <i data-lucide="circle-check-big" class="size-4"></i>
                                             @else
                                                 <i data-lucide="layers" class="size-4"></i>
