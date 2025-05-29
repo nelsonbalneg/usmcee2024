@@ -570,7 +570,7 @@
                                                                         </button>
                                                                     </form>
                                                                     <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                        href="{{ Storage::url(str_replace('doc/', 'honorable-dismissal/', $file)) }}"
+                                                                        href="{{ Storage::url(str_replace('doc/', 'honorable_dismisal/', $file)) }}"
                                                                         target="_blank">
                                                                         View
                                                                     </a>
@@ -580,7 +580,7 @@
                                                                         Pending</a>
                                                                 @else
                                                                     <a class="inline-flex items-center px-4 py-2 text-xs font-medium text-green-500 bg-green-100 border border-transparent rounded dark:bg-green-500/20 dark:border-transparent"
-                                                                        href="{{ Storage::url(str_replace('doc/', 'honorable-dismissal/', $file)) }}"
+                                                                        href="{{ Storage::url(str_replace('doc/', 'honorable_dismisal/', $file)) }}"
                                                                         target="_blank">
                                                                         View
                                                                     </a>

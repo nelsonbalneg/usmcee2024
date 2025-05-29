@@ -190,7 +190,7 @@
                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
                                         Submit the original copies of the pertinent requirements to the
                                         <b class="text-purple-500">Admission and Records Office (ARO)</b> on or before May
-                                        16, 2025.
+                                        30, 2025.
                                         Submission may be done in person or via courier.
                                     </span>
                                 @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)

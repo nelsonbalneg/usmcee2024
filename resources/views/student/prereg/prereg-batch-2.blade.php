@@ -113,7 +113,7 @@
                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
                                                         Submit the original copies of the pertinent requirements to the
                                                         <b class="text-purple-500">Admission and Records Office (ARO)</b> on
-                                                        or before May 16, 2025.
+                                                        or before May 30, 2025.
                                                         Submission may be done in person or via courier.
                                                     </span>
                                                 @elseif($prereg_profile->prereg_status == 'cancelled')
@@ -129,7 +129,8 @@
                                                     <span
                                                         class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
                                                         Tap the <b class="text-purple-600">Pre-registration Menu</b>, then
-                                                        tap the <b class="text-purple-600">View Certificate of Registration </b>button to get
+                                                        tap the <b class="text-purple-600">View Certificate of Registration
+                                                        </b>button to get
                                                         your Certificate of
                                                         Registration.
                                                     </span>

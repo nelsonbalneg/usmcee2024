@@ -341,7 +341,7 @@
                                                                         pertinent requirements to the <b
                                                                             class="text-purple-500"> Admission
                                                                             and Records
-                                                                            Office (ARO) </b> on or before May 16, 2025.
+                                                                            Office (ARO) </b> on or before May 30, 2025.
                                                                         This may be done face-to-face
                                                                         or via courier.
                                                                     </span>

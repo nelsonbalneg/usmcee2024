@@ -85,7 +85,7 @@
                                             Submit the original copies of the pertinent
                                             requirements to the
                                             <b class="text-purple-500">Admission and Records
-                                                Office (ARO)</b> on or before May 16, 2025.
+                                                Office (ARO)</b> on or before May 30, 2025.
                                             Submission may be done in person or via courier.
                                         </span>
                                     @endif
@@ -267,7 +267,7 @@
                                                                         Submit the original copies of the pertinent
                                                                         requirements to the
                                                                         <b class="text-purple-500">Admission and Records
-                                                                            Office (ARO)</b> on or before May 16, 2025.
+                                                                            Office (ARO)</b> on or before May 30, 2025.
                                                                         Submission may be done in person or via courier.
                                                                     </span>
                                                                 @elseif($cee_profile->prereg_status == 'cancelled')
