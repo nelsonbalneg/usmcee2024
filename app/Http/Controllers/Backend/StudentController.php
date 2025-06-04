@@ -85,6 +85,11 @@ class StudentController extends Controller
             //check if records exists
             $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
 
+            //check if user_id exists in requirements table
+            $requirements = DB::table('student_requirements')
+                ->where('student_id', Auth::user()->id)
+               ->first();
+
             //check if it has result
             $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
 
@@ -119,7 +124,8 @@ class StudentController extends Controller
                 'isreservation_exist',
                 'cee_result',
                 'cee_reservation_records',
-                'applicant'
+                'applicant',
+                'requirements'
             ));
         }
     }

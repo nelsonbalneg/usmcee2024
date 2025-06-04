@@ -61,6 +61,13 @@ class StudentProgramConfirmationController extends Controller
             ->where('prereg_status', '==', 'pending')
             ->count();
 
+        //get the uploded requirements
+        //check if user_id exists in requirements table
+        $requirements_submitted = DB::table('student_requirements')
+            ->where('student_id', Auth::user()->id)
+            ->first();
+
+
         // Initialize program data and is_qualified_pre_reg for first priority
         $programData = null;
         $is_qualified_pre_reg = null;
@@ -133,7 +140,8 @@ class StudentProgramConfirmationController extends Controller
             'site_settings',
             'result',
             'has_policy_id',
-            'programDataBatch2'
+            'programDataBatch2',
+            'requirements_submitted',
         ));
     }
 
@@ -224,15 +232,15 @@ class StudentProgramConfirmationController extends Controller
             $app_no = Reservation::where('user_id', $userId)->firstOrFail();
 
             $prog_policy_id = $request->program_policy_id;
-             // Fetch program policy data from external API
-             $programResponse = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$prog_policy_id}");
+            // Fetch program policy data from external API
+            $programResponse = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$prog_policy_id}");
 
-             if (!$programResponse->successful()) {
-                 Log::warning("API call failed for policy_id: {$prog_policy_id}, status: " . $programResponse->status());
-                 return redirect()->back()->with('error', 'Failed to fetch program data.');
-             }
+            if (!$programResponse->successful()) {
+                Log::warning("API call failed for policy_id: {$prog_policy_id}, status: " . $programResponse->status());
+                return redirect()->back()->with('error', 'Failed to fetch program data.');
+            }
 
-             $data = $programResponse->json();
+            $data = $programResponse->json();
 
             Log::info('Incoming program policy ID', ['user_id' => $userId, 'program_policy_id' => $prog_policy_id]);
 

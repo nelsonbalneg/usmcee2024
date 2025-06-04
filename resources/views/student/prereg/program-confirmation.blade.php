@@ -80,14 +80,42 @@
                                             </span>
                                         @endif
 
-                                        <span
-                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                            Submit the original copies of the pertinent
-                                            requirements to the
-                                            <b class="text-purple-500">Admission and Records
-                                                Office (ARO)</b> on or before May 30, 2025.
-                                            Submission may be done in person or via courier.
-                                        </span>
+                                        {{-- check if requirements has been submittted --}}
+                                        @if (is_null($requirements_submitted))
+                                            <span
+                                                class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                Submit the original copies of the pertinent requirements to the
+                                                <b class="text-purple-500">Admission and Records Office (ARO)</b> on or
+                                                before
+                                                May
+                                                30, 2025.
+                                                Submission may be done in person or via courier.
+                                            </span>
+                                        @else
+                                            @php
+                                                $labels = [
+                                                    'goodmoral' => 'Good Moral Certificate',
+                                                    'card' => 'Report Card',
+                                                    'psa' => 'PSA Birth Certificate',
+                                                    'hdismissal' => 'Honorable Dismissal',
+                                                    'certificatetransfer' => 'Certificate of Transfer',
+                                                    'transcript' => 'Transcript of Records',
+                                                ];
+                                            @endphp
+
+                                            <div class="flex flex-wrap items-center justify-center gap-2">
+                                                @foreach ($labels as $key => $label)
+                                                    @if ($requirements_submitted->$key == 1)
+                                                        <span
+                                                            class="flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-white border-green-400 text-green-500 dark:bg-zink-700 dark:border-green-700">
+                                                            <i data-lucide="check" class="size-3 ltr:ml-1 rtl:mr-1"></i>
+                                                            {{ $label }}
+                                                            <a href="#!"
+                                                                class="text-green-400 transition hover:text-green-600"></a></span>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @endif
                                     @endif
 
                                     <div class="mt-5 overflow-x-auto">

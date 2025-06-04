@@ -46,7 +46,13 @@ class StudentPreregController extends Controller
 
         $is_tagged_complete_req = StudentRequirement::where('student_id', $userId)->count();
 
+
         //get the uploded requirements
+        //check if user_id exists in requirements table
+        $requirements_submitted = DB::table('student_requirements')
+            ->where('student_id', Auth::user()->id)
+            ->first();
+
 
         return view('student.prereg.index', compact(
             'result',
@@ -55,7 +61,8 @@ class StudentPreregController extends Controller
             'cee_profile',
             'requirements',
             'site_settings',
-            'is_tagged_complete_req'
+            'is_tagged_complete_req',
+            'requirements_submitted',
         ));
     }
 }

@@ -191,6 +191,12 @@ class ResultController extends Controller
             }
         }
 
+        //get the uploded requirements
+        $requirements_submitted = DB::table('student_requirements')
+            ->where('student_id', Auth::user()->id)
+            ->first();
+
+
         return view('student.result.result-message', compact(
             'cee_result',
             'is_qualified_pre_reg',
@@ -199,7 +205,8 @@ class ResultController extends Controller
             'qualifiedCampuses',
             'has_policy_id',
             'cee_profile',
-            'programDataBatch2'
+            'programDataBatch2',
+            'requirements_submitted',
         ));
     }
 
