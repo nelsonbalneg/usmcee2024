@@ -43,47 +43,69 @@ class StudentCORController extends Controller
         Log::error('Failed to fetch the report', ['error_message' => 'Unable to fetch the report.']);
 
         // Handle errors and return response
-        // return redirect()->back()->with('error', 'Unable to fetch the report.');
-          return redirect()->route('student.prereg.index')->with('error', 'Something went wrong while saving.');
+        return redirect()->route('student.prereg.index')->with('error', 'Something went wrong while saving.');
     }
 
-    // public function downloadCOR()
-    // {
+    public function downloadCOR()
+    {
+        $user_id = Auth::user()->id;
 
-    //     $user_id = Auth::user()->id;
-    //     $regID = StundentProfile::where('user_id', $user_id)
-    //     ->select('reg_no')->first();
+        // Get only the reg_no value
+        $regID = StundentProfile::where('user_id', $user_id)
+            ->value('reg_no');
 
-    //     $apiUrl = 'http://172.16.0.41/api/app/reports/get-pdf-report';
-    //     $queryParams = [
-    //         'folder' => 'enrollment',
-    //         'reportName' => 'COR',
-    //     ];
+        // Log the extracted reg_no
+        Log::info('Downloading COR - User ID: ' . $user_id . ', RegID: ' . $regID);
 
-    //     $response = Http::withHeaders([
-    //         'Accept' => 'application/json',
-    //         'Content-Type' => 'application/json',
-    //         'X-Requested-With' => 'XMLHttpRequest',
-    //     ])->post($apiUrl . '?' . http_build_query($queryParams), [
-    //         'RegID' => $regID,
-    //     ]);
+        // Handle missing reg_no
+        if (!$regID) {
+            Log::warning('No RegID found for user ID: ' . $user_id);
+            return response()->json([
+                'message' => 'Registration ID not found.',
+            ], 404);
+        }
 
-    //     if ($response->successful()) {
-    //         $base64 = $response->body(); // the entire base64 string is the response
-    //         $pdfContent = base64_decode($base64);
+        $apiUrl = 'http://172.16.0.41/api/app/reports/get-pdf-report';
+        $queryParams = [
+            'folder' => 'enrollment',
+            'reportName' => 'COR',
+        ];
 
-    //         return response($pdfContent)
-    //             ->header('Content-Type', 'application/pdf')
-    //             ->header('Content-Disposition', 'attachment; filename="COR.pdf"');
-    //     }
+        Log::info('Sending API request to: ' . $apiUrl . '?' . http_build_query($queryParams));
 
-    //     return response()->json([
-    //         'message' => 'Failed to fetch Certificate of Registration.',
-    //         'status' => $response->status(),
-    //     ], $response->status());
-    // }
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest',
+        ])->post($apiUrl . '?' . http_build_query($queryParams), [
+                    'RegID' => $regID,
+                ]);
 
-    public function downloadCOR(Request $request)
+        // Log full response details
+        Log::info('API Response Status: ' . $response->status());
+        Log::info('API Response Body: ' . $response->body());
+
+        if ($response->successful()) {
+            $base64 = $response->body();
+            $pdfContent = base64_decode($base64);
+
+            Log::info('COR PDF successfully decoded and ready for download.');
+
+            return response($pdfContent)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename="COR-' . $regID . '.pdf"');
+        }
+
+        Log::error('Failed to fetch COR. Status: ' . $response->status() . ' Body: ' . $response->body());
+
+        return response()->json([
+            'message' => 'Failed to fetch Certificate of Registration.',
+            'status' => $response->status(),
+        ], $response->status());
+    }
+
+
+    public function downloadCOR2(Request $request)
     {
         $user_id = Auth::user()->id;
         $regID = StundentProfile::where('user_id', $user_id)
@@ -150,14 +172,13 @@ class StudentCORController extends Controller
             $reportName = $request->query('reportName', 'COR');
             $filename = $reportName . '_' . $regId . '.pdf';
 
-            $apiUrl = config('services.pdf_api.url') . '/api/app/reports/get-pdf-report';
-            $apiUrl .= '?folder=' . urlencode($folder) . '&reportName=' . urlencode($reportName);
+            $url = 'http://172.16.0.41/api/app/reports/get-pdf-report?folder=enrollment&reportName=COR';
 
             $response = Http::withHeaders([
                 'Accept' => 'text/plain',
                 'Content-Type' => 'application/json',
                 'X-Requested-With' => 'XMLHttpRequest',
-            ])->post($apiUrl, [
+            ])->post($url, [
                         'RegID' => $regId
                     ]);
 
@@ -285,7 +306,7 @@ class StudentCORController extends Controller
 
     // }
 
-     public function generateDtrReport()
+    public function generateDtrReport()
     {
         // Static data for demonstration
         $employeeId = '16-03101';  // Hardcoded EmployeeID
