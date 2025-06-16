@@ -28,10 +28,10 @@ class StudentCORController extends Controller
 
         // Check if the response was successful
         if ($responseData->success) {
-            Log::info('PDF report fetched successfully', [
-                'pdf_url' => $responseData->pdf_url,
-                'download_url' => $responseData->download_url
-            ]);
+            // Log::info('PDF report fetched successfully', [
+            //     'pdf_url' => $responseData->pdf_url,
+            //     'download_url' => $responseData->download_url
+            // ]);
 
             return view('student.prereg.cor.cor', [
                 'pdfUrl' => $responseData->pdf_url,
@@ -43,7 +43,8 @@ class StudentCORController extends Controller
         Log::error('Failed to fetch the report', ['error_message' => 'Unable to fetch the report.']);
 
         // Handle errors and return response
-        return redirect()->back()->with('error', 'Unable to fetch the report.');
+        // return redirect()->back()->with('error', 'Unable to fetch the report.');
+          return redirect()->route('student.prereg.index')->with('error', 'Something went wrong while saving.');
     }
 
     // public function downloadCOR()
@@ -92,7 +93,9 @@ class StudentCORController extends Controller
 
         // Build the JSON string manually and encode it
         $jsonString = json_encode([
-            'RegID' => $regID
+            // 'RegID' => $regID
+            'RegID' => $regID->reg_no,
+
         ]);
 
         $payload = [
