@@ -83,7 +83,6 @@ class StudentCORController extends Controller
 
         // Log full response details
         Log::info('API Response Status: ' . $response->status());
-        Log::info('API Response Body: ' . $response->body());
 
         if ($response->successful()) {
             $base64 = $response->body();
