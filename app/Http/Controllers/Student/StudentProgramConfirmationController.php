@@ -62,7 +62,6 @@ class StudentProgramConfirmationController extends Controller
             ->count();
 
         //get the uploded requirements
-        //check if user_id exists in requirements table
         $requirements_submitted = DB::table('student_requirements')
             ->where('student_id', Auth::user()->id)
             ->first();
@@ -72,16 +71,6 @@ class StudentProgramConfirmationController extends Controller
         $programData = null;
         $is_qualified_pre_reg = null;
         $slot_remaning = null;
-
-        //check if the student data hass policy id
-        // if ($cee_profile || $cee_profile->policyId != null || $cee_profile->policyId == 6 || $cee_profile->confirmation_batch == 2) {
-        //     return redirect()->route('student.confirm-program-ranking.second-batch.index');
-        // }
-
-        // } else {
-        //     $programResponse = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$prog_policy_id}");
-
-        // }
 
         if ($cee_profile->confirmation_batch == 2 && $cee_profile->campus_id != null) {
             return redirect()->route('student.confirm-program-ranking.second-batch.index');
@@ -93,7 +82,6 @@ class StudentProgramConfirmationController extends Controller
             $programData = json_decode($programResponse->body(), true);
 
             //compare the CSA and to usmceefp from API
-            // if ($result && isset($programData['usmceefp']) && $result->csa >= $programData['usmceefp'] && $result->confirmation_batch == 1) {
             if ($result) {
                 if ($result->confirmation_batch == 1 && !now()->between($start_batch_2_prereg, $end_batch_2_prereg) || $cee_profile->prereg_status == 'pending') {
                     $is_qualified_pre_reg = 1;
@@ -172,7 +160,6 @@ class StudentProgramConfirmationController extends Controller
             $data = $programResponse->json();
 
             //count the preregister and minus it to the
-            //if $data['pendingLimit'] != null get the remaining from majorSlotRemaining else programSlotRemaining
             $slot_remaning = $data['pendingLimit'] - $total_prereg_by_prog_policy_id;
             if ($slot_remaning <= 0) {
                 return redirect()->back()->with('error', 'No slot remaining for this program.');

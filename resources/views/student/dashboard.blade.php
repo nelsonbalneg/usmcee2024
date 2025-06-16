@@ -174,7 +174,6 @@
                             <i data-lucide="history"></i>
                         </div>
                         <div class="grow">
-                            {{--  {{ !empty($applicant->prereg_status) ? $applicant->prereg_status : '---' }} --}}
 
                             <h5 class="mb-1 text-16">
                                 @if ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
