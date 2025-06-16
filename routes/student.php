@@ -114,10 +114,10 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::resource('cee/ched-applicant-profile', ChedApplicantProfileController::class);
 
     //route for downloading the COR
-    Route::get('pre-registration/applicant/reports/cor/view', [StudentCORController::class, 'viewPdfReport'])->name('prereg.cor-pdf.view');
+    Route::get('pre-registration/applicant/reports/cor/view', [StudentCORController::class, 'showReportView'])->name('prereg.cor-pdf.view');
     Route::get('pre-registration/applicant/cor', [StudentCORController::class, 'downloadCOR'])->name('download.cor');
 
-    Route::get('pre-registration/applicant/view-report', [StudentCORController::class, 'showReportView'])->name('view-report');
+     Route::get('pre-registration/applicant/view-report', [StudentCORController::class, 'showReportView'])->name('view-report');
 
     Route::get('/download-pdf/{filename}', function ($filename) {
         $filePath = storage_path('app/public/reports/' . $filename);
@@ -128,7 +128,7 @@ Route::middleware(['check.maintenance'])->group(function () {
         }
     })->name('download-pdf');
 
-    // Route::get('dtr/generate-report', [StudentCORController::class, 'generateDtrReport'])->name('generate-dtr.report');
+    //  Route::get('dtr/generate-report', [StudentCORController::class, 'generateDtrReport'])->name('generate-dtr.report');
 
 
 });

@@ -260,8 +260,7 @@
                                         <div>
                                             <h6 class="mb-1">DOWNLOADING OF CERTIFICATE OF REGISTRATION</h6>
                                             @if (($applicant && $applicant->prereg_status == 'enrolled') || ($applicant && $applicant->status_id == 1))
-                                                <a type="button" {{-- href="{{ route('student.prereg.cor-pdf.view', ['folder' => 'enrollment', 'reportName' => 'COR']) }}" --}}
-                                                    href="{{ route('student.view-report') }}"
+                                                <a type="button" href="{{ route('student.prereg.cor-pdf.view') }}"
                                                     class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                                                     <i data-lucide="eye"
                                                         class="inline-block size-4 dark:text-zink-200"></i> View
@@ -392,7 +391,6 @@
                                                 @endforeach
                                             </div>
                                         @endif
-                                        
                                     @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
                                         Please wait, ranking in progress.
                                     @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
