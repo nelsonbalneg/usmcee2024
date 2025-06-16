@@ -260,8 +260,7 @@
                                         <div>
                                             <h6 class="mb-1">DOWNLOADING OF CERTIFICATE OF REGISTRATION</h6>
                                             @if (($applicant && $applicant->prereg_status == 'enrolled') || ($applicant && $applicant->status_id == 1))
-                                                <a type="button"
-                                                {{-- href="{{ route('student.prereg.cor-pdf.view') }}" --}}
+                                                <a type="button" {{-- href="{{ route('student.prereg.cor-pdf.view') }}" --}}
                                                     href="{{ route('student.download.cor') }}"
                                                     class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                                                     <i data-lucide="eye"
@@ -361,12 +360,13 @@
                                         @if (is_null($requirements_submitted))
                                             <span
                                                 class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                                Submit the original copies of the pertinent requirements to the
-                                                <b class="text-purple-500">Admission and Records Office (ARO)</b> on or
-                                                before
-                                                May
-                                                30, 2025.
-                                                Submission may be done in person or via courier.
+                                                Please submit the original copies of the required
+                                                documents to the
+                                                <b class="text-purple-500">Admission and Records
+                                                    Office (ARO)</b> as soon as possible.
+                                                Submission may be done in person or via courier. If
+                                                you have already submitted your documents, kindly
+                                                disregard this message.
                                             </span>
                                         @else
                                             @php
