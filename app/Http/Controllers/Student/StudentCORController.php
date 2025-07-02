@@ -54,8 +54,11 @@ class StudentCORController extends Controller
         $regID = StundentProfile::where('user_id', $user_id)
             ->value('reg_no');
 
+        $campusName = StundentProfile::where('user_id', $user_id)
+            ->value('campusName');
+
         // Log the extracted reg_no
-        Log::info('Downloading COR - User ID: ' . $user_id . ', RegID: ' . $regID);
+        Log::info('Downloading COR - User ID: ' . $user_id . ', RegID: ' . $regID . ', Campus: ' . $campusName);
 
         // Handle missing reg_no
         if (!$regID) {
@@ -65,11 +68,24 @@ class StudentCORController extends Controller
             ], 404);
         }
 
-        $apiUrl = 'http://172.16.0.41/api/app/reports/get-pdf-report';
-        $queryParams = [
-            'folder' => 'enrollment',
-            'reportName' => 'COR',
-        ];
+
+        $apiUrl = '';
+        $queryParams = [];
+
+        if ($campusName == 'USM Kidapawan City Campus') {
+            $apiUrl = 'http://172.16.0.41/api/app/reports/get-pdf-report';
+
+            $queryParams = [
+                'folder' => 'enrollment',
+                'reportName' => 'COR_KCC',
+            ];
+        } else {
+             $apiUrl = 'http://172.16.0.41/api/app/reports/get-pdf-report';
+            $queryParams = [
+                'folder' => 'enrollment',
+                'reportName' => 'COR',
+            ];
+        }
 
         Log::info('Sending API request to: ' . $apiUrl . '?' . http_build_query($queryParams));
 
