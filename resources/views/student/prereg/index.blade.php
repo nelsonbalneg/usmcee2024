@@ -98,7 +98,7 @@
                                             <p class="mb-2 text-slate-500 dark:text-zink-200">Confirmation of Enrollment for
                                                 qualified applicants. Encoding of personal information, including address,
                                                 parent/guardian details, educational background, and other important
-                                                information. <br><b>April 21, 2025 - April 29, 2025</b></p>
+                                                information.</p>
 
                                             <a type="button" href="{{ route('student.applicant-profile.step1.show') }}"
                                                 class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
@@ -221,8 +221,7 @@
                                             <p class=" text-slate-500 dark:text-zink-200">Submission of original copies of
                                                 pertinent requirements to the <b class="text-custom-500"> Admission and
                                                     Records
-                                                    Office (ARO) </b>. This may be done face-to-face or via courier.<br>
-                                                <b>April 28, 2025 - May 28, 2025</b>
+                                                    Office (ARO) </b>. This may be done face-to-face or via courier.
                                             </p>
                                         </div>
 
@@ -247,7 +246,8 @@
                                     </div>
                                 </div>
 
-                                <div class="relative">
+                                <div
+                                    class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
                                     <div class="relative flex gap-2">
                                         <div
                                             class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
@@ -268,8 +268,96 @@
                                                     Certificate of Registration</a>
                                             @endif
                                         </div>
+
+
+
+
                                     </div>
                                 </div>
+
+                                <div class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
+                                        <div class="relative flex gap-2">
+                                            <!-- Icon -->
+                                            <div class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
+                                                <i data-lucide="user-plus" class="size-4"></i>
+                                            </div>
+
+                                            <!-- Content -->
+                                            <div>
+                                                <h6 class="mb-1 text-base font-semibold text-slate-700 dark:text-zink-100">
+                                                    CREATE YOUR USM STUDENT PORTAL ACCOUNT
+                                                </h6>
+                                                <p class="mb-2 text-sm text-slate-500 dark:text-zink-200">
+                                                    First-time user? Register now to access your enrollment status, COR, grades, and more through the USM Student Portal.
+                                                </p>
+                                                 <a href="https://studentportal.usm.edu.ph/account/register"
+                                                class="inline-block px-4 py-2 text-sm font-medium text-white bg-green-500 border border-green-500 rounded hover:bg-green-600 hover:border-green-600 focus:outline-none focus:ring focus:ring-green-200 dark:ring-green-400/10">
+                                                <i data-lucide="send"
+                                                        class="inline-block size-4 dark:text-zink-200"></i> Go to Student Portal
+                                            </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                <div
+                                    class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
+                                    <div class="relative flex gap-2">
+                                        <div
+                                            class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
+                                            @if ($applicant && $applicant && $applicant->status_id == 1)
+                                                <i data-lucide="globe" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="loader" class="size-4"></i>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1 text-base font-semibold text-slate-700 dark:text-zink-100">
+                                                REQUEST YOUR USM INSTITUTIONAL EMAIL VIA FACEBOOK (USM MIRA)
+                                            </h6>
+                                            <p class="mb-2 text-sm text-slate-500 dark:text-zink-200">
+                                                Need a USM email? Just send us a message through our official Facebook
+                                                account to begin the request process.
+                                            </p>
+                                            <a href="https://www.facebook.com/profile.php?id=61569902205708"
+                                                class="inline-block px-4 py-2 text-sm font-medium text-white bg-green-500 border border-green-500 rounded hover:bg-green-600 hover:border-green-600 focus:outline-none focus:ring focus:ring-green-200 dark:ring-green-400/10">
+                                                <i data-lucide="send"
+                                                        class="inline-block size-4 dark:text-zink-200"></i> Message Us on Facebook
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="relative">
+                                    <div class="relative flex gap-2">
+                                        <div
+                                            class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
+                                            @if ($applicant && $applicant && $applicant->status_id == 1)
+                                                <i data-lucide="mail" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="loader" class="size-4"></i>
+                                            @endif
+                                        </div>
+                                       <div>
+                                            <h6 class="mb-1 text-base font-semibold text-slate-700 dark:text-zink-100">
+                                                REQUEST YOUR USM INSTITUTIONAL EMAIL VIA GETMAIL
+                                            </h6>
+                                            <p class="mb-2 text-sm text-slate-500 dark:text-zink-200">
+                                                Access the official GetMail portal to request your USM institutional email account.
+                                            </p>
+                                            <a href="https://getmail.usm.edu.ph/"
+                                            class="inline-block px-4 py-2 text-sm font-medium text-white bg-green-500 border border-green-500 rounded hover:bg-green-600 hover:border-green-600 focus:outline-none focus:ring focus:ring-green-200 dark:ring-green-400/10">
+                                                <i data-lucide="send"
+                                                        class="inline-block size-4 dark:text-zink-200"></i> Go to GetMail Portal
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
 
                             </div>
                         </div>
