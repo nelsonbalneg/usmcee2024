@@ -7,6 +7,9 @@
     use Carbon\Carbon;
     $start = Carbon::parse($site_settings->start_prereg_second_batch);
     $end = Carbon::parse($site_settings->end_prereg_second_batch);
+
+    $start_batch_1 = Carbon::parse($site_settings->start_prereg);
+    $end_batch_1 = Carbon::parse($site_settings->end_prereg);
 @endphp
 
 
@@ -30,7 +33,7 @@
         </ul>
     </div>
     {{-- || (now()->between($start, $end) && $result->confirmation_batch == 2) --}}
-    @if ($result->confirmation_batch == 1 || (now()->between($start, $end) && $result->confirmation_batch == 2))
+    @if ((now()->between($start_batch_1, $end_batch_1) && $result->confirmation_batch == 1) || (now()->between($start, $end) && $result->confirmation_batch == 2))
 
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
@@ -445,14 +448,15 @@
 
         </div>
     @else
-        <div class="flex gap-3 p-4 text-sm rounded-md text-sky-500 bg-sky-50 dark:bg-sky-400/20">
+        <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
             <i data-lucide="check-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
             <div>
                 <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.</h6>
                 <ul class="ml-2 list-disc list-inside">
-                    <li>Please visit this page between <b> {{ \Carbon\Carbon::parse($start)->format('F j, Y g:i A') }} to
+                    {{-- <li>Please visit this page between <b> {{ \Carbon\Carbon::parse($start)->format('F j, Y g:i A') }} to
                             {{ \Carbon\Carbon::parse($end)->format('F j, Y g:i A') }} </b> for the second batch of
-                        pre-registration.</li>
+                        pre-registration.</li> --}}
+                    <li>Preregistration has ended.</li>
 
                 </ul>
             </div>

@@ -172,7 +172,10 @@ class StudentCeeReserveController extends Controller
         });
 
         if ($programs) {
-            return response()->json($programs);
+            return response()->json(
+                is_array($programs) ? $programs : ['error' => 'Failed to fetch programs'],
+                is_array($programs) ? 200 : 500
+            );
         } else {
             return response()->json(['error' => 'Failed to fetch programs'], 500);
         }

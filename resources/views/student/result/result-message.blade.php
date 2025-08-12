@@ -6,6 +6,9 @@
     use Carbon\Carbon;
     $start = Carbon::parse($site_settings->start_prereg_second_batch);
     $end = Carbon::parse($site_settings->end_prereg_second_batch);
+
+    $start_batch_1 = Carbon::parse($site_settings->start_prereg);
+    $end_batch_1 = Carbon::parse($site_settings->end_prereg);
 @endphp
 
 
@@ -56,7 +59,8 @@
                             @if ($is_qualified_pre_reg == 1 && !now()->between($start, $end))
 
                                 {{-- add if student is enrolled in first priority --}}
-                                @if ($cee_profile->prereg_status == 'pending' || $cee_profile->prereg_status == 'enrolled')
+                                {{-- @if ($cee_profile->prereg_status == 'pending' || $cee_profile->prereg_status == 'enrolled') --}}
+                                @if ($cee_profile && ($cee_profile->prereg_status === 'pending' || $cee_profile->prereg_status === 'enrolled'))
                                     <p class="text-slate-800">
                                         Congratulations! You have successfully preregistered for your first priority program
                                         at the University of Southern Mindanao!
@@ -133,7 +137,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                @else
+                                @elseif(now()->between($start_batch_1, $end_batch_1) || now()->between($start, $end))
                                     <h4>Congratulations! You Qualified for Your Priority Program at USM!</h4>
 
                                     <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
@@ -166,6 +170,14 @@
                                         <br><br>
                                         Congratulations once again, and we look forward to welcoming you to USM!
 
+                                    </p>
+                                @else
+                                    <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
+                                        {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
+                                        {{ $cee_result->lastname }}
+                                        {{ $cee_result->suffix }},</p>
+                                    <p class="text-slate-800">Please be informed that the Preregistration has ended.
+                                        <br><br>
                                     </p>
                                 @endif
                                 {{-- end if --}}
