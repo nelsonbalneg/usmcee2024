@@ -300,10 +300,10 @@
                                                 </option>
                                                 <option value="Main Campus">Main Campus
                                                 </option>
-                                                {{-- <option value="USM KCC">USM KCC
-                                            </option>
-                                            <option value="USM PALMA">USM PALMA
-                                            </option> --}}
+                                                <option value="USM KCC">USM KCC
+                                                </option>
+                                                <option value="USM PALMA">USM PALMA
+                                                </option>
                                             </select>
 
                                             <label id="activeSlotsLabel"
@@ -541,10 +541,10 @@
                                             </option>
                                             <option value="Main Campus">Main Campus
                                             </option>
-                                            {{-- <option value="USM KCC">USM KCC
-                                  </option>
-                                  <option value="USM PALMA">USM PALMA
-                                  </option> --}}
+                                            <option value="USM KCC">USM KCC
+                                            </option>
+                                            <option value="USM PALMA">USM PALMA
+                                            </option>
                                         </select>
 
                                         <label id="activeSlotsLabel"
@@ -735,8 +735,8 @@
             }
         });
 
-        // Automatically fetch active slots every 5 seconds
-        setInterval(fetchActiveSlots, 5000);
+        // Automatically fetch active slots every 10 seconds
+        setInterval(fetchActiveSlots, 10000);
     </script>
 
 
@@ -781,12 +781,6 @@
         });
 
         // Initialize Choices on the room select element
-        // const choicesInstance = new Choices(ceeexamsession, {
-        //     searchEnabled: true,
-        //     placeholderValue: 'Choose Room',
-        //     noResultsText: 'No rooms available',
-        // });
-
         document.addEventListener('DOMContentLoaded', function() {
             const campusSelect1 = document.getElementById('campus-select');
             const programSelect1 = document.getElementById('program-select');
@@ -811,22 +805,22 @@
                 let termId;
                 switch (realCampusId) {
                     case "1":
-                        termId = 99;
+                        termId = 101;
                         break; // USM Main
                     case "3":
-                        termId = 69;
+                        termId = 70;
                         break; // USM KCC
                     case "5":
-                        termId = 99;
+                        termId = 101;
                         break; // PALMA
                     case "6":
-                        termId = 99;
+                        termId = 101;
                         break; // Mlang
                     case "7":
-                        termId = 99;
+                        termId = 101;
                         break; // antipas
                     case "8":
-                        termId = 99;
+                        termId = 101;
                         break; // Pigcwayan
                     default:
                         termId = null;
@@ -881,65 +875,5 @@
                 thirdprogram_policy_id_Input.value = selectedOption.getAttribute('data-program-policy_id');
             });
         });
-
-
-        // document.addEventListener("DOMContentLoaded", function() {
-        //     const roomSelect = document.getElementById('room-select');
-        //     const ceeSessionSelect = document.getElementById('ceeexamsession');
-        //     let choicesInstance;
-
-        //     // Define the loadRooms function to reset and fetch rooms
-        //     function loadRooms() {
-        //         const ceesession = ceeSessionSelect.value;
-
-        //         // Clear any previous selection in room-select and reset it
-        //         if (choicesInstance) {
-        //             console.log('Destroying existing Choices instance');
-        //             choicesInstance.destroy();
-        //             choicesInstance = null; // Clear reference to allow reinitialization
-        //         }
-
-        //         // Clear roomSelect options directly (in case Choices does not clear all)
-        //         roomSelect.innerHTML = '<option value="" disabled selected>Choose Room</option>';
-        //         roomSelect.value = ''; // Clear any selected value in the DOM
-
-        //         // Reinitialize Choices.js with default settings
-        //         choicesInstance = new Choices(roomSelect, {
-        //             searchEnabled: true,
-        //             placeholderValue: 'Choose Room',
-        //             noResultsText: 'No rooms available',
-        //         });
-
-        //         // If a batch session is selected, fetch room data
-        //         if (ceesession) {
-        //             console.log(`Fetching rooms for session: ${ceesession}`); // Debugging statement
-        //             fetch(`/student/cee/rooms-by-session?ceesession=${ceesession}`, {
-        //                     headers: {
-        //                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-        //                             'content')
-        //                     }
-        //                 })
-        //                 .then(response => {
-        //                     if (!response.ok) {
-        //                         throw new Error('Network response was not ok');
-        //                     }
-        //                     return response.json();
-        //                 })
-        //                 .then(data => {
-        //                     console.log('Rooms data received:', data); // Debugging statement
-        //                     const roomOptions = data.map(room => ({
-        //                         value: room.id,
-        //                         label: `${room.room_name} - ${room.college_name} - (Slots: ${room.capacity})`
-        //                     }));
-        //                     // Populate the dropdown with fetched room data
-        //                     choicesInstance.setChoices(roomOptions, 'value', 'label', true);
-        //                 })
-        //                 .catch(error => console.error('Error fetching rooms:', error));
-        //         }
-        //     }
-
-        //     // Attach the loadRooms function to the onchange event of ceeexamsession select
-        //     ceeSessionSelect.addEventListener('change', loadRooms);
-        // });
     </script>
 @endpush

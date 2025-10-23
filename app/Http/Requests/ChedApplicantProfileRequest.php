@@ -27,12 +27,11 @@ class ChedApplicantProfileRequest extends FormRequest
         $userId = Auth::user()->id;
 
         return [
-            // 'app_no' => 'required|unique:ched_applicant_profiles,app_no',
 
-            'app_no' => [
-                'required',
-                Rule::unique('ched_applicant_profiles', 'app_no')->ignore($userId, 'user_id') // Ignore the current user's email
-            ],
+            // 'app_no' => [
+            //     'required',
+            //     Rule::unique('ched_applicant_profiles', 'app_no')->ignore($userId, 'user_id') // Ignore the current user's email
+            // ],
             'user_id' => [
                 'required',
                 Rule::unique('ched_applicant_profiles', 'user_id')->ignore($userId, 'user_id') // Ignore the current user's email
@@ -133,8 +132,8 @@ class ChedApplicantProfileRequest extends FormRequest
     public function messages()
     {
         return [
-            'app_no.required' => 'The application number is required and cannot be left blank.',
-            'app_no.unique' => 'The application number must be unique and is already in use.',
+            // 'app_no.required' => 'The application number is required and cannot be left blank.',
+            // 'app_no.unique' => 'The application number must be unique and is already in use.',
             'user_id.required' => 'The user ID is required and cannot be omitted.',
             'user_id.unique' => 'This user ID has already been associated with an application.',
 

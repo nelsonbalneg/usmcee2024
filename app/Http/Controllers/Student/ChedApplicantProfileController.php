@@ -25,11 +25,11 @@ class ChedApplicantProfileController extends Controller
         $cee_profile = User::where('id', Auth::user()->id)->first();
 
         //get the application number with confirmed status
-        $app_no = Reservation::where('user_id', Auth::user()->id)
-            ->where('status', 'confirmed')->first();
+        // $app_no = Reservation::where('user_id', Auth::user()->id)
+        //     ->where('status', 'confirmed')->first();
 
         //check if there is a result
-        $result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+        // $result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
 
         //fetch the if user exist in StudentProfile Table and prevent detching null if the user doe not have a profile yet
         //return a new StudentProfile instance
@@ -62,8 +62,6 @@ class ChedApplicantProfileController extends Controller
             'student.profile.ched-applicant-profile',
             compact(
                 'cee_profile',
-                'app_no',
-                'result',
                 'applicant',
                 'is_applicant_exist',
                 'religions',
@@ -114,7 +112,7 @@ class ChedApplicantProfileController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'USMCEE Applicant Profile saved! Please proceed to the next step.');
+            return redirect()->route('student.ched-applicant-profile.index')->with('success', 'Your USMCEE Applicant Profile has been saved as a draft. Please take a moment to review all the details and ensure that the information you entered is accurate. If you find any errors, you may click the Update Information button to make the necessary corrections. Once you have verified that all details are correct, click the Submit and Publish button to finalize and submit your profile.');
         } catch (\Exception $e) {
             DB::rollBack();
 

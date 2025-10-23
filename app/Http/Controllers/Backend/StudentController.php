@@ -92,6 +92,7 @@ class StudentController extends Controller
 
             //check if it has result
             $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+               $ceeActiveession = CeeSession::where('status', 'active')->first();
 
             $cee_reservation_records = DB::table('reservations')
                 ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
@@ -125,7 +126,8 @@ class StudentController extends Controller
                 'cee_result',
                 'cee_reservation_records',
                 'applicant',
-                'requirements'
+                'requirements',
+                'ceeActiveession'
             ));
         }
     }

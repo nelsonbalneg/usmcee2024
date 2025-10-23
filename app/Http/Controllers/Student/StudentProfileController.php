@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use File;
 use App\Models\User;
 use App\Models\Result;
+use App\Models\CeeSession;
 use App\Models\SchoolName;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\ChedApplicantProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,6 +36,12 @@ class StudentProfileController extends Controller
 
         //check if records exists
         $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
+        $ceeActiveession = CeeSession::where('status', 'active')->first();
+
+        $ched_applicant_Profile = ChedApplicantProfile::where('user_id', Auth::id())
+            ->where('status', 1)
+            ->first();
+
 
         $cee_reservation_records = DB::table('reservations')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
@@ -64,10 +72,10 @@ class StudentProfileController extends Controller
         //check if it has result
         $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
 
-        return view("student.profile.profile", compact('studentdetails', 'cee_reservation_records', 'isreservation_exist', 'cee_result'));
+        return view("student.profile.profile", compact('studentdetails', 'ceeActiveession', 'cee_reservation_records', 'isreservation_exist', 'cee_result', 'ched_applicant_Profile'));
     }
 
-   
+
 
     /**
      * Show the form for creating a new resource.
@@ -179,7 +187,7 @@ class StudentProfileController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('message', 'Your profile has been successfully updated! To reserve a slot, please go to the RESERVATION menu.');
+        return redirect()->route('student.ched-applicant-profile.index')->with('message', 'Your profile has been successfully updated! Please complete the additional information required by the Commission on Higher Education.');
     }
 
     public function uploadPhoto(Request $request)

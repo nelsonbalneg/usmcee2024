@@ -898,9 +898,6 @@
             <div>
                 <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.</h6>
                 <ul class="ml-2 list-disc list-inside">
-                    {{-- <li>Please visit this page between <b> {{ \Carbon\Carbon::parse($start)->format('F j, Y g:i A') }} to
-                            {{ \Carbon\Carbon::parse($end)->format('F j, Y g:i A') }} </b> for the second batch of
-                        pre-registration.</li> --}}
                     <li>Preregistration has ended.</li>
 
                 </ul>

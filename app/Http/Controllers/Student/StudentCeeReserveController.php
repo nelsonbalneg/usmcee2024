@@ -10,7 +10,9 @@ use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\ChedApplicantProfile;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -24,6 +26,9 @@ class StudentCeeReserveController extends Controller
     {
         // Retrieve the current authenticated user details
         $studentdetails = Auth::user();
+        $ched_applicant_Profile = ChedApplicantProfile::where('user_id', Auth::id())
+            ->where('status', 1)
+            ->first();
 
         // Check if the student's profile is complete
         if (
@@ -36,9 +41,8 @@ class StudentCeeReserveController extends Controller
             !$studentdetails->province ||
             !$studentdetails->city ||
             !$studentdetails->brgy ||
-            // !$studentdetails->street ||
-            // !$studentdetails->zipcode ||
-            !$studentdetails->photo
+            !$studentdetails->photo ||
+            !$ched_applicant_Profile
         ) {
             // Redirect to the dashboard if the profile is incomplete
             return redirect()->route('student.dashboard');
@@ -161,22 +165,23 @@ class StudentCeeReserveController extends Controller
 
         // Cache the response for 60 minutes
         $programs = Cache::remember($cacheKey, 60, function () use ($termId, $realCampusId) {
+
             $response = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/cee-list/term/{$termId}/realcampus/{$realCampusId}");
 
             if ($response->successful()) {
                 return collect($response->json());
             } else {
-                // Handle the case where the API request was unsuccessful
                 return null; // Return null if the request fails
             }
         });
 
         if ($programs) {
-            return response()->json(
-                is_array($programs) ? $programs : ['error' => 'Failed to fetch programs'],
-                is_array($programs) ? 200 : 500
-            );
+            return response()->json($programs, 200);
         } else {
+            Log::warning('No programs found or failed to fetch', [
+                'termId' => $termId,
+                'realCampusId' => $realCampusId,
+            ]);
             return response()->json(['error' => 'Failed to fetch programs'], 500);
         }
     }

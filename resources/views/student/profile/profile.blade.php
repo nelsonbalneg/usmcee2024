@@ -1,6 +1,6 @@
 @extends('student.layouts.master')
 @section('title')
-    USMCEE - My Profile
+    USMCEE - Account Information
 @endsection
 
 @push('styles')
@@ -86,7 +86,8 @@
                             </div>
                             <p class="text-slate-500 dark:text-zink-200"><i data-lucide="info"
                                     class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
-                                Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025.
+                                Please take time to complete your profile to be able to reserve a slot in USM-CEE for
+                                <b>{{ $ceeActiveession->name }}</b>.
                             </p>
                             <p class="text-orange-500 text-slate-500 dark:text-zink-200"><i data-lucide="info"
                                     class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
@@ -103,33 +104,48 @@
                 </div>
             </div><!--end card-->
             {{-- @endif --}}
+
+            <div class="mb-3">
+                <ul
+                    class="inline-flex flex-wrap items-center gap-2 p-3 text-sm font-normal rounded bg-custom-100 dark:bg-zink-600">
+
+                    <li
+                        class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
+                        <a href="{{ route('student.profile.index') }}"
+                            class="flex items-center gap-1 text-slate-700 dark:text-zink-400">
+
+                            @if (!empty($studentdetails?->schoolid) && !empty($studentdetails?->applicant_type))
+                                <i data-lucide="circle-check" class="text-custom-600 size-4"></i>
+                            @else
+                                <i data-lucide="circle" class="size-3"></i>
+                            @endif
+
+                            Account Information
+                        </a>
+                    </li>
+                    @if (!empty($studentdetails?->schoolid) && !empty($studentdetails?->applicant_type))
+                        <li class="flex items-center gap-1 text-slate-200 dark:text-zink-100">
+                            <a href="{{ route('student.ched-applicant-profile.index') }}"
+                                class="flex items-center gap-1 text-slate-400 dark:text-zink-100">
+                                @if ($ched_applicant_Profile?->status == 1 && $ched_applicant_Profile?->user_id)
+                                    <i data-lucide="circle-check" class="text-custom-400 size-4"></i>
+                                @else
+                                    <i data-lucide="circle" class="size-3"></i>
+                                @endif
+
+                                Personal Information
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
             <div class="card">
                 <div class="card-body">
-
-                    <h6 class="mb-5 text-blue-500 text-15">SCHOOL INFORMATION</h6>
-                    {{-- <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details here
-                    easily. --}}
-                    </p>
-
                     <form action="{{ route('student.profile.update', ['profile' => $studentdetails->id]) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
-
-                            {{-- @if (empty($studentdetails->lrn)) --}}
-                            {{-- <div class="mb-2 xl:col-span-4">
-                            <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
-                                Picture
-                                <span class="text-red-500">*</span>
-                            </label>
-                            <input type="file" id="schoolIdPicture" name="image"
-                                class="cursor-pointer form-file border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
-                                placeholder="Upload your school id picture">
-                            </div> --}}
-                            {{-- @else --}}
-                            {{-- @endif --}}
-
 
                             <div class="xl:col-span-12">
                                 <div
@@ -184,7 +200,8 @@
                             @if (in_array($studentdetails->applicant_type, ['transferee', 'second_courser', 'hs_grad', 'shiftee']))
                             @else
                                 <div class="xl:col-span-6 lrn-track-container">
-                                    <label for="lrn" class="inline-block mb-2 text-base font-medium">Learner Reference
+                                    <label for="lrn" class="inline-block mb-2 text-base font-medium">Learner
+                                        Reference
                                         Number<sup id="lrn-sup" class="text-red-500">* required</sup></label>
                                     <input type="number" id="lrn" name="lrn"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -318,16 +335,7 @@
 
                     </form><!--end form-->
                 </div>
-                {{-- view more --}}
 
-                @if ($cee_result)
-                    <div class="flex gap-2 mt-4">
-                        <a type="button" href="{{ route('student.ched-applicant-profile.index') }}"
-                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                            Complete Your Profile <i data-lucide="move-right" class="inline-block h-4 align-middle"></i>
-                        </a>
-                    </div>
-                @endif
             </div><!--end card-->
         </div><!--end col-->
 
@@ -428,76 +436,6 @@
         @else
         @endif --}}
     </div><!--end grid-->
-
-    @if (empty($studentdetails->applicant_type))
-        <!-- Modal Structure -->
-        <div id="apptypeModal" class="fixed inset-0 z-50 flex items-center justify-center hidden ">
-            <div class="absolute inset-0 bg-gray-900 bg-opacity-50"></div> <!-- Overlay -->
-            <div class="relative w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zinc-600 z-10">
-                <div class="flex items-center justify-center p-4 bg-green-500 border-b dark:border-zinc-500">
-                    <h5 class="text-center text-white text-16">Announcement</h5>
-                </div>
-                <div class="p-4 text-center">
-                    <div class="xl:col-span-12">
-                        <div
-                            class="px-4 py-3 text-sm text-green-500 border border-transparent rounded-md bg-green-50 dark:bg-green-400/20">
-                            <div class="items-center">
-                                <h6 class="mb-1">Announcement: CEE System 4.0 Update</h6>
-                                <ul class="ml-2 list-disc list-inside">
-                                    <p>
-                                        We are excited to announce updates to the CEE System 4.0! These improvements aim to
-                                        better accommodate <strong> transferees, shiftees, high school graduates, and second
-                                            coursers </strong>
-                                        interested in taking the USMCEE.
-                                    </p>
-                                    <br>
-                                    <p>
-                                        As part of this update, we kindly ask all applicants to review and update
-                                        the<strong> "Applicant
-                                            Type" </strong> field in your profile. Please select the option that best
-                                        describes your
-                                        application type and save the changes.
-
-                                    </p>
-                                    <br>
-                                    <p> Thank you for your cooperation!</p>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                    <button id="okButton"
-                        class="mt-4 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                        Let's Go!
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        @push('scripts')
-            {{-- this scipt is for pop up to update the applicant type --}}
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const modal = document.getElementById('apptypeModal');
-                    const overlay = modal.querySelector('.bg-gray-900'); // Overlay element
-                    const okButton = document.getElementById('okButton');
-
-                    // Show the modal when the page loads
-                    modal.classList.remove('hidden');
-
-                    // Prevent closing when clicking outside the modal
-                    overlay.addEventListener('click', function(event) {
-                        event.stopPropagation(); // Prevent the click from closing the modal
-                    });
-
-                    // Close modal when OK button is clicked
-                    okButton.addEventListener('click', function() {
-                        modal.classList.add('hidden');
-                    });
-                });
-            </script>
-        @endpush
-    @endif
 @endsection
 
 @push('scripts')
