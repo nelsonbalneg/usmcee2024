@@ -38,7 +38,7 @@
 
               <div class="mb-3">
             <ul
-                class="inline-flex flex-wrap items-center gap-2 p-3 text-sm font-normal rounded bg-custom-100 dark:bg-zink-600">
+                class="inline-flex flex-wrap items-center gap-2 p-3 text-sm font-normal bg-green-100 rounded dark:bg-zink-600">
 
                 <li
                     class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
@@ -46,7 +46,7 @@
                         class="flex items-center gap-1 text-slate-400 dark:text-zink-100">
 
                         @if (!empty($cee_profile?->schoolid) && !empty($cee_profile?->applicant_type))
-                            <i data-lucide="circle-check" class="text-custom-400 size-4"></i>
+                            <i data-lucide="circle-check" class="text-green-400 size-4"></i>
                         @else
                             <i data-lucide="circle" class="size-3"></i>
                         @endif
@@ -59,7 +59,7 @@
                         <a href="{{ route('student.ched-applicant-profile.index') }}"
                             class="flex items-center gap-1 text-slate-700 dark:text-zink-400">
                             @if ($applicant?->status == 1 && $applicant?->user_id)
-                                <i data-lucide="circle-check" class="text-custom-600 size-4"></i>
+                                <i data-lucide="circle-check" class="text-green-600 size-4"></i>
                             @else
                                 <i data-lucide="circle" class="size-3"></i>
                             @endif
@@ -114,7 +114,7 @@
 
                         <div class="mb-5 xl:col-span-12">
                             <div
-                                class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
+                                class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-green-50 dark:bg-green-400/20">
                                 <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
                                 <div>
                                     <h6 class="mb-1">Prohibition Against Fraud and Misrepresentation</h6>
@@ -231,7 +231,7 @@
                             {{-- readonly --}}
                             <div class="xl:col-span-3">
                                 <label for="region" class="inline-block mb-2 text-base font-medium">Household
-                                    Number<sup class="text-blue-500">* Readonly</sup></label>
+                                    Number<sup class="text-green-500">* Readonly</sup></label>
                                 <input type="text" name="region"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     value="{{ old('region', $cee_profile->region ?? '') }}" readonly>
@@ -240,7 +240,7 @@
 
                             <div class="xl:col-span-3">
                                 <label for="province" class="inline-block mb-2 text-base font-medium">Province<sup
-                                        class="text-blue-500">* Readonly</sup></label>
+                                        class="text-green-500">* Readonly</sup></label>
                                 <input type="text" name="province"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     value="{{ old('province', $cee_profile->province ?? '') }}" readonly>
@@ -250,7 +250,7 @@
                             <div class="xl:col-span-3">
                                 <label for="city"
                                     class="inline-block mb-2 text-base font-medium">Municapality/Town<sup
-                                        class="text-blue-500">* Readonly</sup></label>
+                                        class="text-green-500">* Readonly</sup></label>
                                 <input type="text" name="city"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     value="{{ old('city', $cee_profile->city ?? '') }}" readonly>
@@ -258,7 +258,7 @@
 
                             <div class="xl:col-span-3">
                                 <label for="brgy" class="inline-block mb-2 text-base font-medium">Barangay<sup
-                                        class="text-blue-500">* Readonly</sup></label>
+                                        class="text-green-500">* Readonly</sup></label>
                                 <input type="text" name="brgy"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     value="{{ old('brgy', $cee_profile->brgy ?? '') }}" readonly>
@@ -266,7 +266,7 @@
 
                             <div class="xl:col-span-6">
                                 <label for="street" class="inline-block mb-2 text-base font-medium">Street<sup
-                                        class="text-blue-500">* Readonly</sup></label>
+                                        class="text-green-500">* Readonly</sup></label>
                                 <input type="text" name="street"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     value="{{ old('street', $cee_profile->street ?? '') }}" readonly>
@@ -274,7 +274,7 @@
 
                             <div class="xl:col-span-3">
                                 <label for="zipcode" class="inline-block mb-2 text-base font-medium">Zip Code<sup
-                                        class="text-blue-500">* Readonly</sup></label>
+                                        class="text-green-500">* Readonly</sup></label>
                                 <input type="text" name="zipcode"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     value="{{ old('zipcode', $cee_profile->zipcode ?? '') }}" readonly>
@@ -373,8 +373,8 @@
 
                             {{-- other information --}}
                             <div class="mt-5 xl:col-span-12">
-                                <h6 class="mb-2 text-blue-500 uppercase text-15"><i data-lucide="notebook-tabs"
-                                        class="inline-block text-blue-500 size-4 dark:text-zink-200"></i> OTHER
+                                <h6 class="mb-2 text-green-500 uppercase text-15"><i data-lucide="notebook-tabs"
+                                        class="inline-block text-green-500 size-4 dark:text-zink-200"></i> OTHER
                                     INFORMATION
                                 </h6>
                             </div>
@@ -589,8 +589,8 @@
 
                     <div class="card-body">
 
-                        <h6 class="mb-4 text-blue-500 uppercase text-15"><i data-lucide="contact"
-                                class="inline-block text-blue-500 size-4 dark:text-zink-200"></i> FAMILY BACKGROUND
+                        <h6 class="mb-4 text-green-500 uppercase text-15"><i data-lucide="contact"
+                                class="inline-block text-green-500 size-4 dark:text-zink-200"></i> FAMILY BACKGROUND
                         </h6>
 
                         <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">

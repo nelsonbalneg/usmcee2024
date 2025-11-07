@@ -13,7 +13,7 @@
 @section('contents')
     <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
         <div class="grow">
-            <h5 class="text-16">USM - College Entrance Examination System 4.0</h5>
+            <h5 class="text-16">USMCEE 4.0</h5>
         </div>
         <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
             <li
@@ -135,7 +135,7 @@
                     @if ($endofreservation && Carbon::parse($endofreservation, 'Asia/Manila')->isFuture())
                         <div class="card">
                             <div
-                                class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
+                                class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-ounde-50 dark:bg-ounde-400/20">
                                 <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
                                 <div>
                                     <h6 class="mb-1">Kindly read this note before proceeding to CEE Slot Reservation</h6>
@@ -155,7 +155,7 @@
 
                                     <div class="xl:col-span-6">
                                         <input type="hidden" name="ceesession"
-                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-green-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                             value="{{ $ceeSession->id }}" @readonly(true)>
                                     </div><!--end col-->
 
@@ -163,9 +163,9 @@
 
                                         <div class="xl:col-span-6">
                                             <label for="is_repeat_exam" class="inline-block mb-2 text-base font-medium">CEE
-                                                Retaker?<sup class="text-blue-500">* read only</sup></label>
+                                                Retaker?<sup class="text-green-500">* read only</sup></label>
                                             <input type="text" id="is_repeat_exam" name="is_repeat_exam"
-                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-green-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                 value="<?php echo $isRetaker ? 'Yes' : 'No'; ?>" @readonly(true)>
                                         </div><!--end col-->
 
@@ -354,7 +354,7 @@
                                                     data-lucide="x" class="inline-block size-4"></i> <span
                                                     class="align-middle">Cancel</span></button>
                                             <button type="submit"
-                                                class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100">Submit</button>
+                                                class="text-white transition-all duration-200 ease-linear bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100">Submit</button>
                                         </div><!--end col-->
                                     </div>
                                 </form>
@@ -381,7 +381,7 @@
                 {{-- check the endofreservation --}}
                 @if ($endofreservation && Carbon::parse($endofreservation, 'Asia/Manila')->isFuture())
                     <div class="card">
-                        <div class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
+                        <div class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-green-50 dark:bg-green-400/20">
                             <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
                             <div>
                                 <h6 class="mb-1">Kindly read this note before proceeding to CEE Slot Reservation</h6>
@@ -409,14 +409,14 @@
 
                                     <div class="xl:col-span-6">
                                         <label for="is_repeat_exam" class="inline-block mb-2 text-base font-medium">CEE
-                                            Retaker?<sup class="text-blue-500">* read only</sup></label>
+                                            Retaker?<sup class="text-green-500">* read only</sup></label>
                                         <input type="text" id="is_repeat_exam" name="is_repeat_exam"
                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                             value="<?php echo $isRetaker ? 'Yes' : 'No'; ?>" @readonly(true)>
                                     </div><!--end col-->
 
                                     <div class="xl:col-span-12">
-                                        <h6 class="text-blue-500 text-5">PRIORITY PROGRAMS</h6>
+                                        <h6 class="text-green-500 text-5">PRIORITY PROGRAMS</h6>
 
                                     </div>
 
@@ -526,7 +526,7 @@
 
 
                                     <div class="xl:col-span-12">
-                                        <h6 class="mt-2 text-blue-500 text-5">EXAMINATION VENUE</h6>
+                                        <h6 class="mt-2 text-green-500 text-5">EXAMINATION VENUE</h6>
                                     </div>
 
                                     <div class="xl:col-span-12">

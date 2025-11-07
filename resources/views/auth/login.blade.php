@@ -118,8 +118,8 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                 </a>
 
                 <div class="mt-8 text-center">
-                    <h4 class="mb-1 text-yellow-500 dark:text-yellow-500">Welcome Students !</h4>
-                    <p class="text-slate-500 dark:text-zink-200">Sign in to continue to USMCEE</p>
+                    <h4 class="mb-1 text-yellow-500 dark:text-yellow-500">Welcome Applicants !</h4>
+                    {{-- <p class="text-slate-500 dark:text-zink-200">Sign in to continue to USMCEE</p> --}}
                 </div>
                 <div class="flex gap-3 p-3 mt-5 text-sm text-yellow-500 rounded-md bg-yellow-50 dark:bg-yellow-400/20">
                     <div>
@@ -183,7 +183,7 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                             </a>
                             {{-- <a href="{{ route('password.request') }}"
                                 class="text-base font-medium text-blue-600 cursor-pointer hover:underline">
-                                Forgot Password? 
+                                Forgot Password?
                             </a> --}}
                         </div>
                     </div>

@@ -10,7 +10,7 @@
             </div>
             <div class="hidden lg:block">
                 <div class="ltr:text-right rtl:text-left">
-                    Design & Develop by UICTO
+                    Designed & Developed by UICTO
                 </div>
             </div>
         </div>

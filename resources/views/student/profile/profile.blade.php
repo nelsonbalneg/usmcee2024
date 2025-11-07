@@ -9,7 +9,7 @@
 @section('contents')
     <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
         <div class="grow">
-            <h5 class="text-16">USM - College Entrance Examination System 4.0</h5>
+            <h5 class="text-16">USMCEE - Profile</h5>
         </div>
         <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
             <li
@@ -27,7 +27,7 @@
         <!--start col-->
         <div class="xl:col-span-12">
             <!--start card-->
-            {{-- @if (!empty($alert)) --}}
+
             <div class="card">
                 <div class="card-body">
 
@@ -103,11 +103,10 @@
                     </div><!--end grid-->
                 </div>
             </div><!--end card-->
-            {{-- @endif --}}
 
             <div class="mb-3">
                 <ul
-                    class="inline-flex flex-wrap items-center gap-2 p-3 text-sm font-normal rounded bg-custom-100 dark:bg-zink-600">
+                    class="inline-flex flex-wrap items-center gap-2 p-3 text-sm font-normal bg-green-100 rounded dark:bg-zink-600">
 
                     <li
                         class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
@@ -115,7 +114,7 @@
                             class="flex items-center gap-1 text-slate-700 dark:text-zink-400">
 
                             @if (!empty($studentdetails?->schoolid) && !empty($studentdetails?->applicant_type))
-                                <i data-lucide="circle-check" class="text-custom-600 size-4"></i>
+                                <i data-lucide="circle-check" class="text-green-600 size-4"></i>
                             @else
                                 <i data-lucide="circle" class="size-3"></i>
                             @endif
@@ -128,7 +127,7 @@
                             <a href="{{ route('student.ched-applicant-profile.index') }}"
                                 class="flex items-center gap-1 text-slate-400 dark:text-zink-100">
                                 @if ($ched_applicant_Profile?->status == 1 && $ched_applicant_Profile?->user_id)
-                                    <i data-lucide="circle-check" class="text-custom-400 size-4"></i>
+                                    <i data-lucide="circle-check" class="text-green-400 size-4"></i>
                                 @else
                                     <i data-lucide="circle" class="size-3"></i>
                                 @endif
@@ -149,7 +148,7 @@
 
                             <div class="xl:col-span-12">
                                 <div
-                                    class="flex gap-3 p-4 text-sm rounded-md text-custom-500 bg-custom-50 dark:bg-custom-400/20">
+                                    class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-green-50 dark:bg-green-400/20">
                                     <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
                                     <div>
                                         <h6 class="mb-1">Prohibition Against Fraud and Misrepresentation</h6>
@@ -174,7 +173,7 @@
                                     Applicant Type<sup class="text-red-500">* required</sup>
                                 </label>
                                 <select id="apptype-select" name="apptype"
-                                    class="w-full p-2 transition duration-200 ease-in-out border rounded-md border-slate-300 focus:ring-custom-500 focus:border-custom-500"
+                                    class="w-full p-2 transition duration-200 ease-in-out border rounded-md border-slate-300 focus:ring-green-500 focus:border-green-500"
                                     onchange="setLRNBasedOnApplicantType()" data-choices>
                                     <option value="" {{ $studentdetails->applicant_type == '' ? 'selected' : '' }}
                                         disabled>--Select--</option>
@@ -240,7 +239,7 @@
 
                             <div class="xl:col-span-3">
                                 <label for="school_name" class="inline-block mb-2 text-base font-medium">School Name <sup
-                                        class="text-blue-500">* read only</sup></span></label>
+                                        class="text-green-500">* read only</sup></span></label>
                                 <input type="text" id="school_name" name="school_name"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     readonly placeholder=" School Name" value="{{ $studentdetails->shs_school }}">
@@ -251,7 +250,7 @@
 
                             <div class="xl:col-span-6">
                                 <label for="school_address" class="inline-block mb-2 text-base font-medium">School Address
-                                    <sup class="text-blue-500">* read only</sup></label>
+                                    <sup class="text-green-500">* read only</sup></label>
                                 <input type="text" id="school_address" name="school_address"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     readonly placeholder="Enter School Address"
@@ -263,7 +262,7 @@
 
 
                             <div class="xl:col-span-12">
-                                <h6 class="mb-1 text-blue-500 text-15">ADDRESS INFORMATION</h6>
+                                <h6 class="mb-1 text-green-500 text-15">ADDRESS INFORMATION</h6>
                             </div>
 
                             <div class="xl:col-span-3">
