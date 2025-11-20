@@ -69,6 +69,7 @@ class StudentCeeReserveController extends Controller
 
         $cee_reservation_records = DB::table('reservations')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+            ->join('cee_sessions', 'reservations.cee_session_id', '=', 'cee_sessions.id')
             ->where('reservations.user_id', $userId)
             ->select(
                 'reservations.user_id',
@@ -88,7 +89,8 @@ class StudentCeeReserveController extends Controller
                 'rooms.exam_session',
                 'rooms.campus',
                 'rooms.time',
-                'rooms.schedule'
+                'rooms.schedule',
+                'cee_sessions.name as session_name'
             )
             ->orderBy('reservations.created_at', 'desc')
             ->get();

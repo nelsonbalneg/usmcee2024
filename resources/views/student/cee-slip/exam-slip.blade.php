@@ -211,7 +211,7 @@
     <!-- Footer that appears on all pages -->
     <div class="footer">
         <p>Downloaded Date and Time:
-            {{ \Carbon\Carbon::now()->setTimezone('Asia/Manila')->format('F j, Y h:i:s A') }} | {{ request()->ip() }}
+            {{ \Carbon\Carbon::now()->setTimezone('Asia/Manila')->format('F j, Y h:i:s A') }}
         </p>
         <p style="margin-top:-8px;">Browser Agent: {{ request()->header('User-Agent') }}</p>
         <p style="margin-top:-8px; color:green"> University of Southern Mindanao - College Entrance Examination
@@ -224,7 +224,7 @@
         <div class="header">
             <img src="{{ public_path('backend/assets/images/logo/OFFICIAL_USM_LOGO.png') }}" alt="University Logo"
                 class="left-logo">
-                <img src="{{ $qrCodeUrl }}" alt="QR Code" class="right-logo" />
+            <img src="{{ $qrCodeUrl }}" alt="QR Code" class="right-logo" />
 
 
             <div>University of Southern Mindanao</div>
@@ -232,7 +232,7 @@
             <div style="font-size: 10pt;">Kabacan, Cotabato</div>
             <br>
 
-            <div style="color: green;">UNIVERSITY OF SOUTHERN MINDANAO <br>
+            <div style="color: seagreen;">UNIVERSITY OF SOUTHERN MINDANAO <br>
                 COLLEGE ENTRANCE EXAMINATION (USMCEE)</div>
             <div class="title">Entrance Examination Slip</div>
         </div>
@@ -240,7 +240,8 @@
         <div class="row d-flex justify-content-center" style="margin-bottom: 10px; margin-top:40px;">
             <div class="col">
                 <div class="text-left">
-                    <span class="info-item"><b>Congratulations!</b> You have successfully reserved a slot for the
+                    <span class="info-item"><b>Congratulations!</b><br><br> You have successfully reserved a slot for
+                        the
                         USMCEE.
                         Below are your reservation details:</span>
                 </div>
@@ -249,7 +250,7 @@
 
         <table style="margin-bottom: 10px; width: 100%;">
             <tr>
-                <th colspan="2" style="text-align: center;">USMCEE RESERVATION DETAILS</th>
+                <th colspan="2" style="text-align: center; background-color: mediumaquamarine;">USMCEE RESERVATION DETAILS</th>
             </tr>
             <tr>
                 <!-- Left Column -->
@@ -266,27 +267,36 @@
                 </td>
 
                 <!-- Right Column -->
-                <td style="vertical-align: top; width: 50%;">
+                <td style="vertical-align: top; width: 50%">
                     <table style="width: 100%;">
                         <tr>
-                            <th style="text-align: left; width: 100px;">Test Session:</th>
-                            <td>{{ $cee_reservation->exam_session }}</td>
+                            <th style="text-align: left; width: 100px; border: none; background-color: white;">Test
+                                Session:</th>
+                            <td style="border: none;">{{ $cee_reservation->exam_session }}</td>
                         </tr>
+
                         <tr>
-                            <th style="text-align: left; width: 100px;">Test Venue:</th>
-                            <td> ({{ $cee_reservation->campus }}) {{ $cee_reservation->college_name }} /
+                            <th style="text-align: left; width: 100px; border: none; background-color: white;">Test
+                                Venue:</th>
+                            <td style="border: none;">
+                                ({{ $cee_reservation->campus }}) {{ $cee_reservation->college_name }} /
                                 {{ $cee_reservation->room_name }}
                             </td>
                         </tr>
+
                         <tr>
-                            <th style="text-align: left; width: 100px;">Date and Time:</th>
-                            <td> {{ \Carbon\Carbon::parse($cee_reservation->schedule)->format('F j, Y') }} /
+                            <th style="text-align: left; width: 100px; border: none; background-color: white;">Date and
+                                Time:</th>
+                            <td style="border: none;">
+                                {{ \Carbon\Carbon::parse($cee_reservation->schedule)->format('F j, Y') }} /
                                 {{ $cee_reservation->time }}
                             </td>
                         </tr>
+
                         <tr>
-                            <th style="text-align: left; width: 100px;">CEE Applicant Type:</th>
-                            <td>
+                            <th style="text-align: left; width: 100px; border: none; background-color: white;">CEE
+                                Applicant Type:</th>
+                            <td style="border: none;">
                                 @if ($cee_reservation->is_repeat_exam === 'Yes')
                                     Retaker
                                 @else
@@ -294,6 +304,8 @@
                                 @endif
                             </td>
                         </tr>
+
+
                     </table>
                 </td>
             </tr>

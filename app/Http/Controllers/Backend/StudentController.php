@@ -88,14 +88,15 @@ class StudentController extends Controller
             //check if user_id exists in requirements table
             $requirements = DB::table('student_requirements')
                 ->where('student_id', Auth::user()->id)
-               ->first();
+                ->first();
 
             //check if it has result
             $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
-               $ceeActiveession = CeeSession::where('status', 'active')->first();
+            $ceeActiveession = CeeSession::where('status', 'active')->first();
 
             $cee_reservation_records = DB::table('reservations')
                 ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                ->join('cee_sessions', 'reservations.cee_session_id', '=', 'cee_sessions.id')
                 ->where('reservations.user_id', Auth::user()->id)
                 ->select(
                     'reservations.user_id',
@@ -115,7 +116,8 @@ class StudentController extends Controller
                     'rooms.exam_session',
                     'rooms.campus',
                     'rooms.time',
-                    'rooms.schedule'
+                    'rooms.schedule',
+                    'cee_sessions.name as session_name'
                 )
                 ->orderBy('reservations.created_at', 'desc')
                 ->get();

@@ -51,8 +51,6 @@
                                             <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Schedule
                                             </th>
                                             <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Venue</th>
-                                            <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">CEE Term
-                                            </th>
                                             <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Date
                                                 Created</th>
                                         </tr>
@@ -104,12 +102,20 @@
                                                     </td>
                                                     <td class="px-3.5 py-2.5">{{ $data->app_no }}</td>
                                                     <td class="px-3.5 py-2.5">
+                                                        <span
+                                                            class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                            {{ $data->session_name }}</span>
                                                         {{ $data->exam_session }} <br>
                                                         {{ \Carbon\Carbon::parse($data->schedule)->format('F j, Y') }}
-                                                        [{{ $data->time }}]</td>
+                                                        [{{ $data->time }}]
+                                                    </td>
                                                     <td class="px-3.5 py-2.5">
-                                                        {{ $data->college_name . '-' . $data->room_name }}</td>
-                                                    <td class="px-3.5 py-2.5">{{ $data->cee_session_id }}</td>
+                                                        <span
+                                                            class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                            {{ $data->campus }}</span><br>
+                                                        {{ $data->college_name . '-' . $data->room_name }}
+                                                    </td>
+
                                                     <td class="px-3.5 py-2.5">
                                                         {{ \Carbon\Carbon::parse($data->created_at)->setTimezone('Asia/Manila')->format('F j, Y h:i A') }}
                                                     </td>
@@ -134,8 +140,7 @@
                     {{-- check the endofreservation --}}
                     @if ($endofreservation && Carbon::parse($endofreservation, 'Asia/Manila')->isFuture())
                         <div class="card">
-                            <div
-                                class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-ounde-50 dark:bg-ounde-400/20">
+                            <div class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-ounde-50 dark:bg-ounde-400/20">
                                 <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
                                 <div>
                                     <h6 class="mb-1">Kindly read this note before proceeding to CEE Slot Reservation</h6>
