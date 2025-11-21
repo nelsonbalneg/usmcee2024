@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Models\Room;
+use App\Models\Term;
 use App\Models\CeeSession;
 use App\Models\PastCeeData;
 use App\Models\Reservation;
@@ -104,8 +105,10 @@ class StudentCeeReserveController extends Controller
         $siteSetting = SiteSetting::first();
         $endofreservation = $siteSetting ? $siteSetting->endreservation : null;
 
+          $campusNames = Term::where('is_active', 1)->get();
 
-        return view("student.reserve.reserve", compact('ceeSession', 'isRetaker', 'endofreservation', 'cee_reservation_records', 'reservation_details'));
+
+        return view("student.reserve.reserve", compact('ceeSession', 'isRetaker', 'endofreservation', 'cee_reservation_records', 'reservation_details', 'campusNames'));
     }
 
     // In your controller

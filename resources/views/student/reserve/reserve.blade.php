@@ -431,12 +431,12 @@
                                         <select id="campus-select" name="campus" data-choices
                                             class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                             <option selected="true" disabled>Choose Campus</option>
-                                            <option value="1">USM Main</option>
-                                            <option value="3">USM KCC</option>
-                                            <option value="5">USM PALMA CLUSTER</option>
-                                            <option value="6">USM MLANG</option>
-                                            <option value="7">USM Antipas</option>
-                                            <option value="8">USM Pigcwayan</option>
+                                            @foreach ($campusNames as $campusName)
+                                                <option value="{{ $campusName->real_campus_id }} "
+                                                    data-termid="{{ $campusName->termid }}">
+                                                    {{ $campusName->campus_name }}
+                                                </option>
+                                            @endforeach
 
                                         </select>
                                     </div>
@@ -460,12 +460,12 @@
                                         <select id="campus-select2" name="campus2" data-choices
                                             class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                             <option selected="true" disabled>Choose Campus</option>
-                                            <option value="1">USM Main</option>
-                                            <option value="3">USM KCC</option>
-                                            <option value="5">USM PALMA CLUSTER</option>
-                                            <option value="6">USM MLANG</option>
-                                            <option value="7">USM Antipas</option>
-                                            <option value="8">USM Pigcwayan</option>
+                                            @foreach ($campusNames as $campusName)
+                                                <option value="{{ $campusName->real_campus_id }} "
+                                                    data-termid="{{ $campusName->termid }}">
+                                                    {{ $campusName->campus_name }}
+                                                </option>
+                                            @endforeach
 
                                         </select>
                                     </div>
@@ -491,12 +491,12 @@
                                         <select id="campus-select3" name="campus3" data-choices
                                             class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                             <option selected="true" disabled>Choose Campus</option>
-                                            <option value="1">USM Main</option>
-                                            <option value="3">USM KCC</option>
-                                            <option value="5">USM PALMA CLUSTER</option>
-                                            <option value="6">USM MLANG</option>
-                                            <option value="7">USM Antipas</option>
-                                            <option value="8">USM Pigcwayan</option>
+                                            @foreach ($campusNames as $campusName)
+                                                <option value="{{ $campusName->real_campus_id }} "
+                                                    data-termid="{{ $campusName->termid }}">
+                                                    {{ $campusName->campus_name }}
+                                                </option>
+                                            @endforeach
 
                                         </select>
                                     </div>
@@ -805,32 +805,7 @@
 
             function loadPrograms(campusSelect, programSelect) {
                 const realCampusId = campusSelect.value;
-
-                // Set termId based on the selected campus
-                let termId;
-                switch (realCampusId) {
-                    case "1":
-                        termId = 101;
-                        break; // USM Main
-                    case "3":
-                        termId = 70;
-                        break; // USM KCC
-                    case "5":
-                        termId = 101;
-                        break; // PALMA
-                    case "6":
-                        termId = 101;
-                        break; // Mlang
-                    case "7":
-                        termId = 101;
-                        break; // antipas
-                    case "8":
-                        termId = 101;
-                        break; // Pigcwayan
-                    default:
-                        termId = null;
-                        break;
-                }
+                  const termId = campusSelect.selectedOptions[0].dataset.termid;
 
                 if (!realCampusId || !termId) return; // Exit if missing values
 
