@@ -7,7 +7,7 @@
 @section('contents')
     <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
         <div class="grow">
-            <h5 class="text-16">USM-CEE | Schools</h5>
+            <h5 class="text-16">USM-CEE | Masterlist of Schools</h5>
         </div>
         <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
             <li
@@ -20,8 +20,25 @@
         </ul>
     </div>
 
+
+
     <!--start grid-->
     <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
+
+        <div class="mb-2 xl:col-span-12">
+            <div class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-green-50 dark:bg-green-400/20">
+                <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
+                <div>
+                    <h6 class="mb-1">Disclaimer</h6>
+                    <ul class="ml-2 list-disc list-inside">
+                        <li>The list of schools is sourced from the official DepEd master list.</li>
+                        <li>Some schools may appear multiple times, but each entry has a unique School ID.</li>
+                        <li>The School ID can typically be found on the school's gate or building.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!--start col-->
         <div class="xl:col-span-12">
             <!--start card-->
@@ -52,7 +69,7 @@
     <script src="{{ asset('backend/assets/js/datatables/data-tables.tailwindcss.min.js') }}"></script>
 
     <script>
-         $.ajaxSetup({
+        $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
