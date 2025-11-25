@@ -21,8 +21,6 @@ use Illuminate\Support\Facades\Cache;
 
 class StudentCeeReserveController extends Controller
 {
-
-
     public function index()
     {
         // Retrieve the current authenticated user details

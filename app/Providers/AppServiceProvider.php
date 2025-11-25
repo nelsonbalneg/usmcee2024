@@ -43,11 +43,22 @@ class AppServiceProvider extends ServiceProvider
             //fetch the Sitesettings
             $site_settings = DB::table('site_settings')->first();
 
+            // $active_cee_term = DB::table('cee_sessions')->where('status', 'active')->first();
+
             $view->with([
                 'ched_applicant_Profile' => $ched_applicant_Profile,
                 'result_confirmation_batch' => $result_confirmation_batch,
                 'site_settings' => $site_settings,
             ]);
         });
+
+       View::composer(['errors::minimal', 'errors.503', 'errors::*'], function ($view) {
+    $active_cee_term = DB::table('cee_sessions')
+        ->where('status', 'active')
+        ->first();
+
+    $view->with('active_cee_term', $active_cee_term);
+});
+
     }
 }
