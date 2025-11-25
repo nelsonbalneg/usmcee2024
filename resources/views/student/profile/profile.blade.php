@@ -227,7 +227,10 @@
 
                             <div class="xl:col-span-3">
                                 <label for="choices-single-default" class="inline-block mb-2 text-base font-medium">School
-                                    ID <sup class="text-red-500">* required</sup></label>
+                                    ID
+                                    <sup class="text-red-500">* required</sup></label>
+
+
                                 <input type="text" id="school_id" name="school_id"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="School ID" value="{{ $studentdetails->schoolid }}"
@@ -235,6 +238,15 @@
                                 @error('school_id')
                                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
+
+                                <!-- Help message below input -->
+                                <p class="mt-2 text-sm text-custom-600">
+                                    If you don’t know your School ID,
+                                    <a href="{{ route('student.schoolname.index') }}"
+                                        class="font-medium underline hover:text-blue-800">
+                                        Click here
+                                    </a>
+                                </p>
                             </div><!--end col-->
 
                             <div class="xl:col-span-3">
