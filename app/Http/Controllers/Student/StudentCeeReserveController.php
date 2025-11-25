@@ -56,6 +56,16 @@ class StudentCeeReserveController extends Controller
 
         $ceeSession = CeeSession::where('status', 'active')->first();
 
+        $reservationCount = 0;
+
+        if ($ceeSession) {
+            // Count the reservations for the current user
+            $reservationCount = Reservation::where('cee_session_id', $ceeSession->id)
+                ->where('user_id', Auth::user()->id)
+                ->whereIn('status', ['pending', 'confirmed'])
+                ->count();
+        }
+
 
 
         $reservation_details = Reservation::where('user_id', Auth::id())
@@ -105,10 +115,10 @@ class StudentCeeReserveController extends Controller
         $siteSetting = SiteSetting::first();
         $endofreservation = $siteSetting ? $siteSetting->endreservation : null;
 
-          $campusNames = Term::where('is_active', 1)->get();
+        $campusNames = Term::where('is_active', 1)->get();
 
 
-        return view("student.reserve.reserve", compact('ceeSession', 'isRetaker', 'endofreservation', 'cee_reservation_records', 'reservation_details', 'campusNames'));
+        return view("student.reserve.reserve", compact('ceeSession', 'isRetaker', 'endofreservation', 'cee_reservation_records', 'reservation_details', 'campusNames', 'reservationCount'));
     }
 
     // In your controller

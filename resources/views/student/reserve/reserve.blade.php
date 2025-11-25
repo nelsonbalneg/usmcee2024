@@ -32,361 +32,112 @@
         <div class="xl:col-span-12">
             <!--start card-->
             {{-- <div class="card"> --}}
-            @if ($reservation_details)
 
-                @if ($reservation_details->status === 'confirmed' || $reservation_details->status === 'pending')
-
-                    <div class="flex flex-col col-span-1 gap-3 card 2xl:col-span-12">
-                        <div class="card-body">
-                            <h6 class="mb-4 text-15">YOUR USMCEE RESERVATIONS
-                            </h6>
-                            <div class="overflow-x-auto">
-                                <table class="w-full border-separate table-custom border-spacing-y-1">
-                                    <thead class="">
+            <div class="flex flex-col col-span-1 gap-3 card 2xl:col-span-12">
+                <div class="card-body">
+                    <h6 class="mb-4 text-15">YOUR USMCEE RESERVATIONS
+                    </h6>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-separate table-custom border-spacing-y-1">
+                            <thead class="">
+                                <tr
+                                    class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+                                    <th class="px-3.5 py-2.5 font-semibold justify-center">Action</th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Status</th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">App #</th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Schedule
+                                    </th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Venue</th>
+                                    <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Date
+                                        Created</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($cee_reservation_records->isNotEmpty())
+                                    @foreach ($cee_reservation_records as $data)
                                         <tr
                                             class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
-                                            <th class="px-3.5 py-2.5 font-semibold justify-center">Action</th>
-                                            <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Status</th>
-                                            <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">App #</th>
-                                            <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Schedule
-                                            </th>
-                                            <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Venue</th>
-                                            <th class="px-3.5 py-2.5 font-semibold ltr:text-left rtl:text-right">Date
-                                                Created</th>
+                                            <td class="px-3.5 py-2.5">
+                                                @if ($data->status === 'cancelled')
+                                                    <a href="#"
+                                                        class="flex items-center justify-center transition-all duration-200 ease-linear bg-slate-100 text-slate-500 btn hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-green-100 active:text-white active:bg-slate-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20">
+                                                        Not Available
+                                                    </a>
+                                                @elseif($data->status === 'pending')
+                                                    <a href="{{ route('student.cee.exam-slip', ['app_no' => encrypt($data->app_no)]) }}"
+                                                        target="_blank"
+                                                        class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
+                                                        CEE Slip
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('student.cee.result') }}" target="_blank"
+                                                        class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
+                                                        Result
+                                                    </a>
+                                                @endif
+                                            </td>
+
+                                            <td class="px-3.5 py-2.5">
+                                                @if ($data->status === 'pending')
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">
+                                                        <i data-lucide="circle-dashed" class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                        Reserved</span>
+                                                @elseif ($data->status === 'cancelled')
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent"><i
+                                                            data-lucide="x-circle" class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                        Cancelled</span>
+                                                @elseif($data->status === 'confirmed')
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent"><i
+                                                            data-lucide="check-circle-2"
+                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i> Confirmed</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-3.5 py-2.5">{{ $data->app_no }}</td>
+                                            <td class="px-3.5 py-2.5">
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                    {{ $data->session_name }}</span>
+                                                {{ $data->exam_session }} <br>
+                                                {{ \Carbon\Carbon::parse($data->schedule)->format('F j, Y') }}
+                                                [{{ $data->time }}]
+                                            </td>
+                                            <td class="px-3.5 py-2.5">
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                    {{ $data->campus }}</span><br>
+                                                {{ $data->college_name . '-' . $data->room_name }}
+                                            </td>
+
+                                            <td class="px-3.5 py-2.5">
+                                                {{ \Carbon\Carbon::parse($data->created_at)->setTimezone('Asia/Manila')->format('F j, Y h:i A') }}
+                                            </td>
+
+
+
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if ($cee_reservation_records->isNotEmpty())
-                                            @foreach ($cee_reservation_records as $data)
-                                                <tr
-                                                    class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
-                                                    <td class="px-3.5 py-2.5">
-                                                        @if ($data->status === 'cancelled')
-                                                            <a href="#"
-                                                                class="flex items-center justify-center transition-all duration-200 ease-linear bg-slate-100 text-slate-500 btn hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-green-100 active:text-white active:bg-slate-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20">
-                                                                Not Available
-                                                            </a>
-                                                        @elseif($data->status === 'pending')
-                                                            <a href="{{ route('student.cee.exam-slip', ['app_no' => encrypt($data->app_no)]) }}"
-                                                                target="_blank"
-                                                                class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
-                                                                CEE Slip
-                                                            </a>
-                                                        @else
-                                                            <a href="{{ route('student.cee.result') }}" target="_blank"
-                                                                class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
-                                                                Result
-                                                            </a>
-                                                        @endif
-                                                    </td>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="8" class="px-3.5 py-2.5 text-center text-gray-500">
+                                            No reservations available.
+                                        </td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!--end card-->
 
-                                                    <td class="px-3.5 py-2.5">
-                                                        @if ($data->status === 'pending')
-                                                            <span
-                                                                class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">
-                                                                <i data-lucide="circle-dashed"
-                                                                    class="size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                Reserved</span>
-                                                        @elseif ($data->status === 'cancelled')
-                                                            <span
-                                                                class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent"><i
-                                                                    data-lucide="x-circle"
-                                                                    class="size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                Cancelled</span>
-                                                        @elseif($data->status === 'confirmed')
-                                                            <span
-                                                                class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent"><i
-                                                                    data-lucide="check-circle-2"
-                                                                    class="size-3 ltr:mr-1 rtl:ml-1"></i> Confirmed</span>
-                                                        @endif
-                                                    </td>
-                                                    <td class="px-3.5 py-2.5">{{ $data->app_no }}</td>
-                                                    <td class="px-3.5 py-2.5">
-                                                        <span
-                                                            class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                            {{ $data->session_name }}</span>
-                                                        {{ $data->exam_session }} <br>
-                                                        {{ \Carbon\Carbon::parse($data->schedule)->format('F j, Y') }}
-                                                        [{{ $data->time }}]
-                                                    </td>
-                                                    <td class="px-3.5 py-2.5">
-                                                        <span
-                                                            class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                            {{ $data->campus }}</span><br>
-                                                        {{ $data->college_name . '-' . $data->room_name }}
-                                                    </td>
+            @if ($reservationCount == 0)
 
-                                                    <td class="px-3.5 py-2.5">
-                                                        {{ \Carbon\Carbon::parse($data->created_at)->setTimezone('Asia/Manila')->format('F j, Y h:i A') }}
-                                                    </td>
-
-
-
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="8" class="px-3.5 py-2.5 text-center text-gray-500">
-                                                    No reservations available.
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div><!--end card-->
-                @elseif($reservation_details->status === 'cancelled')
-                    {{-- check the endofreservation --}}
-                    @if ($endofreservation && Carbon::parse($endofreservation, 'Asia/Manila')->isFuture())
-                        <div class="card">
-                            <div class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-ounde-50 dark:bg-ounde-400/20">
-                                <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                                <div>
-                                    <h6 class="mb-1">Kindly read this note before proceeding to CEE Slot Reservation</h6>
-                                    <p><b>Note:</b> Please ensure that you provide accurate and correct information.
-                                        Double-check
-                                        all details before submitting, as you will not be able to edit them once saved. </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-
-                                <form action="{{ route('student.reserve.store') }}" method="POST">
-                                    @csrf
-                                    <h6 class="mb-1 text-5">RESERVATION DETAILS</h6>
-                                    <hr class="mb-4" />
-
-                                    <div class="xl:col-span-6">
-                                        <input type="hidden" name="ceesession"
-                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-green-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                            value="{{ $ceeSession->id }}" @readonly(true)>
-                                    </div><!--end col-->
-
-                                    <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
-
-                                        <div class="xl:col-span-6">
-                                            <label for="is_repeat_exam" class="inline-block mb-2 text-base font-medium">CEE
-                                                Retaker?<sup class="text-green-500">* read only</sup></label>
-                                            <input type="text" id="is_repeat_exam" name="is_repeat_exam"
-                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-green-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                value="<?php echo $isRetaker ? 'Yes' : 'No'; ?>" @readonly(true)>
-                                        </div><!--end col-->
-
-                                        <div class="xl:col-span-12">
-                                            <h6 class="text-blue-500 text-5">PRIORITY PROGRAMS</h6>
-
-                                        </div>
-
-                                        <div class="xl:col-span-4">
-                                            <label for="campus" class="inline-block mb-2 text-base font-medium">Select
-                                                Campus<sup class="text-red-500">* required</sup></label>
-                                            <select id="campus-select" name="campus" data-choices
-                                                class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                                <option selected="true" disabled>Choose Campus</option>
-                                                <option value="1">USM Main</option>
-                                                <option value="3">USM KCC</option>
-                                                <option value="5">USM PALMA CLUSTER</option>
-                                                <option value="6">USM MLANG</option>
-                                                <option value="7">USM Antipas</option>
-                                                <option value="8">USM Pigcwayan</option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="xl:col-span-8">
-                                            <label for="firstprioprog" class="inline-block mb-2 text-base font-medium">First
-                                                Priority
-                                                Program <sup class="text-red-500">* required</sup></label>
-                                            <select id="program-select" name="firstprioprog" data-choices
-                                                class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                                <option selected="true" disabled>Choose Program</option>
-                                            </select>
-                                            <input type="hidden" name="firstprioprog_desc" id="firstprioprog_desc">
-                                            <input type="hidden" name="firstprogram_policy_id"
-                                                id="firstprogram_policy_id">
-                                        </div>
-
-
-                                        <div class="xl:col-span-4">
-                                            <label for="campus2" class="inline-block mb-2 text-base font-medium">Select
-                                                Campus<sup class="text-red-500">* required</sup></label>
-                                            <select id="campus-select2" name="campus2" data-choices
-                                                class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                                <option selected="true" disabled>Choose Campus</option>
-                                                <option value="1">USM Main</option>
-                                                <option value="3">USM KCC</option>
-                                                <option value="5">USM PALMA CLUSTER</option>
-                                                <option value="6">USM MLANG</option>
-                                                <option value="7">USM Antipas</option>
-                                                <option value="8">USM Pigcwayan</option>
-
-                                            </select>
-                                        </div>
-
-
-                                        <div class="xl:col-span-8">
-                                            <label for="secondprioprog"
-                                                class="inline-block mb-2 text-base font-medium">Second
-                                                Priority
-                                                Program <sup class="text-red-500">* required</sup></label>
-                                            <select id="program-select2" name="secondprioprog" data-choices
-                                                class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                                <option selected="true" disabled>Choose Program</option>
-                                            </select>
-                                            <input type="hidden" name="secondprioprog_desc" id="secondprioprog_desc">
-                                            <input type="hidden" name="secondprogram_policy_id"
-                                                id="secondprogram_policy_id">
-                                        </div>
-
-
-                                        <div class="xl:col-span-4">
-                                            <label for="campus3" class="inline-block mb-2 text-base font-medium">Select
-                                                Campus<sup class="text-red-500">* required</sup></label>
-                                            <select id="campus-select3" name="campus3" data-choices
-                                                class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                                <option selected="true" disabled>Choose Campus</option>
-                                                <option value="1">USM Main</option>
-                                                <option value="3">USM KCC</option>
-                                                <option value="5">USM PALMA CLUSTER</option>
-                                                <option value="6">USM MLANG</option>
-                                                <option value="7">USM Antipas</option>
-                                                <option value="8">USM Pigcwayan</option>
-
-                                            </select>
-                                        </div>
-
-                                        <!-- Modal overlay for loading spinner -->
-                                        <div id="loading-modal"
-                                            class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-800 bg-opacity-50">
-                                            <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg">
-                                                <svg class="w-10 h-10 mb-4 animate-spin text-custom-500"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24">
-                                                    <circle class="opacity-25" cx="12" cy="12" r="10"
-                                                        stroke="currentColor" stroke-width="4"></circle>
-                                                    <path class="opacity-75" fill="currentColor"
-                                                        d="M4 12a8 8 0 018-8V0a12 12 0 100 24v-4a8 8 0 01-8-8z"></path>
-                                                </svg>
-                                                <p class="font-medium text-gray-700">Loading programs, please wait...</p>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="xl:col-span-8">
-                                            <label for="thirdprioprog"
-                                                class="inline-block mb-2 text-base font-medium">Third
-                                                Priority
-                                                Program <sup class="text-red-500">* required</sup></label>
-                                            <select id="program-select3" name="thirdprioprog" data-choices
-                                                class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
-                                                <option selected="true" disabled>Choose Program</option>
-                                            </select>
-                                            <input type="hidden" name="thirdprioprog_desc" id="thirdprioprog_desc">
-                                            <input type="hidden" name="thirdprogram_policy_id"
-                                                id="thirdprogram_policy_id">
-                                        </div>
-
-
-                                        <div class="xl:col-span-12">
-                                            <h6 class="mt-2 text-blue-500 text-5">EXAMINATION VENUE</h6>
-                                        </div>
-
-                                        <div class="xl:col-span-12">
-                                            <label for="campus" class="inline-block mb-2 text-base font-medium">Select
-                                                Examination Venue
-                                                <sup class="text-red-500">* required</sup></label>
-
-                                            <select
-                                                class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
-                                                id="examcampus" name="venue_campus">
-                                                <option value="" selecteds>-Select
-                                                </option>
-                                                <option value="Main Campus">Main Campus
-                                                </option>
-                                                <option value="USM KCC">USM KCC
-                                                </option>
-                                                <option value="USM PALMA">USM PALMA
-                                                </option>
-                                            </select>
-
-                                            <label id="activeSlotsLabel"
-                                                class="hidden block mt-2 text-base font-medium text-blue-500">
-                                                Active Slots for <span id="selectedCampus"></span>: <span
-                                                    id="activeSlots">0</span>
-                                            </label>
-
-                                            <label for="campus" class="block mt-2 text-base font-medium text-green-500">
-                                                Note: The system will automatically select and assign a room for your
-                                                reservation.
-                                            </label>
-                                        </div><!--end col-->
-
-                                        {{-- <div class="xl:col-span-6">
-                                        <label for="ceesession" class="inline-block mb-2 text-base font-medium">USMCEE
-                                            Batch
-                                            <sup class="text-red-500">* required</sup></label>
-                                        <select
-                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
-                                            id="ceeexamsession" name="ceeexamsession">
-                                            <option value="" selected>-Select Campus
-                                            </option>
-                                            <option value="Batch 1">Batch 1 (8:00 AM - 9:00 AM)
-                                            </option>
-                                            <option value="Batch 2">Batch 2 (10:00 AM - 1:00 PM)
-                                            </option>
-                                            <option value="Batch 3">Batch 3 (1:30 PM - 4:30 PM)
-                                            </option>
-                                        </select>
-                                    </div> --}}
-
-                                        <!--end col-->
-
-                                        {{-- <div class="xl:col-span-6">
-                                        <label for="room" class="inline-block mb-2 text-base font-medium">Room
-                                            Assignment<sup class="text-red-500">* required</sup></label>
-                                        <select id="room-select" name="room"
-                                            class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
-                                            data-choices>
-                                            <option selected="true" disabled>Choose Room</option>
-                                        </select>
-                                    </div> --}}
-
-                                        <div class="flex justify-end gap-2 xl:col-span-12">
-                                            <button type="button"
-                                                class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10"><i
-                                                    data-lucide="x" class="inline-block size-4"></i> <span
-                                                    class="align-middle">Cancel</span></button>
-                                            <button type="submit"
-                                                class="text-white transition-all duration-200 ease-linear bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100">Submit</button>
-                                        </div><!--end col-->
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                        {{-- If the reservation Closesd --}}
-                    @else
-                        <div class="card">
-                            <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
-                                <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                                <div>
-                                    <h6 class="mb-1">Hi there, {{ Auth::user()->firstname }} !</h6>
-                                    <p class="mb-0">Please be informed that the USMCEE Slot Reservation is officially
-                                        closed.
-                                    </p>
-                                    <p class="mb-2">Thank you!</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                @endif
-            @else
                 {{-- check the endofreservation --}}
                 @if ($endofreservation && Carbon::parse($endofreservation, 'Asia/Manila')->isFuture())
                     <div class="card">
-                        <div class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-green-50 dark:bg-green-400/20">
+                        <div class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-ounde-50 dark:bg-ounde-400/20">
                             <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
                             <div>
                                 <h6 class="mb-1">Kindly read this note before proceeding to CEE Slot Reservation</h6>
@@ -406,7 +157,7 @@
 
                                 <div class="xl:col-span-6">
                                     <input type="hidden" name="ceesession"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-green-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         value="{{ $ceeSession->id }}" @readonly(true)>
                                 </div><!--end col-->
 
@@ -416,12 +167,12 @@
                                         <label for="is_repeat_exam" class="inline-block mb-2 text-base font-medium">CEE
                                             Retaker?<sup class="text-green-500">* read only</sup></label>
                                         <input type="text" id="is_repeat_exam" name="is_repeat_exam"
-                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-green-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                             value="<?php echo $isRetaker ? 'Yes' : 'No'; ?>" @readonly(true)>
                                     </div><!--end col-->
 
                                     <div class="xl:col-span-12">
-                                        <h6 class="text-green-500 text-5">PRIORITY PROGRAMS</h6>
+                                        <h6 class="text-blue-500 text-5">PRIORITY PROGRAMS</h6>
 
                                     </div>
 
@@ -437,6 +188,7 @@
                                                     {{ $campusName->campus_name }}
                                                 </option>
                                             @endforeach
+
 
                                         </select>
                                     </div>
@@ -466,6 +218,7 @@
                                                     {{ $campusName->campus_name }}
                                                 </option>
                                             @endforeach
+
 
                                         </select>
                                     </div>
@@ -497,6 +250,7 @@
                                                     {{ $campusName->campus_name }}
                                                 </option>
                                             @endforeach
+
 
                                         </select>
                                     </div>
@@ -531,7 +285,7 @@
 
 
                                     <div class="xl:col-span-12">
-                                        <h6 class="mt-2 text-green-500 text-5">EXAMINATION VENUE</h6>
+                                        <h6 class="mt-2 text-blue-500 text-5">EXAMINATION VENUE</h6>
                                     </div>
 
                                     <div class="xl:col-span-12">
@@ -564,43 +318,13 @@
                                         </label>
                                     </div><!--end col-->
 
-                                    {{-- <div class="xl:col-span-6">
-                              <label for="ceesession" class="inline-block mb-2 text-base font-medium">USMCEE
-                                  Batch
-                                  <sup class="text-red-500">* required</sup></label>
-                              <select
-                                  class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
-                                  id="ceeexamsession" name="ceeexamsession">
-                                  <option value="" selected>-Select Campus
-                                  </option>
-                                  <option value="Batch 1">Batch 1 (8:00 AM - 9:00 AM)
-                                  </option>
-                                  <option value="Batch 2">Batch 2 (10:00 AM - 1:00 PM)
-                                  </option>
-                                  <option value="Batch 3">Batch 3 (1:30 PM - 4:30 PM)
-                                  </option>
-                              </select>
-                          </div> --}}
-
-                                    <!--end col-->
-
-                                    {{-- <div class="xl:col-span-6">
-                              <label for="room" class="inline-block mb-2 text-base font-medium">Room
-                                  Assignment<sup class="text-red-500">* required</sup></label>
-                              <select id="room-select" name="room"
-                                  class="form-input border-slate-300 focus:outline-none focus:border-custom-500"
-                                  data-choices>
-                                  <option selected="true" disabled>Choose Room</option>
-                              </select>
-                          </div> --}}
-
                                     <div class="flex justify-end gap-2 xl:col-span-12">
                                         <button type="button"
                                             class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10"><i
                                                 data-lucide="x" class="inline-block size-4"></i> <span
                                                 class="align-middle">Cancel</span></button>
                                         <button type="submit"
-                                            class="text-white transition-all duration-200 ease-linear btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100">Submit</button>
+                                            class="text-white transition-all duration-200 ease-linear bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100">Submit</button>
                                     </div><!--end col-->
                                 </div>
                             </form>
@@ -622,6 +346,7 @@
                         </div>
                     </div>
                 @endif
+
             @endif
 
         </div><!--end col-->
@@ -805,7 +530,7 @@
 
             function loadPrograms(campusSelect, programSelect) {
                 const realCampusId = campusSelect.value;
-                  const termId = campusSelect.selectedOptions[0].dataset.termid;
+                const termId = campusSelect.selectedOptions[0].dataset.termid;
 
                 if (!realCampusId || !termId) return; // Exit if missing values
 
