@@ -11,6 +11,7 @@ use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Student\StudentCeeReserveController;
 use App\Http\Controllers\Student\StudentRequirementsController;
 use App\Http\Controllers\Student\ChedApplicantProfileController;
+use App\Http\Controllers\Student\SchoolNamesController;
 use App\Http\Controllers\Student\StudentApplicantProfileController;
 use App\Http\Controllers\Student\StudentProgramConfirmationController;
 
@@ -100,6 +101,9 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::post('pre-registration/applicant-requirements/card', [StudentRequirementsController::class, 'storeCard'])->name('requirements.card.store');
     Route::resource('pre-registration/applicant-requirements', StudentRequirementsController::class);
 
+    //school names
+     Route::get('user/schoolname', [SchoolNamesController::class, 'index'])->name('schoolname.index');
+     Route::get('user/schoolname/get-all-data', [SchoolNamesController::class, 'getData'])->name('schoolname.get-all-data');
 
     //route for Program confirmations
     //route for ranking second batch
