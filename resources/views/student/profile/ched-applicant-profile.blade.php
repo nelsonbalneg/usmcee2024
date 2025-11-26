@@ -36,40 +36,40 @@
         {{-- @if ($app_no && $result) --}}
         <div class="xl:col-span-12">
 
-              <div class="mb-3">
-            <ul
-                class="inline-flex flex-wrap items-center gap-2 p-3 text-sm font-normal bg-green-100 rounded dark:bg-zink-600">
+            <div class="mb-3">
+                <ul
+                    class="inline-flex flex-wrap items-center gap-2 p-3 text-sm font-normal bg-green-100 rounded dark:bg-zink-600">
 
-                <li
-                    class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
-                    <a href="{{ route('student.profile.index') }}"
-                        class="flex items-center gap-1 text-slate-400 dark:text-zink-100">
+                    <li
+                        class="relative before:content-['\ea54'] before:font-remix before:ltr:-right-1 before:rtl:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:rtl:rotate-180 before:text-slate-500 dark:before:text-zink-200">
+                        <a href="{{ route('student.profile.index') }}"
+                            class="flex items-center gap-1 text-slate-400 dark:text-zink-100">
 
-                        @if (!empty($cee_profile?->schoolid) && !empty($cee_profile?->applicant_type))
-                            <i data-lucide="circle-check" class="text-green-400 size-4"></i>
-                        @else
-                            <i data-lucide="circle" class="size-3"></i>
-                        @endif
-
-                        Account Information
-                    </a>
-                </li>
-                @if (!empty($cee_profile?->schoolid) && !empty($cee_profile?->applicant_type))
-                    <li class="flex items-center gap-1 text-slate-200 dark:text-zink-100">
-                        <a href="{{ route('student.ched-applicant-profile.index') }}"
-                            class="flex items-center gap-1 text-slate-700 dark:text-zink-400">
-                            @if ($applicant?->status == 1 && $applicant?->user_id)
-                                <i data-lucide="circle-check" class="text-green-600 size-4"></i>
+                            @if (!empty($cee_profile?->schoolid) && !empty($cee_profile?->applicant_type))
+                                <i data-lucide="circle-check" class="text-green-400 size-4"></i>
                             @else
                                 <i data-lucide="circle" class="size-3"></i>
                             @endif
 
-                            Personal Information
+                            Account Information
                         </a>
                     </li>
-                @endif
-            </ul>
-        </div>
+                    @if (!empty($cee_profile?->schoolid) && !empty($cee_profile?->applicant_type))
+                        <li class="flex items-center gap-1 text-slate-200 dark:text-zink-100">
+                            <a href="{{ route('student.ched-applicant-profile.index') }}"
+                                class="flex items-center gap-1 text-slate-700 dark:text-zink-400">
+                                @if ($applicant?->status == 1 && $applicant?->user_id)
+                                    <i data-lucide="circle-check" class="text-green-600 size-4"></i>
+                                @else
+                                    <i data-lucide="circle" class="size-3"></i>
+                                @endif
+
+                                Personal Information
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
 
             <form action="{{ route('student.ched-applicant-profile.store') }}" id="applicant-form" method="POST">
                 @csrf
@@ -113,8 +113,7 @@
                         </h6> --}}
 
                         <div class="mb-5 xl:col-span-12">
-                            <div
-                                class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-green-50 dark:bg-green-400/20">
+                            <div class="flex gap-3 p-4 text-sm text-green-500 rounded-md bg-green-50 dark:bg-green-400/20">
                                 <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
                                 <div>
                                     <h6 class="mb-1">Prohibition Against Fraud and Misrepresentation</h6>
@@ -230,8 +229,8 @@
 
                             {{-- readonly --}}
                             <div class="xl:col-span-3">
-                                <label for="region" class="inline-block mb-2 text-base font-medium">Household
-                                    Number<sup class="text-green-500">* Readonly</sup></label>
+                                <label for="region" class="inline-block mb-2 text-base font-medium">Region
+                                    <sup class="text-green-500">* Readonly</sup></label>
                                 <input type="text" name="region"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     value="{{ old('region', $cee_profile->region ?? '') }}" readonly>
@@ -550,10 +549,10 @@
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     name="is_belong_to_farmer" data-choices data-choices-search-false>
                                     <option value="">Select</option>
-                                        <option value="1"
-                                            {{ $applicant->is_belong_to_farmer == '1' ? 'selected' : '' }}>Yes</option>
-                                        <option value="0"
-                                            {{ $applicant->is_belong_to_farmer == '0' ? 'selected' : '' }}>No</option>
+                                    <option value="1" {{ $applicant->is_belong_to_farmer == '1' ? 'selected' : '' }}>
+                                        Yes</option>
+                                    <option value="0" {{ $applicant->is_belong_to_farmer == '0' ? 'selected' : '' }}>
+                                        No</option>
                                 </select>
                             </div><!--end col-->
                             {{-- End ofMember of the indigenous people (IP)  --}}
