@@ -37,7 +37,7 @@
             <a href="https://drive.google.com/file/d/11uex4NLsFaez7bJv0LNUUqSZMCR2W1pZ/view?usp=sharing"
                 class="block w-full mt-2 mb-2 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:yellow-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-custom-400/10">
                 <i data-lucide="book" class="inline-block h-4 align-middle"></i>
-                Download the User Guide
+                Download User Guide
             </a>
 
             <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
