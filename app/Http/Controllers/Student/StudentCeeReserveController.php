@@ -354,7 +354,7 @@ class StudentCeeReserveController extends Controller
                 ->where('status', 'confirmed')
                 ->exists()
         ) {
-            return redirect()->back()->with([
+            return redirect()->route('student.reserve.index')->with([
                 'message' => 'You have already reserved a confirmed slot!',
                 'status' => 'error'
             ]);
@@ -372,7 +372,7 @@ class StudentCeeReserveController extends Controller
 
 
         if (!$room) {
-            return redirect()->back()->with([
+            return redirect()->route('student.reserve.index')->with([
                 'message' => 'We are sorry! No available rooms for this selection. Please choose a different examination venue.',
                 'status' => 'error'
             ]);
