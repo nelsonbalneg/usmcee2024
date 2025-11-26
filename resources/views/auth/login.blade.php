@@ -189,8 +189,6 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                     </div>
 
                     <!-- Error message for Remember Me -->
-                    {{-- <div class="mt-5 cf-turnstile" data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"></div> --}}
-                    {{-- <div class="mt-5 cf-turnstile" data-sitekey="{{ config('services.turnstile.sitekey') }}"></div> --}}
                     <div class="mt-5 cf-turnstile" data-sitekey="{{ config('services.turnstile.sitekey') }}"></div>
 
                     <div class="mt-5 text-center">

@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
 
         // Retrieve the Turnstile response from the request
         $turnstileResponse = $request->input('cf-turnstile-response');
-        $secretKey = env('TURNSTILE_SECRET_KEY'); // Your Turnstile secret key
+        $secretKey = config('services.turnstile.secret'); // Your Turnstile secret key
 
         // Send the Turnstile response for verification
         try {

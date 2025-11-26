@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
     <!-- Layout config Js -->
     <script src="{{ asset('backend/assets/js/layout.js') }}"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <!-- Icons CSS -->
 
     <!-- Tailwind CSS -->
@@ -436,7 +437,7 @@ use Carbon\Carbon; @endphp
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- cleave.js -->
         <script src="{{ asset('backend/assets/libs/cleave.js/cleave.min.js') }}"></script>
-        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
         <script>
             if (document.querySelector("#cleavePhone")) {
                 var cleaveBlocks = new Cleave('#cleavePhone', {
