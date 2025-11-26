@@ -417,10 +417,15 @@ class StudentCeeReserveController extends Controller
         // Reduce room capacity
         $room->decrement('capacity');
 
-        return redirect()->back()->with([
+        // return redirect()->back()->with([
+        //     'message' => 'Congratulations! Your USMCEE Slot reservation was successful. Assigned Room: ' . $room->room_name,
+        //     'status' => 'success'
+        // ]);
+        return redirect()->route('student.reserve.index')->with([
             'message' => 'Congratulations! Your USMCEE Slot reservation was successful. Assigned Room: ' . $room->room_name,
             'status' => 'success'
         ]);
+
     }
 
 }
