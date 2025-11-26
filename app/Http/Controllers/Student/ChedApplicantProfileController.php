@@ -91,7 +91,7 @@ class ChedApplicantProfileController extends Controller
             $data = $request->validated();
 
             // Log validated data (for debugging only — remove in production if it contains sensitive info)
-            Log::info('CHED Applicant Profile - Validated Data:', $data);
+            // Log::info('CHED Applicant Profile - Validated Data:', $data);
 
             // Trim all string values in the validated data
             $data = array_map(function ($value) {
@@ -124,7 +124,7 @@ class ChedApplicantProfileController extends Controller
                 'user' => Auth::user()?->id ?? 'guest'
             ]);
 
-            return redirect()->back()
+            return redirect()->route('student.ched-applicant-profile.index')
                 ->withErrors(['error' => 'Something went wrong while saving the application. Please try again.'])
                 ->withInput();
         }

@@ -148,7 +148,7 @@
                             <input type="hidden" name="sex" value="{{ $cee_profile->sex }}">
                             <input type="hidden" name="birthdate" value="{{ $cee_profile->birthdate }}">
 
-                            <div class="xl:col-span-6">
+                            {{-- <div class="xl:col-span-6">
                                 <label for="student_category" class="inline-block mb-2 text-base font-medium">Student
                                     Category
                                     <sup class="text-red-500">* required</sup></label>
@@ -216,7 +216,7 @@
                                         Second Courser
                                         (Completed Degree in the same school)</option>
                                 </select>
-                            </div><!--end col-->
+                            </div><!--end col--> --}}
 
                             <div class="xl:col-span-3">
                                 <label for="house_hould_no" class="inline-block mb-2 text-base font-medium">Household
@@ -992,8 +992,8 @@
 
                     <div class="card-body">
 
-                        <h6 class="mb-4 text-blue-500 uppercase text-15"><i data-lucide="school"
-                                class="inline-block text-blue-500 size-4 dark:text-zink-200"></i> EDUCATIONAL
+                        <h6 class="mb-4 text-green-500 uppercase text-15"><i data-lucide="school"
+                                class="inline-block text-green-500 size-4 dark:text-zink-200"></i> EDUCATIONAL
                             BACKGROUND
                         </h6>
 

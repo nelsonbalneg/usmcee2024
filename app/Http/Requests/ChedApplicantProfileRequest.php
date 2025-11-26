@@ -38,7 +38,8 @@ class ChedApplicantProfileRequest extends FormRequest
             ],
 
 
-            'student_category' => 'required|in:0,1',
+            'student_category' => 'nullable',
+            // 'student_category' => 'required|in:0,1',
             'student_category_new_type' => 'nullable|string',
             'student_category_old_type' => 'nullable|string',
 
@@ -137,8 +138,8 @@ class ChedApplicantProfileRequest extends FormRequest
             'user_id.required' => 'The user ID is required and cannot be omitted.',
             'user_id.unique' => 'This user ID has already been associated with an application.',
 
-            'student_category.required' => 'The student category is required and must be selected.',
-            'student_category.in' => 'The student category must be either 0 (new) or 1 (old).',
+            // 'student_category.required' => 'The student category is required and must be selected.',
+            // 'student_category.in' => 'The student category must be either 0 (new) or 1 (old).',
 
             'first_name.required' => 'First name is required and cannot be empty.',
             'last_name.required' => 'Last name is required and cannot be empty.',
