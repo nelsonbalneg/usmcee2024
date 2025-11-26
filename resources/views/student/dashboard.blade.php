@@ -32,8 +32,13 @@
             {{-- <a href="https://drive.google.com/file/d/17K7A0XK0fkGALONUxJ28UxNs40-d5zTB/view?usp=sharing"
                 class="block w-full mt-2 mb-2 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:yellow-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-custom-400/10">
                 <i data-lucide="book" class="inline-block h-4 align-middle"></i>
-                Download the Preregistration Guide
+                Download the User Guide
             </a> --}}
+            <a href="https://drive.google.com/file/d/11uex4NLsFaez7bJv0LNUUqSZMCR2W1pZ/view?usp=sharing"
+                class="block w-full mt-2 mb-2 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:yellow-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-custom-400/10">
+                <i data-lucide="book" class="inline-block h-4 align-middle"></i>
+                Download the User Guide
+            </a>
 
             <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                 <div class="card-body">
@@ -433,12 +438,13 @@
                                                 </td>
                                                 <td class="px-3.5 py-2.5">{{ $data->app_no }}</td>
                                                 <td class="px-3.5 py-2.5">
-                                                       <span
-                                                            class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                            {{ $data->session_name }}</span><br>
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                        {{ $data->session_name }}</span><br>
                                                     {{ $data->exam_session }} <br>
                                                     {{ \Carbon\Carbon::parse($data->schedule)->format('F j, Y') }}
-                                                    [{{ $data->time }}]</td>
+                                                    [{{ $data->time }}]
+                                                </td>
                                                 <td class="px-3.5 py-2.5">
                                                     <span
                                                         class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
