@@ -207,8 +207,8 @@ class StudentProfileController extends Controller
         $user->photo = empty(!$imagePath) ? $imagePath : $user->photo;
 
         $user->save();
-        
-        return redirect()->route('student.profile.profile')->with('message', 'Your Profile Photo has been updated!');
+
+        return redirect()->route('student.profile.index')->with('message', 'Your Profile Photo has been updated!');
     }
 
     public function school_name(Request $request): JsonResponse
