@@ -4,6 +4,7 @@
 @endsection
 
 @push('styles')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 @endpush
 
 @section('contents')
@@ -205,6 +206,7 @@
                                     <input type="number" id="lrn" name="lrn"
                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                         placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}"
+                                        data-user-id="{{ $studentdetails->id }}"
                                         onblur="validateLRN()">
                                     @error('lrn')
                                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
@@ -389,6 +391,7 @@
     <!-- Include SweetAlert library -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -481,26 +484,65 @@
         }
     </script>
     <script>
+        // function validateLRN() {
+        //     const lrnInput = document.getElementById('lrn');
+        //     const lrnValue = lrnInput.value;
+
+        //     // Check if the LRN is exactly 12 digits and contains numbers only
+        //     if (!/^\d{12}$/.test(lrnValue)) {
+        //         Toastify({
+        //             text: 'LRN must be exactly 12 digits.',
+        //             duration: 3000,
+        //             gravity: "top",
+        //             position: "right",
+        //             backgroundColor: "#f56565", // Red for error
+        //             className: "error",
+        //         }).showToast();
+
+        //         // Clear the input field
+        //         lrnInput.value = '';
+        //     }
+
+        // }
+
         function validateLRN() {
             const lrnInput = document.getElementById('lrn');
-            const lrnValue = lrnInput.value;
+            const lrnValue = lrnInput.value.trim();
 
-            // Check if the LRN is exactly 12 digits and contains numbers only
+            // Check if the LRN is exactly 12 digits
             if (!/^\d{12}$/.test(lrnValue)) {
                 Toastify({
                     text: 'LRN must be exactly 12 digits.',
                     duration: 3000,
                     gravity: "top",
                     position: "right",
-                    backgroundColor: "#f56565", // Red for error
+                    backgroundColor: "#f56565",
                     className: "error",
                 }).showToast();
-
-                // Clear the input field
                 lrnInput.value = '';
+                return;
             }
 
+            // Check uniqueness via AJAX
+            fetch(`{{ route('student.check-lrn') }}?lrn=${lrnValue}&id=${lrnInput.dataset.userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.unique) {
+                        Toastify({
+                            text: 'This LRN is already taken.',
+                            duration: 3000,
+                            gravity: "top",
+                            position: "right",
+                            backgroundColor: "#f56565",
+                            className: "error",
+                        }).showToast();
+                        lrnInput.value = '';
+                    }
+                })
+                .catch(error => console.error('Error checking LRN:', error));
         }
+
+
         document.getElementById('profile-img-file-input').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {

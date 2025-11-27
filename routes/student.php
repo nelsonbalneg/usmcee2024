@@ -54,6 +54,11 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::get('count-active-slots', [StudentCeeReserveController::class, 'countActiveSlots'])->name('count-active-slots');
     Route::get('/check-duplicate-records', [StudentCeeReserveController::class, 'checkForDuplicateRecords'])->name('check.duplicate.records');
 
+    //check the LRN duplicates
+    // web.php
+    Route::get('cee/check-lrn', [StudentController::class, 'checkLRN'])->name('check-lrn');
+
+
     //route for programs
     // Route::get('/programs/index', [ProgramController::class, 'index'])->name('programs.index');
 
@@ -102,8 +107,8 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::resource('pre-registration/applicant-requirements', StudentRequirementsController::class);
 
     //school names
-     Route::get('user/schoolname', [SchoolNamesController::class, 'index'])->name('schoolname.index');
-     Route::get('user/schoolname/get-all-data', [SchoolNamesController::class, 'getData'])->name('schoolname.get-all-data');
+    Route::get('user/schoolname', [SchoolNamesController::class, 'index'])->name('schoolname.index');
+    Route::get('user/schoolname/get-all-data', [SchoolNamesController::class, 'getData'])->name('schoolname.get-all-data');
 
     //route for Program confirmations
     //route for ranking second batch
@@ -121,7 +126,7 @@ Route::middleware(['check.maintenance'])->group(function () {
     Route::get('pre-registration/applicant/reports/cor/view', [StudentCORController::class, 'showReportView'])->name('prereg.cor-pdf.view');
     Route::get('pre-registration/applicant/cor', [StudentCORController::class, 'downloadCOR'])->name('download.cor');
 
-     Route::get('pre-registration/applicant/view-report', [StudentCORController::class, 'showReportView'])->name('view-report');
+    Route::get('pre-registration/applicant/view-report', [StudentCORController::class, 'showReportView'])->name('view-report');
 
     Route::get('/download-pdf/{filename}', function ($filename) {
         $filePath = storage_path('app/public/reports/' . $filename);

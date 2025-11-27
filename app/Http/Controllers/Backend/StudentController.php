@@ -22,6 +22,18 @@ class StudentController extends Controller
         //
     }
 
+    public function checkLRN(Request $request)
+    {
+        $lrn = $request->query('lrn');
+        $id = Auth::user()->id;
+
+        $exists = User::where('lrn', $lrn)
+            ->where('id', '!=', $id)
+            ->exists();
+
+        return response()->json(['unique' => !$exists]);
+    }
+
     public function dashboard()
     {
         $checkEmptyLRN = User::where('id', Auth::id())
@@ -29,12 +41,6 @@ class StudentController extends Controller
                 $query->whereNull('lrn')
                     ->orWhere('lrn', '');
             })->exists();
-        // ->where('id', Auth::user()->id)
-        // ->where(function ($query) {
-        //     $query->whereNull('birthdate')
-        //         ->orWhere('birthdate', '');
-        // })
-        // ->exists();
 
         if ($checkEmptyLRN) {
 
