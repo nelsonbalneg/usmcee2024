@@ -132,12 +132,14 @@ class StudentProfileController extends Controller
                     'province_text' => ['required'],
                     'city_text' => ['required'],
                     'barangay_text' => ['required'],
-                    'apptype' => ['required']
+                    'apptype' => ['required'],
+                    'zipcode' => ['required'],
 
                 ],
                 [
                     'lrn.size' => 'The LRN must be exactly 12 digits.',
                     'apptype.required' => 'Please select an applicant type.',
+                    'zipcode.required' => 'Please select an applicant type.',
                 ]
             );
         } else {
