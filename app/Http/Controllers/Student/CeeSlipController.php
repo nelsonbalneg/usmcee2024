@@ -41,7 +41,8 @@ class CeeSlipController extends Controller
             !$studentdetails->province ||
             !$studentdetails->city ||
             !$studentdetails->brgy ||
-            !$studentdetails->zipcode ||
+            // !$studentdetails->zipcode ||
+            // !$studentdetails->zipcode ||
             !$studentdetails->photo
         ) {
             return redirect()->route('student.dashboard');
