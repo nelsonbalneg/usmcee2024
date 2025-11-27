@@ -73,6 +73,7 @@ class RegisteredUserController extends Controller
             [
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
+                'sex' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
                 'phone' => ['required', 'string', 'unique:' . User::class, 'regex:/^09\d{2}-\d{3}-\d{4}$/'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -83,6 +84,7 @@ class RegisteredUserController extends Controller
                 'email.unique' => 'The email address is already taken. Please use a different email.',
                 'phone.regex' => 'The phone number must contain exactly 11 digits.',
                 'birthdate.required' => 'The birthdate is required.',
+                'sex.required' => 'Sex is required.',
             ]
         );
 
