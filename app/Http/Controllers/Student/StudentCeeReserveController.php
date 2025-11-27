@@ -349,13 +349,28 @@ class StudentCeeReserveController extends Controller
         // }
 
         // Check if user has already reserved a confirmed slot
-        if (
-            Reservation::where('user_id', Auth::id())
-                ->where('status', 'confirmed')
-                ->exists()
-        ) {
+        // if (
+        //     Reservation::where('user_id', Auth::id())
+        //         ->where('status', 'confirmed')
+        //         ->exists()
+        // ) {
+        //     return redirect()->route('student.reserve.index')->with([
+        //         'message' => 'You have already reserved a confirmed slot!',
+        //         'status' => 'error'
+        //     ]);
+        // }
+
+        // Get the active CEE session
+        $activeSession = CeeSession::where('status', 'active')->first();
+
+        $userHasConfirmed = Reservation::where('user_id', Auth::id())
+            ->where('cee_session_id', $activeSession->id)
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->exists();
+
+        if ($userHasConfirmed) {
             return redirect()->route('student.reserve.index')->with([
-                'message' => 'You have already reserved a confirmed slot!',
+                'message' => 'You already have a confirmed reservation in the active session!',
                 'status' => 'error'
             ]);
         }
