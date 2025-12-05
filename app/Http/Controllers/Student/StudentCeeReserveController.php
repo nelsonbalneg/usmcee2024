@@ -242,7 +242,6 @@ class StudentCeeReserveController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
         //     'ceesession' => 'required|integer',
         //     'campus' => 'required|string|max:100',
         //     'firstprioprog' => 'required|string|max:100',
@@ -340,26 +339,6 @@ class StudentCeeReserveController extends Controller
 
         ]);
 
-        // Check if user has already reserved a slot
-        // if (Reservation::where('user_id', Auth::user()->id)->exists()) {
-        //     return redirect()->back()->with([
-        //         'message' => 'You have already reserved a slot!',
-        //         'status' => 'error'
-        //     ]);
-        // }
-
-        // Check if user has already reserved a confirmed slot
-        // if (
-        //     Reservation::where('user_id', Auth::id())
-        //         ->where('status', 'confirmed')
-        //         ->exists()
-        // ) {
-        //     return redirect()->route('student.reserve.index')->with([
-        //         'message' => 'You have already reserved a confirmed slot!',
-        //         'status' => 'error'
-        //     ]);
-        // }
-
         // Get the active CEE session
         $activeSession = CeeSession::where('status', 'active')->first();
 
@@ -398,7 +377,9 @@ class StudentCeeReserveController extends Controller
 
         // Generate Application Number
         $userId = Auth::user()->id;
-        $ceeSession = $request->ceesession;
+        // $ceeSession = $request->ceesession;
+        $ceeSession = $activeSession->id;
+
         $lastId = Reservation::max('id') ?? 0; // Get max ID, default to 0 if none exist
         $formattedDate = Carbon::now()->format('Ymd'); // Use current date
         $appno = 'CEE-' . $formattedDate . $userId . $ceeSession . ($lastId + 1);
@@ -432,10 +413,6 @@ class StudentCeeReserveController extends Controller
         // Reduce room capacity
         $room->decrement('capacity');
 
-        // return redirect()->back()->with([
-        //     'message' => 'Congratulations! Your USMCEE Slot reservation was successful. Assigned Room: ' . $room->room_name,
-        //     'status' => 'success'
-        // ]);
         return redirect()->route('student.reserve.index')->with([
             'message' => 'Congratulations! Your USMCEE Slot reservation was successful. Assigned Room: ' . $room->room_name,
             'status' => 'success'
