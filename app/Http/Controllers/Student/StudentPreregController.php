@@ -53,7 +53,6 @@ class StudentPreregController extends Controller
             ->where('student_id', Auth::user()->id)
             ->first();
 
-
         return view('student.prereg.index', compact(
             'result',
             'applicant',

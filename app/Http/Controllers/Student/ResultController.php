@@ -206,7 +206,7 @@ class ResultController extends Controller
             'has_policy_id',
             'cee_profile',
             'programDataBatch2',
-            'requirements_submitted',
+            'requirements_submitted'
         ));
     }
 

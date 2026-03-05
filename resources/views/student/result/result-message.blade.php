@@ -62,7 +62,8 @@
                                 {{-- @if ($cee_profile->prereg_status == 'pending' || $cee_profile->prereg_status == 'enrolled') --}}
                                 @if ($cee_profile && ($cee_profile->prereg_status === 'pending' || $cee_profile->prereg_status === 'enrolled'))
                                     <p class="text-slate-800">
-                                        Congratulations! You have successfully preregistered for your first priority program
+                                        Congratulations! You have successfully preregistered for your first priority
+                                        program
                                         at the University of Southern Mindanao!
                                     </p>
                                     <br>
@@ -153,9 +154,10 @@
 
                                         <br><br>
                                         To begin your enrollment process
-                                        immediately, please click or tap the Confirm button below, <strong>not later than
+                                        immediately, please click or tap the Confirm button below, <strong>not later
+                                            than
                                             April
-                                            25, 2025:</strong><br>
+                                            25, 2026:</strong><br>
 
                                         <a href="{{ route('student.prereg.index') }}"
                                             class="mt-4 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
@@ -165,7 +167,8 @@
                                         <br><br>
 
                                         If you choose not to enroll in your
-                                        priority program, or if you would like to explore other program options, we will be
+                                        priority program, or if you would like to explore other program options, we will
+                                        be
                                         sending you a list of other available programs on April 24.
                                         <br><br>
                                         Congratulations once again, and we look forward to welcoming you to USM!
@@ -195,10 +198,12 @@
 
                                             @if ($cee_profile && $cee_profile->policyId == null && $cee_profile->programName != null)
                                                 <strong class="mb-4 text-custom-500">
-                                                    We understand that you have selected {{ $cee_profile->programName }}
+                                                    We understand that you have selected
+                                                    {{ $cee_profile->programName }}
                                                     {{ $cee_profile->majorDiscDesc }}. However, we regret to inform you
                                                     that you did not qualify for the said program based on your ranking.
-                                                    Please choose another program from the available options offered to you.
+                                                    Please choose another program from the available options offered to
+                                                    you.
                                                 </strong>
                                                 <br> <br>
                                             @endif
@@ -206,11 +211,13 @@
 
                                             Below is the list of other available programs that you may consider for
                                             enrollment.
-                                            We encourage you to review this list carefully. We are committed to helping you
+                                            We encourage you to review this list carefully. We are committed to helping
+                                            you
                                             find
                                             the right academic path at the University of Southern Mindanao.<br><br>
 
-                                            However, please note that you will not be admitted automatically to your chosen
+                                            However, please note that you will not be admitted automatically to your
+                                            chosen
                                             program as all qualifiers will undergo ranking. <br><br>
 
                                             <hr><br>
@@ -221,7 +228,8 @@
                                             kami sa pagtulong sa iyo upang mahanap mo ang angkop na akademik program sa
                                             University of Southern Mindanao.<br><br>
 
-                                            Gayunpaman, pakatandaan na hindi awtomatikong ibibigay ang napili mong program
+                                            Gayunpaman, pakatandaan na hindi awtomatikong ibibigay ang napili mong
+                                            program
                                             sapagkat lahat ng kwalipikado ay daraan sa proseso ng ranggohan
                                             (ranking).<br><br>
 
@@ -282,11 +290,13 @@
                                     @elseif($has_policy_id == 1)
                                         <p class="text-slate-800">
                                             Below are the details of your selected program.
-                                            Please note that admission is not automatic, as all qualifiers will undergo a
+                                            Please note that admission is not automatic, as all qualifiers will undergo
+                                            a
                                             ranking process. <br><br>
 
                                             <hr><br>
-                                            Narito ang detalye ng iyong napiling program. Pakatandaan na hindi awtomatikong
+                                            Narito ang detalye ng iyong napiling program. Pakatandaan na hindi
+                                            awtomatikong
                                             ibibigay ang napili mong program
                                             sapagkat lahat ng kwalipikado ay daraan sa proseso ng ranggohan
                                             (ranking).<br><br>
@@ -313,11 +323,13 @@
                                                                 Selected: </b><br><span class="align-middle">
                                                                 {{ $programDataBatch2['programName'] }} -
                                                                 {{ $programDataBatch2['majorDiscDesc'] }}</span></p>
-                                                        <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Campus and
+                                                        <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Campus
+                                                                and
                                                                 College: </b><br><span
                                                                 class="align-middle">{{ $programDataBatch2['realCampus'] }}
                                                                 - {{ $programDataBatch2['collegeName'] }}</span></p>
-                                                        <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Date and
+                                                        <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Date
+                                                                and
                                                                 Time: </b><br><span
                                                                 class="align-middle">{{ \Carbon\Carbon::parse($cee_profile->date_program_selected)->format('F j, Y g:i A') }}</span>
                                                         </p>
@@ -331,7 +343,8 @@
                                                                     </span>
                                                                     <span
                                                                         class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                                                        Kindly finish all the steps to confirm your selected
+                                                                        Kindly finish all the steps to confirm your
+                                                                        selected
                                                                         program for ranking.
                                                                     </span>
                                                                 @elseif($cee_profile->prereg_status == 'pending' && $cee_profile->status_id == null)
@@ -354,9 +367,11 @@
                                                                             Please submit the original copies of the
                                                                             required
                                                                             documents to the
-                                                                            <b class="text-purple-500">Admission and Records
+                                                                            <b class="text-purple-500">Admission and
+                                                                                Records
                                                                                 Office (ARO)</b> as soon as possible.
-                                                                            Submission may be done in person or via courier.
+                                                                            Submission may be done in person or via
+                                                                            courier.
                                                                             If
                                                                             you have already submitted your documents,
                                                                             kindly
@@ -412,7 +427,8 @@
                                                                         class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
                                                                         Tap the <b class="text-purple-600">Pre-registration
                                                                             Menu</b>, then
-                                                                        tap the <b class="text-purple-600">View Certificate
+                                                                        tap the <b class="text-purple-600">View
+                                                                            Certificate
                                                                             of Registration </b>button to get
                                                                         your Certificate of
                                                                         Registration.
@@ -460,7 +476,8 @@
                                         Mindanao!
 
                                         <br><br>
-                                        We understand that this may be disappointing. However, we would like to offer you
+                                        We understand that this may be disappointing. However, we would like to offer
+                                        you
                                         the
                                         opportunity to explore other programs at USM that may be a good fit for your
                                         interests
@@ -471,12 +488,15 @@
                                         available programs that you
                                         may consider for enrollment.
 
-                                        We encourage you to review this list carefully. We are committed to helping you find
+                                        We encourage you to review this list carefully. We are committed to helping you
+                                        find
                                         the
                                         right academic path at the University of Southern Mindanao.
                                     </p>
                                 @endif
                             @endif
+
+
                         @endif
                     </div>
 
