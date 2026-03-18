@@ -41,32 +41,42 @@
                     </div>
                     <div class="mt-10 overflow-x-auto">
                         @if ($cee_result->csa < 25)
-                            <p class="text-slate-800">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thank you for your
-                                interest in pursuing your tertiary education at the University of Southern Mindanao. We
-                                appreciate the time and effort you invested in our admission process.
+
+                            <h4 class="uppercase">Update on Your USMCEE Result</h4>
+
+                            <p class="mt-4 mb-4">
+                                Dear {{ $cee_result->firstname }}
+                                {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
+                                {{ $cee_result->lastname }}
+                                {{ $cee_result->suffix }},
+                            </p>
+                            <p class="text-slate-800">
+                                Thank you for your interest in joining the University of Southern Mindanao!
 
                                 <br><br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After careful evaluation of all examination
-                                results, <strong class="text-red-500">we regret to inform you that your performance did not
-                                    meet the requirement for admission into any of our offered programs at this
-                                    time</strong>.
-
+                                We truly admire your determination to
+                                pursue a college education. However, we encourage you to consider other schools where you
+                                can continue working toward your goals.
                                 <br><br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We recommend exploring alternative
-                                educational pathways that may align with your interests and career goals.
+                                We wish you success in your endeavors!
                             </p>
                         @elseif($cee_result->csa >= 25)
                             @if ($is_qualified_pre_reg == 1 && !now()->between($start, $end))
 
                                 {{-- add if student is enrolled in first priority --}}
                                 {{-- @if ($cee_profile->prereg_status == 'pending' || $cee_profile->prereg_status == 'enrolled') --}}
-                                @if ($cee_profile && ($cee_profile->prereg_status === 'pending' || $cee_profile->prereg_status === 'enrolled'))
+                                {{-- @if ($cee_profile && ($cee_profile->prereg_status === 'pending' || $cee_profile->prereg_status === 'enrolled')) --}}
+                                @if (
+                                    $cee_profile &&
+                                        $ceeActiveession &&
+                                        $cee_profile->preregistration_id == $ceeActiveession->id &&
+                                        ($cee_profile->prereg_status === 'pending' || $cee_profile->prereg_status === 'enrolled'))
                                     <p class="text-slate-800">
                                         Congratulations! You have successfully preregistered for your first priority
-                                        program
-                                        at the University of Southern Mindanao!
+                                        program at the University of Southern Mindanao!
                                     </p>
                                     <br>
+
                                     <div class="flex flex-col gap-3">
                                         <div class="border rounded-md border-slate-200 dark:border-zink-500">
                                             <div class="flex flex-wrap items-center gap-3 p-2">
@@ -75,30 +85,46 @@
                                                         class="h-10 rounded-full">
                                                 </div>
                                                 <div class="grow">
-                                                    <h6 class="mb-1"><a href="#!">{{ $cee_result->firstname }}
+                                                    <h6 class="mb-1">
+                                                        <a href="#!">
+                                                            {{ $cee_result->firstname }}
                                                             {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
                                                             {{ $cee_result->lastname }}
-                                                            {{ $cee_result->suffix }}</a></h6>
-                                                    <p class="text-slate-500 dark:text-zink-200">
-                                                        {{ $cee_result->email }}</p>
+                                                            {{ $cee_result->suffix }}
+                                                        </a>
+                                                    </h6>
+                                                    <p class="text-slate-500 dark:text-zink-200">{{ $cee_result->email }}
+                                                    </p>
                                                 </div>
                                             </div>
+
                                             <div class="p-2 border-t border-slate-200 dark:border-zink-500">
                                                 <div class="flex flex-col gap-3">
-                                                    <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Program
-                                                            Selected: </b><br><span class="align-middle">
-                                                            {{ $programDataBatch2['programName'] }} -
-                                                            {{ $programDataBatch2['majorDiscDesc'] }}</span></p>
-                                                    <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Campus and
-                                                            College: </b><br><span
-                                                            class="align-middle">{{ $programDataBatch2['realCampus'] }}
-                                                            - {{ $programDataBatch2['collegeName'] }}</span></p>
-                                                    <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Date and
-                                                            Time: </b><br><span
-                                                            class="align-middle">{{ \Carbon\Carbon::parse($cee_profile->date_program_selected)->format('F j, Y g:i A') }}</span>
+                                                    <p class="text-slate-500 dark:text-zink-200 shrink-0">
+                                                        <b>Program Selected: </b><br>
+                                                        <span class="align-middle">
+                                                            {{ $programDataBatch2['programName'] ?? '---' }} -
+                                                            {{ $programDataBatch2['majorDiscDesc'] ?? '---' }}
+                                                        </span>
                                                     </p>
-                                                    <p class="text-slate-500 dark:text-zink-200 shrink-0"><b>Status:
-                                                        </b><br>
+
+                                                    <p class="text-slate-500 dark:text-zink-200 shrink-0">
+                                                        <b>Campus and College: </b><br>
+                                                        <span class="align-middle">
+                                                            {{ $programDataBatch2['realCampus'] ?? '---' }} -
+                                                            {{ $programDataBatch2['collegeName'] ?? '---' }}
+                                                        </span>
+                                                    </p>
+
+                                                    <p class="text-slate-500 dark:text-zink-200 shrink-0">
+                                                        <b>Date and Time: </b><br>
+                                                        <span class="align-middle">
+                                                            {{ $cee_profile->date_program_selected ? \Carbon\Carbon::parse($cee_profile->date_program_selected)->format('F j, Y g:i A') : '---' }}
+                                                        </span>
+                                                    </p>
+
+                                                    <p class="text-slate-500 dark:text-zink-200 shrink-0">
+                                                        <b>Status:</b><br>
                                                         <span class="align-middle">
                                                             @if ($cee_profile->prereg_status == 'for_ranking')
                                                                 <span
@@ -107,79 +133,126 @@
                                                                 </span>
                                                             @elseif($cee_profile->prereg_status == 'pending' && $cee_profile->status_id == null)
                                                                 <span
-                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded borsder bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">Confirmed</span>
+                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-custom-100 border-transparent text-custom-500 dark:bg-custom-500/20 dark:border-transparent">
+                                                                    Confirmed
+                                                                </span>
                                                             @elseif($cee_profile->prereg_status == 'cancelled')
                                                                 <span
-                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Cancelled</span>
+                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">
+                                                                    Cancelled
+                                                                </span>
                                                             @elseif($cee_profile->prereg_status == 'denied')
                                                                 <span
-                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Denied
+                                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">
+                                                                    Denied
                                                                 </span>
                                                             @elseif($cee_profile->prereg_status == 'enrolled' || $cee_profile->status_id == 1)
                                                                 <span
-                                                                    class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">You
-                                                                    are officially enrolled!</span>
+                                                                    class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                                    You are officially enrolled!
+                                                                </span>
                                                                 <span
                                                                     class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
                                                                     Tap the <b class="text-purple-600">Pre-registration
-                                                                        Menu</b>, then tap the <b
-                                                                        class="text-purple-600">View Certificate of
-                                                                        Registration </b>button to
-                                                                    get your Certificate of
-                                                                    Registration.
+                                                                        Menu</b>, then tap the
+                                                                    <b class="text-purple-600">View Certificate of
+                                                                        Registration</b> button to get your
+                                                                    Certificate of Registration.
                                                                 </span>
                                                             @else
                                                                 ---
                                                             @endif
                                                         </span>
                                                     </p>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 @elseif(now()->between($start_batch_1, $end_batch_1) || now()->between($start, $end))
-                                    <h4>Congratulations! You Qualified for Your Priority Program at USM!</h4>
+                                    <h4>You Qualified for Your Priority Program at USM!</h4>
 
-                                    <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
+                                    <p class="mt-4 mb-4">
+                                        Dear {{ $cee_result->firstname }}
                                         {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
                                         {{ $cee_result->lastname }}
-                                        {{ $cee_result->suffix }},</p>
-                                    <p class="text-slate-800">We are pleased to
-                                        inform you that you have qualified for your first priority program, <b
-                                            class="text-custom-500">{{ $programResponse['programName'] }}
-                                            {{ $programResponse['majorDiscDesc'] }}</b>, at the University of Southern
-                                        Mindanao!
-                                        Congratulations on this achievement!
+                                        {{ $cee_result->suffix }},
+                                    </p>
 
+                                    <p class="mb-4">Congratulations!</p>
+                                    <p class="text-slate-800">
+                                        Based on your USM College Entrance Examination (USMCEE) result, you have qualified
+                                        for admission to the program:
+                                        <b class="text-custom-500">
+                                            {{ $programResponse['programName'] ?? '---' }}
+                                            {{ $programResponse['majorDiscDesc'] ?? '' }}
+                                        </b>.
+                                        Please confirm your chosen program by clicking the Confirm button below on or before
+                                        March 23, 2026.
                                         <br><br>
-                                        To begin your enrollment process
-                                        immediately, please click or tap the Confirm button below, <strong>not later
-                                            than
-                                            April
-                                            25, 2026:</strong><br>
 
                                         <a href="{{ route('student.prereg.index') }}"
-                                            class="mt-4 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            class="mt-2 text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
                                             <i data-lucide="thumbs-up" class="inline-block size-4 dark:text-zink-200"></i>
-                                            Confirm</a>
+                                            Confirm
+                                        </a>
 
-                                        <br><br>
 
-                                        If you choose not to enroll in your
-                                        priority program, or if you would like to explore other program options, we will
-                                        be
-                                        sending you a list of other available programs on April 24.
-                                        <br><br>
-                                        Congratulations once again, and we look forward to welcoming you to USM!
+                                        <hr class="mt-4 border-t-2 border-slate-200 dark:border-zink-700">
+                                    <h5 class="self-end mt-5">Other Programs You May Qualify For
+                                    </h5>
+                                    <p class="mt-4"> If you prefer to enroll in any of these programs, <b> wait until
+                                            March 24, 2026
+                                            for slot confirmation</b>. <br><br>
+                                        Please note that admission is not guaranteed, as acceptance will still be based on
+                                        ranking and the availability of slots.</p><br>
+                                    @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
+                                        <div class="overflow-x-auto">
+                                            @foreach ($qualifiedCampuses['qualifiedCampuses'] as $campus)
+                                                <div class="w-full mb-2 whitespace-nowrap">
+                                                    <h5
+                                                        class="p-2 text-left text-green-500 bg-green-100 dark:bg-zink-600 dark:text-zink-200">
+                                                        @if (!empty($campus['qualifiedPrograms']))
+                                                            {{ $campus['qualifiedPrograms'][0]['realCampus'] }}
+                                                        @else
+                                                            {{ $campus['campusName'] }}
+                                                        @endif
+                                                    </h5>
 
-                                    </p>
+                                                    <div class="overflow-x-auto">
+                                                        <table class="w-full whitespace-nowrap">
+                                                            <thead
+                                                                class="text-left bg-slate-100 text-slate-500 dark:bg-zink-600 dark:text-zink-200">
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($campus['qualifiedPrograms'] as $program)
+                                                                    <tr
+                                                                        class="even:bg-slate-50 hover:bg-slate-50 even:hover:bg-slate-100 dark:even:bg-zink-600/50 dark:hover:bg-zink-600 dark:even:hover:bg-zink-600">
+                                                                        <td
+                                                                            class="px-2 py-1 border-y border-slate-200 dark:border-zink-500">
+                                                                            {{ $program['program'] }}{{ !empty($program['major']) ? ' - ' . $program['major'] : '' }}
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="alert alert-info">
+                                            No qualified programs found.
+                                        </div>
+                                    @endif
                                 @else
-                                    <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
+                                    <p class="mt-4 mb-4">
+                                        Dear {{ $cee_result->firstname }}
                                         {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
                                         {{ $cee_result->lastname }}
-                                        {{ $cee_result->suffix }},</p>
-                                    <p class="text-slate-800">Please be informed that the Preregistration has ended.
+                                        {{ $cee_result->suffix }},
+                                    </p>
+                                    <p class="text-slate-800">
+                                        Please be informed that the Preregistration has ended.
                                         <br><br>
                                     </p>
                                 @endif
@@ -192,7 +265,7 @@
                                         <h6 class="mt-4">Dear {{ $cee_result->firstname }}
                                             {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
                                             {{ $cee_result->lastname }}
-                                            {{ $cee_result->suffix }}</h6>
+                                            {{ $cee_result->suffix }},</h6>
                                         <br>
                                         <p class="text-slate-800">
 
@@ -207,31 +280,10 @@
                                                 </strong>
                                                 <br> <br>
                                             @endif
-
-
-                                            Below is the list of other available programs that you may consider for
-                                            enrollment.
-                                            We encourage you to review this list carefully. We are committed to helping
-                                            you
-                                            find
-                                            the right academic path at the University of Southern Mindanao.<br><br>
-
-                                            However, please note that you will not be admitted automatically to your
-                                            chosen
-                                            program as all qualifiers will undergo ranking. <br><br>
-
-                                            <hr><br>
-                                            Narito ang listahan ng iba pang mga akademik program na maaari mong
-                                            isaalang-alang
-                                            para sa pag-enroll. Hinihikayat ka naming suriing mabuti ang listahang ito.
-                                            Nakatuon
-                                            kami sa pagtulong sa iyo upang mahanap mo ang angkop na akademik program sa
-                                            University of Southern Mindanao.<br><br>
-
-                                            Gayunpaman, pakatandaan na hindi awtomatikong ibibigay ang napili mong
-                                            program
-                                            sapagkat lahat ng kwalipikado ay daraan sa proseso ng ranggohan
-                                            (ranking).<br><br>
+                                            You passed the <b class="text-green-500">USM College Entrance Examination
+                                                (USMCEE)</b> .<br>Admission to programs
+                                            is subject to ranking and the availability of slots. Please select your
+                                            preferred program on <b>March 24, 2026</b>, from the list below.<br><br>
 
                                             @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
                                                 <div class="overflow-x-auto">
@@ -252,8 +304,8 @@
                                                                         class="text-left bg-slate-100 text-slate-500 dark:bg-zink-600 dark:text-zink-200">
                                                                         <tr>
                                                                             <th
-                                                                                class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                                                                Action</th>
+                                                                                class="px-2 py-1 font-semibold border-b border-slate-200 dark:border-zink-500">
+                                                                            </th>
                                                                             <th>Program Name</th>
                                                                         </tr>
                                                                     </thead>
@@ -262,14 +314,14 @@
                                                                             <tr
                                                                                 class="even:bg-slate-50 hover:bg-slate-50 even:hover:bg-slate-100 dark:even:bg-zink-600/50 dark:hover:bg-zink-600 dark:even:hover:bg-zink-600">
                                                                                 <td
-                                                                                    class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                                    class="px-2 py-1 border-y border-slate-200 dark:border-zink-500">
                                                                                     <button
                                                                                         data-program="{{ $program['policyId'] }}"
                                                                                         class="text-white selectProgramBtn border-custom-500 bg-custom-500 btn hover:text-white hover:bg-custom-600 hover:yellow-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/10">
                                                                                         Select</button>
                                                                                 </td>
                                                                                 <td
-                                                                                    class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                                                    class="px-2 py-1 border-y border-slate-200 dark:border-zink-500">
                                                                                     {{ $program['program'] }}{{ !empty($program['major']) ? ' - ' . $program['major'] : '' }}
                                                                                 </td>
                                                                             </tr>
@@ -285,7 +337,6 @@
                                                     No qualified programs found.
                                                 </div>
                                             @endif
-
                                         </p>
                                     @elseif($has_policy_id == 1)
                                         <p class="text-slate-800">
@@ -293,13 +344,6 @@
                                             Please note that admission is not automatic, as all qualifiers will undergo
                                             a
                                             ranking process. <br><br>
-
-                                            <hr><br>
-                                            Narito ang detalye ng iyong napiling program. Pakatandaan na hindi
-                                            awtomatikong
-                                            ibibigay ang napili mong program
-                                            sapagkat lahat ng kwalipikado ay daraan sa proseso ng ranggohan
-                                            (ranking).<br><br>
                                         </p>
                                         <div class="flex flex-col gap-3">
                                             <div class="border rounded-md border-slate-200 dark:border-zink-500">
@@ -459,7 +503,7 @@
 
                                     {{-- end --}}
                                 @else
-                                    <h4>Update on Your USM Enrollment Application</h4>
+                                    <h4>Update on Your USMCEE Result</h4>
 
                                     <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
                                         {{ $cee_result->middlename ? strtoupper(substr($cee_result->middlename, 0, 1)) . '.' : '' }}
@@ -501,19 +545,11 @@
                     </div>
 
                     <div class="grid grid-cols-1 mt-10 2xl:grid-cols-12">
-                        <div class="2xl:col-span-5">
-                            <p class="mb-5 text-slate-500 dark:text-zink-200">Sincerely,</p>
-                            <p class="mb-2 uppercase text-slate-800 dark:text-zink-200"> <b> LEORENCE C. TANDOG </b></p>
-                            <p class="text-slate-500 dark:text-zink-200">Vice President for Academic Affairs</p>
-                            <p class="text-slate-500 dark:text-zink-200">University of Southern Mindanao</p>
-                        </div>
-
-
-                        <div class="self-end mt-10 text-center 2xl:col-span-2 2xl:col-start-11">
+                        <div class="self-end mt-10 2xl:col-span-2">
                             <hr class="mb-5 border-t-2 border-slate-200 dark:border-zink-700">
                             <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
                                 class="h-12 mx-auto">
-                            <h6>University of Southern Mindanao</h6>
+                            {{-- <h6>University of Southern Mindanao</h6> --}}
                         </div>
                     </div>
 

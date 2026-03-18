@@ -55,6 +55,10 @@
                             <tbody>
                                 @if ($cee_reservation_records->isNotEmpty())
                                     @foreach ($cee_reservation_records as $data)
+                                        @php
+                                            $isActiveSession = $data->session_status === 'active';
+                                        @endphp
+
                                         <tr
                                             class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
                                             <td class="px-3.5 py-2.5">
@@ -63,17 +67,24 @@
                                                         class="flex items-center justify-center transition-all duration-200 ease-linear bg-slate-100 text-slate-500 btn hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-green-100 active:text-white active:bg-slate-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20">
                                                         Not Available
                                                     </a>
-                                                @elseif($data->status === 'pending')
+                                                @elseif ($data->status === 'pending')
                                                     <a href="{{ route('student.cee.exam-slip', ['app_no' => encrypt($data->app_no)]) }}"
                                                         target="_blank"
                                                         class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
                                                         CEE Slip
                                                     </a>
                                                 @else
-                                                    <a href="{{ route('student.cee.result') }}" target="_blank"
-                                                        class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
-                                                        Result
-                                                    </a>
+                                                    @if ($isActiveSession)
+                                                        <a href="{{ route('student.cee.result') }}" target="_blank"
+                                                            class="flex items-center justify-center text-green-500 transition-all duration-200 ease-linear bg-green-100 btn hover:text-white hover:bg-green-600 focus:text-white focus:bg-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:ring active:ring-green-100 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500 dark:hover:text-white dark:focus:bg-green-500 dark:focus:text-white dark:active:bg-green-500 dark:active:text-white dark:ring-green-400/20">
+                                                            Result
+                                                        </a>
+                                                    @else
+                                                        <span
+                                                            class="flex items-center justify-center transition-all duration-200 ease-linear cursor-not-allowed pointer-events-none bg-slate-100 text-slate-500 btn dark:bg-green-500/20 dark:text-slate-400">
+                                                            Result Unavailable
+                                                        </span>
+                                                    @endif
                                                 @endif
                                             </td>
 
@@ -82,41 +93,47 @@
                                                     <span
                                                         class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-yellow-100 border-transparent text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent">
                                                         <i data-lucide="circle-dashed" class="size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                        Reserved</span>
+                                                        Reserved
+                                                    </span>
                                                 @elseif ($data->status === 'cancelled')
                                                     <span
-                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent"><i
-                                                            data-lucide="x-circle" class="size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                        Cancelled</span>
-                                                @elseif($data->status === 'confirmed')
+                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">
+                                                        <i data-lucide="x-circle" class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                        Cancelled
+                                                    </span>
+                                                @elseif ($data->status === 'confirmed')
                                                     <span
-                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent"><i
-                                                            data-lucide="check-circle-2"
-                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i> Confirmed</span>
+                                                        class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                        <i data-lucide="check-circle-2"
+                                                            class="size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                        Confirmed
+                                                    </span>
                                                 @endif
                                             </td>
+
                                             <td class="px-3.5 py-2.5">{{ $data->app_no }}</td>
+
                                             <td class="px-3.5 py-2.5">
                                                 <span
                                                     class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                    {{ $data->session_name }}</span>
+                                                    {{ $data->session_name }}
+                                                </span>
                                                 {{ $data->exam_session }} <br>
                                                 {{ \Carbon\Carbon::parse($data->schedule)->format('F j, Y') }}
                                                 [{{ $data->time }}]
                                             </td>
+
                                             <td class="px-3.5 py-2.5">
                                                 <span
                                                     class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                    {{ $data->campus }}</span><br>
+                                                    {{ $data->campus }}
+                                                </span><br>
                                                 {{ $data->college_name . '-' . $data->room_name }}
                                             </td>
 
                                             <td class="px-3.5 py-2.5">
                                                 {{ \Carbon\Carbon::parse($data->created_at)->setTimezone('Asia/Manila')->format('F j, Y h:i A') }}
                                             </td>
-
-
-
                                         </tr>
                                     @endforeach
                                 @else

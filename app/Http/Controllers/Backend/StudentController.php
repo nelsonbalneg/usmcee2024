@@ -79,54 +79,72 @@ class StudentController extends Controller
                 ->orderBy('reservations.created_at', 'desc')
                 ->get();
 
-            return view("student.profile.profile", compact('studentdetails', 'ceeActiveession', 'isreservation_exist', 'cee_reservation_records', 'cee_result'))->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
+            return view("student.profile.profile", compact(
+                'studentdetails',
+                'ceeActiveession',
+                'isreservation_exist',
+                'cee_reservation_records',
+                'cee_result'
+            ))
+                ->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
         } else {
 
-            $studentdetails = User::where('id', Auth::user()->id)->first();
+            $studentdetails = User::where('id', Auth::id())->first();
 
-            $applicant = StundentProfile::where('user_id', Auth::user()->id)
-                ->where('applicant_profile_status', 1)
-                ->first();
-
-            //check if records exists
-            $isreservation_exist = Reservation::where('user_id', Auth::user()->id)->count();
-
-            //check if user_id exists in requirements table
-            $requirements = DB::table('student_requirements')
-                ->where('student_id', Auth::user()->id)
-                ->first();
-
-            //check if it has result
-            $cee_result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+            // Active CEE Session is the main reference
             $ceeActiveession = CeeSession::where('status', 'active')->first();
 
-            $cee_reservation_records = DB::table('reservations')
-                ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-                ->join('cee_sessions', 'reservations.cee_session_id', '=', 'cee_sessions.id')
-                ->where('reservations.user_id', Auth::user()->id)
-                ->select(
-                    'reservations.user_id',
-                    'reservations.app_no',
-                    'reservations.firstpriorty_desc',
-                    'reservations.secondpriority_desc',
-                    'reservations.thirdpriorty_desc',
-                    'reservations.campus_id',
-                    'reservations.campus_id_prio_prog_2',
-                    'reservations.campus_id_prio_prog_3',
-                    'reservations.is_repeat_exam',
-                    'reservations.status',
-                    'reservations.created_at',
-                    'reservations.cee_session_id',
-                    'rooms.room_name',
-                    'rooms.college_name',
-                    'rooms.exam_session',
-                    'rooms.campus',
-                    'rooms.time',
-                    'rooms.schedule',
-                    'cee_sessions.name as session_name'
-                )
-                ->orderBy('reservations.created_at', 'desc')
-                ->get();
+            $applicant = null;
+            $cee_reservation_records = collect();
+
+            if ($ceeActiveession) {
+                // Student profile must match the preregistration_id of the active CEE session
+                $applicant = StundentProfile::where('user_id', Auth::id())
+                    ->where('applicant_profile_status', 1)
+                    ->where('preregistration_id', $ceeActiveession->id)
+                    ->first();
+
+                // Reservation must match the active CEE session
+                $cee_reservation_records = DB::table('reservations')
+                    ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                    ->join('cee_sessions', 'reservations.cee_session_id', '=', 'cee_sessions.id')
+                    ->where('reservations.user_id', Auth::id())
+                    ->where('reservations.cee_session_id', $ceeActiveession->id)
+                    ->select(
+                        'reservations.user_id',
+                        'reservations.app_no',
+                        'reservations.firstpriorty_desc',
+                        'reservations.secondpriority_desc',
+                        'reservations.thirdpriorty_desc',
+                        'reservations.campus_id',
+                        'reservations.campus_id_prio_prog_2',
+                        'reservations.campus_id_prio_prog_3',
+                        'reservations.is_repeat_exam',
+                        'reservations.status',
+                        'reservations.created_at',
+                        'reservations.cee_session_id',
+                        'rooms.room_name',
+                        'rooms.college_name',
+                        'rooms.exam_session',
+                        'rooms.campus',
+                        'rooms.time',
+                        'rooms.schedule',
+                        'cee_sessions.name as session_name',
+                        'cee_sessions.status as session_status'
+                    )
+                    ->orderBy('reservations.created_at', 'desc')
+                    ->get();
+            }
+
+            $isreservation_exist = $cee_reservation_records->count();
+
+            $requirements = DB::table('student_requirements')
+                ->where('student_id', Auth::id())
+                ->first();
+
+            $cee_result = Result::where('user_id', Auth::id())
+                ->where('status', 'posted')
+                ->first();
 
             return view('student.dashboard', compact(
                 'studentdetails',

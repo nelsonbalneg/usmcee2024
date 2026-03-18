@@ -114,263 +114,263 @@
 
         </div>
 
-        @if ($applicant)
-            <div class="xl:col-span-4">
-                {{-- Profile Staatuss --}}
-                <h5 class="mb-2 uppercase">Pre-registration Quick Information</h5>
-                <div class="card">
-                    <div class="flex items-center gap-3 card-body">
+        <div class="xl:col-span-4">
+            {{-- Profile Status --}}
+            <h5 class="mb-2 uppercase">Pre-registration Quick Information</h5>
 
-                        @if ($applicant->applicant_profile_status == 1)
-                            <div
-                                class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
-                                <i data-lucide="check-circle"></i>
-                            </div>
-                            <div class="grow">
-                                <h5 class="mb-1 text-16"><span>Published</span></h5>
-                                <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
-                            </div>
-                        @else
-                            <div
-                                class="flex items-center justify-center text-yellow-500 bg-yellow-100 rounded-md size-12 text-15 dark:bg-yellow-500/20 shrink-0">
-                                <i data-lucide="square-pen"></i>
-                            </div>
-                            <div class="grow">
-                                <h5 class="mb-1 text-16"><span>Draft</span></h5>
-                                <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
-                            </div>
-                        @endif
-
-                    </div>
-                </div>
-                {{-- Program --}}
-                <div class="card">
-                    <div class="flex items-center gap-3 card-body">
+            <div class="card">
+                <div class="flex items-center gap-3 card-body">
+                    @if ($applicant && $applicant->applicant_profile_status == 1)
                         <div
                             class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
-                            <i data-lucide="graduation-cap"></i>
+                            <i data-lucide="check-circle"></i>
                         </div>
                         <div class="grow">
-                            <h5 class="mb-1 text-16">
-                                @if ($applicant->policyId == null && $applicant->programName != null)
-                                    You did not qualify for <span
-                                        class="text-custom-500">{{ !empty($applicant->programName) ? $applicant->programName : '' }}
-                                        -
-                                        {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}</span>
-                                    based on your ranking. <br><br> Tap or Click the <a class="text-green-500"
-                                        href="{{ route('student.cee.result') }}">Result </a> Menu to select other program.
-                                @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
-                                    ---
-                                @else
-                                    {{ !empty($applicant->programName) ? $applicant->programName : '' }} -
+                            <h5 class="mb-1 text-16"><span>Published</span></h5>
+                            <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
+                        </div>
+                    @elseif ($applicant)
+                        <div
+                            class="flex items-center justify-center text-yellow-500 bg-yellow-100 rounded-md size-12 text-15 dark:bg-yellow-500/20 shrink-0">
+                            <i data-lucide="square-pen"></i>
+                        </div>
+                        <div class="grow">
+                            <h5 class="mb-1 text-16"><span>Draft</span></h5>
+                            <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
+                        </div>
+                    @else
+                        <div
+                            class="flex items-center justify-center rounded-md text-slate-500 bg-slate-100 size-12 text-15 dark:bg-slate-500/20 shrink-0">
+                            <i data-lucide="minus"></i>
+                        </div>
+                        <div class="grow">
+                            <h5 class="mb-1 text-16"><span>---</span></h5>
+                            <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Program --}}
+            <div class="card">
+                <div class="flex items-center gap-3 card-body">
+                    <div
+                        class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
+                        <i data-lucide="graduation-cap"></i>
+                    </div>
+                    <div class="grow">
+                        <h5 class="mb-1 text-16">
+                            @if (!$applicant)
+                                ---
+                            @elseif ($applicant->policyId == null && $applicant->programName != null)
+                                You did not qualify for
+                                <span class="text-custom-500">
+                                    {{ !empty($applicant->programName) ? $applicant->programName : '' }}
+                                    -
                                     {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
-                                @endif
-                            </h5>
-                            <p class="text-slate-500 dark:text-zink-200">Program Name</p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Prereg staus --}}
-                <div class="card">
-                    <div class="flex items-center gap-3 card-body">
-                        <div
-                            class="flex items-center justify-center text-purple-500 bg-purple-100 rounded-md size-12 text-15 dark:bg-purple-500/20 shrink-0">
-                            <i data-lucide="history"></i>
-                        </div>
-                        <div class="grow">
-
-                            <h5 class="mb-1 text-16">
-                                @if ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
-                                    Program has been confirmed for enrollment.
-                                    @if ($applicant->is_answered_nstp == 1)
-                                        <br>
-                                        <span
-                                            class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                            NSTP PREFERENCE: {{ $applicant->nstp == 1 ? 'CWTS' : 'ROTC' }}
-                                        </span>
-                                    @endif
-
-                                    {{-- check if requirements has been submittted --}}
-                                    @if (is_null($requirements))
-                                        <span
-                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                            Please submit the original copies of the required
-                                            documents to the
-                                            <b class="text-purple-500">Admission and Records
-                                                Office (ARO)</b> as soon as possible.
-                                            Submission may be done in person or via courier. If
-                                            you have already submitted your documents, kindly
-                                            disregard this message.
-                                        </span>
-                                    @else
-                                        @php
-                                            $labels = [
-                                                'goodmoral' => 'Good Moral Certificate',
-                                                'card' => 'Report Card',
-                                                'psa' => 'PSA Birth Certificate',
-                                                'hdismissal' => 'Honorable Dismissal',
-                                                'certificatetransfer' => 'Certificate of Transfer',
-                                                'transcript' => 'Transcript of Records',
-                                            ];
-                                        @endphp
-
-                                        <div class="flex flex-wrap items-center gap-2">
-                                            @foreach ($labels as $key => $label)
-                                                @if ($requirements->$key == 1)
-                                                    <span
-                                                        class="flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-white border-green-400 text-green-500 dark:bg-zink-700 dark:border-green-700">
-                                                        <i data-lucide="check" class="size-3 ltr:ml-1 rtl:mr-1"></i>
-                                                        {{ $label }}
-                                                        <a href="#!"
-                                                            class="text-green-400 transition hover:text-green-600"></a></span>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
-                                    Please wait, ranking in progress.
-                                @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
-                                    Please confirm the program.
-                                @elseif ($applicant->policyId == null && $applicant->programName != null)
-                                    You did not qualify for the chosen program based on your ranking
-                                @elseif($applicant->status_id == 0)
-                                    <span
-                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">Enrollment
-                                        in progress</span>
-                                @elseif($applicant->prereg_status == 'enrolled' || $applicant->status_id == 1)
-                                    <span
-                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">You
-                                        are officially enrolled!</span>
-                                    <span
-                                        class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
-                                        Tap the <b class="text-purple-600">Pre-registration Menu</b>, then tap the <b
-                                            class="text-purple-600">Download COR button</b> to get your Certificate of
-                                        Registration.
-                                    </span>
-                                @else
-                                    ---
-                                @endif
-                            </h5>
-                            <p class="text-slate-500 dark:text-zink-200">Status</p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- id Number --}}
-                <div class="card">
-                    <div class="flex items-center gap-3 card-body">
-                        <div
-                            class="flex items-center justify-center rounded-md size-12 text-sky-500 bg-sky-100 text-15 dark:bg-sky-500/20 shrink-0">
-                            <i data-lucide="id-card"></i>
-                        </div>
-                        <div class="grow">
-                            <h5 class="mb-1 text-16">{{ !empty($applicant->student_no) ? $applicant->student_no : '---' }}
-                            </h5>
-                            <p class="text-slate-500 dark:text-zink-200">Student ID Number</p>
-                        </div>
+                                </span>
+                                based on your ranking. <br><br>
+                                Tap or Click the <a class="text-green-500"
+                                    href="{{ route('student.cee.result') }}">Result</a>
+                                Menu to select other program.
+                            @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                ---
+                            @else
+                                {{ !empty($applicant->programName) ? $applicant->programName : '---' }}
+                                {{ !empty($applicant->majorDiscDesc) ? ' - ' . $applicant->majorDiscDesc : '' }}
+                            @endif
+                        </h5>
+                        <p class="text-slate-500 dark:text-zink-200">Program Name</p>
                     </div>
                 </div>
             </div>
 
-            @if ($applicant->prereg_status == 'pending' && $applicant->is_answered_nstp == 0)
-                <!-- Modal Structure -->
-                <div id="nstpModal" class="fixed inset-0 z-50 flex items-center justify-center hidden ">
-                    <div class="absolute inset-0 bg-gray-900 bg-opacity-50"></div> <!-- Overlay -->
-                    <div class="relative w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zinc-600 z-10">
-                        <div
-                            class="relative flex items-center justify-center p-4 bg-green-500 border-b dark:border-zinc-500">
-                            <h5 class="w-full text-center text-white uppercase text-16">National Service Training Program
-                                (NSTP)</h5>
-                            <!-- X Button -->
-                            <button id="closeModalBtn"
-                                class="absolute hidden text-xl font-bold text-white top-3 right-3 hover:text-gray-200 focus:outline-none">
-                                &times;
-                            </button>
-                        </div>
-                        <div class="p-4 text-center">
-                            <div class="xl:col-span-12">
-                                <div
-                                    class="px-4 py-3 text-sm text-green-500 border border-transparent rounded-md bg-green-50 dark:bg-green-400/20">
-                                    <div class="items-center">
-                                        <ul class="ml-2 list-disc list-inside">
-                                            <p>
-                                                <strong>The National Service Training Program (NSTP)</strong> is a
-                                                Philippine program aimed at enhancing civic consciousness, defense
-                                                preparedness, and the ethics of service and patriotism among the youth. It
-                                                is a requirement for students in Philippine higher education and
-                                                technical-vocational institutions.
-                                            </p>
-                                            <br>
-                                            <p>
-                                                As part of this update, we kindly ask all confirmed enrollees to select
-                                                their NSTP preference below.
-                                            </p>
-                                            <br>
+            {{-- Prereg status --}}
+            <div class="card">
+                <div class="flex items-center gap-3 card-body">
+                    <div
+                        class="flex items-center justify-center text-purple-500 bg-purple-100 rounded-md size-12 text-15 dark:bg-purple-500/20 shrink-0">
+                        <i data-lucide="history"></i>
+                    </div>
+                    <div class="grow">
+                        <h5 class="mb-1 text-16">
+                            @if (!$applicant)
+                                ---
+                            @elseif ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
+                                Program has been confirmed for enrollment.
 
-                                            <div class="mb-2 xl:col-span-6">
-                                                {{-- <label for="nstp" class="block mb-2 text-base font-medium">
-                                                    What is your NSTP peference?<sup class="text-red-500">* required</sup>
-                                                </label> --}}
-                                                <select name="nstp" id="nstpSelect"
-                                                    class="w-full p-2 transition duration-200 ease-in-out border rounded-md border-custom-300 focus:ring-custom-500 focus:border-custom-500"
-                                                    data-choices>
-                                                    <option value="1"
-                                                        {{ $applicant->nstp == '1' ? 'selected' : '' }}>Civic Welfare
-                                                        Training Service (CWTS)
-                                                    </option>
-                                                    <option value="2"
-                                                        {{ $applicant->nstp == '2' ? 'selected' : '' }}>Reserve Officers'
-                                                        Training Corps (ROTC)
-                                                    </option>
-                                                </select>
-                                            </div>
+                                @if ($applicant->is_answered_nstp == 1)
+                                    <br>
+                                    <span
+                                        class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                        NSTP PREFERENCE: {{ $applicant->nstp == 1 ? 'CWTS' : 'ROTC' }}
+                                    </span>
+                                @endif
 
-                                            <button id="saveNstpPref"
-                                                class="block w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                Save
-                                            </button>
+                                @if (is_null($requirements))
+                                    <span
+                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                        Please submit the original copies of the required documents to the
+                                        <b class="text-purple-500">Admission and Records Office (ARO)</b> as soon as
+                                        possible.
+                                        Submission may be done in person or via courier. If you have already submitted your
+                                        documents, kindly disregard this message.
+                                    </span>
+                                @else
+                                    @php
+                                        $labels = [
+                                            'goodmoral' => 'Good Moral Certificate',
+                                            'card' => 'Report Card',
+                                            'psa' => 'PSA Birth Certificate',
+                                            'hdismissal' => 'Honorable Dismissal',
+                                            'certificatetransfer' => 'Certificate of Transfer',
+                                            'transcript' => 'Transcript of Records',
+                                        ];
+                                    @endphp
 
-                                        </ul>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        @foreach ($labels as $key => $label)
+                                            @if ($requirements->$key == 1)
+                                                <span
+                                                    class="flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-white border-green-400 text-green-500 dark:bg-zink-700 dark:border-green-700">
+                                                    <i data-lucide="check" class="size-3 ltr:ml-1 rtl:mr-1"></i>
+                                                    {{ $label }}
+                                                </span>
+                                            @endif
+                                        @endforeach
                                     </div>
-
-                                </div>
-                            </div>
-                            <button id="okButton"
-                                class="hidden w-full mt-4 text-white border-slate-500 bg-slate-500 btn hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">
-                                Close
-                            </button>
-                        </div>
+                                @endif
+                            @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
+                                Please wait, ranking in progress.
+                            @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                Please confirm the program.
+                            @elseif ($applicant->policyId == null && $applicant->programName != null)
+                                You did not qualify for the chosen program based on your ranking
+                            @elseif ($applicant->status_id == 0)
+                                <span
+                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">
+                                    Enrollment in progress
+                                </span>
+                            @elseif ($applicant->prereg_status == 'enrolled' || $applicant->status_id == 1)
+                                <span
+                                    class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                    You are officially enrolled!
+                                </span>
+                                <span
+                                    class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
+                                    Tap the <b class="text-purple-600">Pre-registration Menu</b>, then tap the
+                                    <b class="text-purple-600">Download COR button</b> to get your Certificate of
+                                    Registration.
+                                </span>
+                            @else
+                                ---
+                            @endif
+                        </h5>
+                        <p class="text-slate-500 dark:text-zink-200">Status</p>
                     </div>
                 </div>
+            </div>
 
-                @push('scripts')
-                    {{-- this scipt is for pop up to update the applicant type --}}
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const modal = document.getElementById('nstpModal');
-                            const overlay = modal.querySelector('.bg-gray-900'); // Overlay element
-                            const okButton = document.getElementById('okButton');
+            {{-- ID Number --}}
+            <div class="card">
+                <div class="flex items-center gap-3 card-body">
+                    <div
+                        class="flex items-center justify-center rounded-md size-12 text-sky-500 bg-sky-100 text-15 dark:bg-sky-500/20 shrink-0">
+                        <i data-lucide="id-card"></i>
+                    </div>
+                    <div class="grow">
+                        <h5 class="mb-1 text-16">{{ $applicant->student_no ?? '---' }}</h5>
+                        <p class="text-slate-500 dark:text-zink-200">Student ID Number</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                            // Show the modal when the page loads
-                            modal.classList.remove('hidden');
+        @if ($applicant && $applicant->prereg_status == 'pending' && $applicant->is_answered_nstp == 0)
+            <!-- Modal Structure -->
+            <div id="nstpModal" class="fixed inset-0 z-50 flex items-center justify-center hidden ">
+                <div class="absolute inset-0 bg-gray-900 bg-opacity-50"></div>
+                <div class="relative w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zinc-600 z-10">
+                    <div class="relative flex items-center justify-center p-4 bg-green-500 border-b dark:border-zinc-500">
+                        <h5 class="w-full text-center text-white uppercase text-16">National Service Training Program
+                            (NSTP)</h5>
+                        <button id="closeModalBtn"
+                            class="absolute hidden text-xl font-bold text-white top-3 right-3 hover:text-gray-200 focus:outline-none">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="p-4 text-center">
+                        <div class="xl:col-span-12">
+                            <div
+                                class="px-4 py-3 text-sm text-green-500 border border-transparent rounded-md bg-green-50 dark:bg-green-400/20">
+                                <div class="items-center">
+                                    <ul class="ml-2 list-disc list-inside">
+                                        <p>
+                                            <strong>The National Service Training Program (NSTP)</strong> is a Philippine
+                                            program aimed at enhancing civic consciousness, defense preparedness, and the
+                                            ethics
+                                            of service and patriotism among the youth. It is a requirement for students in
+                                            Philippine higher education and technical-vocational institutions.
+                                        </p>
+                                        <br>
+                                        <p>
+                                            As part of this update, we kindly ask all confirmed enrollees to select their
+                                            NSTP
+                                            preference below.
+                                        </p>
+                                        <br>
 
-                            // Prevent closing when clicking outside the modal
-                            overlay.addEventListener('click', function(event) {
-                                event.stopPropagation(); // Prevent the click from closing the modal
-                            });
+                                        <div class="mb-2 xl:col-span-6">
+                                            <select name="nstp" id="nstpSelect"
+                                                class="w-full p-2 transition duration-200 ease-in-out border rounded-md border-custom-300 focus:ring-custom-500 focus:border-custom-500"
+                                                data-choices>
+                                                <option value="1" {{ $applicant->nstp == '1' ? 'selected' : '' }}>
+                                                    Civic Welfare Training Service (CWTS)
+                                                </option>
+                                                <option value="2" {{ $applicant->nstp == '2' ? 'selected' : '' }}>
+                                                    Reserve Officers' Training Corps (ROTC)
+                                                </option>
+                                            </select>
+                                        </div>
 
-                            // Close modal when OK button is clicked
-                            okButton.addEventListener('click', function() {
-                                modal.classList.add('hidden');
-                            });
+                                        <button id="saveNstpPref"
+                                            class="block w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            Save
+                                        </button>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="okButton"
+                            class="hidden w-full mt-4 text-white border-slate-500 bg-slate-500 btn hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            @push('scripts')
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const modal = document.getElementById('nstpModal');
+                        const overlay = modal.querySelector('.bg-gray-900');
+                        const okButton = document.getElementById('okButton');
+
+                        modal.classList.remove('hidden');
+
+                        overlay.addEventListener('click', function(event) {
+                            event.stopPropagation();
                         });
-                    </script>
-                @endpush
-            @endif
+
+                        okButton.addEventListener('click', function() {
+                            modal.classList.add('hidden');
+                        });
+                    });
+                </script>
+            @endpush
         @endif
 
-        @if ($isreservation_exist > 0)
+        {{-- @if ($isreservation_exist > 0)
             <div class="col-span-6 xl:col-span-12">
                 <div class="card">
                     <div class="card-body">
@@ -396,6 +396,7 @@
                                         @foreach ($cee_reservation_records as $data)
                                             <tr
                                                 class="relative rounded-md bg-slate-50 after:absolute after:border-l-2 after:left-0 after:top-0 after:bottom-0 after:border-transparent dark:bg-zink-600 [&.active]:after:border-custom-500">
+
                                                 <td class="px-3.5 py-2.5">
                                                     @if ($data->status === 'cancelled')
                                                         <a href="#"
@@ -472,7 +473,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
 
 

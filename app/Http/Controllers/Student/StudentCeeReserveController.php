@@ -99,7 +99,8 @@ class StudentCeeReserveController extends Controller
                 'rooms.campus',
                 'rooms.time',
                 'rooms.schedule',
-                'cee_sessions.name as session_name'
+                'cee_sessions.name as session_name',
+                'cee_sessions.status as session_status'
             )
             ->orderBy('reservations.created_at', 'desc')
             ->get();
@@ -115,11 +116,17 @@ class StudentCeeReserveController extends Controller
 
         $campusNames = Term::where('is_active', 1)->get();
 
-
-        return view("student.reserve.reserve", compact('ceeSession', 'isRetaker', 'endofreservation', 'cee_reservation_records', 'reservation_details', 'campusNames', 'reservationCount'));
+        return view("student.reserve.reserve", compact(
+            'ceeSession',
+            'isRetaker',
+            'endofreservation',
+            'cee_reservation_records',
+            'reservation_details',
+            'campusNames',
+            'reservationCount'
+        ));
     }
 
-    // In your controller
     public function checkForDuplicateRecords()
     {
         $user = Auth::user();

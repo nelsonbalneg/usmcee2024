@@ -24,15 +24,6 @@ class ChedApplicantProfileController extends Controller
         //get the existing details of the user during registration
         $cee_profile = User::where('id', Auth::user()->id)->first();
 
-        //get the application number with confirmed status
-        // $app_no = Reservation::where('user_id', Auth::user()->id)
-        //     ->where('status', 'confirmed')->first();
-
-        //check if there is a result
-        // $result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
-
-        //fetch the if user exist in StudentProfile Table and prevent detching null if the user doe not have a profile yet
-        //return a new StudentProfile instance
         $applicant = ChedApplicantProfile::where('user_id', Auth::user()->id)->first() ?? new ChedApplicantProfile();
         $is_applicant_exist = ChedApplicantProfile::where('user_id', Auth::user()->id)->first();
 
@@ -87,22 +78,12 @@ class ChedApplicantProfileController extends Controller
         try {
             DB::beginTransaction();
 
-
             $data = $request->validated();
-
-            // Log validated data (for debugging only — remove in production if it contains sensitive info)
-            // Log::info('CHED Applicant Profile - Validated Data:', $data);
 
             // Trim all string values in the validated data
             $data = array_map(function ($value) {
                 return is_string($value) ? trim($value) : $value;
             }, $data);
-
-            // Log user attempting to save, if applicable
-            Log::info('Attempting to save CHED Applicant Profile', [
-                'user_id' => $data['user_id'] ?? null,
-                'app_no' => $data['app_no'] ?? null,
-            ]);
 
             // Check if user_id exists and update or create
             ChedApplicantProfile::updateOrCreate(
@@ -115,14 +96,6 @@ class ChedApplicantProfileController extends Controller
             return redirect()->route('student.ched-applicant-profile.index')->with('success', 'Your USMCEE Applicant Profile has been saved as a draft. Please take a moment to review all the details and ensure that the information you entered is accurate. If you find any errors, you may click the Update Information button to make the necessary corrections. Once you have verified that all details are correct, click the Submit and Publish button to finalize and submit your profile.');
         } catch (\Exception $e) {
             DB::rollBack();
-
-            // Log full exception trace
-            Log::error('CHED Applicant Profile Saving Error', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'data' => $data ?? [],
-                'user' => Auth::user()?->id ?? 'guest'
-            ]);
 
             return redirect()->route('student.ched-applicant-profile.index')
                 ->withErrors(['error' => 'Something went wrong while saving the application. Please try again.'])
@@ -140,27 +113,18 @@ class ChedApplicantProfileController extends Controller
     {
         try {
             $userId = Auth::id();
-            Log::info('Publish request initiated by user.', ['user_id' => $userId]);
 
             // Find the user's student profile
             $studentProfile = ChedApplicantProfile::where('user_id', $userId)->first();
 
             if (!$studentProfile) {
-                Log::warning('Applicant profile not found.', ['user_id' => $userId]);
                 return response()->json(['success' => false, 'message' => 'Applicant profile not found.'], 404);
             }
 
             // Update profile status to published (1)
             $studentProfile->update(['status' => '1']);
-            Log::info('Profile published successfully.', ['user_id' => $userId]);
-
             return response()->json(['success' => true, 'message' => 'Applicant profile published successfully.']);
         } catch (\Exception $e) {
-            Log::error('Error publishing profile.', [
-                'user_id' => Auth::id(),
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
             return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()], 500);
         }
     }

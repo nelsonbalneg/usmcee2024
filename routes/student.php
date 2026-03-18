@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\ResultController;
 use App\Http\Controllers\Backend\StudentController;
 use App\Http\Controllers\Student\CeeSlipController;
-use App\Http\Controllers\Student\ProgramController;
 use App\Http\Controllers\Student\StudentCORController;
 use App\Http\Controllers\Student\StudentPreregController;
 use App\Http\Controllers\Student\StudentProfileController;
@@ -17,8 +16,6 @@ use App\Http\Controllers\Student\StudentProgramConfirmationController;
 
 Route::middleware(['check.maintenance'])->group(function () {
     Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
-
-
 
     Route::put('/test-update/{id}', [StudentProfileController::class, 'update']);
     Route::put('cee/update-photo/{id}', [StudentProfileController::class, 'uploadPhoto'])->name('cee.update-photo');

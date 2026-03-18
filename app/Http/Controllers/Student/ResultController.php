@@ -22,25 +22,25 @@ class ResultController extends Controller
 {
     public function index()
     {
+        $userId = Auth::id();
+        $reservation = Auth::user();
 
-        // $cee_term = CeeSession::where('status', 'active')->first();
-        // $cee_term_active = $cee_term->id;
+        $cee_result = Result::with('cee_term:id,name,status')
+            ->where('user_id', $userId)
+            ->where('status', 'posted')
+            ->latest()
+            ->get();
 
-        // $reservation = Reservation::where('user_id', Auth::user()->id)
-        //     ->where('cee_session_id', $cee_term_active)
-        //     ->first();
+        $is_ched_applicant_profile = ChedApplicantProfile::where('user_id', $userId)
+            ->where('status', 1)
+            ->exists();
 
-        $reservation = User::where('id', Auth::user()->id)->first();
-
-        $cee_result = Result::where('user_id', Auth::user()->id)
-            ->where('status', 'posted')->get();
-
-        $is_ched_applicant_profile = ChedApplicantProfile::where('user_id', Auth::user()->id)
-            ->where('status', '1')->first();
-
-        return view("student.result.result", compact('cee_result', 'reservation', 'is_ched_applicant_profile'));
+        return view('student.result.result', compact(
+            'cee_result',
+            'reservation',
+            'is_ched_applicant_profile'
+        ));
     }
-
     public function generateceeResultSlip($encryptedAppNo)
     {
 
@@ -96,6 +96,14 @@ class ResultController extends Controller
         $site_settings = DB::table('site_settings')->first();
         $start_batch_2_prereg = Carbon::parse($site_settings->start_prereg_second_batch);
         $end_batch_2_prereg = Carbon::parse($site_settings->end_prereg_second_batch);
+
+        $start_batch_1_prereg = Carbon::parse($site_settings->start_prereg);
+        $end_batch_1_prereg = Carbon::parse($site_settings->end_prereg);
+
+
+
+        //get active cee session
+        $ceeActiveession = CeeSession::where('status', 'active')->first();
 
         $cee_result = DB::table('reservations')
             ->join('results', 'reservations.app_no', '=', 'results.app_no')
@@ -165,9 +173,8 @@ class ResultController extends Controller
         $qualifiedCampuses = null;
         $csa = (float) $result;
 
-
         // fetch all the programs for batch 2
-        if (now()->between($start_batch_2_prereg, $end_batch_2_prereg)) {
+        if (now()->between($start_batch_2_prereg, $end_batch_2_prereg) || (now()->between($start_batch_1_prereg, $end_batch_1_prereg))) {
             $programsfor_batch_2 = Http::get("http://172.16.0.60/academic/api/v2/CeeV/get-qualified-programs/{$csa}");
 
             if ($programsfor_batch_2->successful()) {
@@ -206,7 +213,8 @@ class ResultController extends Controller
             'has_policy_id',
             'cee_profile',
             'programDataBatch2',
-            'requirements_submitted'
+            'requirements_submitted',
+            'ceeActiveession'
         ));
     }
 

@@ -48,7 +48,6 @@ class StudentPreregController extends Controller
 
 
         //get the uploded requirements
-        //check if user_id exists in requirements table
         $requirements_submitted = DB::table('student_requirements')
             ->where('student_id', Auth::user()->id)
             ->first();
