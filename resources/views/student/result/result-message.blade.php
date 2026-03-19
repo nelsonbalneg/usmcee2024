@@ -40,7 +40,7 @@
                             USM-CEE RESULT</h5>
                     </div>
                     <div class="mt-10 overflow-x-auto">
-                        @if ($cee_result->csa < 25)
+                        @if ($cee_result->csa < 30)
 
                             <h4 class="uppercase">Update on Your USMCEE Result</h4>
 
@@ -60,7 +60,7 @@
                                 <br><br>
                                 We wish you success in your endeavors!
                             </p>
-                        @elseif($cee_result->csa >= 25)
+                        @elseif($cee_result->csa >= 30)
                             @if ($is_qualified_pre_reg == 1 && !now()->between($start, $end))
 
                                 {{-- add if student is enrolled in first priority --}}
