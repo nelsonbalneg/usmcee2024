@@ -184,11 +184,11 @@
                                         for admission to the program:
                                         <b class="text-custom-500">
                                             {{ $programResponse['programName'] ?? '---' }}
-                                            {{ $programResponse['majorDiscDesc'] ?? '' }} - 
+                                            {{ $programResponse['majorDiscDesc'] ?? '' }} -
                                             {{ $programResponse['realCampus'] ?? '' }}
                                         </b>.
                                         Please confirm your chosen program by clicking the Confirm button below on or before
-                                        March 23, 2026.
+                                        March 24, 2026.
                                         <br><br>
 
                                         <a href="{{ route('student.prereg.index') }}"
@@ -202,7 +202,7 @@
                                     <h5 class="self-end mt-5">Other Programs You May Qualify For
                                     </h5>
                                     <p class="mt-4"> If you prefer to enroll in any of these programs, <b> wait until
-                                            March 24, 2026
+                                            March 25, 2026
                                             for slot confirmation</b>. <br><br>
                                         Please note that admission is not guaranteed, as acceptance will still be based on
                                         ranking and the availability of slots.</p><br>
@@ -284,7 +284,7 @@
                                             You passed the <b class="text-green-500">USM College Entrance Examination
                                                 (USMCEE)</b> .<br>Admission to programs
                                             is subject to ranking and the availability of slots. Please select your
-                                            preferred program on <b>March 24, 2026</b>, from the list below.<br><br>
+                                            preferred program on <b>March 25, 2026</b>, from the list below.<br><br>
 
                                             @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
                                                 <div class="overflow-x-auto">
@@ -516,7 +516,7 @@
                                     You passed the <b class="text-green-500">USM College Entrance Examination
                                         (USMCEE)</b> .<br>Admission to programs
                                     is subject to ranking and the availability of slots. Please select your
-                                    preferred program on <b>March 24, 2026</b>, from the list below.<br><br>
+                                    preferred program on <b>March 25, 2026</b>, from the list below.<br><br>
                                     @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
                                         <div class="overflow-x-auto">
                                             @foreach ($qualifiedCampuses['qualifiedCampuses'] as $campus)
