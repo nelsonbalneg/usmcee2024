@@ -33,20 +33,6 @@
         </ul>
     </div>
     @if ($result && $result->csa >= 25)
-        {{-- @if (($applicant && $applicant->prereg_status === 'pending') || ($applicant && $applicant->status_id === 1)) --}}
-
-        {{-- @else
-            <div class="flex gap-3 p-4 mb-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
-                <i data-lucide="check-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                <div>
-                    <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.</h6>
-                    <ul class="ml-2 list-disc list-inside">
-                        <li>Preregistration has ended.</li>
-
-                    </ul>
-                </div>
-            </div>
-        @endif --}}
         @if (
             (now()->between($start_batch_1, $end_batch_1) && $result->confirmation_batch == 1) ||
                 (now()->between($start, $end) && $result->confirmation_batch == 2))
@@ -255,8 +241,7 @@
                                                     pertinent requirements to the <b class="text-custom-500"> Admission
                                                         and
                                                         Records
-                                                        Office (ARO) </b>. This may be done face-to-face or via
-                                                    courier.<br>
+                                                        Office (ARO) </b>.
                                                     <b>April 20, 2026</b>
                                                 </p>
                                             </div>
@@ -320,9 +305,6 @@
                     <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.
                     </h6>
                     <ul class="ml-2 list-disc list-inside">
-                        {{-- <li>Please visit this page between <b> {{ \Carbon\Carbon::parse($start)->format('F j, Y g:i A') }} to
-                            {{ \Carbon\Carbon::parse($end)->format('F j, Y g:i A') }} </b> for the second batch of
-                        pre-registration.</li> --}}
                         <li>Preregistration has ended.</li>
 
                     </ul>

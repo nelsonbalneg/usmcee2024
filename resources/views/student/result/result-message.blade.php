@@ -184,7 +184,8 @@
                                         for admission to the program:
                                         <b class="text-custom-500">
                                             {{ $programResponse['programName'] ?? '---' }}
-                                            {{ $programResponse['majorDiscDesc'] ?? '' }}
+                                            {{ $programResponse['majorDiscDesc'] ?? '' }} - 
+                                            {{ $programResponse['realCampus'] ?? '' }}
                                         </b>.
                                         Please confirm your chosen program by clicking the Confirm button below on or before
                                         March 23, 2026.
@@ -333,7 +334,7 @@
                                                     @endforeach
                                                 </div>
                                             @else
-                                                <div class="alert alert-info">
+                                                <div class="mt-2 mb-2 alert alert-info">
                                                     No qualified programs found.
                                                 </div>
                                             @endif
@@ -414,8 +415,6 @@
                                                                             <b class="text-purple-500">Admission and
                                                                                 Records
                                                                                 Office (ARO)</b> as soon as possible.
-                                                                            Submission may be done in person or via
-                                                                            courier.
                                                                             If
                                                                             you have already submitted your documents,
                                                                             kindly
@@ -503,6 +502,7 @@
 
                                     {{-- end --}}
                                 @else
+                                    {{-- message for second batch qualified applicants --}}
                                     <h4>Update on Your USMCEE Result</h4>
 
                                     <p class="mt-4 mb-4">Dear {{ $cee_result->firstname }}
@@ -512,31 +512,50 @@
 
                                     <br>
 
-                                    <p class="text-slate-800">Thank you for your interest in the University of Southern
-                                        Mindanao. <b> We regret to inform you that you did not qualify for your first
-                                            priority
-                                            program </b>, <b class="text-custom-500">{{ $programResponse['programName'] }}
-                                            {{ $programResponse['majorDiscDesc'] }}</b>, at the University of Southern
-                                        Mindanao!
 
-                                        <br><br>
-                                        We understand that this may be disappointing. However, we would like to offer
-                                        you
-                                        the
-                                        opportunity to explore other programs at USM that may be a good fit for your
-                                        interests
-                                        and qualifications.
+                                    You passed the <b class="text-green-500">USM College Entrance Examination
+                                        (USMCEE)</b> .<br>Admission to programs
+                                    is subject to ranking and the availability of slots. Please select your
+                                    preferred program on <b>March 24, 2026</b>, from the list below.<br><br>
+                                    @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
+                                        <div class="overflow-x-auto">
+                                            @foreach ($qualifiedCampuses['qualifiedCampuses'] as $campus)
+                                                <div class="w-full mb-2 whitespace-nowrap">
+                                                    <h5
+                                                        class="p-2 text-left text-green-500 bg-green-100 dark:bg-zink-600 dark:text-zink-200">
+                                                        @if (!empty($campus['qualifiedPrograms']))
+                                                            {{ $campus['qualifiedPrograms'][0]['realCampus'] }}
+                                                        @else
+                                                            {{ $campus['campusName'] }}
+                                                        @endif
+                                                    </h5>
 
-                                        <br><br>
-                                        On April 26, 2025 to April 29, 2025, we will be sending you a list of other
-                                        available programs that you
-                                        may consider for enrollment.
-
-                                        We encourage you to review this list carefully. We are committed to helping you
-                                        find
-                                        the
-                                        right academic path at the University of Southern Mindanao.
-                                    </p>
+                                                    <div class="overflow-x-auto">
+                                                        <table class="w-full whitespace-nowrap">
+                                                            <thead
+                                                                class="text-left bg-slate-100 text-slate-500 dark:bg-zink-600 dark:text-zink-200">
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($campus['qualifiedPrograms'] as $program)
+                                                                    <tr
+                                                                        class="even:bg-slate-50 hover:bg-slate-50 even:hover:bg-slate-100 dark:even:bg-zink-600/50 dark:hover:bg-zink-600 dark:even:hover:bg-zink-600">
+                                                                        <td
+                                                                            class="px-2 py-1 border-y border-slate-200 dark:border-zink-500">
+                                                                            {{ $program['program'] }}{{ !empty($program['major']) ? ' - ' . $program['major'] : '' }}
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="alert alert-info">
+                                            No qualified programs found.
+                                        </div>
+                                    @endif
                                 @endif
                             @endif
 

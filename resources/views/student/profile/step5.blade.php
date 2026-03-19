@@ -134,13 +134,13 @@
                                         <h5 class="mb-2 uppercase">Student Applicant Profile has been saved as a DRAFT!🎉
                                         </h5>
                                         <p class="mb-5 text-slate-500 text-15">
-                                            You can still update your information while your profile status is in DRAFT.
-                                            Kindly
-                                            click the previous button to go back.
-                                            Please review all the details carefully.
-                                            If there are any incorrect entries, you can update them. Once everything is
-                                            correct,
-                                            click the <b>'Submit'</b> button to finalize.
+                                            You may still update your information while your profile status is set to DRAFT.
+                                            Please click the <a href="{{ route('student.applicant-profile.step4.show') }}"
+                                                class="text-blue-500 hover:text-blue-700">Previous</a> button to go back and
+                                            review your details carefully.
+                                            If you find any incorrect entries, you can edit them before proceeding.
+                                            Once everything is correct, click the<b> Submit</b> button to proceed to the next
+                                            step.
                                         </p>
                                     @endif
 
