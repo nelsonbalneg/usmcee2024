@@ -25,6 +25,7 @@ class Requirements extends Model
         'preg_test',
         'signature',
         'photo',
-        'unpost_count'
+        'unpost_count',
+        'cee_session_id'
     ];
 }

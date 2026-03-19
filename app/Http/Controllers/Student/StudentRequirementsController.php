@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Models\Reservation;
-use App\Models\Requirements;
-use Illuminate\Http\Request;
-use App\Models\StundentProfile;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\CeeSession;
+use App\Models\Requirements;
+use App\Models\Reservation;
+use App\Models\StundentProfile;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class StudentRequirementsController extends Controller
@@ -16,9 +18,38 @@ class StudentRequirementsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $applicant = StundentProfile::where('user_id', Auth::user()->id)
+    //         ->select(
+    //             'id',
+    //             'user_id',
+    //             'student_type',
+    //             'freshmen_type',
+    //             'applicant_profile_status',
+    //             'policyId',
+    //             'gender'
+    //         )
+    //         ->first();
+
+    //     //check if user id exists in Requirements table
+    //     $requirements = Requirements::where('user_id', Auth::user()->id)->get();
+
+    //     return view('student.requirements.requirements', compact('applicant', 'requirements'));
+    // }
+
     public function index()
     {
-        $applicant = StundentProfile::where('user_id', Auth::user()->id)
+        $userId = Auth::id();
+
+        $cee_session = CeeSession::where('status', 'active')->first();
+
+        if (!$cee_session) {
+            return redirect()->back()->with('error', 'No active CEE session found.');
+        }
+
+        $applicant = StundentProfile::where('user_id', $userId)
+            ->where('preregistration_id', $cee_session->id)
             ->select(
                 'id',
                 'user_id',
@@ -30,10 +61,15 @@ class StudentRequirementsController extends Controller
             )
             ->first();
 
-        //check if user id exists in Requirements table
-        $requirements = Requirements::where('user_id', Auth::user()->id)->get();
+        // If your Requirements table has preregistration_id, use this:
+        $requirements = Requirements::where('user_id', $userId)
+            ->where('cee_session_id', $cee_session->id) // enable if column exists
+            ->get();
 
-        return view('student.requirements.requirements', compact('applicant', 'requirements'));
+        return view('student.requirements.requirements', compact(
+            'applicant',
+            'requirements'
+        ));
     }
 
     /**
@@ -50,6 +86,8 @@ class StudentRequirementsController extends Controller
 
     public function store(Request $request)
     {
+        $cee_session = CeeSession::where('status', 'active')->first();
+
         $request->validate(
             [
                 'psa_files.*' => 'required|file|mimes:jpg,jpeg,png,pdf|max:10048',
@@ -85,6 +123,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'psa' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         return redirect()->route('student.applicant-requirements.index')->with('success', 'PSA files uploaded successfully.');
@@ -103,6 +142,8 @@ class StudentRequirementsController extends Controller
                 'gmc_files.*.max' => 'Each file must not exceed 10 MB.',
             ]
         );
+
+        $cee_session = CeeSession::where('status', 'active')->first();
 
         $filePaths = [];
 
@@ -127,6 +168,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'good_moral_char' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         return redirect()->route('student.applicant-requirements.index')->with('success', 'GMC files uploaded successfully.');
@@ -146,6 +188,8 @@ class StudentRequirementsController extends Controller
             ]
         );
 
+
+        $cee_session = CeeSession::where('status', 'active')->first();
         $filePaths = [];
 
         if ($request->hasFile('shs_files')) {
@@ -169,6 +213,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'shs_card' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         return redirect()->route('student.applicant-requirements.index')->with('success', 'Card files uploaded successfully.');
@@ -187,6 +232,8 @@ class StudentRequirementsController extends Controller
                 'enrollment_certification.*.max' => 'Each file must not exceed 10 MB.',
             ]
         );
+
+        $cee_session = CeeSession::where('status', 'active')->first();
 
         $filePaths = [];
 
@@ -211,6 +258,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'enrolment_certification' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id
         ]);
 
         return redirect()->route('student.applicant-requirements.index')->with('success', 'Enrollment Certification files uploaded successfully.');
@@ -231,6 +279,7 @@ class StudentRequirementsController extends Controller
         );
 
         $filePaths = [];
+        $cee_session = CeeSession::where('status', 'active')->first();
 
         if ($request->hasFile('honorable_dismisal_files')) {
             foreach ($request->file('honorable_dismisal_files') as $file) {
@@ -253,6 +302,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'honorable_dismisal' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         return redirect()->route('student.applicant-requirements.index')->with('success', 'Honorable Dismissal files uploaded successfully.');
@@ -272,6 +322,7 @@ class StudentRequirementsController extends Controller
             ]
         );
 
+        $cee_session = CeeSession::where('status', 'active')->first();
         $filePaths = [];
 
         if ($request->hasFile('tor_files')) {
@@ -295,6 +346,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'tor' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         return redirect()->route('student.applicant-requirements.index')->with('success', 'Trancript of Records uploaded successfully.');
@@ -306,22 +358,55 @@ class StudentRequirementsController extends Controller
         try {
             $userId = Auth::id();
 
-            // Update all records where user_id matches
-            $updated = Requirements::where('user_id', $userId)->update(['req_status' => 1]);
+            $cee_session = CeeSession::where('status', 'active')->first();
 
-            if ($updated === 0) {
-                return response()->json(['success' => false, 'message' => 'No requirements found to update.'], 404);
+            if (!$cee_session) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No active CEE session found.'
+                ], 404);
             }
 
-            return response()->json(['success' => true, 'message' => 'All applicant requirements published successfully.']);
+            $updated = Requirements::where('user_id', $userId)
+                ->where('cee_session_id', $cee_session->id)
+                ->update(['req_status' => 1]);
+
+            if ($updated === 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No requirements found to update.'
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'All applicant requirements published successfully.'
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()], 500);
+            Log::error('Error publishing requirements: ' . $e->getMessage(), [
+                'user_id' => Auth::id(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
         }
     }
 
     public function additionalRequiremtIndex(Request $request)
     {
-        $applicant = StundentProfile::where('user_id', Auth::user()->id)
+        $userId = Auth::id();
+
+        $cee_session = CeeSession::where('status', 'active')->first();
+
+        if (!$cee_session) {
+            return redirect()->back()->with('error', 'No active CEE session found.');
+        }
+
+        $applicant = StundentProfile::where('user_id', $userId)
+            ->where('preregistration_id', $cee_session->id)
             ->select(
                 'id',
                 'user_id',
@@ -332,15 +417,20 @@ class StudentRequirementsController extends Controller
             )
             ->first();
 
-        //check if user id exists in Requirements table
-        $requirements = Requirements::where('user_id', Auth::user()->id)->get();
+        $requirements = Requirements::where('user_id', $userId)
+            ->where('cee_session_id', $cee_session->id)
+            ->get();
 
-        //fetch also the program_policy_id from reservation
-        $prog_policy_id = Reservation::where('user_id', Auth::user()->id)
+        $prog_policy_id = Reservation::where('user_id', $userId)
             ->where('status', 'confirmed')
+            ->where('cee_session_id', $cee_session->id)
             ->first();
 
-        return view('student.requirements.additional-requirements', compact('applicant', 'requirements', 'prog_policy_id'));
+        return view('student.requirements.additional-requirements', compact(
+            'applicant',
+            'requirements',
+            'prog_policy_id'
+        ));
     }
 
     public function storeHepab(Request $request)
@@ -358,6 +448,7 @@ class StudentRequirementsController extends Controller
         );
 
         $filePaths = [];
+        $cee_session = CeeSession::where('status', 'active')->first();
 
         if ($request->hasFile('hepb_files')) {
             foreach ($request->file('hepb_files') as $file) {
@@ -380,6 +471,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'hepa_b_test' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         // student.requirements.additional-requirements
@@ -401,6 +493,7 @@ class StudentRequirementsController extends Controller
         );
 
         $filePaths = [];
+        $cee_session = CeeSession::where('status', 'active')->first();
 
         if ($request->hasFile('hepb_files')) {
             foreach ($request->file('hepb_files') as $file) {
@@ -423,6 +516,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'hepa_b_test' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         // student.requirements.additional-requirements
@@ -486,6 +580,7 @@ class StudentRequirementsController extends Controller
         );
 
         $filePaths = [];
+        $cee_session = CeeSession::where('status', 'active')->first();
 
         if ($request->hasFile('chestxray_files')) {
             foreach ($request->file('chestxray_files') as $file) {
@@ -508,6 +603,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'chest_x_ray' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         return redirect()->route('student.applicant-requirements.index')->with('success', 'Chest X-Rays Result uploaded successfully.');
@@ -532,6 +628,7 @@ class StudentRequirementsController extends Controller
         );
 
         $filePaths = [];
+        $cee_session = CeeSession::where('status', 'active')->first();
 
         if ($request->hasFile('pregnancyTest_files')) {
             foreach ($request->file('pregnancyTest_files') as $file) {
@@ -554,6 +651,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'preg_test' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         return redirect()->route('student.requirements.additional-requirements')->with('success', 'Pregnancy Test uploaded successfully.');
@@ -574,6 +672,7 @@ class StudentRequirementsController extends Controller
         );
 
         $filePaths = [];
+        $cee_session = CeeSession::where('status', 'active')->first();
 
         if ($request->hasFile('pregnancyTest_files')) {
             foreach ($request->file('pregnancyTest_files') as $file) {
@@ -596,6 +695,7 @@ class StudentRequirementsController extends Controller
         Requirements::create([
             'user_id' => Auth::id(),
             'preg_test' => json_encode($filePaths),
+            'cee_session_id' => $cee_session->id,
         ]);
 
         return redirect()->route('student.applicant-requirements.index')->with('success', 'Pregnancy Test uploaded successfully.');

@@ -76,7 +76,7 @@
                     </div><!--end card-->
                 </div><!--end col-->
 
-                <div class="xl:col-span-6">
+                <div class="xl:col-span-4">
                     <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                         <div class="card">
                             <div class="card-body">
@@ -296,6 +296,181 @@
                         </div><!--end card-->
                     </div><!--end card-->
                 </div><!--end col-->
+
+
+                <div class="xl:col-span-4">
+                    {{-- Profile Status --}}
+                    <h5 class="mb-2 uppercase">Pre-registration Quick Information</h5>
+
+                    <div class="card">
+                        <div class="flex items-center gap-3 card-body">
+                            @if ($applicant && $applicant->applicant_profile_status == 1)
+                                <div
+                                    class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
+                                    <i data-lucide="check-circle"></i>
+                                </div>
+                                <div class="grow">
+                                    <h5 class="mb-1 text-16"><span>Published</span></h5>
+                                    <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
+                                </div>
+                            @elseif ($applicant)
+                                <div
+                                    class="flex items-center justify-center text-yellow-500 bg-yellow-100 rounded-md size-12 text-15 dark:bg-yellow-500/20 shrink-0">
+                                    <i data-lucide="square-pen"></i>
+                                </div>
+                                <div class="grow">
+                                    <h5 class="mb-1 text-16"><span>Draft</span></h5>
+                                    <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
+                                </div>
+                            @else
+                                <div
+                                    class="flex items-center justify-center rounded-md text-slate-500 bg-slate-100 size-12 text-15 dark:bg-slate-500/20 shrink-0">
+                                    <i data-lucide="minus"></i>
+                                </div>
+                                <div class="grow">
+                                    <h5 class="mb-1 text-16"><span>---</span></h5>
+                                    <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Program --}}
+                    <div class="card">
+                        <div class="flex items-center gap-3 card-body">
+                            <div
+                                class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
+                                <i data-lucide="graduation-cap"></i>
+                            </div>
+                            <div class="grow">
+                                <h5 class="mb-1 text-16">
+                                    @if (!$applicant)
+                                        ---
+                                    @elseif ($applicant->policyId == null && $applicant->programName != null)
+                                        You did not qualify for
+                                        <span class="text-custom-500">
+                                            {{ !empty($applicant->programName) ? $applicant->programName : '' }}
+                                            -
+                                            {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
+                                        </span>
+                                        based on your ranking. <br><br>
+                                        Tap or Click the <a class="text-green-500"
+                                            href="{{ route('student.cee.result') }}">Result</a>
+                                        Menu to select other program.
+                                    @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                        ---
+                                    @else
+                                        {{ !empty($applicant->programName) ? $applicant->programName : '---' }}
+                                        {{ !empty($applicant->majorDiscDesc) ? ' - ' . $applicant->majorDiscDesc : '' }}
+                                    @endif
+                                </h5>
+                                <p class="text-slate-500 dark:text-zink-200">Program Name</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Prereg status --}}
+                    <div class="card">
+                        <div class="flex items-center gap-3 card-body">
+                            <div
+                                class="flex items-center justify-center text-purple-500 bg-purple-100 rounded-md size-12 text-15 dark:bg-purple-500/20 shrink-0">
+                                <i data-lucide="history"></i>
+                            </div>
+                            <div class="grow">
+                                <h5 class="mb-1 text-16">
+                                    @if (!$applicant)
+                                        ---
+                                    @elseif ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
+                                        Program has been confirmed for enrollment.
+
+                                        @if ($applicant->is_answered_nstp == 1)
+                                            <br>
+                                            <span
+                                                class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                                NSTP PREFERENCE: {{ $applicant->nstp == 1 ? 'CWTS' : 'ROTC' }}
+                                            </span>
+                                        @endif
+
+                                        @if (is_null($requirements))
+                                            <span
+                                                class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                Please submit the original copies of the required documents to the
+                                                <b class="text-purple-500">Admission and Records Office (ARO)</b> as soon
+                                                as
+                                                possible.
+                                                Submission may be done in person or via courier. If you have already
+                                                submitted your
+                                                documents, kindly disregard this message.
+                                            </span>
+                                        @else
+                                            @php
+                                                $labels = [
+                                                    'goodmoral' => 'Good Moral Certificate',
+                                                    'card' => 'Report Card',
+                                                    'psa' => 'PSA Birth Certificate',
+                                                    'hdismissal' => 'Honorable Dismissal',
+                                                    'certificatetransfer' => 'Certificate of Transfer',
+                                                    'transcript' => 'Transcript of Records',
+                                                ];
+                                            @endphp
+
+                                            <div class="flex flex-wrap items-center gap-2">
+                                                @foreach ($labels as $key => $label)
+                                                    @if ($requirements->$key == 1)
+                                                        <span
+                                                            class="flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-white border-green-400 text-green-500 dark:bg-zink-700 dark:border-green-700">
+                                                            <i data-lucide="check" class="size-3 ltr:ml-1 rtl:mr-1"></i>
+                                                            {{ $label }}
+                                                        </span>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
+                                        Please wait, ranking in progress.
+                                    @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                        Please confirm the program.
+                                    @elseif ($applicant->policyId == null && $applicant->programName != null)
+                                        You did not qualify for the chosen program based on your ranking
+                                    @elseif ($applicant->status_id == 0)
+                                        <span
+                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">
+                                            Enrollment in progress
+                                        </span>
+                                    @elseif ($applicant->prereg_status == 'enrolled' || $applicant->status_id == 1)
+                                        <span
+                                            class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
+                                            You are officially enrolled!
+                                        </span>
+                                        <span
+                                            class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
+                                            Tap the <b class="text-purple-600">Pre-registration Menu</b>, then tap the
+                                            <b class="text-purple-600">Download COR button</b> to get your Certificate of
+                                            Registration.
+                                        </span>
+                                    @else
+                                        ---
+                                    @endif
+                                </h5>
+                                <p class="text-slate-500 dark:text-zink-200">Status</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- ID Number --}}
+                    <div class="card">
+                        <div class="flex items-center gap-3 card-body">
+                            <div
+                                class="flex items-center justify-center rounded-md size-12 text-sky-500 bg-sky-100 text-15 dark:bg-sky-500/20 shrink-0">
+                                <i data-lucide="id-card"></i>
+                            </div>
+                            <div class="grow">
+                                <h5 class="mb-1 text-16">{{ $applicant->student_no ?? '---' }}</h5>
+                                <p class="text-slate-500 dark:text-zink-200">Student ID Number</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         @else

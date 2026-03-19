@@ -383,35 +383,61 @@ class StudentProgramConfirmationController extends Controller
     //program confirmation for batch 2s
     public function storeSelectProgramBatch2(Request $request)
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::id();
 
-        // Wrap entire logic in try-catch to track unexpected issues as well
         try {
-            $user_data = User::findOrFail($userId);
-            $app_no = Reservation::where('user_id', $userId)->firstOrFail();
+            $cee_session = CeeSession::where('status', 'active')->first();
 
-            $prog_policy_id = $request->program_policy_id;
-            // Fetch program policy data from external API
+            if (!$cee_session) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No active CEE session found.'
+                ], 404);
+            }
+
+            $validated = $request->validate([
+                'program_policy_id' => 'required|integer',
+            ]);
+
+            $user_data = User::findOrFail($userId);
+
+            $reservation = Reservation::where('user_id', $userId)
+                ->where('status', 'confirmed')
+                ->where('cee_session_id', $cee_session->id)
+                ->firstOrFail();
+
+            $prog_policy_id = $validated['program_policy_id'];
+
             $programResponse = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$prog_policy_id}");
 
             if (!$programResponse->successful()) {
                 Log::warning("API call failed for policy_id: {$prog_policy_id}, status: " . $programResponse->status());
-                return redirect()->back()->with('error', 'Failed to fetch program data.');
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to fetch program data.'
+                ], 422);
             }
 
             $data = $programResponse->json();
 
-            Log::info('Incoming program policy ID', ['user_id' => $userId, 'program_policy_id' => $prog_policy_id]);
+            Log::info('Incoming program policy ID', [
+                'user_id' => $userId,
+                'program_policy_id' => $prog_policy_id,
+                'preregistration_id' => $cee_session->id,
+            ]);
 
-            // Log request payload
             Log::info('Full request data', $request->all());
 
             DB::beginTransaction();
 
-            StundentProfile::updateOrCreate(
-                ['user_id' => $userId],
+            $profile = StundentProfile::updateOrCreate(
                 [
-                    'app_no' => $app_no->app_no,
+                    'user_id' => $userId,
+                    'preregistration_id' => $cee_session->id,
+                ],
+                [
+                    'app_no' => $reservation->app_no,
                     'last_name' => $user_data->lastname,
                     'middle_name' => $user_data->middlename,
                     'first_name' => $user_data->firstname,
@@ -419,11 +445,23 @@ class StudentProgramConfirmationController extends Controller
                     'gender' => $user_data->sex,
                     'mobile_no' => $user_data->phone,
                     'email' => $user_data->email,
+
+                    'preregistration_id' => $cee_session->id,
+
                     'policyId' => $prog_policy_id,
+                    'campus_id' => $data['campusId'] ?? null,
+                    'prog_id' => $data['programId'] ?? null,
+                    'major_disc_id' => $data['majorDiscId'] ?? null,
+                    'collegeId' => $data['collegeId'] ?? null,
+                    'termId' => $data['termId'] ?? null,
                     'programName' => $data['programName'] ?? null,
                     'collegeName' => $data['collegeName'] ?? null,
                     'majorDiscDesc' => $data['majorDiscDesc'] ?? null,
-                    'campusName' => $data['realCampus'] ?? null,
+                    'campusName' => $data['campusName'] ?? ($data['realCampus'] ?? null),
+                    'term' => $data['term'] ?? null,
+                    'programCode' => $data['programCode'] ?? null,
+                    'realCampusId' => $data['realCampusId'] ?? null,
+
                     'current_step' => 0,
                     'prereg_status' => 'for_ranking',
                     'confirmation_batch' => 2,
@@ -432,41 +470,80 @@ class StudentProgramConfirmationController extends Controller
             );
 
             DB::commit();
-            Log::info('Program policy ID saved successfully', ['user_id' => $userId]);
 
-            return response()->json(['success' => true]);
+            Log::info('Program policy ID saved successfully', [
+                'user_id' => $userId,
+                'profile_id' => $profile->id,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Program selected successfully.'
+            ]);
         } catch (\Illuminate\Validation\ValidationException $ve) {
             Log::warning('Validation failed', [
                 'user_id' => $userId,
                 'errors' => $ve->errors()
             ]);
-            return response()->json(['success' => false, 'message' => 'Validation error', 'errors' => $ve->errors()], 422);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error',
+                'errors' => $ve->errors()
+            ], 422);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Required user or confirmed reservation was not found for the active session.'
+            ], 404);
         } catch (\Exception $e) {
             DB::rollBack();
+
             Log::error('Error saving program info', [
                 'user_id' => $userId,
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            return response()->json(['success' => false, 'message' => 'Something went wrong while saving.'], 500);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong while saving.'
+            ], 500);
         }
     }
 
     //program confirmation for batch 2
     public function storeConfirmProgramBatch2(Request $request)
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::id();
 
-        $prog_policy_id = $request->program_policy_id;
         try {
+            $cee_session = CeeSession::where('status', 'active')->first();
+
+            if (!$cee_session) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No active CEE session found.'
+                ], 404);
+            }
+
+            $validated = $request->validate([
+                'program_policy_id' => 'required|integer',
+            ]);
+
+            $prog_policy_id = $validated['program_policy_id'];
+
             Log::info("Fetching program policy for user_id: {$userId}, policy_id: {$prog_policy_id}");
 
-            // Fetch program policy data from external API
             $programResponse = Http::get("http://172.16.0.60/academic/api/v2/ProgramPolicies/{$prog_policy_id}");
 
             if (!$programResponse->successful()) {
                 Log::warning("API call failed for policy_id: {$prog_policy_id}, status: " . $programResponse->status());
-                return redirect()->back()->with('error', 'Failed to fetch program data.');
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to fetch program data.'
+                ], 422);
             }
 
             $data = $programResponse->json();
@@ -476,7 +553,10 @@ class StudentProgramConfirmationController extends Controller
             DB::beginTransaction();
 
             $profile = StundentProfile::updateOrCreate(
-                ['user_id' => $userId],
+                [
+                    'user_id' => $userId,
+                    'preregistration_id' => $cee_session->id,
+                ],
                 [
                     'policyId' => $data['id'] ?? null,
                     'campus_id' => $data['campusId'] ?? null,
@@ -486,12 +566,13 @@ class StudentProgramConfirmationController extends Controller
                     'termId' => $data['termId'] ?? null,
                     'programName' => $data['programName'] ?? null,
                     'collegeName' => $data['collegeName'] ?? null,
-                    'campusName' => $data['realCampus'] ?? null,
+                    'campusName' => $data['campusName'] ?? ($data['realCampus'] ?? null),
                     'term' => $data['term'] ?? null,
                     'majorDiscDesc' => $data['majorDiscDesc'] ?? null,
                     'programCode' => $data['programCode'] ?? null,
                     'realCampusId' => $data['realCampusId'] ?? null,
                     'prereg_status' => 'for_ranking',
+                    'confirmation_batch' => 2,
                     'current_step' => 6,
                     'date_confirmed' => now(),
                 ]
@@ -501,39 +582,57 @@ class StudentProgramConfirmationController extends Controller
 
             DB::commit();
 
-            return response()->json(['success' => true]); // Return JSON, not redirect
-
+            return response()->json([
+                'success' => true,
+                'message' => 'Program confirmed successfully.'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $e->errors()
+            ], 422);
         } catch (\Exception $e) {
             DB::rollBack();
+
             Log::error('Error saving program info: ' . $e->getMessage(), [
                 'user_id' => $userId,
-                'program_policy_id' => $prog_policy_id,
+                'program_policy_id' => $request->program_policy_id,
                 'trace' => $e->getTraceAsString()
             ]);
-            return redirect()->route('student.program-confirmation.index')->with('error', 'Something went wrong while saving.');
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong while saving.'
+            ], 500);
         }
     }
 
     public function programBatch2index()
     {
+        $user_id = Auth::id();
 
-        $user_id = Auth::user()->id;
+        $cee_session = CeeSession::where('status', 'active')->first();
 
-        // Get the CEE profile of the student
+        if (!$cee_session) {
+            return redirect()
+                ->route('student.cee.result')
+                ->with('error', 'No active CEE session found.');
+        }
+
         $prereg_profile = StundentProfile::where('user_id', $user_id)
+            ->where('preregistration_id', $cee_session->id)
             ->whereNotNull('prereg_status')
             ->whereNotNull('policyId')
             ->first();
 
-        //check if has policy id
-        $has_policy_id = null;
+        $has_policy_id = 0;
 
         if (!$prereg_profile || $prereg_profile->policyId == null) {
-            $has_policy_id = 0;
             return redirect()->route('student.cee.result');
-        } else {
-            $has_policy_id = 1;
         }
+
+        $has_policy_id = 1;
 
         return view('student.prereg.prereg-batch-2', compact(
             'prereg_profile',
