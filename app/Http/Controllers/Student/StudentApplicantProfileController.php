@@ -25,69 +25,158 @@ class StudentApplicantProfileController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $cee_profile = User::where('id', Auth::user()->id)->first();
+    //     $app_no = Reservation::where('user_id', Auth::user()->id)
+    //         ->where('status', 'confirmed')->first();
+
+    //     //check if there is a result
+    //     $result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+
+
+    //     // get the data from chedprofile
+    //     $ched_profile = ChedApplicantProfile::where('user_id', Auth::user()->id)
+    //         ->where('status', '1')->first();
+
+    //     // Read religions.json file
+    //     $religions = [];
+    //     $path = public_path('backend/assets/religion/religions.json'); // Ensure the path is correct
+    //     if (File::exists($path)) {
+    //         $religions = json_decode(File::get($path), true);
+    //     }
+
+    //     // Read nationality.json file
+    //     $nationalities = [];
+    //     $path_nationality = public_path('backend/assets/nationality/nationality.json'); // Ensure the path is correct
+    //     if (File::exists($path_nationality)) {
+    //         $nationalities = json_decode(File::get($path_nationality), true);
+    //     }
+
+    //     // Read tribes.json file
+    //     $tribes = [];
+    //     $path_tribe = public_path('backend/assets/tribe/tribes.json'); // Ensure the path is correct
+    //     if (File::exists($path_tribe)) {
+    //         $tribes = json_decode(File::get($path_tribe), true);
+    //     }
+
+    //     //fetch the if user exist in StudentProfile Table and prevent detching null if the user doe not have a profile yet
+    //     //return a new StudentProfile instance
+    //     $applicant = StundentProfile::where('user_id', Auth::user()->id)->first() ?? new StundentProfile();
+    //     $is_applicant_exist = StundentProfile::where('user_id', Auth::user()->id)->first();
+
+    //     //resident address
+    //     $applicant->res_region = $applicant->res_region ?? '';
+    //     $applicant->res_province = $applicant->res_province ?? '';
+    //     $applicant->res_towncity = $applicant->res_towncity ?? '';
+    //     $applicant->res_barangay = $applicant->res_barangay ?? '';
+
+    //     //permanent address
+    //     $applicant->perm_address = $applicant->perm_address ?? '';
+    //     $applicant->perm_address_province = $applicant->perm_address_province ?? '';
+    //     $applicant->perm_address_towncity = $applicant->perm_address_towncity ?? '';
+    //     $applicant->perm_address_barangay = $applicant->perm_address_barangay ?? '';
+
+    //     //guardian address
+    //     $applicant->guardian_address = $applicant->guardian_address ?? '';
+    //     $applicant->guardian_address_province = $applicant->guardian_address_province ?? '';
+    //     $applicant->guardian_address_towncity = $applicant->guardian_address_towncity ?? '';
+    //     $applicant->guardian_address_barangay = $applicant->guardian_address_barangay ?? '';
+
+    //     // dd($applicant);
+
+
+    //     // return view('student.profile.applicant-profile', compact('cee_profile', 'religions', 'nationalities', 'tribes', 'app_no', 'applicant', 'is_applicant_exist', 'result'));
+    //     return view('student.profile.applicant-profile-personal-info', compact('cee_profile', 'religions', 'nationalities', 'tribes', 'app_no', 'applicant', 'is_applicant_exist', 'result', 'ched_profile'));
+    // }
+
     public function index()
     {
-        $cee_profile = User::where('id', Auth::user()->id)->first();
-        $app_no = Reservation::where('user_id', Auth::user()->id)
-            ->where('status', 'confirmed')->first();
+        $userId = Auth::id();
 
-        //check if there is a result
-        $result = Result::where('user_id', Auth::user()->id)->where('status', 'posted')->first();
+        $cee_session = CeeSession::where('status', 'active')->first();
 
+        if (!$cee_session) {
+            return redirect()->back()->with('error', 'No active CEE session found.');
+        }
+
+        $cee_profile = User::where('id', $userId)->first();
+
+        $app_no = Reservation::where('user_id', $userId)
+            ->where('status', 'confirmed')
+            ->where('cee_session_id', $cee_session->id)
+            ->first();
+
+        // check if there is a result
+        $result = Result::where('user_id', $userId)
+            ->where('status', 'posted')
+            ->where('cee_session_id', $cee_session->id)
+            ->first();
 
         // get the data from chedprofile
-        $ched_profile = ChedApplicantProfile::where('user_id', Auth::user()->id)
-            ->where('status', '1')->first();
+        $ched_profile = ChedApplicantProfile::where('user_id', $userId)
+            ->where('status', '1')
+            ->first();
 
         // Read religions.json file
         $religions = [];
-        $path = public_path('backend/assets/religion/religions.json'); // Ensure the path is correct
+        $path = public_path('backend/assets/religion/religions.json');
         if (File::exists($path)) {
             $religions = json_decode(File::get($path), true);
         }
 
         // Read nationality.json file
         $nationalities = [];
-        $path_nationality = public_path('backend/assets/nationality/nationality.json'); // Ensure the path is correct
+        $path_nationality = public_path('backend/assets/nationality/nationality.json');
         if (File::exists($path_nationality)) {
             $nationalities = json_decode(File::get($path_nationality), true);
         }
 
         // Read tribes.json file
         $tribes = [];
-        $path_tribe = public_path('backend/assets/tribe/tribes.json'); // Ensure the path is correct
+        $path_tribe = public_path('backend/assets/tribe/tribes.json');
         if (File::exists($path_tribe)) {
             $tribes = json_decode(File::get($path_tribe), true);
         }
 
-        //fetch the if user exist in StudentProfile Table and prevent detching null if the user doe not have a profile yet
-        //return a new StudentProfile instance
-        $applicant = StundentProfile::where('user_id', Auth::user()->id)->first() ?? new StundentProfile();
-        $is_applicant_exist = StundentProfile::where('user_id', Auth::user()->id)->first();
+        // fetch applicant only for active preregistration/session
+        $applicant = StundentProfile::where('user_id', $userId)
+            ->where('preregistration_id', $cee_session->id)
+            ->first() ?? new StundentProfile();
 
-        //resident address
+        $is_applicant_exist = StundentProfile::where('user_id', $userId)
+            ->where('preregistration_id', $cee_session->id)
+            ->first();
+
+        // resident address
         $applicant->res_region = $applicant->res_region ?? '';
         $applicant->res_province = $applicant->res_province ?? '';
         $applicant->res_towncity = $applicant->res_towncity ?? '';
         $applicant->res_barangay = $applicant->res_barangay ?? '';
 
-        //permanent address
+        // permanent address
         $applicant->perm_address = $applicant->perm_address ?? '';
         $applicant->perm_address_province = $applicant->perm_address_province ?? '';
         $applicant->perm_address_towncity = $applicant->perm_address_towncity ?? '';
         $applicant->perm_address_barangay = $applicant->perm_address_barangay ?? '';
 
-        //guardian address
+        // guardian address
         $applicant->guardian_address = $applicant->guardian_address ?? '';
         $applicant->guardian_address_province = $applicant->guardian_address_province ?? '';
         $applicant->guardian_address_towncity = $applicant->guardian_address_towncity ?? '';
         $applicant->guardian_address_barangay = $applicant->guardian_address_barangay ?? '';
 
-        // dd($applicant);
-
-
-        // return view('student.profile.applicant-profile', compact('cee_profile', 'religions', 'nationalities', 'tribes', 'app_no', 'applicant', 'is_applicant_exist', 'result'));
-        return view('student.profile.applicant-profile-personal-info', compact('cee_profile', 'religions', 'nationalities', 'tribes', 'app_no', 'applicant', 'is_applicant_exist', 'result', 'ched_profile'));
+        return view('student.profile.applicant-profile-personal-info', compact(
+            'cee_profile',
+            'religions',
+            'nationalities',
+            'tribes',
+            'app_no',
+            'applicant',
+            'is_applicant_exist',
+            'result',
+            'ched_profile'
+        ));
     }
 
     public function showStep1()
@@ -632,9 +721,118 @@ class StudentApplicantProfileController extends Controller
     //     }
     // }
 
+    // public function postStep2(Request $request)
+    // {
+    //     $userId = Auth::user()->id;
+    //     $cee_session = CeeSession::where('status', 'active')->first();
+
+    //     if (!$cee_session) {
+    //         return redirect()
+    //             ->route('student.applicant-profile.step2.show')
+    //             ->with('error', 'No active CEE session found.');
+    //     }
+
+    //     $validated = $request->validate([
+    //         'father' => 'nullable|string|max:50',
+    //         'father_birth_date' => 'nullable|date',
+    //         'father_educ_attain' => 'nullable|string|max:100',
+    //         'father_occupation' => 'nullable|string|max:50',
+    //         'father_company' => 'nullable|string|max:100',
+    //         'father_company_address' => 'nullable|string|max:200',
+    //         'father_tel_no' => 'nullable|string|max:20',
+    //         'father_email' => 'nullable|string|max:50',
+    //         'father_income_from' => 'nullable|string',
+
+    //         'mother' => 'nullable|string|max:50',
+    //         'mother_birth_date' => 'nullable|date',
+    //         'mother_educ_attain' => 'nullable|string|max:100',
+    //         'mother_occupation' => 'nullable|string|max:50',
+    //         'mother_company' => 'nullable|string|max:100',
+    //         'mother_company_address' => 'nullable|string|max:200',
+    //         'mother_tel_no' => 'nullable|string|max:20',
+    //         'mother_email' => 'nullable|string|max:50',
+    //         'mother_income_from' => 'nullable|string',
+
+    //         'father_income_to' => 'nullable|string',
+    //         'mother_income_to' => 'nullable|string',
+
+    //         // Guardian Information
+    //         'guardian' => 'required|string|max:100',
+    //         'guardian_relationship' => 'required|string|max:100',
+    //         'guardian_occupation' => 'nullable|string|max:100',
+    //         'guardian_company' => 'nullable|string|max:100',
+    //         'guardian_telno' => 'nullable|string|max:100',
+    //         'guardian_email' => 'nullable|string|max:100',
+
+    //         'guardian_address' => 'nullable|string|max:100',
+    //         'guardian_street' => 'required|string|max:100',
+    //         'barangay_text-guardian' => 'required|string|max:100',
+    //         'city_text-guardian' => 'required|string|max:100',
+    //         'province_text-guardian' => 'required|string|max:100',
+    //         'region_text-guardian' => 'required|string|max:100',
+    //         'guardian_zipcode' => 'nullable|integer',
+    //     ]);
+
+    //     DB::beginTransaction();
+
+    //     try {
+    //         $data = array_map(
+    //             fn($value) => is_string($value) ? trim(preg_replace('/\s+/', ' ', $value)) : $value,
+    //             $validated
+    //         );
+
+    //         $data['guardian_region'] = $request->input('region_text-guardian');
+    //         $data['guardian_province'] = $request->input('province_text-guardian');
+    //         $data['guardian_towncity'] = $request->input('city_text-guardian');
+    //         $data['guardian_barangay'] = $request->input('barangay_text-guardian');
+
+    //         $data['guardian_address'] = implode(', ', array_filter([
+    //             $request->input('guardian_street'),
+    //             $request->input('barangay_text-guardian'),
+    //             $request->input('city_text-guardian'),
+    //             $request->input('province_text-guardian'),
+    //             $request->input('guardian_zipcode'),
+    //         ]));
+
+    //         $data['current_step'] = 2;
+    //         $data['user_id'] = $userId;
+    //         $data['preregistration_id'] = $cee_session->id;
+
+    //         Log::info('Final data to be saved for user ' . $userId, $data);
+
+    //         $studentProfile = StundentProfile::updateOrCreate(
+    //             [
+    //                 'user_id' => $userId,
+    //                 'preregistration_id' => $cee_session->id,
+    //             ],
+    //             $data
+    //         );
+
+    //         DB::commit();
+
+    //         return redirect()
+    //             ->route('student.applicant-profile.step3.show')
+    //             ->with('student_profile_id', $studentProfile->id);
+
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+
+    //         Log::error('Error saving personal info: ' . $e->getMessage(), [
+    //             'user_id' => $userId,
+    //             'preregistration_id' => $cee_session->id ?? null,
+    //             'trace' => $e->getTraceAsString(),
+    //         ]);
+
+    //         return redirect()
+    //             ->route('student.applicant-profile.step2.show')
+    //             ->withInput()
+    //             ->with('error', 'Something went wrong while saving.');
+    //     }
+    // }
+
     public function postStep2(Request $request)
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::id();
         $cee_session = CeeSession::where('status', 'active')->first();
 
         if (!$cee_session) {
@@ -643,7 +841,7 @@ class StudentApplicantProfileController extends Controller
                 ->with('error', 'No active CEE session found.');
         }
 
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'father' => 'nullable|string|max:50',
             'father_birth_date' => 'nullable|date',
             'father_educ_attain' => 'nullable|string|max:100',
@@ -651,8 +849,10 @@ class StudentApplicantProfileController extends Controller
             'father_company' => 'nullable|string|max:100',
             'father_company_address' => 'nullable|string|max:200',
             'father_tel_no' => 'nullable|string|max:20',
-            'father_email' => 'nullable|email|max:50',
+            'father_email' => 'nullable|string|max:50',
+
             'father_income_from' => 'nullable|string',
+            'father_income_to' => 'nullable|string',
 
             'mother' => 'nullable|string|max:50',
             'mother_birth_date' => 'nullable|date',
@@ -661,19 +861,17 @@ class StudentApplicantProfileController extends Controller
             'mother_company' => 'nullable|string|max:100',
             'mother_company_address' => 'nullable|string|max:200',
             'mother_tel_no' => 'nullable|string|max:20',
-            'mother_email' => 'nullable|email|max:50',
-            'mother_income_from' => 'nullable|string',
+            'mother_email' => 'nullable|string|max:50',
 
-            'father_income_to' => 'nullable|string',
+            'mother_income_from' => 'nullable|string',
             'mother_income_to' => 'nullable|string',
 
-            // Guardian Information
             'guardian' => 'required|string|max:100',
             'guardian_relationship' => 'required|string|max:100',
             'guardian_occupation' => 'nullable|string|max:100',
             'guardian_company' => 'nullable|string|max:100',
             'guardian_telno' => 'nullable|string|max:100',
-            'guardian_email' => 'nullable|email|max:100',
+            'guardian_email' => 'nullable|string|max:100',
 
             'guardian_address' => 'nullable|string|max:100',
             'guardian_street' => 'required|string|max:100',
@@ -684,9 +882,18 @@ class StudentApplicantProfileController extends Controller
             'guardian_zipcode' => 'nullable|integer',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()
+                ->route('student.applicant-profile.step2.show')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         DB::beginTransaction();
 
         try {
+            $validated = $validator->validated();
+
             $data = array_map(
                 fn($value) => is_string($value) ? trim(preg_replace('/\s+/', ' ', $value)) : $value,
                 $validated
@@ -866,38 +1073,38 @@ class StudentApplicantProfileController extends Controller
                 ->with('error', 'No active CEE session found.');
         }
 
-        $validated = $request->validate([
-            'elem_school' => 'required|string|max:100',
-            'elem_address' => 'required|string|max:100',
-            'elem_incldates' => 'required|string|max:60',
-
-            'hs_school' => 'required|string|max:100',
-            'hs_address' => 'required|string|max:100',
-            'hs_incldates' => 'required|string|max:60',
-
-            'vocational' => 'nullable|string|max:100',
-            'vocational_address' => 'nullable|string|max:100',
-            'vocational_degree' => 'nullable|string|max:100',
-            'vocational_incldates' => 'nullable|string|max:60',
-
-            'shs_school' => 'required|string|max:100',
-            'shs_address' => 'required|string|max:100',
-            'shs_incldates' => 'required|string|max:60',
-
-            'college_school' => 'required|string|max:100',
-            'college_address' => 'required|string|max:100',
-            'college_degree' => 'required|string|max:100',
-            'college_incldates' => 'required|string|max:60',
-
-            'student_picture' => 'nullable|file',
-            'elem_award_honor' => 'nullable|string|max:1000',
-            'hs_award_honor' => 'nullable|string|max:1000',
-            'shs_award_honor' => 'nullable|string|max:1000',
-        ]);
-
         DB::beginTransaction();
 
         try {
+            $validated = $request->validate([
+                'elem_school' => 'required|string|max:100',
+                'elem_address' => 'required|string|max:1000',
+                'elem_incldates' => 'required|string|max:60',
+
+                'hs_school' => 'required|string|max:100',
+                'hs_address' => 'required|string|max:1000',
+                'hs_incldates' => 'required|string|max:60',
+
+                'vocational' => 'nullable|string|max:100',
+                'vocational_address' => 'nullable|string|max:1000',
+                'vocational_degree' => 'nullable|string|max:100',
+                'vocational_incldates' => 'nullable|string|max:60',
+
+                'shs_school' => 'required|string|max:100',
+                'shs_address' => 'required|string|max:100',
+                'shs_incldates' => 'required|string|max:60',
+
+                'college_school' => 'required|string|max:100',
+                'college_address' => 'required|string|max:100',
+                'college_degree' => 'required|string|max:100',
+                'college_incldates' => 'required|string|max:60',
+
+                'student_picture' => 'nullable|file',
+                'elem_award_honor' => 'nullable|string|max:1000',
+                'hs_award_honor' => 'nullable|string|max:1000',
+                'shs_award_honor' => 'nullable|string|max:1000',
+            ]);
+
             $data = array_map(
                 fn($value) => is_string($value) ? trim(preg_replace('/\s+/', ' ', $value)) : $value,
                 $validated
@@ -906,16 +1113,6 @@ class StudentApplicantProfileController extends Controller
             $data['user_id'] = $userId;
             $data['preregistration_id'] = $cee_session->id;
             $data['current_step'] = 3;
-
-            // Optional file upload handling
-            if ($request->hasFile('student_picture')) {
-                $file = $request->file('student_picture');
-                $filename = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
-                $path = $file->storeAs('student_pictures', $filename, 'public');
-                $data['student_picture'] = $path;
-            } else {
-                unset($data['student_picture']);
-            }
 
             $studentProfile = StundentProfile::updateOrCreate(
                 [
@@ -931,6 +1128,13 @@ class StudentApplicantProfileController extends Controller
                 ->route('student.applicant-profile.step4.show')
                 ->with('student_profile_id', $studentProfile->id);
 
+        } catch (ValidationException $e) {
+            DB::rollBack();
+
+            return redirect()
+                ->route('student.applicant-profile.step3.show')
+                ->withErrors($e->validator)
+                ->withInput();
         } catch (\Exception $e) {
             DB::rollBack();
 

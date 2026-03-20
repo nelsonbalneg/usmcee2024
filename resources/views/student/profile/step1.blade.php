@@ -710,11 +710,14 @@
                         <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.
                         </h6>
                         <ul class="ml-2 list-disc list-inside">
-                            <li>Please visit this page between <b>
-                                    {{ \Carbon\Carbon::parse($start)->format('F j, Y g:i A') }} to
-                                    {{ \Carbon\Carbon::parse($end)->format('F j, Y g:i A') }} </b> for the second batch of
-                                pre-registration.</li>
-
+                            <li>
+                               Unable to proceed. 
+                                If you believe this is an error or require assistance, please contact the System
+                                Administrator through
+                                <b>Agapay</b> (<a href="https://agapay.usm.edu.ph/"
+                                    target="_blank">https://agapay.usm.edu.ph/</a>),
+                                the official ticketing system of the University of Southern Mindanao.
+                            </li>
                         </ul>
                     </div>
                 </div>
