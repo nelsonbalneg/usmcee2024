@@ -181,10 +181,6 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                                 class="text-base font-medium text-blue-600 cursor-pointer hover:underline">
                                 Forgot Password?
                             </a>
-                            {{-- <a href="{{ route('password.request') }}"
-                                class="text-base font-medium text-blue-600 cursor-pointer hover:underline">
-                                Forgot Password?
-                            </a> --}}
                         </div>
                     </div>
 
@@ -217,14 +213,87 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                     </div>
                 @endif
 
+                <div
+                    class="mt-6 pt-4 border-t border-slate-200 dark:border-zink-600 text-center text-[12px] text-slate-400 dark:text-zink-200 space-x-2">
+
+                    <a href="javascript:void(0)" data-drawer-target="drawerterms"
+                        class="hover:underline hover:text-slate-600 dark:hover:text-white">
+                        Terms &amp; Conditions
+                    </a>
+                    <span>|</span>
+
+                    <a href="javascript:void(0)" data-drawer-target="drawerprivacy"
+                        class="hover:underline hover:text-slate-600 dark:hover:text-white">
+                        Data Privacy
+                    </a>
+
+                    <span>|</span>
+
+                    <a href="javascript:void(0)" data-drawer-target="drawerprivacy"
+                        class="hover:underline hover:text-slate-600 dark:hover:text-white">
+                        Cookie Policy
+                    </a>
+
+                </div>
+
+
+
             </div>
+
+
+        </div>
+
+
+    </div>
+    <div id="drawerterms"
+        class="fixed inset-y-0 flex flex-col hidden w-full transition-transform duration-300 ease-in-out transform translate-x-full bg-white shadow md:w-80 z-drawer dark:bg-zink-600 ltr:right-0 rtl:left-0">
+
+        <div class="flex items-center justify-between p-4 border-b card-body border-slate-200 dark:border-zink-500">
+            <h6 class="text-15">Terms &amp; Conditions</h6>
+            <button type="button" data-drawer-close="drawerterms">
+                <i data-lucide="x"
+                    class="transition-all duration-200 ease-linear size-4 text-slate-500 hover:text-slate-700 dark:text-zink-200 dark:hover:text-zink-50"></i>
+            </button>
+        </div>
+
+        <div class="h-full p-2 overflow-y-auto">
+            {!! $activeTermsPolicy->content !!}
+
+        </div>
+
+        <div class="flex items-center justify-between p-4 border-t border-slate-200 dark:border-zink-500">
+            <h6 class="text-15">University of Southern Mindanao</h6>
+            <button type="button" class="px-3 py-1.5 text-sm text-white bg-slate-600 rounded-md hover:bg-slate-700"
+                data-drawer-close="drawerterms">
+                Close
+            </button>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const drawer = document.getElementById('drawerterms');
+            if (!drawer) return;
+
+            // Disable transition briefly so it doesn't animate on load
+            drawer.style.transition = 'none';
+            drawer.classList.add('translate-x-full');
+
+            // Re-enable transition after a tick
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    drawer.style.transition = '';
+                });
+            });
+        });
+    </script>
+
 
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     {{-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> --}}
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const emailInput = document.getElementById("email");

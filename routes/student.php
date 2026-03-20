@@ -1,20 +1,27 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Student\ResultController;
 use App\Http\Controllers\Backend\StudentController;
 use App\Http\Controllers\Student\CeeSlipController;
+use App\Http\Controllers\Student\ChedApplicantProfileController;
+use App\Http\Controllers\Student\ResultController;
+use App\Http\Controllers\Student\SchoolNamesController;
+use App\Http\Controllers\Student\StudentApplicantProfileController;
+use App\Http\Controllers\Student\StudentCeeReserveController;
 use App\Http\Controllers\Student\StudentCORController;
 use App\Http\Controllers\Student\StudentPreregController;
 use App\Http\Controllers\Student\StudentProfileController;
-use App\Http\Controllers\Student\StudentCeeReserveController;
-use App\Http\Controllers\Student\StudentRequirementsController;
-use App\Http\Controllers\Student\ChedApplicantProfileController;
-use App\Http\Controllers\Student\SchoolNamesController;
-use App\Http\Controllers\Student\StudentApplicantProfileController;
 use App\Http\Controllers\Student\StudentProgramConfirmationController;
+use App\Http\Controllers\Student\StudentRequirementsController;
+use App\Http\Controllers\Student\TermsPolicyController;
+use Illuminate\Support\Facades\Route;
 
-Route::middleware(['check.maintenance'])->group(function () {
+
+Route::get('terms-policy', [TermsPolicyController::class, 'show'])->name('terms-policy.show');
+
+
+Route::post('terms-policy/accept', [TermsPolicyController::class, 'accept'])->name('terms-policy.accept');
+
+Route::middleware(['check.maintenance', 'terms.accepted'])->group(function () {
     Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
 
     Route::put('/test-update/{id}', [StudentProfileController::class, 'update']);
@@ -133,6 +140,9 @@ Route::middleware(['check.maintenance'])->group(function () {
             return response()->json(['message' => 'File not found'], 404);
         }
     })->name('download-pdf');
+
+    Route::post('terms-policy/accept', [TermsPolicyController::class, 'accept'])->name('terms-policy.accept');
+    Route::get('terms-policy/toc', [TermsPolicyController::class, 'showtoc'])->name('terms-policy.toc');
 
     //  Route::get('dtr/generate-report', [StudentCORController::class, 'generateDtrReport'])->name('generate-dtr.report');
 

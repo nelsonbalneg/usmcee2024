@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\View\View;
-use App\Models\SiteSetting;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Models\SiteSetting;
+use App\Models\TermsPolicy;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 
 class AuthenticatedSessionController extends Controller
@@ -23,7 +24,12 @@ class AuthenticatedSessionController extends Controller
         $siteSetting = SiteSetting::first();
         $endofregistration = $siteSetting ? $siteSetting->endregistration : null;
 
-        return view('auth.login', compact('endofregistration'));
+
+        $activeTermsPolicy = TermsPolicy::where('is_active', true)
+            ->latest('id')
+            ->first();
+
+        return view('auth.login', compact('endofregistration', 'activeTermsPolicy'));
     }
 
     /**
@@ -99,4 +105,5 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
 }

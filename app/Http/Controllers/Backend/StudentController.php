@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\User;
-use App\Models\Result;
+use App\Http\Controllers\Controller;
 use App\Models\CeeSession;
 use App\Models\Reservation;
-use Illuminate\Http\Request;
+use App\Models\Result;
 use App\Models\StundentProfile;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
+use App\Models\TermsPolicy;
+use App\Models\TermsPolicyAcceptance;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -146,6 +148,17 @@ class StudentController extends Controller
                 ->where('status', 'posted')
                 ->first();
 
+            $activeTermsPolicy = TermsPolicy::where('is_active', true)->latest('id')->first();
+
+            $hasAcceptedTermsPolicy = false;
+
+            if ($activeTermsPolicy && Auth::check()) {
+                $hasAcceptedTermsPolicy = TermsPolicyAcceptance::where('user_id', Auth::id())
+                    ->where('terms_policy_id', $activeTermsPolicy->id)
+                    ->exists();
+            }
+
+
             return view('student.dashboard', compact(
                 'studentdetails',
                 'isreservation_exist',
@@ -153,7 +166,9 @@ class StudentController extends Controller
                 'cee_reservation_records',
                 'applicant',
                 'requirements',
-                'ceeActiveession'
+                'ceeActiveession',
+                'activeTermsPolicy',
+                'hasAcceptedTermsPolicy'
             ));
         }
     }

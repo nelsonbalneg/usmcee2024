@@ -1,14 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
+use App\Http\Middleware\CheckMaintenanceMode;
+use App\Http\Middleware\EnsureTermsAccepted;
+use App\Http\Middleware\ExcludeApiRoutesFromCsrf;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\UpdateLastSeen;
-use App\Http\Middleware\CheckMaintenanceMode;
-use Illuminate\Session\Middleware\StartSession;
-use App\Http\Middleware\ExcludeApiRoutesFromCsrf;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -38,6 +39,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'csrf.except.api' => ExcludeApiRoutesFromCsrf::class,
             'check.maintenance' => CheckMaintenanceMode::class,
             'update.last.seen' => UpdateLastSeen::class,
+            'terms.accepted' => EnsureTermsAccepted::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
