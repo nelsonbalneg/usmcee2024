@@ -248,6 +248,7 @@ class StudentApplicantProfileController extends Controller
             'is_applicant_exist',
             'result',
             'applicant',
+            'cee_active_session',
             'site_settings'
         ));
     }
@@ -629,6 +630,7 @@ class StudentApplicantProfileController extends Controller
             'result',
             'cee_profile',
             'applicant',
+            'cee_session',
             'is_applicant_exist'
         ));
     }
@@ -1001,7 +1003,8 @@ class StudentApplicantProfileController extends Controller
             'result',
             'cee_profile',
             'applicant',
-            'is_applicant_exist'
+            'is_applicant_exist',
+            'cee_session'
         ));
     }
 
@@ -1188,7 +1191,8 @@ class StudentApplicantProfileController extends Controller
             'result',
             'cee_profile',
             'applicant',
-            'is_applicant_exist'
+            'is_applicant_exist',
+            'cee_session'
         ));
     }
 
@@ -1290,7 +1294,8 @@ class StudentApplicantProfileController extends Controller
             'result',
             'cee_profile',
             'applicant',
-            'is_applicant_exist'
+            'is_applicant_exist',
+            'cee_session'
         ));
     }
 

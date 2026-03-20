@@ -41,7 +41,7 @@
 
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
-        @if ($app_no && $result->csa >= 25)
+        @if ($app_no && $result->csa >= $cee_session->min_csa)
             <div class="xl:col-span-12">
                 <form id="studentProfileForm" action="{{ route('student.applicant-profile.step3.save') }}" method="POST">
                     @csrf
@@ -252,8 +252,8 @@
                                 {{-- Vocational school --}}
                                 <div class="xl:col-span-12">
                                     <h6 class="mt-4 text-green-500 uppercase text-15">Vocational/Trade Course</h6>
-                                        <p class="text-custom-500">Enter N/A in the fields that are not applicable to you.
-                                        </p>
+                                    <p class="text-custom-500">Enter N/A in the fields that are not applicable to you.
+                                    </p>
                                 </div>
 
                                 </h6>

@@ -392,16 +392,33 @@
                                         @endif
 
                                         @if (is_null($requirements))
-                                            <span
-                                                class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                                Please submit the original copies of the required documents to the
-                                                <b class="text-purple-500">Admission and Records Office (ARO)</b> as soon
-                                                as
-                                                possible.
-                                                Submission may be done in person or via courier. If you have already
-                                                submitted your
-                                                documents, kindly disregard this message.
-                                            </span>
+                                            @if ($applicant->campus_id == 1)
+                                                <span
+                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                    Kindly submit the original copies of the required admission documents to
+                                                    the
+                                                    <b class="text-purple-500">Admission and Records Office (ARO),
+                                                        University of
+                                                        Southern Mindanao, Kabacan, Cotabato.</b>
+                                                    <br>
+                                                    If you have already submitted the required documents, please disregard
+                                                    this
+                                                    notice.
+                                                </span>
+                                            @elseif($applicant->campus_id == 3)
+                                                <span
+                                                    class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                    Kindly submit the original copies of the required admission documents to
+                                                    the
+                                                    <b class="text-purple-500">Admission and Records Office (ARO),
+                                                        University of
+                                                        Southern Mindanao – Kidapawan City Campus, Kidapawan City.</b>
+                                                    <br>
+                                                    If you have already submitted the required documents, please disregard
+                                                    this
+                                                    notice.
+                                                </span>
+                                            @endif
                                         @else
                                             @php
                                                 $labels = [

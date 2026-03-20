@@ -45,7 +45,7 @@
 
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
-        @if ($app_no && $result->csa >= 25)
+        @if ($app_no && $result->csa >= $cee_session->min_csa)
             <div class="xl:col-span-12">
                 <form id="studentProfileForm" action="{{ route('student.applicant-profile.step4.save') }}" method="POST">
                     @csrf

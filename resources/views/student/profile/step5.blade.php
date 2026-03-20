@@ -48,7 +48,7 @@
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
-        @if ($app_no && $result->csa >= 25)
+        @if ($app_no && $result->csa >= $cee_session->min_csa)
             {{-- <div class="xl:col-span-3">
                 <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                     <div class="card-body">

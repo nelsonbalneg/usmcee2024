@@ -44,7 +44,7 @@
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
         @if (
-            ($app_no && $result->csa >= 25 && $result->confirmation_batch == 1) ||
+            ($app_no && $result->csa >= $cee_active_session->min_csa && $result->confirmation_batch == 1) ||
                 (now()->between($start, $end) && $result->confirmation_batch == 2))
             <div class="xl:col-span-12">
                 <form id="studentProfileForm" action="{{ route('student.applicant-profile.step1.save') }}" method="POST">
@@ -711,7 +711,7 @@
                         </h6>
                         <ul class="ml-2 list-disc list-inside">
                             <li>
-                               Unable to proceed. 
+                                Unable to proceed.
                                 If you believe this is an error or require assistance, please contact the System
                                 Administrator through
                                 <b>Agapay</b> (<a href="https://agapay.usm.edu.ph/"
