@@ -198,7 +198,9 @@ class StudentApplicantProfileController extends Controller
         $studentdetails = User::where("id", $userId)->first();
 
         //check if there is a result
-        $result = Result::where('user_id', $userId)->where('status', 'posted')->first();
+        $result = Result::where('user_id', $userId)->where('status', 'posted')
+        ->where('cee_session_id', $cee_active_session->id)
+        ->first();
 
         // Read religions.json file
         $religions = [];

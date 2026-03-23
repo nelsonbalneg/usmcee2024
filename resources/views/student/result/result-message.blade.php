@@ -271,13 +271,12 @@
                                         <p class="text-slate-800">
 
                                             @if ($cee_profile && $cee_profile->policyId == null && $cee_profile->programName != null)
-                                                <strong class="mb-4 text-custom-500">
-                                                    We understand that you have selected
-                                                    {{ $cee_profile->programName }}
-                                                    {{ $cee_profile->majorDiscDesc }}. However, we regret to inform you
-                                                    that you did not qualify for the said program based on your ranking.
-                                                    Please choose another program from the available options offered to
-                                                    you.
+                                                Thank you for choosing {{ $cee_profile->programName }}
+                                                {{ $cee_profile->majorDiscDesc }}.
+                                                While we truly appreciate your interest, the available slots for this
+                                                program are limited and selection is based on ranking.
+                                                At this time, you were not able to secure a slot. You may still choose
+                                                another program from the available options.
                                                 </strong>
                                                 <br> <br>
                                             @endif
