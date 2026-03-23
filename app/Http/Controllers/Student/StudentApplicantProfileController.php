@@ -199,8 +199,8 @@ class StudentApplicantProfileController extends Controller
 
         //check if there is a result
         $result = Result::where('user_id', $userId)->where('status', 'posted')
-        ->where('cee_session_id', $cee_active_session->id)
-        ->first();
+            ->where('cee_session_id', $cee_active_session->id)
+            ->first();
 
         // Read religions.json file
         $religions = [];
@@ -1616,7 +1616,7 @@ class StudentApplicantProfileController extends Controller
             }
 
             $validated = $request->validate([
-                'nstp' => 'required|string|max:50',
+                'nstp' => 'required|int|max:50',
             ]);
 
             $studentProfile = StundentProfile::where('user_id', $userId)

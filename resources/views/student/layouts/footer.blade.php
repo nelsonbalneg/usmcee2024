@@ -47,8 +47,9 @@
                         Terms and Conditions
                     </a>
                     <span>|</span>
-                    <a href="/cookie-policy" class="hover:underline hover:text-slate-600 dark:hover:text-white">
-                        Cookies
+                    <a href="{{ route('student.faqs.index') }}"
+                        class="hover:underline hover:text-slate-600 dark:hover:text-white">
+                        FAQs
                     </a>
                 </div>
             </div>

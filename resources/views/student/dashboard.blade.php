@@ -201,9 +201,12 @@
 
                                 @if ($applicant->is_answered_nstp == 1)
                                     <br>
+                                    {{--   NSTP PREFERENCE: {{ $applicant->nstp == 1 ? 'CWTS' : 'ROTC' }} — --}}
                                     <span
                                         class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                        NSTP PREFERENCE: {{ $applicant->nstp == 1 ? 'CWTS' : 'ROTC' }}
+
+                                        Please note that enrollment for CWTS or ROTC will take place after the student
+                                        orientation.
                                     </span>
                                 @endif
 
@@ -319,24 +322,27 @@
                                 <div class="items-center">
                                     <ul class="ml-2 list-disc list-inside">
                                         <p>
-                                            <strong>The National Service Training Program (NSTP)</strong> is a Philippine
-                                            program aimed at enhancing civic consciousness, defense preparedness, and the
-                                            ethics
-                                            of service and patriotism among the youth. It is a requirement for students in
-                                            Philippine higher education and technical-vocational institutions.
-                                        </p>
-                                        <br>
-                                        <p>
-                                            As part of this update, we kindly ask all confirmed enrollees to select their
-                                            NSTP
-                                            preference below.
+                                            <strong>The National Service Training Program (NSTP)</strong> is a
+                                            government-mandated program in the Philippines designed to enhance civic
+                                            consciousness, promote defense preparedness, and instill the values of service
+                                            and patriotism among the youth. It is a required component for all students
+                                            enrolled in higher education institutions and technical-vocational programs.
                                         </p>
                                         <br>
 
-                                        <div class="mb-2 xl:col-span-6">
+                                        <p>
+                                            Please be advised that the enrollment for NSTP components—such as <strong>Civic
+                                                Welfare Training Service (CWTS)</strong> and <strong>Reserve Officers’
+                                                Training Corps (ROTC)</strong>—will be conducted <strong>after the official
+                                                NSTP Orientation</strong>. Students are encouraged to attend the orientation
+                                            to be guided on the selection and enrollment process.
+                                        </p>
+                                        <br>
+
+                                        {{-- <div class="mb-2 xl:col-span-6">
                                             <select name="nstp" id="nstpSelect"
                                                 class="w-full p-2 transition duration-200 ease-in-out border rounded-md border-custom-300 focus:ring-custom-500 focus:border-custom-500"
-                                                data-choices>
+                                                data-choices >
                                                 <option value="1" {{ $applicant->nstp == '1' ? 'selected' : '' }}>
                                                     Civic Welfare Training Service (CWTS)
                                                 </option>
@@ -344,7 +350,7 @@
                                                     Reserve Officers' Training Corps (ROTC)
                                                 </option>
                                             </select>
-                                        </div>
+                                        </div> --}}
 
                                         <button id="saveNstpPref"
                                             class="block w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
@@ -522,7 +528,7 @@
         updateClock(); // run once on load
     </script>
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('nstpModal');
             const overlay = modal.querySelector('.bg-gray-900');
@@ -572,6 +578,73 @@
                             });
 
                             // Optional: disable the Save button to prevent resubmission
+                            saveButton.disabled = true;
+
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Request failed:', error);
+                        alert('An unexpected error occurred.');
+                    });
+            });
+        });
+    </script> --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('nstpModal');
+            const overlay = modal.querySelector('.bg-gray-900');
+            const saveButton = document.getElementById('saveNstpPref');
+            const okButton = document.getElementById('okButton');
+
+            // Show modal
+            modal.classList.remove('hidden');
+
+            // Prevent closing when clicking outside
+            overlay.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+
+            // Save button click handler
+            saveButton.addEventListener('click', function() {
+
+                const selectedNSTP = 2; // ✅ default value (ROTC)
+
+                fetch('{{ route('student.applicant-profile.nstp-pref.save') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            nstp: selectedNSTP
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+
+                            Toastify({
+                                text: '<i class="fas fa-check-circle" style="margin-right: 8px;"></i>' +
+                                    (data.message || "Saved Successfully!"),
+                                duration: 3000,
+                                gravity: "center",
+                                position: "right",
+                                backgroundColor: "#4CAF50",
+                                className: "success",
+                                escapeMarkup: false
+                            }).showToast();
+
+                            // Show close button
+                            okButton.classList.remove('hidden');
+
+                            okButton.addEventListener('click', function() {
+                                modal.classList.add('hidden');
+                            });
+
+                            // Disable save to prevent duplicate
                             saveButton.disabled = true;
 
                         } else {

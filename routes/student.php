@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\StudentController;
 use App\Http\Controllers\Student\CeeSlipController;
 use App\Http\Controllers\Student\ChedApplicantProfileController;
+use App\Http\Controllers\Student\FaqController;
 use App\Http\Controllers\Student\ResultController;
 use App\Http\Controllers\Student\SchoolNamesController;
 use App\Http\Controllers\Student\StudentApplicantProfileController;
@@ -143,6 +144,10 @@ Route::middleware(['check.maintenance', 'terms.accepted'])->group(function () {
 
     Route::post('terms-policy/accept', [TermsPolicyController::class, 'accept'])->name('terms-policy.accept');
     Route::get('terms-policy/toc', [TermsPolicyController::class, 'showtoc'])->name('terms-policy.toc');
+
+    //Route for FAQs
+    Route::get('faqs', [FaqController::class, 'index'])->name('faqs.index');
+
 
     //  Route::get('dtr/generate-report', [StudentCORController::class, 'generateDtrReport'])->name('generate-dtr.report');
 
