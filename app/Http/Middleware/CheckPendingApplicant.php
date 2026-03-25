@@ -40,6 +40,7 @@ class CheckPendingApplicant
         if (!$studentProfile) {
             return response()->view('student.profile.incomplete-profile', [
                 'hasRequirements' => false,
+                'studentProfile' => $studentProfile,
             ]);
         }
 

@@ -19,9 +19,8 @@
                         Action Required
                     </h6>
 
-                    @if (
-                        ($studentProfile->applicant_profile_status == null || $studentProfile->applicant_profile_status == 0) &&
-                            $studentProfile->prereg_status == 'pending')
+                    {{-- @if (($studentProfile->applicant_profile_status == null || $studentProfile->applicant_profile_status == 0) && $studentProfile->prereg_status == 'pending') --}}
+                    @if ($studentProfile && !$studentProfile->applicant_profile_status && $studentProfile->prereg_status == 'pending')
 
                         <p class="mb-4 text-sm leading-relaxed text-slate-600">
                             It appears that your applicant profile is not yet complete.
