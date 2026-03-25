@@ -31,19 +31,19 @@ class CheckPendingApplicant
             ->where('preregistration_id', $ceeSession->id)
             ->first();
 
-        // ✅ Check requirements early
+        // Check requirements early
         $hasRequirements = Requirements::where('user_id', $userId)
             ->where('cee_session_id', $ceeSession->id)
             ->exists();
 
-        // ❌ No profile at all
+        // No profile at all
         if (!$studentProfile) {
             return response()->view('student.profile.incomplete-profile', [
                 'hasRequirements' => false,
             ]);
         }
 
-        // ❌ Incomplete profile
+        // Incomplete profile
         $hasIncompleteProfile =
             $studentProfile->prereg_status === 'pending' &&
             (is_null($studentProfile->applicant_profile_status) || $studentProfile->applicant_profile_status == 0);
@@ -55,7 +55,7 @@ class CheckPendingApplicant
             ]);
         }
 
-        // ❌ NEW: No requirements uploaded → BLOCK ACCESS
+        //NEW: No requirements uploaded → BLOCK ACCESS
         if (!$hasRequirements) {
             return response()->view('student.profile.incomplete-profile', [
                 'hasRequirements' => false,
@@ -64,7 +64,7 @@ class CheckPendingApplicant
             ]);
         }
 
-        // ✅ All good → allow access
+        // All good → allow access
         return $next($request);
     }
 }
