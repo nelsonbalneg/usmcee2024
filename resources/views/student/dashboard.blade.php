@@ -163,13 +163,16 @@
                             @if (!$applicant)
                                 ---
                             @elseif ($applicant->policyId == null && $applicant->programName != null)
-                                You did not qualify for
+                                Thank you for choosing
                                 <span class="text-custom-500">
                                     {{ !empty($applicant->programName) ? $applicant->programName : '' }}
                                     -
                                     {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
                                 </span>
-                                based on your ranking. <br><br>
+                                While we truly appreciate your interest, the available slots for this
+                                program are limited and selection is based on ranking.
+                                At this time, you were not able to secure a slot. You may still choose
+                                another program from the available options. <br><br>
                                 Tap or Click the <a class="text-green-500"
                                     href="{{ route('student.cee.result') }}">Result</a>
                                 Menu to select other program.
@@ -210,7 +213,54 @@
                                             Profile Registration</a>
                                     </p>
                                 @else
-                                    Profile Complete.
+                                    @if (is_null($requirements))
+                                        @if ($applicant->campus_id == 1)
+                                            <span
+                                                class="mt-2 mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                Kindly submit the original copies of the required admission documents to the
+                                                <b class="text-purple-500">Admission and Records Office (ARO), University
+                                                    of
+                                                    Southern Mindanao, Kabacan, Cotabato.</b>
+                                                <br>
+                                                If you have already submitted the required documents, please disregard this
+                                                notice.
+                                            </span>
+                                        @elseif($applicant->campus_id == 3)
+                                            <span
+                                                class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
+                                                Kindly submit the original copies of the required admission documents to the
+                                                <b class="text-purple-500">Admission and Records Office (ARO), University
+                                                    of
+                                                    Southern Mindanao – Kidapawan City Campus, Kidapawan City.</b>
+                                                <br>
+                                                If you have already submitted the required documents, please disregard this
+                                                notice.
+                                            </span>
+                                        @endif
+                                    @else
+                                        @php
+                                            $labels = [
+                                                'goodmoral' => 'Good Moral Certificate',
+                                                'card' => 'Report Card',
+                                                'psa' => 'PSA Birth Certificate',
+                                                'hdismissal' => 'Honorable Dismissal',
+                                                'certificatetransfer' => 'Certificate of Transfer',
+                                                'transcript' => 'Transcript of Records',
+                                            ];
+                                        @endphp
+
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            @foreach ($labels as $key => $label)
+                                                @if ($requirements->$key == 1)
+                                                    <span
+                                                        class="flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-white border-green-400 text-green-500 dark:bg-zink-700 dark:border-green-700">
+                                                        <i data-lucide="check" class="size-3 ltr:ml-1 rtl:mr-1"></i>
+                                                        {{ $label }}
+                                                    </span>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 @endif
 
 
@@ -224,59 +274,12 @@
                                         orientation.
                                     </span>
                                 @endif
-
-                                @if (is_null($requirements))
-                                    @if ($applicant->campus_id == 1)
-                                        <span
-                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                            Kindly submit the original copies of the required admission documents to the
-                                            <b class="text-purple-500">Admission and Records Office (ARO), University of
-                                                Southern Mindanao, Kabacan, Cotabato.</b>
-                                            <br>
-                                            If you have already submitted the required documents, please disregard this
-                                            notice.
-                                        </span>
-                                    @elseif($applicant->campus_id == 3)
-                                        <span
-                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                            Kindly submit the original copies of the required admission documents to the
-                                            <b class="text-purple-500">Admission and Records Office (ARO), University of
-                                                Southern Mindanao – Kidapawan City Campus, Kidapawan City.</b>
-                                            <br>
-                                            If you have already submitted the required documents, please disregard this
-                                            notice.
-                                        </span>
-                                    @endif
-                                @else
-                                    @php
-                                        $labels = [
-                                            'goodmoral' => 'Good Moral Certificate',
-                                            'card' => 'Report Card',
-                                            'psa' => 'PSA Birth Certificate',
-                                            'hdismissal' => 'Honorable Dismissal',
-                                            'certificatetransfer' => 'Certificate of Transfer',
-                                            'transcript' => 'Transcript of Records',
-                                        ];
-                                    @endphp
-
-                                    <div class="flex flex-wrap items-center gap-2">
-                                        @foreach ($labels as $key => $label)
-                                            @if ($requirements->$key == 1)
-                                                <span
-                                                    class="flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-white border-green-400 text-green-500 dark:bg-zink-700 dark:border-green-700">
-                                                    <i data-lucide="check" class="size-3 ltr:ml-1 rtl:mr-1"></i>
-                                                    {{ $label }}
-                                                </span>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                @endif
                             @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
                                 Please wait, ranking in progress.
                             @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
                                 Please confirm the program.
                             @elseif ($applicant->policyId == null && $applicant->programName != null)
-                                You did not qualify for the chosen program based on your ranking
+                                ---
                             @elseif ($applicant->status_id == 0)
                                 <span
                                     class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">

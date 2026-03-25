@@ -23,7 +23,7 @@ Route::get('terms-policy', [TermsPolicyController::class, 'show'])->name('terms-
 Route::post('terms-policy/accept', [TermsPolicyController::class, 'accept'])->name('terms-policy.accept');
 
 Route::middleware(['check.maintenance', 'terms.accepted'])->group(function () {
-    Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
+    Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard')->middleware('check.pending.applicant'); ;
 
     Route::put('/test-update/{id}', [StudentProfileController::class, 'update']);
     Route::put('cee/update-photo/{id}', [StudentProfileController::class, 'uploadPhoto'])->name('cee.update-photo');
@@ -52,7 +52,7 @@ Route::middleware(['check.maintenance', 'terms.accepted'])->group(function () {
 
     //route for CEE result
     Route::get('cee/result-slip/{app_no}', [ResultController::class, 'generateceeResultSlip'])->name('cee.result-slip');
-    Route::get('cee/result-message/{app_no}', [ResultController::class, 'viewResultMessageIndex'])->name('cee.result-message');
+    Route::get('cee/result-message/{app_no}', [ResultController::class, 'viewResultMessageIndex'])->name('cee.result-message')->middleware('check.pending.applicant'); ;
     Route::get('cee/result', [ResultController::class, 'index'])->name('cee.result');
 
     //route for checking duplicate records
@@ -68,7 +68,7 @@ Route::middleware(['check.maintenance', 'terms.accepted'])->group(function () {
     // Route::get('/programs/index', [ProgramController::class, 'index'])->name('programs.index');
 
     //routes for Preregitration
-    Route::get('/pre-registration/dasboard', [StudentPreregController::class, 'index'])->name('prereg.index');
+    Route::get('/pre-registration/dasboard', [StudentPreregController::class, 'index'])->name('prereg.index')->middleware('check.pending.applicant'); ;
 
     //route for Student Profile
     Route::post('pre-registration/student-profile/nstp-preference', [StudentApplicantProfileController::class, 'saveNSTPPreference'])->name('applicant-profile.nstp-pref.save');

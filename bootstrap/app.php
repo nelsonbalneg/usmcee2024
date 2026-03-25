@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CheckMaintenanceMode;
+use App\Http\Middleware\CheckPendingApplicant;
 use App\Http\Middleware\EnsureTermsAccepted;
 use App\Http\Middleware\ExcludeApiRoutesFromCsrf;
 use App\Http\Middleware\RoleMiddleware;
@@ -40,6 +41,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'check.maintenance' => CheckMaintenanceMode::class,
             'update.last.seen' => UpdateLastSeen::class,
             'terms.accepted' => EnsureTermsAccepted::class,
+            'check.pending.applicant' => CheckPendingApplicant::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
