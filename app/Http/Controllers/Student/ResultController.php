@@ -105,6 +105,12 @@ class ResultController extends Controller
         //get active cee session
         $ceeActiveession = CeeSession::where('status', 'active')->first();
 
+
+        $app_no = Reservation::where('user_id', Auth::user()->id)
+            ->where('status', 'confirmed')
+            ->where('cee_session_id', $ceeActiveession->id)
+            ->first();
+
         $cee_result = DB::table('reservations')
             ->join('results', 'reservations.app_no', '=', 'results.app_no')
             ->join('users', 'reservations.user_id', '=', 'users.id')
@@ -183,7 +189,7 @@ class ResultController extends Controller
         }
         $programDataBatch2 = null;
         $has_policy_id = null;
-        $cee_profile = StundentProfile::where('user_id', Auth::user()->id)->first();
+        $cee_profile = StundentProfile::where('user_id', Auth::user()->id)->where('app_no', $app_no->app_no)->first();
 
         if (!$cee_profile || $cee_profile->policyId == null) {
             $has_policy_id = 0;
