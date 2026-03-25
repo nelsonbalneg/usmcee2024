@@ -205,7 +205,7 @@
                                     <span
                                         class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
 
-                                        Please note that enrollment for CWTS or ROTC will take place after the student
+                                        Please note that enrollment for CWTS or ROTC will take place after the NSTP
                                         orientation.
                                     </span>
                                 @endif
@@ -354,7 +354,7 @@
 
                                         <button id="saveNstpPref"
                                             class="block w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                            Save
+                                            OK
                                         </button>
                                     </ul>
                                 </div>

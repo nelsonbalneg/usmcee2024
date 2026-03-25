@@ -33,9 +33,7 @@
         </ul>
     </div>
     @if ($result && $result->csa >= 25)
-        @if (
-            (now()->between($start_batch_1, $end_batch_1) && $result->confirmation_batch == 1) ||
-                (now()->between($start, $end) && $result->confirmation_batch == 2))
+        @if ($isPreregOpen)
             <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
                 <div class="xl:col-span-3">
@@ -497,7 +495,7 @@
                     <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.
                     </h6>
                     <ul class="ml-2 list-disc list-inside">
-                        <li>Preregistration has ended.</li>
+                        <li>{{ $preregMessage }}</li>
 
                     </ul>
                 </div>
@@ -509,10 +507,7 @@
             <div>
                 <h6 class="mb-1"> <span class="font-bold">Information!</span> USMCEE PREREGISTRATION UPDATE.</h6>
                 <ul class="ml-2 list-disc list-inside">
-                    <li>Please visit this page between <b> {{ Carbon::parse($start)->format('F j, Y g:i A') }} to
-                            {{ Carbon::parse($end)->format('F j, Y g:i A') }} </b> for the second batch of
-                        pre-registration.
-                    </li>
+                    <li>Please wait for the official preregistration schedule.</li>
                 </ul>
             </div>
         </div>
