@@ -367,6 +367,82 @@
                         </div>
                     </div>
 
+                    <div class="relative overflow-hidden card">
+                        <div class="card-body">
+                            <div class="absolute top-0 right-0 size-16">
+
+
+                                <div
+                                    class="absolute transform rotate-45 bg-green-500 text-center text-white font-medium py-1 -right-12 top-6 w-[170px]">
+                                   Done
+                                </div>
+
+
+                            </div>
+                            <h5 class="mb-2"><i data-lucide="history" class="inline-block mr-1 size-5 text-sky-500"></i>
+                                <span class="uppercase align-middle">Preregistration Status</span></h5>
+                            <p class="mb-4 text-slate-500 dark:text-zink-200">Run your company on your teams</p>
+
+                            
+
+                            <h1 class="mb-4 font-normal"><span
+                                    class="text-slate-500 dark:text-zink-200">$</span>39.99<small
+                                    class="text-15 text-slate-500 dark:text-zink-200">/Monthly</small></h1>
+                            <button type="button"
+                                class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">Purchase
+                                Now</button>
+                            <ul class="flex flex-col gap-3 mt-5">
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-check"
+                                        class="inline-block text-green-500 size-4 fill-green-100 dark:fill-green-500/20"></i>
+                                    <span><b>3</b> Projects</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-check"
+                                        class="inline-block text-green-500 size-4 fill-green-100 dark:fill-green-500/20"></i>
+                                    <span><b>299</b> Customers</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-check"
+                                        class="inline-block text-green-500 size-4 fill-green-100 dark:fill-green-500/20"></i>
+                                    <span>Scalable Bandwidth</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-check"
+                                        class="inline-block text-green-500 size-4 fill-green-100 dark:fill-green-500/20"></i>
+                                    <span><b>3</b> No Team Account</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-check"
+                                        class="inline-block text-green-500 size-4 fill-green-100 dark:fill-green-500/20"></i>
+                                    <span>In app messaging</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-check"
+                                        class="inline-block text-green-500 size-4 fill-green-100 dark:fill-green-500/20"></i>
+                                    <span><b>5</b> FTP Login</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-check"
+                                        class="inline-block text-green-500 size-4 fill-green-100 dark:fill-green-500/20"></i>
+                                    <span>Detailed Analytics</span>
+                                </li>
+                                <li class="flex items-center gap-2 line-through text-slate-500 dark:text-zink-200">
+                                    <i data-lucide="x" class="inline-block text-red-500 size-4 fill-green-100"></i>
+                                    <span>Custom Domain</span>
+                                </li>
+                                <li class="flex items-center gap-2 line-through text-slate-500 dark:text-zink-200">
+                                    <i data-lucide="x" class="inline-block text-red-500 size-4 fill-green-100"></i>
+                                    <span>Smart Workflow</span>
+                                </li>
+                                <li class="flex items-center gap-2 line-through text-slate-500 dark:text-zink-200">
+                                    <i data-lucide="x" class="inline-block text-red-500 size-4 fill-green-100"></i>
+                                    <span>IQ test</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!--end card-->
+
                     {{-- Prereg status --}}
                     <div class="card">
                         <div class="flex items-center gap-3 card-body">
@@ -375,11 +451,33 @@
                                 <i data-lucide="history"></i>
                             </div>
                             <div class="grow">
+
+                                @if (!$applicant)
+                                    ---
+                                @endif
+
+
                                 <h5 class="mb-1 text-16">
                                     @if (!$applicant)
                                         ---
                                     @elseif ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
                                         Program has been confirmed for enrollment.
+
+                                        @if ($applicant->applicant_profile_status == null || $applicant->applicant_profile_status == 0)
+                                            <p class="text-red-500">Please proceed to Profile Registration to complete your
+                                                Preregistration. By
+                                                clicking the this button below: <br>
+
+                                                <a type="button"
+                                                    href="{{ route('student.applicant-profile.step1.show') }}"
+                                                    class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                                    <i data-lucide="user-pen"
+                                                        class="inline-block size-4 dark:text-zink-200"></i>
+                                                    Profile Registration</a>
+                                            </p>
+                                        @else
+                                            fff
+                                        @endif
 
                                         @if ($applicant->is_answered_nstp == 1)
                                             <br>
