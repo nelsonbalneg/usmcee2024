@@ -91,7 +91,7 @@ class StudentController extends Controller
                 ->with('alert', 'Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025');
         } else {
 
-            $studentdetails = User::where('id', Auth::id())->first();
+
 
             // Active CEE Session is the main reference
             $ceeActiveession = CeeSession::where('status', 'active')->first();
@@ -99,10 +99,12 @@ class StudentController extends Controller
             $applicant = null;
             $cee_reservation_records = collect();
 
+            $studentdetails = User::where('id', Auth::id())->first();
+
             if ($ceeActiveession) {
                 // Student profile must match the preregistration_id of the active CEE session
                 $applicant = StundentProfile::where('user_id', Auth::id())
-                    ->where('applicant_profile_status', 1)
+                    // ->where('applicant_profile_status', 1)
                     ->where('preregistration_id', $ceeActiveession->id)
                     ->first();
 
@@ -146,6 +148,7 @@ class StudentController extends Controller
 
             $cee_result = Result::where('user_id', Auth::id())
                 ->where('status', 'posted')
+                ->where('cee_session_id', $ceeActiveession->id)
                 ->first();
 
             $activeTermsPolicy = TermsPolicy::where('is_active', true)->latest('id')->first();

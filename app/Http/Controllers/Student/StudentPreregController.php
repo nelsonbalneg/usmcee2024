@@ -74,11 +74,13 @@ class StudentPreregController extends Controller
         $userId = Auth::id();
 
         $cee_profile = User::find($userId);
+
         $cee_active_session = CeeSession::where('status', 'active')->first();
 
         $result = null;
         $applicant = null;
         $is_applicant_exist = null;
+        
         $requirements = Requirements::where('user_id', $userId)->first();
         $site_settings = DB::table('site_settings')->first();
         $is_tagged_complete_req = StudentRequirement::where('student_id', $userId)->count();

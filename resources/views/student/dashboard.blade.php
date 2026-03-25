@@ -199,6 +199,21 @@
                             @elseif ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
                                 Program has been confirmed for enrollment.
 
+                                @if ($applicant->applicant_profile_status == null || $applicant->applicant_profile_status == 0)
+                                    <p class="text-red-500">Please proceed to Profile Registration to complete your
+                                        Preregistration. By
+                                        clicking the this button below: <br>
+
+                                        <a type="button" href="{{ route('student.applicant-profile.step1.show') }}"
+                                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
+                                            <i data-lucide="user-pen" class="inline-block size-4 dark:text-zink-200"></i>
+                                            Profile Registration</a>
+                                    </p>
+                                @else
+                                    Profile Complete.
+                                @endif
+
+
                                 @if ($applicant->is_answered_nstp == 1)
                                     <br>
                                     {{--   NSTP PREFERENCE: {{ $applicant->nstp == 1 ? 'CWTS' : 'ROTC' }} — --}}

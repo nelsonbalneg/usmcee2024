@@ -105,8 +105,10 @@
                                                         <br>
                                                         <span
                                                             class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                            NSTP PREFERENCE:
-                                                            {{ $prereg_profile->nstp == 1 ? 'CWTS' : 'ROTC' }}
+
+                                                            Please note that enrollment for CWTS or ROTC will take place
+                                                            after the NSTP
+                                                            orientation.
                                                         </span>
                                                     @endif
                                                     <span
