@@ -366,7 +366,7 @@
                             </div>
                         </div>
                     </div>
-
+{{--
                     <div class="relative overflow-hidden card">
                         <div class="card-body">
                             <div class="absolute top-0 right-0 size-16">
@@ -383,7 +383,7 @@
                                 <span class="uppercase align-middle">Preregistration Status</span></h5>
                             <p class="mb-4 text-slate-500 dark:text-zink-200">Run your company on your teams</p>
 
-                            
+
 
                             <h1 class="mb-4 font-normal"><span
                                     class="text-slate-500 dark:text-zink-200">$</span>39.99<small
@@ -441,7 +441,8 @@
                                 </li>
                             </ul>
                         </div>
-                    </div><!--end card-->
+                    </div> --}}
+                    <!--end card-->
 
                     {{-- Prereg status --}}
                     <div class="card">
