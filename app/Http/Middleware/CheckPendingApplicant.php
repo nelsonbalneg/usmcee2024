@@ -31,41 +31,25 @@ class CheckPendingApplicant
             ->where('preregistration_id', $ceeSession->id)
             ->first();
 
-        // Check requirements early
-        $hasRequirements = Requirements::where('user_id', $userId)
+        $requirements = Requirements::where('user_id', $userId)
             ->where('cee_session_id', $ceeSession->id)
-            ->exists();
+            ->first();
 
-        // No profile at all
-        if (!$studentProfile) {
-            return response()->view('student.profile.incomplete-profile', [
-                'hasRequirements' => false,
-                'studentProfile' => $studentProfile,
-            ]);
+        // Only block if BOTH student profile and requirements already exist
+        if ($studentProfile && $requirements) {
+
+            $hasIncompleteProfile =
+                $studentProfile->prereg_status === 'pending' &&
+                (is_null($studentProfile->applicant_profile_status) || $studentProfile->applicant_profile_status == 0);
+
+            if ($hasIncompleteProfile) {
+                return response()->view('student.profile.incomplete-profile', [
+                    'hasRequirements' => true,
+                    'studentProfile' => $studentProfile,
+                ]);
+            }
         }
 
-        // Incomplete profile
-        $hasIncompleteProfile =
-            $studentProfile->prereg_status === 'pending' &&
-            (is_null($studentProfile->applicant_profile_status) || $studentProfile->applicant_profile_status == 0);
-
-        if ($hasIncompleteProfile) {
-            return response()->view('student.profile.incomplete-profile', [
-                'hasRequirements' => $hasRequirements,
-                'studentProfile' => $studentProfile,
-            ]);
-        }
-
-        //NEW: No requirements uploaded → BLOCK ACCESS
-        if (!$hasRequirements) {
-            return response()->view('student.profile.incomplete-profile', [
-                'hasRequirements' => false,
-                'studentProfile' => $studentProfile,
-                'message' => 'Please upload your required documents to proceed.',
-            ]);
-        }
-
-        // All good → allow access
         return $next($request);
     }
 }
