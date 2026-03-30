@@ -283,7 +283,7 @@
                                             You passed the <b class="text-green-500">USM College Entrance Examination
                                                 (USMCEE)</b> .<br>Admission to programs
                                             is subject to ranking and the availability of slots. Please select your
-                                            preferred program on <b>March 25, 2026</b>, from the list below.<br><br>
+                                            preferred program from the list below.<br><br>
 
                                             @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
                                                 <div class="overflow-x-auto">
@@ -400,8 +400,12 @@
                                                                         <br>
                                                                         <span
                                                                             class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                                            NSTP PREFERENCE:
-                                                                            {{ $cee_profile->nstp == 1 ? 'CWTS' : 'ROTC' }}
+                                                                            {{-- NSTP PREFERENCE:
+                                                                            {{ $cee_profile->nstp == 1 ? 'CWTS' : 'ROTC' }} --}}
+                                                                            Please note that enrollment for CWTS or ROTC
+                                                                            will take place
+                                                                            after the NSTP
+                                                                            orientation.
                                                                         </span>
                                                                     @endif
                                                                     {{-- check if requirements has been submittted --}}
@@ -515,7 +519,7 @@
                                     You passed the <b class="text-green-500">USM College Entrance Examination
                                         (USMCEE)</b> .<br>Admission to programs
                                     is subject to ranking and the availability of slots. Please select your
-                                    preferred program on <b>March 25, 2026</b>, from the list below.<br><br>
+                                    preferred program from the list below.<br><br>
                                     @if (isset($qualifiedCampuses['qualifiedCampuses']) && !empty($qualifiedCampuses['qualifiedCampuses']))
                                         <div class="overflow-x-auto">
                                             @foreach ($qualifiedCampuses['qualifiedCampuses'] as $campus)

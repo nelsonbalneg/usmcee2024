@@ -80,7 +80,7 @@
                                 </div>
                                 <p class="text-slate-500 dark:text-zink-200"><i data-lucide="info"
                                         class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
-                                    Please take time to complete your profile to be able to reserve a slot in USM-CEE 2025.
+                                    Please take time to complete your profile to be able to reserve a slot in USM-CEE 2026.
                                 </p>
                                 <p class="text-orange-500 text-slate-500 dark:text-zink-200"><i data-lucide="info"
                                         class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
@@ -100,7 +100,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h6 class="mb-5 text-15 text-blue-500">School Information</h6>
+                    <h6 class="mb-5 text-blue-500 text-15">School Information</h6>
                     {{-- <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details here easily. --}}
                     </p>
 
@@ -113,7 +113,7 @@
                         <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
 
                             @if (empty($studentdetails->lrn))
-                            <div class="xl:col-span-4 mb-2">
+                            <div class="mb-2 xl:col-span-4">
                                 <label for="lrn" class="inline-block mb-2 text-base font-medium">Upload School ID
                                     Picture
                                     <span class="text-red-500">*</span>
@@ -136,7 +136,7 @@
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="Enter your 12 digits LRN" value="{{ $studentdetails->lrn }}" readonly>
                                 @error('lrn')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div><!--end col-->
 
@@ -147,7 +147,7 @@
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     placeholder="Enter your SHS track" value="{{ $studentdetails->track }}">
                                 @error('track')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div><!--end col-->
 
@@ -180,7 +180,7 @@
 
 
                             <div class="xl:col-span-12">
-                                <h6 class="mb-1 text-15 text-blue-500">Address</h6>
+                                <h6 class="mb-1 text-blue-500 text-15">Address</h6>
                                 <p class="mb-4 text-slate-500 dark:text-zink-200">Update your photo and personal details
                                     here easily.</p>
                             </div>
@@ -241,7 +241,7 @@
                             </div><!--end col-->
 
                             @if (empty($studentdetails->lrn))
-                            <div class="xl:col-span-12 flex justify-end gap-2">
+                            <div class="flex justify-end gap-2 xl:col-span-12">
                                 <button type="button"
                                     class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10"><i
                                         data-lucide="x" class="inline-block size-4"></i> <span

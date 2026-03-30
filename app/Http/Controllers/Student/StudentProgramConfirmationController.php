@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use PhpParser\Node\Stmt\TryCatch;
-
 
 class StudentProgramConfirmationController extends Controller
 {
@@ -449,18 +447,18 @@ class StudentProgramConfirmationController extends Controller
                     'preregistration_id' => $cee_session->id,
 
                     'policyId' => $prog_policy_id,
-                   // 'campus_id' => $data['campusId'] ?? null,
-                  ///=  'prog_id' => $data['programId'] ?? null,
-                   // 'major_disc_id' => $data['majorDiscId'] ?? null,
-                   // 'collegeId' => $data['collegeId'] ?? null,
-                  //  'termId' => $data['termId'] ?? null,
-                  //  'programName' => $data['programName'] ?? null,
-                  //  'collegeName' => $data['collegeName'] ?? null,
-                  //  'majorDiscDesc' => $data['majorDiscDesc'] ?? null,
-                 //   'campusName' => $data['campusName'] ?? ($data['realCampus'] ?? null),
-                  //  'term' => $data['term'] ?? null,
-                  //  'programCode' => $data['programCode'] ?? null,
-                  //  'realCampusId' => $data['realCampusId'] ?? null,
+                    // 'campus_id' => $data['campusId'] ?? null,
+                    ///=  'prog_id' => $data['programId'] ?? null,
+                    // 'major_disc_id' => $data['majorDiscId'] ?? null,
+                    // 'collegeId' => $data['collegeId'] ?? null,
+                    //  'termId' => $data['termId'] ?? null,
+                    'programName' => $data['programName'] ?? null,
+                    'collegeName' => $data['collegeName'] ?? null,
+                    'majorDiscDesc' => $data['majorDiscDesc'] ?? null,
+                    'campusName' => $data['campusName'] ?? ($data['realCampus'] ?? null),
+                    //  'term' => $data['term'] ?? null,
+                    //  'programCode' => $data['programCode'] ?? null,
+                    // 'realCampusId' => $data['realCampusId'] ?? null,
 
                     'current_step' => 0,
                     'prereg_status' => 'for_ranking',

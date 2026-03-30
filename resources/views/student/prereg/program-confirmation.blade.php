@@ -75,8 +75,11 @@
                                             <br>
                                             <span
                                                 class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                                NSTP PREFERENCE:
-                                                {{ $cee_profile->nstp == 1 ? 'CWTS' : 'ROTC' }}
+                                                {{-- NSTP PREFERENCE:
+                                                {{ $cee_profile->nstp == 1 ? 'CWTS' : 'ROTC' }} --}}
+                                                Please note that enrollment for CWTS or ROTC will take place
+                                                after the NSTP
+                                                orientation.
                                             </span>
                                         @endif
 
@@ -293,7 +296,7 @@
                                                                         documents to the
                                                                         <b class="text-purple-500">Admission and Records
                                                                             Office (ARO)</b> as soon as possible.
-                                                                        Submission may be done in person or via courier. If
+                                                                        Submission may be done in person. If
                                                                         you have already submitted your documents, kindly
                                                                         disregard this message.
                                                                     </span>
