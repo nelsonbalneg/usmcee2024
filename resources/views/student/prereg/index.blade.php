@@ -14,24 +14,13 @@
 
 
 @section('contents')
-    <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
-        <div class="grow">
-            <h5 class="uppercase text-16">USMCEE 4.0 | Pre-registration Dashboard</h5>
-        </div>
-        <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
-            <li
-                class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                <a href="#!" class="text-slate-400 dark:text-zink-200">Home</a>
-            </li>
-            <li
-                class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                <a href="#!" class="text-slate-400 dark:text-zink-200">Pre-registration</a>
-            </li>
-            <li class="text-slate-700 dark:text-zink-100">
-                Dashboard
-            </li>
-        </ul>
-    </div>
+
+    <x-page-header title="USMCEE 4.0 | Pre-registration Dashboard" :breadcrumbs="[
+        ['label' => 'Home', 'url' => route('dashboard')],
+        ['label' => 'Pre-registration', 'url' => '#!'],
+        ['label' => 'Dashboard'],
+    ]" />
+
     @if ($result && $result->csa >= 25)
         @if ($isPreregOpen)
             <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
@@ -43,472 +32,733 @@
                         <i data-lucide="book" class="inline-block h-4 align-middle"></i>
                         Download the Preregistration Guide
                     </a>
-                    <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
-                        <div class="card-body">
-                            <h6 class="mb-4 text-15">MY PROFILE INFORMATION</h6>
 
-                            <div class="px-4 rounded-md py-7 bg-sky-50 dark:bg-zinc-600">
-                                <img src="{{ asset($cee_profile->photo) }}" alt="Student Photo"
-                                    class="block mx-auto border border-gray-300 rounded-full h-s">
-                            </div>
-                            <div class="mt-3">
-                                <h5 class="mb-0 text-blue-500 uppercase">{{ $cee_profile->lastname }},
-                                    {{ $cee_profile->firstname }}
-                                    {{ $cee_profile->middlename }} {{ $cee_profile->suffix }}</h5>
-                                <p class="text-slate-500 dark:text-zink-200">
-                                    <i data-lucide="mail" class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                    {{ $cee_profile->email }}
-                                </p>
-                                <p class="text-slate-500 dark:text-zink-200">
-                                    <i data-lucide="phone"
-                                        class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                    {{ $cee_profile->phone }}
-                                </p>
-                                <p class="text-slate-500 dark:text-zink-200">
-                                    <i data-lucide="calendar"
-                                        class="inline-block size-4 text-slate-500 dark:text-zink-200"></i>
-                                    {{ \Carbon\Carbon::parse($cee_profile->birthdate)->format('F j, Y') }}
-                                </p>
-                            </div>
-                        </div>
-                    </div><!--end card-->
-                </div><!--end col-->
+                    <div class="sticky top-[calc(theme('spacing.header')_*_1.3)]">
+                        <div
+                            class="relative overflow-hidden border shadow-sm card rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
 
-                <div class="xl:col-span-4">
-                    <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="mb-4 uppercase text-15">Enrollment Process for incoming Freshmen (1st
-                                    Semester,
-                                    A.Y.
-                                    2026-2027 )</h6>
-                                <div>
-                                    <div
-                                        class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
-                                        <div class="relative flex gap-2">
-                                            <div
-                                                class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                                @if (
-                                                    $applicant &&
-                                                        ($applicant->applicant_profile_status == 0 ||
-                                                            empty($applicant->applicant_profile_status) ||
-                                                            is_null($applicant->applicant_profile_status)))
-                                                    <i data-lucide="circle-dot" class="size-4"></i>
-                                                @else
-                                                    <i data-lucide="circle-check-big" class="size-4"></i>
-                                                @endif
-                                            </div>
-
-                                            <div>
-                                                <h6 class="mb-1">PROFILE REGISTRATION</h6>
-                                                <p class="mb-2 text-slate-500 dark:text-zink-200">Confirmation of
-                                                    Enrollment
-                                                    for
-                                                    qualified applicants. Encoding of personal information, including
-                                                    address,
-                                                    parent/guardian details, educational background, and other important
-                                                    information. <br><b>April 18, 2026</b></p>
-
-                                                <a type="button" href="{{ route('student.applicant-profile.step1.show') }}"
-                                                    class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                    <i data-lucide="user-pen"
-                                                        class="inline-block size-4 dark:text-zink-200"></i>
-                                                    Profile Registration</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
-                                        <div class="relative flex gap-2">
-
-                                            @if ($applicant && $applicant->applicant_profile_status == 1)
-                                                <div
-                                                    class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                                    @if (
-                                                        $requirements &&
-                                                            (($requirements->req_status == 0 || empty($requirements->req_status) || is_null($requirements->req_status)) &&
-                                                                ($requirements->additional_req_status == 0 ||
-                                                                    empty($requirements->additional_req_status) ||
-                                                                    is_null($requirements->additional_req_status))))
-                                                        <i data-lucide="file-axis-3d" class="size-4"></i>
-                                                    @else
-                                                        <i data-lucide="circle-check-big" class="size-4"></i>
-                                                    @endif
-
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-1">UPLOADING OF REQUIREMENTS</h6>
-
-                                                    <p class="mb-2 text-slate-500 dark:text-zink-200">Uploading of
-                                                        electronic
-                                                        copies
-                                                        of
-                                                        pertinent requirements such as e-signature, Form 138, and other
-                                                        necessary
-                                                        documents</p>
-                                                    <a type="button"
-                                                        href="{{ route('student.applicant-requirements.index') }}"
-                                                        class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                        <i data-lucide="upload"
-                                                            class="inline-block size-4 dark:text-zink-200"></i>
-                                                        Upload Requirements</a>
-                                                </div>
-                                            @else
-                                                <div
-                                                    class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                                    <i data-lucide="file-axis-3d" class="size-4"></i>
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-1">UPLOADING OF REQUIREMENTS</h6>
-
-                                                    <p class="mb-2 text-slate-500 dark:text-zink-200">Uploading of
-                                                        electronic
-                                                        copies
-                                                        of
-                                                        pertinent requirements such as e-signature, Form 138, and other
-                                                        necessary
-                                                        documents</p>
-                                                </div>
-                                            @endif
-
-
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
-                                        <div class="relative flex gap-2">
-                                            {{-- ||
-                                        empty($applicant->prereg_status) ||
-                                        is_null(value: $applicant->prereg_status) --}}
-                                            @if ($applicant && $applicant->applicant_profile_status == 1)
-                                                <div
-                                                    class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                                    @if (!empty($applicant->campus_id) && !is_null($applicant->prog_id))
-                                                        <i data-lucide="circle-check-big" class="size-4"></i>
-                                                    @else
-                                                        <i data-lucide="graduation-cap" class="size-4"></i>
-                                                    @endif
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-1">PRIORITY PROGRAM CONFIRMATION</h6>
-                                                    <p class="mb-2 text-slate-500 dark:text-zink-200">Confirmation of
-                                                        your
-                                                        program.</p>
-                                                    <a type="button"
-                                                        href="{{ route('student.program-confirmation.index') }}"
-                                                        class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                        <i data-lucide="graduation-cap"
-                                                            class="inline-block size-4 dark:text-zink-200"></i> Program
-                                                        Confirmation</a>
-                                                </div>
-                                            @else
-                                                <div
-                                                    class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                                    <i data-lucide="graduation-cap" class="size-4"></i>
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-1">PRIORITY PROGRAM CONFIRMATION</h6>
-                                                    <p class="mb-2 text-slate-500 dark:text-zink-200">Confirmation of
-                                                        your
-                                                        program.</p>
-                                                </div>
-                                            @endif
-
-
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
-                                        <div class="relative flex gap-2">
-
-                                            <div
-                                                class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                                @if ($applicant && ($applicant->status_id == 0 || $applicant->status_id == 1))
-                                                    <i data-lucide="circle-check-big" class="size-4"></i>
-                                                @else
-                                                    <i data-lucide="layers" class="size-4"></i>
-                                                @endif
-                                            </div>
-
-                                            <div>
-                                                <h6 class="mb-1">SUBMISSION OF ORIGINAL COPIES OF REQUIREMENTS</h6>
-                                                <p class=" text-slate-500 dark:text-zink-200">Submission of original
-                                                    copies
-                                                    of
-                                                    pertinent requirements to the <b class="text-custom-500"> Admission
-                                                        and
-                                                        Records
-                                                        Office (ARO) </b>.
-                                                    <b>April 20, 2026</b>
-                                                </p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="relative before:absolute ltr:before:border-l-2 rtl:before:border-r-2 ltr:before:left-3.5 rtl:before:right-3.5 before:top-1.5 before:-bottom-1.5 pb-4 dark:before:border-zink-500">
-                                        <div class="relative flex gap-2">
-                                            <div
-                                                class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                                @if (($applicant && $applicant->status_id == 0) || ($applicant && $applicant->status_id == 1))
-                                                    <i data-lucide="circle-check-big" class="size-4"></i>
-                                                @else
-                                                    <i data-lucide="loader" class="size-4"></i>
-                                                @endif
-
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-1">PROCESSING OF ENROLLMENT</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="relative">
-                                        <div class="relative flex gap-2">
-                                            <div
-                                                class="size-8 p-0.5 bg-white text-green-500 flex items-center justify-center border rounded-full shrink-0 border-slate-200 dark:border-zink-500 dark:bg-zink-700">
-                                                @if ($applicant && $applicant && $applicant->status_id == 1)
-                                                    <i data-lucide="download" class="size-4"></i>
-                                                @else
-                                                    <i data-lucide="loader" class="size-4"></i>
-                                                @endif
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-1">DOWNLOADING OF CERTIFICATE OF REGISTRATION</h6>
-                                                @if (($applicant && $applicant->prereg_status == 'enrolled') || ($applicant && $applicant->status_id == 1))
-                                                    <a type="button" {{-- href="{{ route('student.prereg.cor-pdf.view') }}" --}}
-                                                        href="{{ route('student.download.cor') }}"
-                                                        class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                        <i data-lucide="eye"
-                                                            class="inline-block size-4 dark:text-zink-200"></i> View
-                                                        Certificate of Registration</a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div><!--end card-->
-                    </div><!--end card-->
-                </div><!--end col-->
-
-
-                <div class="xl:col-span-4">
-                    {{-- Profile Status --}}
-                    <h5 class="mb-2 uppercase">Pre-registration Quick Information</h5>
-
-                    <div class="card">
-                        <div class="flex items-center gap-3 card-body">
-                            @if ($applicant && $applicant->applicant_profile_status == 1)
-                                <div
-                                    class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
-                                    <i data-lucide="check-circle"></i>
-                                </div>
-                                <div class="grow">
-                                    <h5 class="mb-1 text-16"><span>Published</span></h5>
-                                    <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
-                                </div>
-                            @elseif ($applicant)
-                                <div
-                                    class="flex items-center justify-center text-yellow-500 bg-yellow-100 rounded-md size-12 text-15 dark:bg-yellow-500/20 shrink-0">
-                                    <i data-lucide="square-pen"></i>
-                                </div>
-                                <div class="grow">
-                                    <h5 class="mb-1 text-16"><span>Draft</span></h5>
-                                    <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
-                                </div>
-                            @else
-                                <div
-                                    class="flex items-center justify-center rounded-md text-slate-500 bg-slate-100 size-12 text-15 dark:bg-slate-500/20 shrink-0">
-                                    <i data-lucide="minus"></i>
-                                </div>
-                                <div class="grow">
-                                    <h5 class="mb-1 text-16"><span>---</span></h5>
-                                    <p class="text-slate-500 dark:text-zink-200">Student Profile Status</p>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
-                    {{-- Program --}}
-                    <div class="card">
-                        <div class="flex items-center gap-3 card-body">
+                            {{-- Decorative Glow --}}
                             <div
-                                class="flex items-center justify-center text-green-500 bg-green-100 rounded-md size-12 text-15 dark:bg-green-500/20 shrink-0">
-                                <i data-lucide="graduation-cap"></i>
+                                class="absolute inset-0 bg-gradient-to-br from-sky-500/[0.08] via-blue-500/[0.03] to-transparent">
                             </div>
-                            <div class="grow">
-                                <h5 class="mb-1 text-16">
-                                    @if (!$applicant)
-                                        ---
-                                    @elseif ($applicant->policyId == null && $applicant->programName != null)
-                                        Thank you for choosing
-                                        <span class="text-custom-500">
-                                            {{ !empty($applicant->programName) ? $applicant->programName : '' }}
-                                            -
-                                            {{ !empty($applicant->majorDiscDesc) ? $applicant->majorDiscDesc : '' }}
-                                        </span>
-                                        While we truly appreciate your interest, the available slots for this
-                                        program are limited and selection is based on ranking.
-                                        At this time, you were not able to secure a slot. You may still choose
-                                        another program from the available options. <br><br>
-                                        Tap or Click the <a class="text-green-500"
-                                            href="{{ route('student.cee.result') }}">Result</a>
-                                        Menu to select other program.
-                                    @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
-                                        ---
-                                    @else
-                                        {{ !empty($applicant->programName) ? $applicant->programName : '---' }}
-                                        {{ !empty($applicant->majorDiscDesc) ? ' - ' . $applicant->majorDiscDesc : '' }}
-                                    @endif
-                                </h5>
-                                <p class="text-slate-500 dark:text-zink-200">Program Name</p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    {{-- Prereg status --}}
-                    <div class="card">
-                        <div class="flex items-center gap-3 card-body">
+                            <div class="absolute rounded-full -top-12 -right-12 size-36 bg-sky-400/10 blur-3xl"></div>
                             <div
-                                class="flex items-center justify-center text-purple-500 bg-purple-100 rounded-md size-12 text-15 dark:bg-purple-500/20 shrink-0">
-                                <i data-lucide="history"></i>
+                                class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent">
                             </div>
-                            <div class="grow">
 
+                            <div class="relative p-6">
+                                {{-- Header --}}
+                                <div class="mb-5">
+                                    <p class="mb-1 text-[11px] font-semibold tracking-[0.22em] uppercase text-sky-500">
+                                        Applicant Account
+                                    </p>
+                                    <h6 class="text-lg font-bold tracking-tight text-slate-800 dark:text-white">
+                                        My Profile
+                                    </h6>
+                                </div>
 
-                                <h5 class="mb-1 text-16">
-                                    @if (!$applicant)
-                                        ---
-                                    @elseif ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
-                                        Program has been confirmed for enrollment.
+                                {{-- Photo Section --}}
+                                <div
+                                    class="relative px-5 mb-5 overflow-hidden border py-7 rounded-2xl bg-gradient-to-br from-sky-50 via-white to-blue-50 border-sky-100 dark:border-zink-700 dark:from-zink-800 dark:via-zink-700 dark:to-zink-800">
+                                    <div
+                                        class="absolute rounded-full -top-8 -right-8 size-24 bg-sky-200/40 blur-2xl dark:bg-sky-500/10">
+                                    </div>
+                                    <div
+                                        class="absolute rounded-full -bottom-8 -left-8 size-24 bg-blue-200/40 blur-2xl dark:bg-blue-500/10">
+                                    </div>
 
-                                        @if ($applicant->applicant_profile_status == null || $applicant->applicant_profile_status == 0)
-                                            <p class="text-red-500">Please proceed to Profile Registration to complete your
-                                                Preregistration. By
-                                                clicking the this button below: <br>
+                                    <div class="relative flex justify-center">
+                                        <div class="relative">
+                                            <div
+                                                class="absolute inset-0 scale-110 rounded-full bg-gradient-to-br from-sky-400 to-blue-500 blur-md opacity-20">
+                                            </div>
+                                            <img src="{{ asset($cee_profile->photo) }}" alt="Student Photo"
+                                                class="relative object-cover mx-auto border-4 border-white rounded-full shadow-xl size-28 dark:border-zink-700">
 
-                                                <a type="button"
-                                                    href="{{ route('student.applicant-profile.step1.show') }}"
-                                                    class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                                    <i data-lucide="user-pen"
-                                                        class="inline-block size-4 dark:text-zink-200"></i>
-                                                    Profile Registration</a>
-                                            </p>
-                                        @else
-                                            @if (is_null($requirements))
-                                                @if ($applicant->campus_id == 1)
-                                                    <span
-                                                        class=" mt-2 mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                                        Kindly submit the original copies of the required admission
-                                                        documents to
-                                                        the
-                                                        <b class="text-purple-500">Admission and Records Office (ARO),
-                                                            University of
-                                                            Southern Mindanao, Kabacan, Cotabato.</b>
-                                                        <br>
-                                                        If you have already submitted the required documents, please
-                                                        disregard
-                                                        this
-                                                        notice.
-                                                    </span>
-                                                @elseif($applicant->campus_id == 3)
-                                                    <span
-                                                        class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-purple-100 border-transparent text-purple-500 dark:bg-purple-500/20 dark:border-transparent">
-                                                        Kindly submit the original copies of the required admission
-                                                        documents to
-                                                        the
-                                                        <b class="text-purple-500">Admission and Records Office (ARO),
-                                                            University of
-                                                            Southern Mindanao – Kidapawan City Campus, Kidapawan City.</b>
-                                                        <br>
-                                                        If you have already submitted the required documents, please
-                                                        disregard
-                                                        this
-                                                        notice.
-                                                    </span>
-                                                @endif
-                                            @else
-                                                @php
-                                                    $labels = [
-                                                        'goodmoral' => 'Good Moral Certificate',
-                                                        'card' => 'Report Card',
-                                                        'psa' => 'PSA Birth Certificate',
-                                                        'hdismissal' => 'Honorable Dismissal',
-                                                        'certificatetransfer' => 'Certificate of Transfer',
-                                                        'transcript' => 'Transcript of Records',
-                                                    ];
-                                                @endphp
-
-                                                <div class="flex flex-wrap items-center gap-2">
-                                                    @foreach ($labels as $key => $label)
-                                                        @if ($requirements->$key == 1)
-                                                            <span
-                                                                class="flex items-center px-2.5 py-0.5 text-xs font-medium rounded border bg-white border-green-400 text-green-500 dark:bg-zink-700 dark:border-green-700">
-                                                                <i data-lucide="check"
-                                                                    class="size-3 ltr:ml-1 rtl:mr-1"></i>
-                                                                {{ $label }}
-                                                            </span>
-                                                        @endif
-                                                    @endforeach
-                                                </div>
-                                            @endif
-                                        @endif
-
-                                        @if ($applicant->is_answered_nstp == 1)
-                                            <br>
                                             <span
-                                                class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-
-                                                Please note that enrollment for CWTS or ROTC will take place after the NSTP
-                                                orientation.
+                                                class="absolute flex items-center justify-center w-8 h-8 text-white border-2 border-white rounded-full shadow-md bottom-1 right-1 bg-gradient-to-br from-green-500 to-emerald-600 dark:border-zink-700">
+                                                <i data-lucide="check" class="size-4"></i>
                                             </span>
-                                        @endif
-                                    @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
-                                        Please wait, ranking in progress.
-                                    @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
-                                        Please confirm the program.
-                                    @elseif ($applicant->policyId == null && $applicant->programName != null)
-                                        You did not qualify for the chosen program based on your ranking
-                                    @elseif ($applicant->status_id == 0)
-                                        <span
-                                            class="px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-orange-100 border-transparent text-orange-500 dark:bg-orange-500/20 dark:border-transparent">
-                                            Enrollment in progress
-                                        </span>
-                                    @elseif ($applicant->prereg_status == 'enrolled' || $applicant->status_id == 1)
-                                        <span
-                                            class="mb-2 px-2.5 py-0.5 inline-block text-[11px] font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">
-                                            You are officially enrolled!
-                                        </span>
-                                        <span
-                                            class="inline-block px-2.5 py-0.5 text-[11px] font-medium rounded bg-purple-100 text-purple-600 dark:bg-purple-500/20">
-                                            Tap the <b class="text-purple-600">Pre-registration Menu</b>, then tap the
-                                            <b class="text-purple-600">Download COR button</b> to get your Certificate of
-                                            Registration.
-                                        </span>
-                                    @else
-                                        ---
-                                    @endif
-                                </h5>
-                                <p class="text-slate-500 dark:text-zink-200">Status</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Name + Basic Info --}}
+                                <div class="mb-5 text-center">
+                                    <h5 class="text-lg font-bold tracking-tight uppercase text-sky-600 dark:text-sky-400">
+                                        {{ $cee_profile->lastname }}, {{ $cee_profile->firstname }}
+                                        {{ $cee_profile->middlename }} {{ $cee_profile->suffix }}
+                                    </h5>
+                                    <p class="mt-1 text-sm text-slate-500 dark:text-zink-300">
+                                        Applicant Information Summary
+                                    </p>
+                                </div>
+
+                                {{-- Contact / Personal Info --}}
+                                <div class="space-y-3">
+                                    <div
+                                        class="flex items-center gap-3 p-3 transition-all duration-200 border rounded-xl bg-slate-50/80 border-slate-200/70 hover:border-sky-200 hover:bg-sky-50/70 dark:bg-zink-700/40 dark:border-zink-600">
+                                        <div
+                                            class="flex items-center justify-center rounded-xl size-10 bg-sky-100 text-sky-600 dark:bg-sky-500/20 dark:text-sky-300 shrink-0">
+                                            <i data-lucide="mail" class="size-4"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <p
+                                                class="text-xs font-semibold tracking-wide uppercase text-slate-400 dark:text-zink-400">
+                                                Email Address
+                                            </p>
+                                            <p class="text-sm font-medium break-all text-slate-700 dark:text-zink-100">
+                                                {{ $cee_profile->email ?? '---' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="flex items-center gap-3 p-3 transition-all duration-200 border rounded-xl bg-slate-50/80 border-slate-200/70 hover:border-sky-200 hover:bg-sky-50/70 dark:bg-zink-700/40 dark:border-zink-600">
+                                        <div
+                                            class="flex items-center justify-center text-green-600 bg-green-100 rounded-xl size-10 dark:bg-green-500/20 dark:text-green-300 shrink-0">
+                                            <i data-lucide="phone" class="size-4"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <p
+                                                class="text-xs font-semibold tracking-wide uppercase text-slate-400 dark:text-zink-400">
+                                                Contact Number
+                                            </p>
+                                            <p class="text-sm font-medium text-slate-700 dark:text-zink-100">
+                                                {{ $cee_profile->phone ?? '---' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="flex items-center gap-3 p-3 transition-all duration-200 border rounded-xl bg-slate-50/80 border-slate-200/70 hover:border-sky-200 hover:bg-sky-50/70 dark:bg-zink-700/40 dark:border-zink-600">
+                                        <div
+                                            class="flex items-center justify-center rounded-xl size-10 bg-violet-100 text-violet-600 dark:bg-violet-500/20 dark:text-violet-300 shrink-0">
+                                            <i data-lucide="calendar" class="size-4"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <p
+                                                class="text-xs font-semibold tracking-wide uppercase text-slate-400 dark:text-zink-400">
+                                                Birthdate
+                                            </p>
+                                            <p class="text-sm font-medium text-slate-700 dark:text-zink-100">
+                                                {{ !empty($cee_profile->birthdate) ? \Carbon\Carbon::parse($cee_profile->birthdate)->format('F j, Y') : '---' }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div><!--end col-->
 
-                    {{-- ID Number --}}
-                    <div class="card">
-                        <div class="flex items-center gap-3 card-body">
+                <div class="xl:col-span-4">
+                    <div class="sticky top-[calc(theme('spacing.header')_*_1.3)]">
+                        <div
+                            class="relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+
+                            {{-- Decorative layers --}}
                             <div
-                                class="flex items-center justify-center rounded-md size-12 text-sky-500 bg-sky-100 text-15 dark:bg-sky-500/20 shrink-0">
-                                <i data-lucide="id-card"></i>
+                                class="absolute inset-0 bg-gradient-to-br from-emerald-500/[0.05] via-sky-500/[0.03] to-transparent">
                             </div>
-                            <div class="grow">
-                                <h5 class="mb-1 text-16">{{ $applicant->student_no ?? '---' }}</h5>
-                                <p class="text-slate-500 dark:text-zink-200">Student ID Number</p>
+                            <div class="absolute rounded-full -top-10 -right-10 size-32 bg-emerald-400/10 blur-3xl"></div>
+                            <div
+                                class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent">
+                            </div>
+
+                            <div class="relative p-6">
+                                {{-- Header --}}
+                                <div class="mb-6">
+                                    <p class="mb-1 text-[11px] font-semibold tracking-[0.22em] uppercase text-emerald-500">
+                                        Enrollment Guide
+                                    </p>
+                                    <h6 class="text-lg font-bold tracking-tight text-slate-800 dark:text-white">
+                                        Enrollment Process for Incoming Freshmen
+                                    </h6>
+                                    <p class="mt-1 text-sm text-slate-500 dark:text-zink-300">
+                                        1st Semester, A.Y. 2026–2027
+                                    </p>
+                                </div>
+
+                                {{-- Timeline --}}
+                                <div class="space-y-5">
+
+                                    {{-- Step 1 --}}
+                                    <div class="relative pl-16">
+                                        <div
+                                            class="absolute left-[1.05rem] top-12 bottom-[-1.25rem] w-px bg-gradient-to-b from-emerald-200 via-slate-200 to-slate-100 dark:from-emerald-500/30 dark:via-zink-600 dark:to-zink-700">
+                                        </div>
+
+                                        <div
+                                            class="absolute top-0 left-0 flex items-center justify-center bg-white border shadow-sm size-9 rounded-2xl border-slate-200 text-emerald-500 dark:border-zink-600 dark:bg-zink-700">
+                                            @if (
+                                                $applicant &&
+                                                    ($applicant->applicant_profile_status == 0 ||
+                                                        empty($applicant->applicant_profile_status) ||
+                                                        is_null($applicant->applicant_profile_status)))
+                                                <i data-lucide="circle-dot" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="circle-check-big" class="size-4"></i>
+                                            @endif
+                                        </div>
+
+                                        <div
+                                            class="p-4 border rounded-2xl bg-slate-50/80 border-slate-200/70 dark:bg-zink-700/30 dark:border-zink-600">
+                                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                                <h6 class="font-bold tracking-tight text-slate-800 dark:text-white">
+                                                    Profile Registration
+                                                </h6>
+                                                <span
+                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-600">
+                                                    Step 1
+                                                </span>
+                                            </div>
+
+                                            <p class="mb-4 text-sm text-slate-500 dark:text-zink-300">
+                                                Confirmation of enrollment for qualified applicants. Encoding of personal
+                                                information,
+                                                including address, parent/guardian details, educational background, and
+                                                other important
+                                                information.
+                                            </p>
+
+                                            <a href="{{ route('student.applicant-profile.step1.show') }}"
+                                                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-700">
+                                                <i data-lucide="user-pen" class="size-4"></i>
+                                                Profile Registration
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    {{-- Step 2 --}}
+                                    <div class="relative pl-16">
+                                        <div
+                                            class="absolute left-[1.05rem] top-12 bottom-[-1.25rem] w-px bg-gradient-to-b from-slate-200 via-slate-200 to-slate-100 dark:from-zink-600 dark:via-zink-600 dark:to-zink-700">
+                                        </div>
+
+                                        <div
+                                            class="absolute top-0 left-0 flex items-center justify-center bg-white border shadow-sm size-9 rounded-2xl border-slate-200 text-emerald-500 dark:border-zink-600 dark:bg-zink-700">
+                                            @if ($applicant && $applicant->applicant_profile_status == 1)
+                                                @if (
+                                                    $requirements &&
+                                                        (($requirements->req_status == 0 || empty($requirements->req_status) || is_null($requirements->req_status)) &&
+                                                            ($requirements->additional_req_status == 0 ||
+                                                                empty($requirements->additional_req_status) ||
+                                                                is_null($requirements->additional_req_status))))
+                                                    <i data-lucide="file-axis-3d" class="size-4"></i>
+                                                @else
+                                                    <i data-lucide="circle-check-big" class="size-4"></i>
+                                                @endif
+                                            @else
+                                                <i data-lucide="file-axis-3d" class="size-4"></i>
+                                            @endif
+                                        </div>
+
+                                        <div
+                                            class="p-4 border rounded-2xl bg-slate-50/80 border-slate-200/70 dark:bg-zink-700/30 dark:border-zink-600">
+                                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                                <h6 class="font-bold tracking-tight text-slate-800 dark:text-white">
+                                                    Uploading of Requirements
+                                                </h6>
+                                                <span
+                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-700">
+                                                    Step 2
+                                                </span>
+                                            </div>
+
+                                            <p class="mb-4 text-sm text-slate-500 dark:text-zink-300">
+                                                Upload electronic copies of pertinent requirements such as e-signature, Form
+                                                138, and
+                                                other necessary documents.
+                                            </p>
+
+                                            @if ($applicant && $applicant->applicant_profile_status == 1)
+                                                <a href="{{ route('student.applicant-requirements.index') }}"
+                                                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-700">
+                                                    <i data-lucide="upload" class="size-4"></i>
+                                                    Upload Requirements
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    {{-- Step 3 --}}
+                                    <div class="relative pl-16">
+                                        <div
+                                            class="absolute left-[1.05rem] top-12 bottom-[-1.25rem] w-px bg-gradient-to-b from-slate-200 via-slate-200 to-slate-100 dark:from-zink-600 dark:via-zink-600 dark:to-zink-700">
+                                        </div>
+
+                                        <div
+                                            class="absolute top-0 left-0 flex items-center justify-center bg-white border shadow-sm size-9 rounded-2xl border-slate-200 text-emerald-500 dark:border-zink-600 dark:bg-zink-700">
+                                            @if ($applicant && $applicant->applicant_profile_status == 1)
+                                                @if (!empty($applicant->campus_id) && !is_null($applicant->prog_id))
+                                                    <i data-lucide="circle-check-big" class="size-4"></i>
+                                                @else
+                                                    <i data-lucide="graduation-cap" class="size-4"></i>
+                                                @endif
+                                            @else
+                                                <i data-lucide="graduation-cap" class="size-4"></i>
+                                            @endif
+                                        </div>
+
+                                        <div
+                                            class="p-4 border rounded-2xl bg-slate-50/80 border-slate-200/70 dark:bg-zink-700/30 dark:border-zink-600">
+                                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                                <h6 class="font-bold tracking-tight text-slate-800 dark:text-white">
+                                                    Priority Program Confirmation
+                                                </h6>
+                                                <span
+                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-700">
+                                                    Step 3
+                                                </span>
+                                            </div>
+
+                                            <p class="mb-4 text-sm leading-7 text-slate-500 dark:text-zink-300">
+                                                Confirm your priority program.
+                                            </p>
+
+                                            @if ($applicant && $applicant->applicant_profile_status == 1)
+                                                <a href="{{ route('student.program-confirmation.index') }}"
+                                                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-700">
+                                                    <i data-lucide="graduation-cap" class="size-4"></i>
+                                                    Program Confirmation
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    {{-- Step 4 --}}
+                                    <div class="relative pl-16">
+                                        <div
+                                            class="absolute left-[1.05rem] top-12 bottom-[-1.25rem] w-px bg-gradient-to-b from-slate-200 via-slate-200 to-slate-100 dark:from-zink-600 dark:via-zink-600 dark:to-zink-700">
+                                        </div>
+
+                                        <div
+                                            class="absolute top-0 left-0 flex items-center justify-center bg-white border shadow-sm size-9 rounded-2xl border-slate-200 text-emerald-500 dark:border-zink-600 dark:bg-zink-700">
+                                            @if ($applicant && ($applicant->status_id == 0 || $applicant->status_id == 1))
+                                                <i data-lucide="circle-check-big" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="layers" class="size-4"></i>
+                                            @endif
+                                        </div>
+
+                                        <div
+                                            class="p-4 border rounded-2xl bg-slate-50/80 border-slate-200/70 dark:bg-zink-700/30 dark:border-zink-600">
+                                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                                <h6 class="font-bold tracking-tight text-slate-800 dark:text-white">
+                                                    Submission of Original Copies of Requirements
+                                                </h6>
+                                                <span
+                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-700">
+                                                    April 20, 2026
+                                                </span>
+                                            </div>
+
+                                            <p class="text-sm text-slate-500 dark:text-zink-300">
+                                                Submit the original copies of pertinent requirements to the
+                                                <b class="text-custom-500">Admission and Records Office (ARO)</b>.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {{-- Step 5 --}}
+                                    <div class="relative pl-16">
+                                        <div
+                                            class="absolute left-[1.05rem] top-12 bottom-[-1.25rem] w-px bg-gradient-to-b from-slate-200 via-slate-200 to-slate-100 dark:from-zink-600 dark:via-zink-600 dark:to-zink-700">
+                                        </div>
+
+                                        <div
+                                            class="absolute top-0 left-0 flex items-center justify-center bg-white border shadow-sm size-9 rounded-2xl border-slate-200 text-emerald-500 dark:border-zink-600 dark:bg-zink-700">
+                                            @if (($applicant && $applicant->status_id == 0) || ($applicant && $applicant->status_id == 1))
+                                                <i data-lucide="circle-check-big" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="loader" class="size-4"></i>
+                                            @endif
+                                        </div>
+
+                                        <div
+                                            class="p-4 border rounded-2xl bg-slate-50/80 border-slate-200/70 dark:bg-zink-700/30 dark:border-zink-600">
+                                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                                <h6 class="font-bold tracking-tight text-slate-800 dark:text-white">
+                                                    Processing of Enrollment
+                                                </h6>
+                                                <span
+                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
+                                                    Processing
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Step 6 --}}
+                                    <div class="relative pl-16">
+                                        <div
+                                            class="absolute top-0 left-0 flex items-center justify-center bg-white border shadow-sm size-9 rounded-2xl border-slate-200 text-emerald-500 dark:border-zink-600 dark:bg-zink-700">
+                                            @if ($applicant && $applicant->status_id == 1)
+                                                <i data-lucide="download" class="size-4"></i>
+                                            @else
+                                                <i data-lucide="loader" class="size-4"></i>
+                                            @endif
+                                        </div>
+
+                                        <div
+                                            class="p-4 border rounded-2xl bg-slate-50/80 border-slate-200/70 dark:bg-zink-700/30 dark:border-zink-600">
+                                            <div class="flex flex-wrap items-center gap-2 mb-2">
+                                                <h6 class="font-bold tracking-tight text-slate-800 dark:text-white">
+                                                    Downloading of Certificate of Registration
+                                                </h6>
+                                                <span
+                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-700">
+                                                    Final Step
+                                                </span>
+                                            </div>
+
+                                            @if (($applicant && $applicant->prereg_status == 'enrolled') || ($applicant && $applicant->status_id == 1))
+                                                <a href="{{ route('student.download.cor') }}"
+                                                    class="inline-flex items-center gap-2 px-4 py-2 mt-2 text-sm font-semibold text-white transition-all duration-200 shadow-lg rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:-translate-y-0.5 hover:shadow-green-500/25">
+                                                    <i data-lucide="eye" class="size-4"></i>
+                                                    View Certificate of Registration
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end col-->
+
+
+                <div class="xl:col-span-4">
+                    <div class="sticky space-y-4 top-4">
+                        {{-- Section Header --}}
+                        <div class="px-1">
+                            <p class="mb-1 text-[11px] font-semibold tracking-[0.22em] uppercase text-custom-500">
+                                Applicant Overview
+                            </p>
+                            <h5 class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">
+                                Pre-registration Quick Information
+                            </h5>
+                            <p class="mt-1 text-sm text-slate-500 dark:text-slate-300">
+                                View your current profile, program, registration, and student ID details.
+                            </p>
+                        </div>
+
+                        {{-- Profile Status --}}
+                        <div
+                            class="relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-green-500/[0.06] via-emerald-500/[0.03] to-transparent">
+                            </div>
+                            <div class="absolute rounded-full -top-10 -right-10 size-28 bg-green-400/10 blur-3xl"></div>
+
+                            <div class="relative p-5">
+                                <div class="flex items-start gap-4">
+                                    @if ($applicant && $applicant->applicant_profile_status == 1)
+                                        <div
+                                            class="flex items-center justify-center text-white shadow-lg shrink-0 size-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 shadow-green-500/20">
+                                            <i data-lucide="badge-check" class="size-6"></i>
+                                        </div>
+                                        <div class="min-w-0 grow">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <h5 class="text-base font-bold text-slate-800 dark:text-white">Published
+                                                </h5>
+                                                <span
+                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-700">
+                                                    Completed
+                                                </span>
+                                            </div>
+                                            <p class="text-sm text-slate-500 dark:text-zink-300">Student Profile Status</p>
+                                        </div>
+                                    @elseif ($applicant)
+                                        <div
+                                            class="flex items-center justify-center text-white shadow-lg shrink-0 size-14 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-500 shadow-amber-500/20">
+                                            <i data-lucide="square-pen" class="size-6"></i>
+                                        </div>
+                                        <div class="min-w-0 grow">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <h5 class="text-base font-bold text-slate-800 dark:text-white">Draft</h5>
+                                                <span
+                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-300">
+                                                    In Progress
+                                                </span>
+                                            </div>
+                                            <p class="text-sm text-slate-500 dark:text-zink-300">Student Profile Status</p>
+                                        </div>
+                                    @else
+                                        <div
+                                            class="flex items-center justify-center shadow-sm shrink-0 size-14 rounded-2xl bg-slate-100 text-slate-500 dark:bg-zink-700 dark:text-zink-300">
+                                            <i data-lucide="minus" class="size-6"></i>
+                                        </div>
+                                        <div class="min-w-0 grow">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <h5 class="text-base font-bold text-slate-800 dark:text-white">No Record
+                                                </h5>
+                                                <span
+                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-slate-100 text-slate-600 dark:bg-zink-700 dark:text-zink-300">
+                                                    Empty
+                                                </span>
+                                            </div>
+                                            <p class="text-sm text-slate-500 dark:text-zink-300">Student Profile Status</p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Program --}}
+                        <div
+                            class="relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-violet-500/[0.05] via-fuchsia-500/[0.03] to-transparent">
+                            </div>
+                            <div class="absolute rounded-full -top-10 -right-10 size-28 bg-violet-400/10 blur-3xl"></div>
+
+                            <div class="relative p-5">
+                                <div class="flex items-start gap-4">
+                                    <div
+                                        class="flex items-center justify-center text-white shadow-lg shrink-0 size-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-violet-500/20">
+                                        <i data-lucide="graduation-cap" class="size-6"></i>
+                                    </div>
+
+                                    <div class="min-w-0 grow">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h5 class="text-base font-bold text-slate-800 dark:text-white">Program</h5>
+                                            <span
+                                                class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-700">
+                                                Academic
+                                            </span>
+                                        </div>
+
+                                        <div class="text-sm text-slate-600 dark:text-zink-300">
+                                            @if (!$applicant)
+                                                <span class="text-slate-400">---</span>
+                                            @elseif ($applicant->policyId == null && $applicant->programName != null)
+                                                <div class="space-y-3">
+                                                    <div class="font-medium text-slate-700 dark:text-zink-200">
+                                                        Thank you for choosing
+                                                        <span class="font-semibold text-custom-500">
+                                                            {{ !empty($applicant->programName) ? $applicant->programName : '' }}
+                                                            {{ !empty($applicant->majorDiscDesc) ? ' - ' . $applicant->majorDiscDesc : '' }}
+                                                        </span>.
+                                                    </div>
+
+                                                    <div
+                                                        class="p-3 border rounded-xl bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-700">
+                                                        While we truly appreciate your interest, the available slots for
+                                                        this
+                                                        program are
+                                                        limited and selection is based on ranking. At this time, you were
+                                                        not able
+                                                        to secure a
+                                                        slot. You may still choose another program from the available
+                                                        options.
+                                                    </div>
+
+                                                    <a href="{{ route('student.cee.result') }}"
+                                                        class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-green-700 transition-all duration-200 shadow-lg rounded-xl bg-gradient-to-r from-green-700 to-emerald-700 hover:shadow-green-500/25 hover:-translate-y-0.5">
+                                                        <i data-lucide="arrow-right-circle" class="size-4"></i>
+                                                        Go to Result Menu
+                                                    </a>
+                                                </div>
+                                            @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                                <span class="text-slate-400">---</span>
+                                            @else
+                                                <div class="font-semibold text-slate-800 dark:text-white">
+                                                    {{ !empty($applicant->programName) ? $applicant->programName : '---' }}
+                                                    {{ !empty($applicant->majorDiscDesc) ? ' - ' . $applicant->majorDiscDesc : '' }}
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <p class="mt-2 text-sm text-slate-500 dark:text-zink-300">Program Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Registration Status --}}
+                        <div
+                            class="relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-sky-500/[0.06] via-cyan-500/[0.03] to-transparent">
+                            </div>
+                            <div class="absolute rounded-full -top-10 -right-10 size-28 bg-sky-400/10 blur-3xl"></div>
+
+                            <div class="relative p-5">
+                                <div class="flex items-start gap-4">
+                                    <div
+                                        class="flex items-center justify-center text-white shadow-lg shrink-0 size-14 rounded-2xl bg-gradient-to-br from-sky-500 to-cyan-600 shadow-sky-500/20">
+                                        <i data-lucide="history" class="size-6"></i>
+                                    </div>
+
+                                    <div class="min-w-0 grow">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h5 class="text-base font-bold text-slate-800 dark:text-white">Registration
+                                                Status</h5>
+                                            <span
+                                                class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-700">
+                                                Live Status
+                                            </span>
+                                        </div>
+
+                                        <div class="space-y-3 text-sm text-slate-600 dark:text-zink-300">
+                                            @if (!$applicant)
+                                                <span class="text-slate-400">---</span>
+                                            @elseif ($applicant->prereg_status == 'pending' && $applicant->status_id == null)
+                                                <div class="font-medium text-slate-700 dark:text-zink-200">
+                                                    Program has been confirmed for enrollment.
+                                                </div>
+
+                                                @if ($applicant->applicant_profile_status == null || $applicant->applicant_profile_status == 0)
+                                                    <div
+                                                        class="p-4 border rounded-xl bg-rose-50 border-rose-200 dark:bg-rose-500/10 dark:border-rose-500/20">
+                                                        <p class="mb-3 font-medium text-rose-600 dark:text-rose-300">
+                                                            Please proceed to Profile Registration to complete your
+                                                            pre-registration.
+                                                        </p>
+
+                                                        <a href="{{ route('student.applicant-profile.step1.show') }}"
+                                                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 shadow-lg rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:shadow-green-500/25 hover:-translate-y-0.5">
+                                                            <i data-lucide="user-pen" class="size-4"></i>
+                                                            Profile Registration
+                                                        </a>
+                                                    </div>
+                                                @else
+                                                    @if (is_null($requirements))
+                                                        @if ($applicant->campus_id == 1)
+                                                            <div
+                                                                class="p-4 text-purple-700 border border-purple-200 rounded-xl bg-purple-50 dark:bg-purple-500/10 dark:border-purple-500/20 dark:text-purple-700">
+                                                                Kindly submit the original copies of the required admission
+                                                                documents to the
+                                                                <b>Admission and Records Office (ARO), University of
+                                                                    Southern
+                                                                    Mindanao,
+                                                                    Kabacan, Cotabato.</b>
+                                                                <br>
+                                                                If you have already submitted the required documents, please
+                                                                disregard this
+                                                                notice.
+                                                            </div>
+                                                        @elseif($applicant->campus_id == 3)
+                                                            <div
+                                                                class="p-4 text-purple-700 border border-purple-200 rounded-xl bg-purple-50 dark:bg-purple-500/10 dark:border-purple-500/20 dark:text-purple-700">
+                                                                Kindly submit the original copies of the required admission
+                                                                documents to the
+                                                                <b>Admission and Records Office (ARO), University of
+                                                                    Southern
+                                                                    Mindanao –
+                                                                    Kidapawan City Campus, Kidapawan City.</b>
+                                                                <br>
+                                                                If you have already submitted the required documents, please
+                                                                disregard this
+                                                                notice.
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        @php
+                                                            $labels = [
+                                                                'goodmoral' => 'Good Moral Certificate',
+                                                                'card' => 'Report Card',
+                                                                'psa' => 'PSA Birth Certificate',
+                                                                'hdismissal' => 'Honorable Dismissal',
+                                                                'certificatetransfer' => 'Certificate of Transfer',
+                                                                'transcript' => 'Transcript of Records',
+                                                            ];
+                                                        @endphp
+
+                                                        <div class="flex flex-wrap gap-2 pt-1">
+                                                            @foreach ($labels as $key => $label)
+                                                                @if ($requirements->$key == 1)
+                                                                    <span
+                                                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold border rounded-full bg-white border-green-200 text-green-600 shadow-sm dark:bg-zink-700 dark:border-green-700/40 dark:text-green-700">
+                                                                        <i data-lucide="check" class="size-3"></i>
+                                                                        {{ $label }}
+                                                                    </span>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+                                                @endif
+
+                                                @if ($applicant->is_answered_nstp == 1)
+                                                    <div
+                                                        class="p-3 text-green-700 border border-green-200 rounded-xl bg-green-50 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-700">
+                                                        Please note that enrollment for CWTS or ROTC will take place after
+                                                        the NSTP
+                                                        orientation.
+                                                    </div>
+                                                @endif
+                                            @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id != null)
+                                                <span
+                                                    class="inline-flex items-center px-3 py-1.5 text-xs font-semibold border rounded-full bg-sky-100 border-transparent text-sky-700 dark:bg-sky-500/20 dark:text-sky-700">
+                                                    Please wait, ranking in progress.
+                                                </span>
+                                            @elseif ($applicant->prereg_status == 'for_ranking' && $applicant->campus_id == null)
+                                                <span
+                                                    class="inline-flex items-center px-3 py-1.5 text-xs font-semibold border rounded-full bg-amber-100 border-transparent text-amber-700 dark:bg-amber-500/20 dark:text-amber-700">
+                                                    Please confirm the program.
+                                                </span>
+                                            @elseif ($applicant->policyId == null && $applicant->programName != null)
+                                                <span class="text-slate-400">---</span>
+                                            @elseif ($applicant->status_id == 0)
+                                                <span
+                                                    class="inline-flex items-center px-3 py-1.5 text-xs font-semibold border rounded-full bg-orange-100 border-transparent text-orange-700 dark:bg-orange-500/20 dark:text-orange-700">
+                                                    Enrollment in progress
+                                                </span>
+                                            @elseif ($applicant->prereg_status == 'enrolled' || $applicant->status_id == 1)
+                                                <div class="space-y-3">
+                                                    <span
+                                                        class="inline-flex items-center px-3 py-1.5 text-xs font-semibold border rounded-full bg-green-100 border-transparent text-green-700 dark:bg-green-500/20 dark:text-green-700">
+                                                        You are officially enrolled!
+                                                    </span>
+
+                                                    <div
+                                                        class="p-4 text-purple-700 border border-purple-200 rounded-xl bg-purple-50 dark:bg-purple-500/10 dark:border-purple-500/20 dark:text-purple-700">
+                                                        Tap the <b>Pre-registration Menu</b>, then tap the
+                                                        <b>Download COR button</b> to get your Certificate of Registration.
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <span class="text-slate-400">---</span>
+                                            @endif
+                                        </div>
+
+                                        <p class="mt-2 text-sm text-slate-500 dark:text-zink-300">Status</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Student ID --}}
+                        <div
+                            class="relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.06] via-blue-500/[0.03] to-transparent">
+                            </div>
+                            <div class="absolute rounded-full -top-10 -right-10 size-28 bg-indigo-400/10 blur-3xl"></div>
+
+                            <div class="relative p-5">
+                                <div class="flex items-start gap-4">
+                                    <div
+                                        class="flex items-center justify-center text-white shadow-lg shrink-0 size-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-600 shadow-indigo-500/20">
+                                        <i data-lucide="id-card" class="size-6"></i>
+                                    </div>
+
+                                    <div class="min-w-0 grow">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h5 class="text-base font-bold text-slate-800 dark:text-white">
+                                                {{ $applicant->student_no ?? '---' }}
+                                            </h5>
+                                            <span
+                                                class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-700">
+                                                Student ID
+                                            </span>
+                                        </div>
+                                        <p class="text-sm text-slate-500 dark:text-zink-300">Student ID Number</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

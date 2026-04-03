@@ -20,6 +20,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('backend/assets/css/tailwind2.css') }}">
+    <script src="{{ asset('backend/assets/js/tailwind/tailwind4.js') }}"></script>
     <livewire:styles />
 
     <!-- Google tag (gtag.js) -->
