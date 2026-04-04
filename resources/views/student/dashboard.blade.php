@@ -599,67 +599,110 @@
         </div>
 
         @if ($applicant && $applicant->prereg_status == 'pending' && $applicant->is_answered_nstp == 0)
-            <!-- Modal Structure -->
-            <div id="nstpModal" class="fixed inset-0 z-50 flex items-center justify-center hidden ">
-                <div class="absolute inset-0 bg-gray-900 bg-opacity-50"></div>
-                <div class="relative w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zinc-600 z-10">
-                    <div class="relative flex items-center justify-center p-4 bg-green-500 border-b dark:border-zinc-500">
-                        <h5 class="w-full text-center text-white uppercase text-16">National Service Training Program
-                            (NSTP)</h5>
-                        <button id="closeModalBtn"
-                            class="absolute hidden text-xl font-bold text-white top-3 right-3 hover:text-gray-200 focus:outline-none">
-                            &times;
-                        </button>
-                    </div>
-                    <div class="p-4 text-center">
-                        <div class="xl:col-span-12">
+            <!--  NSTP Modal -->
+            <div id="nstpModal" class="fixed inset-0 z-50 hidden">
+                {{-- Backdrop --}}
+                <div id="nstpModalOverlay" class="absolute inset-0 bg-slate-950/50 backdrop-blur-sm"></div>
+
+                {{-- Modal Wrapper --}}
+                <div class="relative flex items-center justify-center min-h-screen p-4">
+                    <div
+                        class="relative w-full max-w-2xl overflow-hidden border shadow-2xl rounded-3xl border-white/60 bg-white/95 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/95">
+
+                        {{-- Decorative top glow --}}
+                        <div class="absolute inset-x-0 top-0 h-24 bg-green-500/5"></div>
+
+                        {{-- Header --}}
+                        <div class="relative px-6 pt-6 pb-4 border-b border-slate-200 dark:border-zink-700">
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="flex items-center justify-center text-green-600 bg-green-100 rounded-2xl size-12 dark:bg-green-500/20 dark:text-green-300 shrink-0">
+                                    <i data-lucide="shield-check" class="size-6"></i>
+                                </div>
+
+                                <div class="min-w-0 grow">
+                                    <p class="mb-1 text-[11px] font-semibold tracking-[0.18em] uppercase text-green-500">
+                                        Student Advisory
+                                    </p>
+                                    <h5 class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">
+                                        National Service Training Program (NSTP)
+                                    </h5>
+                                    <p class="mt-1 text-sm text-slate-500 dark:text-zink-300">
+                                        Important information before proceeding
+                                    </p>
+                                </div>
+
+                                <button id="closeModalBtn" type="button"
+                                    class="inline-flex items-center justify-center rounded-xl size-10 text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-zink-300 dark:hover:bg-zink-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-slate-200">
+                                    <i data-lucide="x" class="size-5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Body --}}
+                        <div class="px-6 py-5">
                             <div
-                                class="px-4 py-3 text-sm text-green-500 border border-transparent rounded-md bg-green-50 dark:bg-green-400/20">
-                                <div class="items-center">
-                                    <ul class="ml-2 list-disc list-inside">
-                                        <p>
-                                            <strong>The National Service Training Program (NSTP)</strong> is a
-                                            government-mandated program in the Philippines designed to enhance civic
-                                            consciousness, promote defense preparedness, and instill the values of service
-                                            and patriotism among the youth. It is a required component for all students
-                                            enrolled in higher education institutions and technical-vocational programs.
-                                        </p>
-                                        <br>
+                                class="p-5 border rounded-2xl bg-slate-50 border-slate-200 dark:bg-zink-700/30 dark:border-zink-600">
+                                <div class="space-y-4 text-sm leading-7 text-slate-600 dark:text-zink-200">
+                                    <p>
+                                        <strong class="text-slate-800 dark:text-white">The National Service Training
+                                            Program (NSTP)</strong>
+                                        is a government-mandated program in the Philippines designed to enhance civic
+                                        consciousness,
+                                        promote defense preparedness, and instill the values of service and patriotism among
+                                        the youth.
+                                        It is a required component for all students enrolled in higher education
+                                        institutions and
+                                        technical-vocational programs.
+                                    </p>
 
-                                        <p>
-                                            Please be advised that the enrollment for NSTP components—such as <strong>Civic
-                                                Welfare Training Service (CWTS)</strong> and <strong>Reserve Officers’
-                                                Training Corps (ROTC)</strong>—will be conducted <strong>after the official
-                                                NSTP Orientation</strong>. Students are encouraged to attend the orientation
-                                            to be guided on the selection and enrollment process.
-                                        </p>
-                                        <br>
+                                    <p>
+                                        Please be advised that enrollment for NSTP components such as
+                                        <strong class="text-slate-800 dark:text-white">Civic Welfare Training Service
+                                            (CWTS)</strong>
+                                        and
+                                        <strong class="text-slate-800 dark:text-white">Reserve Officers’ Training Corps
+                                            (ROTC)</strong>
+                                        will be conducted
+                                        <strong class="text-green-600 dark:text-green-300">after the official NSTP
+                                            Orientation</strong>.
+                                        Students are encouraged to attend the orientation to be properly guided on the
+                                        selection and
+                                        enrollment process.
+                                    </p>
+                                </div>
+                            </div>
 
-                                        {{-- <div class="mb-2 xl:col-span-6">
-                                            <select name="nstp" id="nstpSelect"
-                                                class="w-full p-2 transition duration-200 ease-in-out border rounded-md border-custom-300 focus:ring-custom-500 focus:border-custom-500"
-                                                data-choices >
-                                                <option value="1" {{ $applicant->nstp == '1' ? 'selected' : '' }}>
-                                                    Civic Welfare Training Service (CWTS)
-                                                </option>
-                                                <option value="2" {{ $applicant->nstp == '2' ? 'selected' : '' }}>
-                                                    Reserve Officers' Training Corps (ROTC)
-                                                </option>
-                                            </select>
-                                        </div> --}}
-
-                                        <button id="saveNstpPref"
-                                            class="block w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">
-                                            OK
-                                        </button>
-                                    </ul>
+                            {{-- Optional highlight note --}}
+                            <div
+                                class="flex gap-3 p-4 mt-4 border rounded-2xl border-amber-200 bg-amber-50 dark:border-amber-500/20 dark:bg-amber-500/10">
+                                <div
+                                    class="flex items-center justify-center rounded-xl size-10 bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-300 shrink-0">
+                                    <i data-lucide="badge-alert" class="size-5"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 text-sm font-semibold text-slate-800 dark:text-white">
+                                        Reminder
+                                    </h6>
+                                    <p class="text-sm leading-6 text-slate-600 dark:text-zink-300">
+                                        You do not need to choose CWTS or ROTC yet. Final enrollment for NSTP will happen
+                                        after the
+                                        orientation.
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <button id="okButton"
-                            class="hidden w-full mt-4 text-white border-slate-500 bg-slate-500 btn hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">
-                            Close
-                        </button>
+
+                        {{-- Footer --}}
+                        <div
+                            class="flex flex-col-reverse gap-3 px-6 py-4 border-t sm:flex-row sm:items-center sm:justify-end border-slate-200 dark:border-zink-700">
+
+                            <button id="saveNstpPref" type="button"
+                                class="inline-flex items-center justify-center w-full gap-2 px-5 py-2.5 text-sm font-semibold text-white rounded-xl bg-green-500 hover:bg-green-600 transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-200 sm:w-auto">
+                                <i data-lucide="check" class="size-4"></i>
+                                OK, I Understand
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -668,17 +711,102 @@
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const modal = document.getElementById('nstpModal');
-                        const overlay = modal.querySelector('.bg-gray-900');
-                        const okButton = document.getElementById('okButton');
+                        const overlay = document.getElementById('nstpModalOverlay');
+                        const closeModalBtn = document.getElementById('closeModalBtn');
+                        const saveNstpPref = document.getElementById('saveNstpPref');
 
-                        modal.classList.remove('hidden');
+                        if (!modal || !overlay || !closeModalBtn || !saveNstpPref) return;
 
-                        overlay.addEventListener('click', function(event) {
-                            event.stopPropagation();
+                        function openModal() {
+                            modal.classList.remove('hidden');
+                            document.body.classList.add('overflow-hidden');
+                            if (window.lucide) lucide.createIcons();
+                        }
+
+                        function closeModal() {
+                            modal.classList.add('hidden');
+                            document.body.classList.remove('overflow-hidden');
+                        }
+
+                        openModal();
+
+                        overlay.addEventListener('click', closeModal);
+                        closeModalBtn.addEventListener('click', closeModal);
+
+                        saveNstpPref.addEventListener('click', function() {
+                            const selectedNSTP = 2; // default ROTC
+
+                            saveNstpPref.disabled = true;
+                            saveNstpPref.classList.add('opacity-70', 'cursor-not-allowed');
+
+                            fetch('{{ route('student.applicant-profile.nstp-pref.save') }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Accept': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        nstp: selectedNSTP
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        if (typeof Toastify !== 'undefined') {
+                                            Toastify({
+                                                text: '<i class="fas fa-check-circle" style="margin-right: 8px;"></i>' +
+                                                    (data.message || 'Saved successfully!'),
+                                                duration: 3000,
+                                                gravity: 'top',
+                                                position: 'right',
+                                                backgroundColor: '#22c55e',
+                                                escapeMarkup: false
+                                            }).showToast();
+                                        }
+
+                                        closeModal();
+                                    } else {
+                                        saveNstpPref.disabled = false;
+                                        saveNstpPref.classList.remove('opacity-70', 'cursor-not-allowed');
+
+                                        if (typeof Toastify !== 'undefined') {
+                                            Toastify({
+                                                text: data.message || 'Failed to save NSTP preference.',
+                                                duration: 3000,
+                                                gravity: 'top',
+                                                position: 'right',
+                                                backgroundColor: '#ef4444'
+                                            }).showToast();
+                                        } else {
+                                            alert('Error: ' + (data.message || 'Failed to save NSTP preference.'));
+                                        }
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Request failed:', error);
+
+                                    saveNstpPref.disabled = false;
+                                    saveNstpPref.classList.remove('opacity-70', 'cursor-not-allowed');
+
+                                    if (typeof Toastify !== 'undefined') {
+                                        Toastify({
+                                            text: 'An unexpected error occurred.',
+                                            duration: 3000,
+                                            gravity: 'top',
+                                            position: 'right',
+                                            backgroundColor: '#ef4444'
+                                        }).showToast();
+                                    } else {
+                                        alert('An unexpected error occurred.');
+                                    }
+                                });
                         });
 
-                        okButton.addEventListener('click', function() {
-                            modal.classList.add('hidden');
+                        document.addEventListener('keydown', function(e) {
+                            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                                closeModal();
+                            }
                         });
                     });
                 </script>
@@ -826,161 +954,5 @@
 
         updateDateTime();
         setInterval(updateDateTime, 1000);
-    </script>
-
-    {{-- <script>
-        function updateClock() {
-            const now = new Date();
-
-            const dateOptions = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            };
-            const timeOptions = {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true
-            };
-
-            document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', dateOptions);
-            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', timeOptions);
-        }
-
-        setInterval(updateClock, 1000);
-        updateClock(); // run once on load
-    </script> --}}
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('nstpModal');
-            const overlay = modal.querySelector('.bg-gray-900');
-            const saveButton = document.getElementById('saveNstpPref');
-
-
-
-            // Prevent closing when clicking outside the modal
-            overlay.addEventListener('click', function(event) {
-                event.stopPropagation();
-            });
-
-            // Save button click handler
-            saveButton.addEventListener('click', function() {
-                const selectedNSTP = document.getElementById('nstpSelect').value;
-
-                fetch('{{ route('student.applicant-profile.nstp-pref.save') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            nstp: selectedNSTP
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Display the success message using Toastify
-                            Toastify({
-                                text: '<i class="fas fa-check-circle" style="margin-right: 8px;"></i>' +
-                                    (data.message || "NSTP preference has been updated"),
-                                duration: 3000,
-                                gravity: "center",
-                                position: "right",
-                                backgroundColor: "#4CAF50", // Green for success
-                                className: "success",
-                                escapeMarkup: false
-                            }).showToast();
-
-                            const okButton = document.getElementById('closeModalBtn');
-                            okButton.classList.remove('hidden');
-
-                            closeModalBtn.addEventListener('click', function() {
-                                modal.classList.add('hidden');
-                            });
-
-                            // Optional: disable the Save button to prevent resubmission
-                            saveButton.disabled = true;
-
-                        } else {
-                            alert('Error: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Request failed:', error);
-                        alert('An unexpected error occurred.');
-                    });
-            });
-        });
-    </script> --}}
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('nstpModal');
-            const overlay = modal.querySelector('.bg-gray-900');
-            const saveButton = document.getElementById('saveNstpPref');
-            const okButton = document.getElementById('okButton');
-
-            // Show modal
-            modal.classList.remove('hidden');
-
-            // Prevent closing when clicking outside
-            overlay.addEventListener('click', function(event) {
-                event.stopPropagation();
-            });
-
-            // Save button click handler
-            saveButton.addEventListener('click', function() {
-
-                const selectedNSTP = 2; // ✅ default value (ROTC)
-
-                fetch('{{ route('student.applicant-profile.nstp-pref.save') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            nstp: selectedNSTP
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-
-                            Toastify({
-                                text: '<i class="fas fa-check-circle" style="margin-right: 8px;"></i>' +
-                                    (data.message || "Saved Successfully!"),
-                                duration: 3000,
-                                gravity: "center",
-                                position: "right",
-                                backgroundColor: "#4CAF50",
-                                className: "success",
-                                escapeMarkup: false
-                            }).showToast();
-
-                            // Show close button
-                            okButton.classList.remove('hidden');
-
-                            okButton.addEventListener('click', function() {
-                                modal.classList.add('hidden');
-                            });
-
-                            // Disable save to prevent duplicate
-                            saveButton.disabled = true;
-
-                        } else {
-                            alert('Error: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Request failed:', error);
-                        alert('An unexpected error occurred.');
-                    });
-            });
-        });
     </script>
 @endpush

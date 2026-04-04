@@ -91,12 +91,14 @@
                         {{-- start hepa b --}}
                         {{-- start filter access --}}
                         @if (
-                            $prog_policy_id->firstprogram_policy_id == 783 ||
-                                $prog_policy_id->firstprogram_policy_id == 725 ||
-                                $prog_policy_id->firstprogram_policy_id == 727 ||
-                                $prog_policy_id->firstprogram_policy_id == 812 ||
-                                $prog_policy_id->firstprogram_policy_id == 731 ||
-                                $prog_policy_id->firstprogram_policy_id == 730)
+                            $prog_policy_id->firstprogram_policy_id == 938 ||
+                                $prog_policy_id->firstprogram_policy_id == 946 ||
+                                $prog_policy_id->firstprogram_policy_id == 883 ||
+                                $prog_policy_id->firstprogram_policy_id == 905 ||
+                                $prog_policy_id->firstprogram_policy_id == 886 ||
+                                $prog_policy_id->firstprogram_policy_id == 959 ||
+                                $prog_policy_id->firstprogram_policy_id == 887 ||
+                                $prog_policy_id->firstprogram_policy_id == 884)
                             <h6 class="mt-4 mb-0 text-15">Hepatitis B Test Result <sup class="text-red-500">*
                                     required</sup>
                             </h6>
