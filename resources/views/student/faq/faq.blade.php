@@ -4,64 +4,89 @@
 @endsection
 
 @section('contents')
-    <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
-        <div class="grow">
-            <h5 class="uppercase text-16">USMCEE 4.0 | Frequently Asked Questions</h5>
-        </div>
-        <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
-            <li
-                class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                <a href="#!" class="text-slate-400 dark:text-zink-200">Home</a>
-            </li>
-            <li class="text-slate-700 dark:text-zink-100">
-                FAQs
-            </li>
-        </ul>
-    </div>
+    <x-page-header title="USMCEE 4.0 | Frequently Asked Questions" :breadcrumbs="[['label' => 'Home', 'url' => route('dashboard')], ['label' => 'Frequently Asked Questions']]" />
 
-    <div class="relative overflow-hidden card">
-        <div class="p-8">
-            <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
-                <div class="xl:col-span-7">
-                    <h4 class="mb-1">USMCEE Help & Support</h4>
-                    <p class="mb-5 text-slate-500 dark:text-zink-200">
-                        Browse frequently asked questions to guide you through the USMCEE process.
+
+    <div
+        class="relative overflow-hidden border shadow-sm rounded-2xl border-custom-200 bg-gradient-to-br from-custom-50 to-white dark:border-custom-500/20 dark:bg-custom-500/10">
+
+        <div class="px-6 py-10 md:px-10">
+            <div class="grid items-center gap-8 xl:grid-cols-12">
+
+                {{-- LEFT CONTENT --}}
+                <div class=" xl:col-span-6">
+
+                    <p class="text-[11px] font-semibold tracking-[0.25em] uppercase text-custom-500">
+                        Help Center
                     </p>
 
-                    <div class="relative inline-block w-2/3">
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 dark:text-white">
+                        USMCEE Help & Support
+                    </h1>
+
+                    <p class="max-w-md mb-3 text-sm text-slate-500 dark:text-zink-300">
+                        Browse frequently asked questions to guide you through the USMCEE process and quickly
+                        find the information you need.
+                    </p>
+
+                    {{-- SEARCH --}}
+                    <div class="relative max-w-md">
                         <input type="text" id="faqSearch"
-                            class="w-full py-2 pl-4 pr-8 form-input border-slate-200 dark:border-zink-500"
+                            class="w-full px-3 py-3 pr-4 text-sm border rounded-2xl border-slate-200 bg-slate-50 pl-11 text-slate-700 placeholder:text-slate-400 focus:border-custom-500 focus:bg-white focus:outline-none dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100"
                             placeholder="Search FAQs...">
-                        <i data-lucide="search" class="inline-block size-4 absolute right-2.5 top-2.5 text-slate-400"></i>
                     </div>
 
-                    <div class="hidden xl:col-span-3 xl:col-start-10 xl:block">
-                        <img src="{{ asset('backend/assets/images/faq.png') }}" alt=""
-                            class="absolute h-[500px] -rotate-45 -top-28 ltr:right-8 rtl:left-8">
-                    </div>
                 </div>
+
+                {{-- RIGHT IMAGE --}}
+                <div class="relative flex justify-center xl:col-span-6 xl:justify-end">
+
+                    {{-- soft background glow --}}
+                    <div class="absolute w-[300px] h-[300px] bg-custom-500/10 rounded-full blur-3xl"></div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <h5 class="mb-5 underline">Frequently Asked Questions</h5>
+    {{-- FAQ Section Header --}}
+    <div class="mt-8 mb-4">
+        <p class="text-[11px] font-semibold tracking-[0.22em] uppercase text-custom-500">
+            Support Topics
+        </p>
+        <h5 class="mt-1 text-xl font-bold tracking-tight text-slate-800 dark:text-white">
+            Frequently Asked Questions
+        </h5>
+        <p class="mt-1 text-sm text-slate-500 dark:text-zink-300">
+            Click a question below to view the answer.
+        </p>
+    </div>
 
-    <div class="grid max-w-3xl grid-cols-1 mx-auto" id="faqContainer">
+    {{-- FAQ List --}}
+    <div class="grid max-w-4xl grid-cols-1 gap-3" id="faqContainer">
         @foreach ($faqs as $faq)
-            <div class="faq-item">
-                <div class="collapsible">
+            <div
+                class="overflow-hidden transition-all duration-200 bg-white border shadow-sm faq-item rounded-2xl border-slate-200 dark:border-zink-600 dark:bg-zink-800">
+                <div class="collapsible group/item">
                     <button type="button"
-                        class="flex items-center w-full p-3 text-left card collapsible-header group/item">
-                        <span class="faq-question">{{ $faq->question }}</span>
+                        class="flex items-center w-full gap-3 px-5 py-4 text-left transition-colors duration-200 collapsible-header hover:bg-slate-50 dark:hover:bg-zink-700/40">
+                        <div
+                            class="flex items-center justify-center rounded-xl size-9 bg-slate-100 text-slate-500 dark:bg-zink-700 dark:text-zink-300 shrink-0">
+                            <i data-lucide="help-circle" class="size-4"></i>
+                        </div>
 
-                        <div class="ltr:ml-auto rtl:mr-auto shrink-0">
+                        <span class="flex-1 text-sm font-semibold faq-question text-slate-800 dark:text-white">
+                            {{ $faq->question }}
+                        </span>
+
+                        <div class="shrink-0 text-slate-400">
                             <i data-lucide="chevron-down" class="hidden size-4 group-[.show]/item:inline-block"></i>
                             <i data-lucide="chevron-up" class="inline-block size-4 group-[.show]/item:hidden"></i>
                         </div>
                     </button>
 
-                    <div class="hidden collapsible-content card">
-                        <div class="card-body text-slate-500 dark:text-zink-200 faq-answer">
+                    <div class="hidden border-t collapsible-content border-slate-200 dark:border-zink-600">
+                        <div class="px-5 py-4 text-sm leading-7 text-slate-600 dark:text-zink-300 faq-answer">
                             {!! $faq->answer !!}
                         </div>
                     </div>
@@ -70,9 +95,11 @@
         @endforeach
     </div>
 
-    <p id="faqNoResults" class="hidden mt-4 text-center text-slate-500 dark:text-zink-200">
+    {{-- No Results --}}
+    <div id="faqNoResults"
+        class="hidden px-5 py-6 mt-6 text-sm text-center border rounded-2xl border-slate-200 bg-slate-50 text-slate-500 dark:border-zink-600 dark:bg-zink-800 dark:text-zink-300">
         No matching FAQs found.
-    </p>
+    </div>
 @endsection
 
 @push('scripts')
