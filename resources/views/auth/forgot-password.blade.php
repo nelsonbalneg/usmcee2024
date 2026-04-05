@@ -19,6 +19,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('backend/assets/css/tailwind2.css') }}">
+    <script src="{{ asset('backend/assets/js/tailwind/tailwind4.js') }}"></script>
 </head>
 
 <body
@@ -89,58 +90,89 @@
             </svg>
         </div>
 
-        <div class="mb-0 w-screen lg:mx-auto lg:w-[500px] card shadow-lg border-none shadow-slate-100 relative">
-            <div class="!px-10 !py-12 card-body">
-                <a href="#!">
-                    <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt=""
-                        class="hidden h-15 mx-auto dark:block">
-                    <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt=""
-                        class="block h-15 mx-auto dark:hidden">
-                </a>
+        <div
+            class="relative w-screen border-none shadow-lg lg:mx-auto lg:w-[520px] rounded-3xl bg-white dark:bg-zink-800 shadow-slate-200/60 dark:shadow-black/20 overflow-hidden">
+            <div class="px-8 py-10 md:px-10 md:py-12">
 
-                <div class="mt-8 text-center">
-                    <p class="text-slate-500 dark:text-zink-200">Forgot your password? No problem. Just let us know your
-                        email address and we will email you a password reset link that will allow you to choose a new
-                        one.</p>
+                {{-- Logo --}}
+                <div class="text-center">
+                    <a href="#!">
+                        <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt="Logo"
+                            class="hidden mx-auto h-14 dark:block">
+                        <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt="Logo"
+                            class="block mx-auto h-14 dark:hidden">
+                    </a>
                 </div>
+
+                {{-- Heading --}}
                 <div class="mt-8 text-center">
-                    <p class="text-slate-500 dark:text-zink-200">
-                        <x-auth-session-status class="mb-4" :status="session('status')" />
+                    <p class="mb-1 text-[11px] font-semibold tracking-[0.22em] uppercase text-custom-500">
+                        Account Recovery
+                    </p>
+                    <h4 class="text-2xl font-bold tracking-tight text-slate-800 dark:text-white">
+                        Forgot your password?
+                    </h4>
+                    <p class="mt-3 text-sm leading-7 text-slate-500 dark:text-zink-300">
+                        No problem. Enter your email address below and we will send you a password reset link so you can
+                        choose
+                        a new one.
                     </p>
                 </div>
 
+                {{-- Session Status --}}
+                @if (session('status'))
+                    <div
+                        class="px-4 py-3 mt-6 text-sm text-green-700 border border-green-200 rounded-2xl bg-green-50 dark:border-green-500/20 dark:bg-green-500/10 dark:text-green-300">
+                        <x-auth-session-status :status="session('status')" />
+                    </div>
+                @endif
 
-                <form method="POST" action="{{ route('password.email') }}" class="mt-10">
+                {{-- Form --}}
+                <form method="POST" action="{{ route('password.email') }}" class="mt-8 space-y-5">
                     @csrf
 
-                    <!-- Email Address Field with Laravel's Blade Components for Error Handling -->
-                    <div class="mb-3">
-                        <label for="email" class="inline-block mb-2 text-base font-medium">Email Address</label>
-                        <input type="email" id="email" name="email" value="{{ old('email') }}"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="Enter email address" required autofocus>
+                    <div>
+                        <label for="email"
+                            class="inline-block mb-2 text-sm font-semibold text-slate-700 dark:text-zink-100">
+                            Email Address
+                        </label>
 
-                        <!-- Display Validation Error Messages for Email -->
-                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-500" />
+                        <div class="relative">
+                            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                class="w-full px-4 py-3 text-sm transition-all duration-200 bg-white border rounded-2xl border-slate-200 pr-11 text-slate-700 placeholder:text-slate-400 focus:border-custom-500 focus:outline-none focus:ring-2 focus:ring-custom-100 dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100 dark:placeholder:text-zink-400 dark:focus:border-custom-500"
+                                placeholder="Enter email address" required autofocus>
+
+                            <div
+                                class="absolute inset-y-0 flex items-center pointer-events-none right-4 text-slate-400">
+                                <i data-lucide="mail" class="size-4"></i>
+                            </div>
+                        </div>
+
+                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-xs font-medium text-red-500" />
                     </div>
 
-                    <!-- Submit Button -->
-                    <div class="mt-10">
+                    <div class="pt-2">
                         <button type="submit"
-                            class="w-full text-white btn bg-green-500 border-green-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                            class="inline-flex items-center justify-center w-full gap-2 px-5 py-3 text-sm font-semibold text-white transition-all duration-200 bg-green-500 shadow-sm rounded-2xl hover:bg-green-600 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-200 active:bg-green-600">
+                            <i data-lucide="send" class="size-4"></i>
                             {{ __('Email Password Reset Link') }}
                         </button>
                     </div>
                 </form>
-                <div class="mt-10 text-center">
-                    <p class="mb-0 text-slate-500 dark:text-zink-200">Already have an account ? <a
-                            href="{{ route('login') }}"
-                            class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">Login</a>
+
+                {{-- Footer --}}
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-slate-500 dark:text-zink-300">
+                        Already have an account?
+                        <a href="{{ route('login') }}"
+                            class="font-semibold transition text-custom-500 hover:text-custom-600 hover:underline">
+                            Login
+                        </a>
                     </p>
                 </div>
-
             </div>
         </div>
+    </div>
     </div>
 
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>

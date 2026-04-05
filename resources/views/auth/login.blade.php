@@ -19,6 +19,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('backend/assets/css/tailwind2.css') }}">
+    <script src="{{ asset('backend/assets/js/tailwind/tailwind4.js') }}"></script>
 
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -117,19 +118,59 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                         class="block mx-auto h-15 dark:hidden">
                 </a>
 
-                <div class="mt-8 text-center">
-                    <h4 class="mb-1 text-yellow-500 dark:text-yellow-500">Welcome Applicants !</h4>
-                    {{-- <p class="text-slate-500 dark:text-zink-200">Sign in to continue to USMCEE</p> --}}
+                {{-- Welcome --}}
+                <div class="mt-8 space-y-2 text-center">
+                    <h4 class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">
+                        Welcome, Applicants
+                    </h4>
+
+                    <p class="text-sm text-slate-500 dark:text-zink-300">
+                        Please review the important guidelines below before proceeding.
+                    </p>
                 </div>
-                <div class="flex gap-3 p-3 mt-5 text-sm text-yellow-500 rounded-md bg-yellow-50 dark:bg-yellow-400/20">
-                    <div>
-                        <h6 class="mb-1">WARNING!</h6>
-                        <ul class="ml-2 list-disc list-inside">
-                            <li>Creating multiple accounts to secure slots is <b>PROHIBITED</b></li>
-                            <li>Ensure all information is complete and accurate.</li>
-                            <li>Incomplete or incorrect entries, or multiple accounts, may result in disqualification.
-                            </li>
-                        </ul>
+
+                {{-- Warning Card --}}
+                <div
+                    class="p-5 mt-6 border shadow-sm border-amber-200 bg-amber-50 rounded-2xl dark:border-amber-500/20 dark:bg-amber-500/10">
+
+                    <div class="flex items-start gap-3">
+
+
+                        {{-- Content --}}
+                        <div class="min-w-0">
+                            <p class="text-[11px] font-semibold tracking-[0.18em] uppercase text-amber-500">
+                                Important Notice
+                            </p>
+
+                            <h6 class="mt-1 text-sm font-bold text-slate-800 dark:text-white">
+                                Please Read Carefully
+                            </h6>
+
+                            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-zink-300">
+                                <li class="flex gap-2">
+
+                                    <span>
+                                        Creating multiple accounts to secure slots is
+                                        <b class="text-red-500">strictly prohibited</b>.
+                                    </span>
+                                </li>
+
+                                <li class="flex gap-2">
+
+                                    <span>
+                                        Ensure all information provided is complete and accurate.
+                                    </span>
+                                </li>
+
+                                <li class="flex gap-2">
+                                    <span>
+                                        Incomplete or incorrect entries, or multiple accounts, may result in
+                                        disqualification.
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
                 <form method="POST" action="{{ route('login') }}" class="mt-5">
@@ -145,70 +186,126 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
                             </div>
                         @endif
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="inline-block mb-2 text-base font-medium">Email Address</label>
-                        <input type="text" id="email" name="email" value="{{ old('email') }}"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="Enter email address">
-                        <div id="email-error" class="hidden mt-1 text-sm text-red-500">Please enter a valid email
-                            address.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                        <input type="password" id="password" name="password" required
-                            autocomplete="current-password"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="Enter password">
-                        <div id="password-error" class="hidden mt-1 text-sm text-red-500">Password must be at least 8
-                            characters long and contain both letters and numbers.</div>
-                    </div>
+                    <div class="space-y-5">
 
-                    <div class="flex items-center justify-between mt-4">
-                        <!-- Remember Me Checkbox -->
-                        <div class="flex items-center gap-2">
-                            <input id="checkboxDefault1" name="remember"
-                                class="border rounded-sm appearance-none size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
-                                type="checkbox" value="1">
-                            <label for="checkboxDefault1"
-                                class="inline-block text-base font-medium align-middle cursor-pointer">
-                                Remember me
+                        {{-- Email --}}
+                        <div>
+                            <label for="email"
+                                class="inline-block mb-2 text-sm font-semibold text-slate-700 dark:text-zink-100">
+                                Email Address
                             </label>
+
+                            <div class="relative">
+                                <input type="text" id="email" name="email" value="{{ old('email') }}"
+                                    class="w-full px-4 py-3 text-sm transition-all duration-200 bg-white border rounded-2xl border-slate-200 text-slate-700 placeholder:text-slate-400 focus:border-custom-500 focus:outline-none focus:ring-2 focus:ring-custom-100 dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100 dark:placeholder:text-zink-400 dark:focus:border-custom-500"
+                                    placeholder="Enter email address">
+
+                                <div
+                                    class="absolute inset-y-0 flex items-center pointer-events-none right-4 text-slate-400">
+                                    <i data-lucide="mail" class="size-4"></i>
+                                </div>
+                            </div>
+
+                            <div id="email-error" class="hidden mt-2 text-xs font-medium text-red-500">
+                                Please enter a valid email address.
+                            </div>
                         </div>
 
-                        <!-- Forgot Password Link -->
+                        {{-- Password --}}
                         <div>
+                            <label for="password"
+                                class="inline-block mb-2 text-sm font-semibold text-slate-700 dark:text-zink-100">
+                                Password
+                            </label>
+
+                            <div class="relative">
+                                <input type="password" id="password" name="password" required
+                                    autocomplete="current-password"
+                                    class="w-full px-4 py-3 text-sm transition-all duration-200 bg-white border rounded-2xl border-slate-200 pr-11 text-slate-700 placeholder:text-slate-400 focus:border-custom-500 focus:outline-none focus:ring-2 focus:ring-custom-100 dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100 dark:placeholder:text-zink-400 dark:focus:border-custom-500"
+                                    placeholder="Enter password">
+
+                                <div
+                                    class="absolute inset-y-0 flex items-center pointer-events-none right-4 text-slate-400">
+                                    <i data-lucide="lock" class="size-4"></i>
+                                </div>
+                            </div>
+
+                            <div id="password-error" class="hidden mt-2 text-xs font-medium text-red-500">
+                                Password must be at least 8 characters long and contain both letters and numbers.
+                            </div>
+                        </div>
+
+                        {{-- Remember / Forgot --}}
+                        <div class="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
+                            <label for="checkboxDefault1" class="inline-flex items-center gap-3 cursor-pointer">
+                                <input id="checkboxDefault1" name="remember"
+                                    class="border rounded size-4 border-slate-300 bg-slate-100 text-custom-500 focus:ring-2 focus:ring-custom-100 dark:border-zink-500 dark:bg-zink-600 dark:checked:bg-custom-500 dark:checked:border-custom-500"
+                                    type="checkbox" value="1">
+                                <span class="text-sm font-medium text-slate-600 dark:text-zink-200">
+                                    Remember me
+                                </span>
+                            </label>
+
                             <a href="{{ route('student.forgot-password') }}"
-                                class="text-base font-medium text-blue-600 cursor-pointer hover:underline">
+                                class="text-sm font-semibold transition text-custom-500 hover:text-custom-600 hover:underline">
                                 Forgot Password?
                             </a>
                         </div>
+
+                        {{-- Turnstile --}}
+                        <div class="pt-1">
+                            <div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.sitekey') }}">
+                            </div>
+                        </div>
+
+                        {{-- Submit --}}
+                        <div class="pt-1">
+                            <button type="submit"
+                                class="inline-flex items-center justify-center w-full gap-2 px-5 py-3 text-sm font-semibold text-white transition-all duration-200 bg-green-500 shadow-sm rounded-2xl hover:bg-green-600 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-200 active:bg-green-600">
+                                <i data-lucide="log-in" class="size-4"></i>
+                                Sign In
+                            </button>
+                        </div>
                     </div>
-
-                    <!-- Error message for Remember Me -->
-                    <div class="mt-5 cf-turnstile" data-sitekey="{{ config('services.turnstile.sitekey') }}"></div>
-
-                    <div class="mt-5 text-center">
-                        <button type="submit"
-                            class="w-full text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Sign
-                            In</button>
-                    </div>
-
                 </form>
 
 
                 @if ($endofregistration && Carbon::parse($endofregistration, 'Asia/Manila')->isFuture())
-                    <div class="mt-10 text-center">
-                        <p class="mb-0 text-slate-500 dark:text-zink-200">Don't have an account ? <a
-                                href="{{ route('register') }}"
-                                class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">
-                                Sign Up</a> </p>
+                    {{-- Sign Up CTA --}}
+                    <div class="mt-10 space-y-2 text-center">
+                        <p class="text-sm text-slate-500 dark:text-zink-300">
+                            Don’t have an account?
+                        </p>
+
+                        <a href="{{ route('register') }}"
+                            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold transition-all duration-200 border text-custom-500 border-custom-200 rounded-xl hover:bg-custom-50 hover:text-custom-600 dark:border-custom-500/20 dark:hover:bg-custom-500/10">
+                            <i data-lucide="user-plus" class="size-4"></i>
+                            Create an Account
+                        </a>
                     </div>
                 @else
-                    <div class="mt-4 card">
-                        <div class="flex gap-3 p-4 text-sm text-red-500 rounded-md bg-red-50 dark:bg-red-400/20">
-                            <i data-lucide="alert-circle" class="inline-block size-4 mt-0.5 shrink-0"></i>
-                            <p class="mb-0">Please be informed that USMCEE <b>account registration and slot
-                                    reservation</b> are now closed.</p>
+                    {{-- Closed Notice --}}
+                    <div
+                        class="p-5 mt-6 border border-red-200 shadow-sm bg-red-50 rounded-2xl dark:border-red-500/20 dark:bg-red-500/10">
+                        <div class="flex items-start gap-3">
+
+
+                            {{-- Content --}}
+                            <div class="min-w-0">
+                                <p class="text-[11px] font-semibold tracking-[0.18em] uppercase text-red-500">
+                                    Registration Closed
+                                </p>
+
+                                <h6 class="mt-1 text-sm font-bold text-slate-800 dark:text-white">
+                                    USMCEE Registration is no longer available
+                                </h6>
+
+                                <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-zink-300">
+                                    Please be informed that <b>account registration and slot reservation</b> for USMCEE
+                                    are now officially closed.
+                                </p>
+                            </div>
+
                         </div>
                     </div>
                 @endif
@@ -292,6 +389,7 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     {{-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> --}}
 
     <script>
