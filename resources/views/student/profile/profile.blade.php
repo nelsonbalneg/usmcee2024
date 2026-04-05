@@ -343,7 +343,7 @@
 
 
 
-    <!-- Modal -->
+    {{-- <!-- Modal -->
     <div id="pageLoadModal" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50">
         <!-- Modal box -->
         <div class="relative p-0 overflow-hidden bg-white rounded-lg shadow-lg w-96">
@@ -370,7 +370,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 @endsection
 

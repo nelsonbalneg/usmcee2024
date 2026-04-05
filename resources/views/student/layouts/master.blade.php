@@ -21,6 +21,8 @@
 
     <link rel="stylesheet" href="{{ asset('backend/assets/css/tailwind2.css') }}">
     <script src="{{ asset('backend/assets/js/tailwind/tailwind4.js') }}"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
     <livewire:styles />
 
     <!-- Google tag (gtag.js) -->
@@ -35,6 +37,25 @@
 
         gtag('config', 'G-EJPB3BXP56');
     </script>
+
+    <style>
+        .introjs-tooltip {
+            border-radius: 16px !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18) !important;
+            padding: 16px !important;
+        }
+
+        .introjs-button {
+            border-radius: 10px !important;
+            text-shadow: none !important;
+            font-size: 13px !important;
+        }
+
+        .introjs-tooltipbuttons {
+            border-top: 0 !important;
+            padding-top: 8px !important;
+        }
+    </style>
 
 
 
@@ -510,6 +531,14 @@
     <!-- Choices.js CSS -->
 
 
+    <!-- Floating Toggle Button -->
+    <button id="topnav-hamburger-icon"
+        class="fixed z-50 flex items-center justify-center text-white transition-all duration-200 rounded-full shadow-lg bottom-6 right-6 w-14 h-14 bg-emerald-500 hover:scale-105 lg:hidden">
+
+        <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+
+
 
     <livewire:scripts />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
@@ -528,6 +557,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
 
     <!--apexchart js-->
     {{-- <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
@@ -537,6 +567,49 @@
 
     <!-- App js -->
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fab = document.getElementById('topnav-hamburger-icon');
+
+            if (!fab) return;
+
+            // show only on mobile
+            if (window.innerWidth >= 1024) return;
+
+            // show only once
+            if (localStorage.getItem('menu_fab_intro_shown') === 'true') return;
+
+            setTimeout(() => {
+                introJs().setOptions({
+                    steps: [{
+                        element: '#topnav-hamburger-icon',
+                        intro: `
+                            <div class="text-sm">
+                                <div class="mb-1 font-semibold text-slate-800">Updated Menu Location</div>
+                                <div class="text-slate-600">
+                                    The menu icon was updated. Tap this button to open the sidebar navigation.
+                                </div>
+                            </div>
+                        `,
+                        position: 'left'
+                    }],
+                    showBullets: false,
+                    showProgress: false,
+                    exitOnOverlayClick: true,
+                    scrollToElement: true,
+                    disableInteraction: false,
+                    nextLabel: 'Got it',
+                    doneLabel: 'Done',
+                    skipLabel: 'Skip'
+                }).oncomplete(function() {
+                    localStorage.setItem('menu_fab_intro_shown', 'true');
+                }).onexit(function() {
+                    localStorage.setItem('menu_fab_intro_shown', 'true');
+                }).start();
+            }, 700);
+        });
+    </script>
     @stack('scripts')
 
 </body>
