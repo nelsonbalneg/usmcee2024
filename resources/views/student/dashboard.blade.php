@@ -607,7 +607,7 @@
                 {{-- Modal Wrapper --}}
                 <div class="relative flex items-center justify-center min-h-screen p-4">
                     <div
-                        class="relative w-full max-w-2xl overflow-hidden border shadow-2xl rounded-3xl border-white/60 bg-white/95 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/95">
+                        class="relative w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden border shadow-2xl rounded-3xl  border-white/60 bg-white/95 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/95">
 
                         {{-- Decorative top glow --}}
                         <div class="absolute inset-x-0 top-0 h-24 bg-green-500/5"></div>
@@ -640,7 +640,7 @@
                         </div>
 
                         {{-- Body --}}
-                        <div class="px-6 py-5">
+                        <div class="flex-1 px-6 py-5 overflow-y-auto">
                             <div
                                 class="p-5 border rounded-2xl bg-slate-50 border-slate-200 dark:bg-zink-700/30 dark:border-zink-600">
                                 <div class="space-y-4 text-sm leading-7 text-slate-600 dark:text-zink-200">

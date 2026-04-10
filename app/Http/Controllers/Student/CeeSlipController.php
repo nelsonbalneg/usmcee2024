@@ -123,8 +123,7 @@ class CeeSlipController extends Controller
             ->setOption('isHtml5ParserEnabled', true)
             ->setOption('isRemoteEnabled', true);
 
-        //return view('student.cee-slip.exam-slip', compact('cee_reservation', 'base64QrCode'));
-        // Stream the PDF instead of downloading it
-        return $pdf->download($cee_reservation->app_no . '-usmcee-slip.pdf');
+        return $pdf->stream($cee_reservation->app_no . '-usmcee-slip.pdf');
+        // return $pdf->download($cee_reservation->app_no . '-usmcee-slip.pdf');
     }
 }

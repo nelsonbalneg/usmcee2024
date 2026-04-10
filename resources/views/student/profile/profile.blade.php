@@ -20,76 +20,126 @@
             <div class="card">
                 <div class="card-body">
 
-                    <div class="grid grid-cols-1 gap-5 lg:grid-cols-12 2xl:grid-cols-12">
+                    <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
 
-                        <form id="profile-form"
-                            action="{{ route('student.cee.update-photo', ['id' => $studentdetails->id]) }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
+                        {{-- LEFT: PROFILE PHOTO --}}
+                        <div class="lg:col-span-3 xl:col-span-2">
+                            <form id="profile-form"
+                                action="{{ route('student.cee.update-photo', ['id' => $studentdetails->id]) }}"
+                                method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
 
-                            <div class="lg:col-span-2 2xl:col-span-1">
+                                <div class="flex flex-col items-center">
+
+                                    {{-- Avatar --}}
+                                    <div class="relative group">
+                                        <div
+                                            class="overflow-hidden border-4 border-white rounded-full shadow-lg bg-slate-100 size-28 dark:border-zink-700">
+
+                                            @if (empty($studentdetails->photo))
+                                                <img src="data:image/jpeg;base64,..."
+                                                    class="object-cover w-full h-full user-profile-image">
+                                            @else
+                                                <img src="{{ asset($studentdetails->photo) }}"
+                                                    class="object-cover w-full h-full user-profile-image">
+                                            @endif
+                                        </div>
+
+                                        {{-- KEEP THIS (enhanced only visually) --}}
+                                        <div
+                                            class="absolute bottom-0 flex items-center justify-center rounded-full size-8 ltr:right-0 rtl:left-0 profile-photo-edit">
+                                            <input id="profile-img-file-input" name="photo" type="file"
+                                                class="hidden profile-img-file-input">
+                                            <label for="profile-img-file-input"
+                                                class="flex items-center justify-center transition-all duration-200 bg-white border rounded-full shadow-lg cursor-pointer border-slate-200 size-8 dark:bg-zink-600 dark:border-zink-500 hover:scale-105 profile-photo-edit">
+                                                <i data-lucide="image-plus"
+                                                    class="size-4 text-slate-500 fill-slate-200 dark:text-zink-200 dark:fill-zink-500"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <p class="mt-3 text-xs text-slate-400 dark:text-zink-400">
+                                        Click icon to update photo
+                                    </p>
+
+                                </div>
+                            </form>
+                        </div>
+
+                        {{-- RIGHT: PROFILE DETAILS --}}
+                        <div class="space-y-5 lg:col-span-9 xl:col-span-10">
+
+                            {{-- Header --}}
+                            <div>
+                                <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-custom-500">
+                                    Applicant Profile
+                                </p>
+
+                                <h5 class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">
+                                    Hi, {{ $studentdetails->firstname }} {{ $studentdetails->middlename }}
+                                    {{ $studentdetails->lastname }} {{ $studentdetails->ssuffix }}
+                                    <i data-lucide="badge-check"
+                                        class="inline-block size-4 text-sky-500 fill-sky-100 dark:fill-custom-500/20"></i>
+                                </h5>
+                            </div>
+
+                            {{-- Info Cards --}}
+                            <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
+
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-zink-700/40">
+                                    <i data-lucide="phone" class="size-4 text-slate-500"></i>
+                                    <span class="text-sm text-slate-700 dark:text-zink-100">
+                                        {{ $studentdetails->phone }}
+                                    </span>
+                                </div>
+
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-zink-700/40">
+                                    <i data-lucide="mail" class="size-4 text-slate-500"></i>
+                                    <span class="text-sm text-slate-700 dark:text-zink-100">
+                                        {{ $studentdetails->email }}
+                                    </span>
+                                </div>
+
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-zink-700/40">
+                                    <i data-lucide="calendar-days" class="size-4 text-slate-500"></i>
+                                    <span class="text-sm text-slate-700 dark:text-zink-100">
+                                        {{ $studentdetails->birthdate }}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            {{-- Notices --}}
+                            <div class="space-y-3">
+
+
                                 <div
-                                    class="relative inline-block rounded-full shadow-md size-21 bg-slate-100 profile-user xl:size-28">
-                                    @if (empty($studentdetails->photo))
-                                        <img src="data:image/jpeg;base64,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"
-                                            alt="" name='photo'
-                                            class="object-cover w-full h-full rounded-full user-profile-image">
-                                    @else
-                                        <img src="{{ asset($studentdetails->photo) }}" alt=""
-                                            class="object-cover w-full h-full rounded-full user-profile-image">
-                                    @endif
-                                    <div
-                                        class="absolute bottom-0 flex items-center justify-center rounded-full size-8 ltr:right-0 rtl:left-0 profile-photo-edit">
-                                        <input id="profile-img-file-input" name="photo" type="file"
-                                            class="hidden profile-img-file-input">
-                                        <label for="profile-img-file-input"
-                                            class="flex items-center justify-center bg-white rounded-full shadow-lg cursor-pointer size-8 dark:bg-zink-600 profile-photo-edit">
-                                            <i data-lucide="image-plus"
-                                                class="size-4 text-slate-500 fill-slate-200 dark:text-zink-200 dark:fill-zink-500"></i>
-                                        </label>
+                                    class="flex gap-3 p-4 border rounded-2xl border-amber-200 bg-amber-50 dark:border-amber-500/20 dark:bg-amber-500/10">
+                                    {{-- Icon --}}
+                                    <i data-lucide="info" class="mt-0.5 size-4 text-amber-500 shrink-0"></i>
+
+                                    {{-- Content --}}
+                                    <div class="space-y-2 text-sm text-slate-600 dark:text-zink-300">
+
+                                        <p>
+                                            Please complete your profile to reserve a slot for
+                                            <b class="text-slate-800 dark:text-white">{{ $ceeActiveession->name }}</b>.
+                                        </p>
+
+                                        <ul class="space-y-1 list-disc list-inside">
+                                            <li>Ensure that all information provided is accurate.</li>
+                                            <li>Double-check all details before submission — changes will no longer be
+                                                allowed.</li>
+                                        </ul>
+
                                     </div>
                                 </div>
-                            </div><!--end col-->
 
-                        </form>
-
-
-
-                        <div class="lg:col-span-10 2xl:col-span-9">
-                            <h5 class="mb-1">Hi! {{ $studentdetails->firstname }} {{ $studentdetails->middlename }}
-                                {{ $studentdetails->lastname }} {{ $studentdetails->ssuffix }} <i data-lucide="badge-check"
-                                    class="inline-block size-4 text-sky-500 fill-sky-100 dark:fill-custom-500/20"></i>
-                            </h5>
-                            <div class="flex gap-3 mb-4">
-                                <p class="text-slate-500 dark:text-zink-200"><i data-lucide="phone"
-                                        class="inline-block size-4 ltr:mr-1 rtl:ml-1 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-500"></i>
-                                    {{ $studentdetails->phone }}</p>
-                                <p class="text-slate-500 dark:text-zink-200"><i data-lucide="mail"
-                                        class="inline-block size-4 ltr:mr-1 rtl:ml-1 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-500"></i>
-                                    {{ $studentdetails->email }}</p>
-
-                                <p class="text-slate-500 dark:text-zink-200"><i data-lucide="calendar-days"
-                                        class="inline-block size-4 ltr:mr-1 rtl:ml-1 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-500"></i>
-                                    {{ $studentdetails->birthdate }}</p>
                             </div>
-                            <p class="text-slate-500 dark:text-zink-200"><i data-lucide="info"
-                                    class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
-                                Please take time to complete your profile to be able to reserve a slot in USM-CEE for
-                                <b>{{ $ceeActiveession->name }}</b>.
-                            </p>
-                            <p class="text-orange-500 text-slate-500 dark:text-zink-200"><i data-lucide="info"
-                                    class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
-                                Please
-                                ensure that you provide
-                                accurate and
-                                correct information.</p>
-                            <p class="text-orange-500 text-slate-500 dark:text-zink-200"><i data-lucide="info"
-                                    class="inline-block text-orange-500 size-4 fill-orange-100 dark:fill-orange-500/20"></i>
-                                Double-check
-                                all details before submitting, as you will not be able to edit them once saved.</p>
+
                         </div>
-                    </div><!--end grid-->
+                    </div>
                 </div>
             </div><!--end card-->
 
