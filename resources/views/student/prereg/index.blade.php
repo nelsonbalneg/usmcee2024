@@ -413,11 +413,21 @@
                                                 </span>
                                             </div>
 
-                                            @if (($applicant && $applicant->prereg_status == 'enrolled') || ($applicant && $applicant->status_id == 1))
+                                            @if (
+                                                ($applicant && $applicant->prereg_status == 'enrolled') ||
+                                                    ($applicant && $applicant->status_id == 1 && $applicant->temp_cor == 0))
                                                 <a href="{{ route('student.download.cor') }}"
                                                     class="inline-flex items-center gap-2 px-4 py-2 mt-2 text-sm font-semibold text-white transition-all duration-200 shadow-lg rounded-xl  bg-emerald-600 hover:-translate-y-0.5 hover:shadow-green-500/25">
                                                     <i data-lucide="eye" class="size-4"></i>
                                                     View Certificate of Registration
+                                                </a>
+                                            @endif
+
+                                            @if ($applicant && $applicant->temp_cor == 1 && $applicant->prereg_status == 'pending')
+                                                <a href="{{ route('student.print.temp.cor', $applicant->id) }}"
+                                                    class="inline-flex items-center gap-2 px-4 py-2 mt-2 text-sm font-semibold text-white transition-all duration-200 shadow-lg rounded-xl  bg-purple-600 hover:-translate-y-0.5 hover:shadow-purple-500/25">
+                                                    <i data-lucide="eye" class="size-4"></i>
+                                                    View  Certificate of Registration
                                                 </a>
                                             @endif
                                         </div>

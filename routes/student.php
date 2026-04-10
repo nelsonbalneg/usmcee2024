@@ -23,7 +23,7 @@ Route::get('terms-policy', [TermsPolicyController::class, 'show'])->name('terms-
 Route::post('terms-policy/accept', [TermsPolicyController::class, 'accept'])->name('terms-policy.accept');
 
 Route::middleware(['check.maintenance', 'terms.accepted'])->group(function () {
-    Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard')->middleware('check.pending.applicant'); 
+    Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard')->middleware('check.pending.applicant');
 
     Route::put('/test-update/{id}', [StudentProfileController::class, 'update']);
     Route::put('cee/update-photo/{id}', [StudentProfileController::class, 'uploadPhoto'])->name('cee.update-photo');
@@ -150,6 +150,6 @@ Route::middleware(['check.maintenance', 'terms.accepted'])->group(function () {
 
 
     //  Route::get('dtr/generate-report', [StudentCORController::class, 'generateDtrReport'])->name('generate-dtr.report');
-
+    Route::get('temp/print-cor/{id}', [StudentPreregController::class, 'printCOR'])->name('print.temp.cor');
 
 });
