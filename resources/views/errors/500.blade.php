@@ -11,7 +11,7 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{asset('backend/assets/images/favicon.ico')}}">
     <!-- Layout config Js -->
-    <script src="{{aset('backendssets/js/layout.js')}}"></script>
+    <script src="{{asset('backendssets/js/layout.js')}}"></script>
     <!-- Icons CSS -->
 
     <!-- Tailwind CSS -->

@@ -214,10 +214,10 @@
         }
 
         .photo-box {
-            border: 0.8px solid #cbd5e1;
+            /* border: 0.8px solid #cbd5e1; */
             padding: 5px;
             text-align: center;
-            background: #f8fafc;
+            /* background: #f8fafc; */
         }
 
         .photo {
@@ -294,9 +294,9 @@
 
         .sign-wrap {
             margin-top: 6px;
-            border: 0.8px solid #cbd5e1;
+            /* border: 0.8px solid #cbd5e1; */
             padding: 6px 7px;
-            background: #fcfdff;
+            /* background: #fcfdff; */
         }
 
         .sign-title {

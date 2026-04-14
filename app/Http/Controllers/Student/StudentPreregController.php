@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class StudentPreregController extends Controller
 {
@@ -162,13 +163,105 @@ class StudentPreregController extends Controller
         ));
     }
 
+    // public function printCOR(Request $request, $id)
+    // {
+    //     // Fetch student or fail
+    //     $student = StundentProfile::findOrFail($id);
+
+    //     // Validate required fields early
+    //     if (empty($student->app_no) || empty($student->curriculum_id)) {
+    //         abort(400, 'Incomplete student data.');
+    //     }
+
+    //     // Format full name safely
+    //     $fullName = trim(
+    //         "{$student->last_name}, {$student->first_name} " . ($student->middle_initial ?? '')
+    //     );
+
+    //     // Normalize gender
+    //     $gender = match (strtoupper($student->gender ?? '')) {
+    //         'M', 'MALE' => 'Male',
+    //         'F', 'FEMALE' => 'Female',
+    //         default => 'Male',
+    //     };
+
+    //     // Scalable campus → report mapping
+    //     $reportMap = [
+    //         1 => 'TempCert',
+    //         3 => 'TempCert_KCC',
+    //         // Add more campuses here
+    //     ];
+
+    //     $reportName = $reportMap[$student->campus_id] ?? 'TempCert';
+
+    //     // Prepare payload
+    //     $payload = [
+    //         'Name' => $fullName ?: 'N/A',
+    //         'AccountNumber' => (string) $student->app_no,
+    //         'Gender' => $gender,
+    //         'CurriculumID' => (string) $student->curriculum_id,
+    //         'PrintedBy' => auth()->user()->name ?? 'System',
+    //     ];
+
+    //     try {
+    //         $response = Http::timeout(120)
+    //             ->retry(3, 2000)
+    //             ->withQueryParameters([
+    //                 'folder' => 'enrollment',
+    //                 'reportName' => $reportName,
+    //             ])
+    //             ->post('http://172.16.0.41/api/app/reports/get-pdf-report', $payload);
+
+    //         if ($response->failed()) {
+    //             abort(500, 'Report API failed.');
+    //         }
+
+    //         // Decode response
+    //         $rawBody = $response->body();
+    //         $decoded = json_decode($rawBody, true);
+
+    //         $base64 = is_string($decoded)
+    //             ? $decoded
+    //             : trim($rawBody, '"');
+
+    //         $pdfContent = base64_decode($base64);
+
+    //         // Validate PDF
+    //         if (!$pdfContent || !str_starts_with($pdfContent, '%PDF')) {
+    //             abort(500, 'Invalid PDF received.');
+    //         }
+
+    //         // Friendly filename
+    //         $safeLastName = preg_replace('/[^A-Za-z0-9]/', '_', $student->last_name);
+    //         $friendlyName = "COR_{$safeLastName}_{$student->app_no}.pdf";
+
+    //         return response($pdfContent)
+    //             ->header('Content-Type', 'application/pdf')
+    //             ->header('Content-Disposition', "inline; filename=\"{$friendlyName}\"");
+
+    //     } catch (\Exception $e) {
+    //         abort(500, 'Something went wrong while generating the report.');
+    //     }
+    // }
+
     public function printCOR(Request $request, $id)
     {
+        Log::info('PRINT COR: Request received', [
+            'student_id' => $id,
+            'requested_by' => auth()->id(),
+        ]);
+
         // Fetch student or fail
         $student = StundentProfile::findOrFail($id);
 
         // Validate required fields early
         if (empty($student->app_no) || empty($student->curriculum_id)) {
+            Log::warning('PRINT COR: Incomplete student data', [
+                'student_id' => $student->id,
+                'app_no' => $student->app_no,
+                'curriculum_id' => $student->curriculum_id,
+            ]);
+
             abort(400, 'Incomplete student data.');
         }
 
@@ -188,7 +281,6 @@ class StudentPreregController extends Controller
         $reportMap = [
             1 => 'TempCert',
             3 => 'TempCert_KCC',
-            // Add more campuses here
         ];
 
         $reportName = $reportMap[$student->campus_id] ?? 'TempCert';
@@ -202,6 +294,15 @@ class StudentPreregController extends Controller
             'PrintedBy' => auth()->user()->name ?? 'System',
         ];
 
+        Log::info('PRINT COR: Sending request to Report API', [
+            'student_id' => $student->id,
+            'report_name' => $reportName,
+            'payload_preview' => [
+                'AccountNumber' => $payload['AccountNumber'],
+                'CurriculumID' => $payload['CurriculumID'],
+            ],
+        ]);
+
         try {
             $response = Http::timeout(120)
                 ->retry(3, 2000)
@@ -212,8 +313,19 @@ class StudentPreregController extends Controller
                 ->post('http://172.16.0.41/api/app/reports/get-pdf-report', $payload);
 
             if ($response->failed()) {
+                Log::error('PRINT COR: Report API failed', [
+                    'student_id' => $student->id,
+                    'status' => $response->status(),
+                    'response' => $response->body(),
+                ]);
+
                 abort(500, 'Report API failed.');
             }
+
+            Log::info('PRINT COR: Report API success', [
+                'student_id' => $student->id,
+                'status' => $response->status(),
+            ]);
 
             // Decode response
             $rawBody = $response->body();
@@ -223,10 +335,20 @@ class StudentPreregController extends Controller
                 ? $decoded
                 : trim($rawBody, '"');
 
+            Log::info('PRINT COR: Decoding base64 PDF', [
+                'student_id' => $student->id,
+                'base64_length' => strlen($base64),
+            ]);
+
             $pdfContent = base64_decode($base64);
 
             // Validate PDF
             if (!$pdfContent || !str_starts_with($pdfContent, '%PDF')) {
+                Log::error('PRINT COR: Invalid PDF received', [
+                    'student_id' => $student->id,
+                    'base64_sample' => substr($base64, 0, 100),
+                ]);
+
                 abort(500, 'Invalid PDF received.');
             }
 
@@ -234,11 +356,22 @@ class StudentPreregController extends Controller
             $safeLastName = preg_replace('/[^A-Za-z0-9]/', '_', $student->last_name);
             $friendlyName = "COR_{$safeLastName}_{$student->app_no}.pdf";
 
+            Log::info('PRINT COR: PDF generated successfully', [
+                'student_id' => $student->id,
+                'filename' => $friendlyName,
+            ]);
+
             return response($pdfContent)
                 ->header('Content-Type', 'application/pdf')
                 ->header('Content-Disposition', "inline; filename=\"{$friendlyName}\"");
 
         } catch (\Exception $e) {
+            Log::critical('PRINT COR: Exception occurred', [
+                'student_id' => $student->id ?? null,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
             abort(500, 'Something went wrong while generating the report.');
         }
     }
