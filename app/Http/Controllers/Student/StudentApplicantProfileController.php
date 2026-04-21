@@ -627,13 +627,17 @@ class StudentApplicantProfileController extends Controller
         $applicant->guardian_towncity = $applicant->guardian_towncity ?? '';
         $applicant->guardian_barangay = $applicant->guardian_barangay ?? '';
 
+        //fetch the Sitesettings
+        $site_settings = DB::table('site_settings')->first();
+
         return view('student.profile.step2', compact(
             'app_no',
             'result',
             'cee_profile',
             'applicant',
             'cee_session',
-            'is_applicant_exist'
+            'is_applicant_exist',
+            'site_settings'
         ));
     }
 
@@ -1000,13 +1004,17 @@ class StudentApplicantProfileController extends Controller
             ->where('preregistration_id', $cee_session->id)
             ->exists();
 
+        //fetch the Sitesettings
+        $site_settings = DB::table('site_settings')->first();
+
         return view('student.profile.step3', compact(
             'app_no',
             'result',
             'cee_profile',
             'applicant',
             'is_applicant_exist',
-            'cee_session'
+            'cee_session',
+            'site_settings'
         ));
     }
 
@@ -1188,13 +1196,17 @@ class StudentApplicantProfileController extends Controller
             ->where('preregistration_id', $cee_session->id)
             ->exists();
 
+
+        //fetch the Sitesettings
+        $site_settings = DB::table('site_settings')->first();
         return view('student.profile.step4', compact(
             'app_no',
             'result',
             'cee_profile',
             'applicant',
             'is_applicant_exist',
-            'cee_session'
+            'cee_session',
+            'site_settings'
         ));
     }
 
@@ -1291,13 +1303,17 @@ class StudentApplicantProfileController extends Controller
             ->where('preregistration_id', $cee_session->id)
             ->exists();
 
+        //fetch the Sitesettings
+        $site_settings = DB::table('site_settings')->first();
+
         return view('student.profile.step5', compact(
             'app_no',
             'result',
             'cee_profile',
             'applicant',
             'is_applicant_exist',
-            'cee_session'
+            'cee_session',
+            'site_settings'
         ));
     }
 

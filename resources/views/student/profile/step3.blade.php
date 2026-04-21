@@ -1,3 +1,13 @@
+
+@php
+    use Carbon\Carbon;
+    // Ensure birthdate is formatted for the date input
+    $birthdate = $cee_profile->birthdate ? Carbon::parse($cee_profile->birthdate)->format('Y-m-d') : '';
+
+    $start = Carbon::parse($site_settings->start_prereg_second_batch);
+    $end = Carbon::parse($site_settings->end_prereg_second_batch);
+
+@endphp
 @extends('student.layouts.master')
 @section('title')
     Pre-registration - Educational Background
@@ -41,7 +51,9 @@
 
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
-        @if ($app_no && $result->csa >= $cee_session->min_csa)
+            @if (
+            ($app_no && $result->csa >= $cee_session->min_csa && $result->confirmation_batch == 1) ||
+                (now()->between($start, $end) && $result->confirmation_batch == 2))
             <div class="xl:col-span-12">
                 <form id="studentProfileForm" action="{{ route('student.applicant-profile.step3.save') }}" method="POST">
                     @csrf

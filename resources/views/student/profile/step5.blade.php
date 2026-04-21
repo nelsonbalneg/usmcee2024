@@ -1,3 +1,12 @@
+@php
+    use Carbon\Carbon;
+    // Ensure birthdate is formatted for the date input
+    $birthdate = $cee_profile->birthdate ? Carbon::parse($cee_profile->birthdate)->format('Y-m-d') : '';
+
+    $start = Carbon::parse($site_settings->start_prereg_second_batch);
+    $end = Carbon::parse($site_settings->end_prereg_second_batch);
+
+@endphp
 @extends('student.layouts.master')
 @section('title')
     Pre-registration - Emergency Contact Information
@@ -48,7 +57,9 @@
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
-        @if ($app_no && $result->csa >= $cee_session->min_csa)
+        @if (
+            ($app_no && $result->csa >= $cee_session->min_csa && $result->confirmation_batch == 1) ||
+                (now()->between($start, $end) && $result->confirmation_batch == 2))
             {{-- <div class="xl:col-span-3">
                 <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                     <div class="card-body">
@@ -139,7 +150,8 @@
                                                 class="text-blue-500 hover:text-blue-700">Previous</a> button to go back and
                                             review your details carefully.
                                             If you find any incorrect entries, you can edit them before proceeding.
-                                            Once everything is correct, click the<b> Submit</b> button to proceed to the next
+                                            Once everything is correct, click the<b> Submit</b> button to proceed to the
+                                            next
                                             step.
                                         </p>
                                     @endif
