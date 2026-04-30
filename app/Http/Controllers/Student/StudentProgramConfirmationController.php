@@ -564,7 +564,7 @@ class StudentProgramConfirmationController extends Controller
                     'termId' => $data['termId'] ?? null,
                     'programName' => $data['programName'] ?? null,
                     'collegeName' => $data['collegeName'] ?? null,
-                    'campusName' => $data['campusName'] ?? ($data['realCampus'] ?? null),
+                    'campusName' => $data['realCampus'] ?? ($data['campusName'] ?? null),
                     'term' => $data['term'] ?? null,
                     'majorDiscDesc' => $data['majorDiscDesc'] ?? null,
                     'programCode' => $data['programCode'] ?? null,
