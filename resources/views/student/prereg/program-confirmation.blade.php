@@ -93,8 +93,7 @@
                                                     <i data-lucide="file-check" class="mt-0.5 size-4 shrink-0"></i>
                                                     <span class="text-left">
                                                         Submit the original copies of the pertinent requirements to the
-                                                        <b>Admission and Records Office (ARO)</b> on or before
-                                                        <b>April 20, 2026</b>.
+                                                        <b>Admission and Records Office (ARO)</b> as soon as possible. If you already submitted your documents, kindly disregard this message.
                                                     </span>
                                                 </div>
                                             @else
