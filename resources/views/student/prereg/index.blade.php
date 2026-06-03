@@ -635,10 +635,10 @@
                                             <h5 class="text-base font-bold text-slate-800 dark:text-white">
                                                 {{ $applicant->student_no ?? '---' }}
                                             </h5>
-                                            <span
+                                            {{-- <span
                                                 class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-700">
-                                                Student ID
-                                            </span>
+                                                {{ $applicant->student_no ?? '---' }}
+                                            </span> --}}
                                         </div>
                                         <p class="text-sm text-slate-500 dark:text-zink-300">Student ID Number</p>
                                     </div>
