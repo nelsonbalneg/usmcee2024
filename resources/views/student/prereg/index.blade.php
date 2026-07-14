@@ -255,10 +255,19 @@
                                                 <h6 class="font-bold tracking-tight text-slate-800 dark:text-white">
                                                     Processing of Enrollment
                                                 </h6>
-                                                <span
-                                                    class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
-                                                    Processing
-                                                </span>
+
+                                                @if ($applicant && $applicant->status_id == 1 && $applicant->prereg_status == 'enrolled')
+                                                    <span
+                                                        class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-700">
+                                                        Completed
+                                                    </span>
+                                                @else
+                                                    <span
+                                                        class="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-700">
+                                                        In Progress
+                                                    </span>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>
