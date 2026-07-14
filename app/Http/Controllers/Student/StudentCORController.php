@@ -48,39 +48,44 @@ class StudentCORController extends Controller
 
     public function downloadCOR()
     {
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
 
-        // Get only the reg_no value
-        $regID = StundentProfile::where('user_id', $user_id)
-            ->value('reg_no');
+        // Get the active student profile
+        $studentProfile = StundentProfile::join(
+            'cee_sessions',
+            'cee_sessions.id',
+            '=',
+            'stundent_profiles.preregistration_id'
+        )
+            ->where('stundent_profiles.user_id', $user_id)
+            ->where('cee_sessions.status', 'active')
+            ->select(
+                'stundent_profiles.reg_no',
+                'stundent_profiles.campusName'
+            )
+            ->first();
 
-        $campusName = StundentProfile::where('user_id', $user_id)
-            ->value('campusName');
+        if (!$studentProfile) {
+            Log::warning('No active registration found for user ID: ' . $user_id);
 
-        // Log the extracted reg_no
-        Log::info('Downloading COR - User ID: ' . $user_id . ', RegID: ' . $regID . ', Campus: ' . $campusName);
-
-        // Handle missing reg_no
-        if (!$regID) {
-            Log::warning('No RegID found for user ID: ' . $user_id);
             return response()->json([
-                'message' => 'Registration ID not found.',
+                'message' => 'No active registration found.',
             ], 404);
         }
 
+        $regID = $studentProfile->reg_no;
+        $campusName = $studentProfile->campusName;
 
-        $apiUrl = '';
-        $queryParams = [];
+        Log::info('Downloading COR - User ID: ' . $user_id . ', RegID: ' . $regID . ', Campus: ' . $campusName);
+
+        $apiUrl = 'http://172.16.0.41/api/app/reports/get-pdf-report';
 
         if ($campusName == 'USM Kidapawan City Campus') {
-            $apiUrl = 'http://172.16.0.41/api/app/reports/get-pdf-report';
-
             $queryParams = [
                 'folder' => 'enrollment',
                 'reportName' => 'COR_KCC',
             ];
         } else {
-             $apiUrl = 'http://172.16.0.41/api/app/reports/get-pdf-report';
             $queryParams = [
                 'folder' => 'enrollment',
                 'reportName' => 'COR',
@@ -97,14 +102,10 @@ class StudentCORController extends Controller
                     'RegID' => $regID,
                 ]);
 
-        // Log full response details
         Log::info('API Response Status: ' . $response->status());
 
         if ($response->successful()) {
-            $base64 = $response->body();
-            $pdfContent = base64_decode($base64);
-
-            Log::info('COR PDF successfully decoded and ready for download.');
+            $pdfContent = base64_decode($response->body());
 
             return response($pdfContent)
                 ->header('Content-Type', 'application/pdf')
