@@ -10,27 +10,12 @@
             margin: 0.22in 0.25in 0.32in 0.25in;
         }
 
-        /* Replace these with your actual font files if available */
-        @font-face {
-            font-family: 'CorbelCustom';
-            src: url("{{ public_path('fonts/corbel.ttf') }}") format("truetype");
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'CorbelCustom';
-            src: url("{{ public_path('fonts/corbel-bold.ttf') }}") format("truetype");
-            font-weight: bold;
-            font-style: normal;
-        }
-
         * {
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'CorbelCustom', Corbel, DejaVu Sans, sans-serif;
+            font-family: DejaVu Sans, sans-serif;
             margin: 0;
             color: #1f2937;
             font-size: 8.35pt;
@@ -474,6 +459,79 @@
         .center {
             text-align: center;
         }
+
+        /* Print-safe layout: explicit table widths and no flex/grid dependencies. */
+        body { font-size: 9pt; line-height: 1.35; }
+        @page { margin: 0.32in 0.35in 0.4in; }
+        .header-green { border-radius: 0; padding: 10px 12px; margin-bottom: 14px; }
+        .header-green .title { font-size: 11pt; letter-spacing: .4px; }
+        .header-green .subtitle { font-size: 8pt; margin-top: 3px; }
+        .header-table td { vertical-align: middle; }
+        .school-name { font-size: 14pt; line-height: 1.2; }
+        .logo { width: 65px; height: 65px; }
+        .qr-main { width: 76px; height: 76px; border: none; }
+        .ref-box { margin-top: 12px; padding: 9px 11px; border-left: 3px solid #065f46; background: #f5faf8; }
+        .ref-text { font-size: 8pt; line-height: 1.4; }
+        .section { margin-top: 12px; page-break-inside: avoid; }
+        .section-head { padding: 7px 10px; background: #edf5f2; color: #064e3b; font-size: 8pt; }
+        .section-body { padding: 12px; }
+        .left-pane { width: 24%; padding-right: 12px; border-right: 1px solid #e2e8f0; }
+        .right-pane { width: 76%; padding-left: 16px; }
+        .photo { width: 100px; height: 100px; }
+        .fullname { font-size: 8pt; line-height: 1.4; margin-top: 8px; }
+        .status-tag { border: none; background: #ecfdf5; color: #065f46; font-size: 7pt; padding: 4px 7px; }
+        .number-label { margin-top: 5px; font-size: 7pt; color: #64748b; text-transform: uppercase; letter-spacing: .7px; }
+        .number-value { font-size: 19pt; font-weight: bold; letter-spacing: 1.5px; color: #064e3b; margin-bottom: 8px; }
+        .info-label { width: 106px; font-size: 8pt; font-weight: normal; }
+        .info-value { font-size: 8.5pt; line-height: 1.4; }
+        .info-table td { padding-bottom: 5px; }
+        .exam-summary { margin-top: 12px; background: #f8fafc; border: 1px solid #cbd5e1; table-layout: fixed; }
+        .exam-summary td { padding: 10px; vertical-align: top; }
+        .exam-summary .summary-label { color: #64748b; font-size: 7pt; text-transform: uppercase; letter-spacing: .5px; }
+        .exam-summary .summary-value { margin-top: 4px; color: #0f172a; font-size: 10pt; font-weight: bold; }
+        .req-note { font-size: 8pt; margin-bottom: 6px; }
+        .req-list li { font-size: 8pt; line-height: 1.45; margin-bottom: 3px; }
+        .sign-wrap { margin-top: 12px; padding: 6px 8px; page-break-inside: avoid; }
+        .sign-line { margin-top: 30px; padding-top: 5px; font-size: 7pt; }
+        .perforation-wrap { border-top: 1px dashed #94a3b8; margin: 22px 0 10px; padding-top: 5px; }
+        .perforation-label { font-size: 7pt; }
+        .bottom-stub { background: #fff; page-break-inside: avoid; }
+        .bottom-stub-head { padding: 7px 10px; background: #edf5f2; color: #064e3b; }
+        .bottom-stub-body { padding: 9px; }
+        .bottom-stub-note { font-size: 7pt; margin-bottom: 8px; }
+        .stub-table { table-layout: fixed; }
+        .stub-table td { font-size: 7.5pt; padding: 6px; word-wrap: break-word; }
+        .stub-label { width: 12%; background: #f8fafc; }
+        .stub-col-app { width: 30%; }
+        .stub-col-exam { width: 26%; }
+        .stub-col-qr { width: 16%; vertical-align: middle !important; }
+        .qr-stub { width: 62px; height: 62px; border: none; }
+        .map-title { font-size: 15pt; color: #064e3b; margin-top: 10px; }
+        .map-subtitle { font-size: 8pt; margin: 8px 0 16px; }
+        .map-image { max-height: 10.3in; }
+        .watermark { display: none; }
+        /* Keep the detachable stub with the main slip on the first folio page. */
+        .header-green { padding: 7px 10px; margin-bottom: 8px; }
+        .qr-main { width: 66px; height: 66px; }
+        .school-name { font-size: 13pt; }
+        .ref-box { margin-top: 8px; padding: 7px 9px; }
+        .section { margin-top: 8px; }
+        .section-body { padding: 8px; }
+        .section-head { padding: 5px 8px; }
+        .photo { width: 88px; height: 88px; }
+        .info-table td { padding-bottom: 2px; }
+        .info-table tr+tr td { padding-top: 1px; }
+        .info-value { font-size: 8pt; line-height: 1.3; }
+        .number-value { font-size: 17pt; margin-bottom: 5px; }
+        .exam-summary { margin-top: 8px; }
+        .exam-summary td { padding: 7px 9px; }
+        .req-list li { line-height: 1.25; margin-bottom: 1px; }
+        .sign-wrap { margin-top: 7px; }
+        .sign-line { margin-top: 22px; }
+        .perforation-wrap { margin: 14px 0 7px; }
+        .stub-table td { padding: 4px 5px; font-size: 7pt; }
+        .bottom-stub-body { padding: 7px; }
+        .bottom-stub .sign-line { margin-top: 18px; }
     </style>
 </head>
 
@@ -552,11 +610,9 @@
                         <td class="right-pane">
                             <div class="status-tag">Reserved Examination Slot</div>
 
+                            <div class="number-label">Application number</div>
+                            <div class="number-value">{{ $cee_reservation->app_no }}</div>
                             <table class="info-table">
-                                <tr>
-                                    <td class="info-label">Application No.</td>
-                                    <td class="info-value">{{ $cee_reservation->app_no }}</td>
-                                </tr>
                                 <tr>
                                     <td class="info-label">Applicant Name</td>
                                     <td class="info-value">{{ $fullName }}</td>
@@ -571,18 +627,9 @@
                                         {{ $cee_reservation->college_name }} / {{ $cee_reservation->room_name }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="info-label">Examination Date</td>
-                                    <td class="info-value">
-                                        {{ \Carbon\Carbon::parse($cee_reservation->schedule)->format('F j, Y') }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="info-label">Examination Time</td>
-                                    <td class="info-value">{{ $cee_reservation->time }}</td>
-                                </tr>
-                                <tr>
                                     <td class="info-label">Applicant Type</td>
                                     <td class="info-value">
-                                        {{ $cee_reservation->is_repeat_exam === 'Yes' ? 'Retaker' : 'First Time Taker' }}
+                                        {{ in_array((string) $cee_reservation->is_repeat_exam, ['Yes', '1'], true) ? 'Retaker' : 'First Time Taker' }}
                                     </td>
                                 </tr>
                             </table>
@@ -591,6 +638,14 @@
                 </table>
             </div>
         </div>
+
+        <table class="exam-summary">
+            <tr>
+                <td style="width: 38%;"><div class="summary-label">Examination date</div><div class="summary-value">{{ \Carbon\Carbon::parse($cee_reservation->schedule)->format('F j, Y') }}</div></td>
+                <td style="width: 38%; border-left: 1px solid #cbd5e1;"><div class="summary-label">Examination time</div><div class="summary-value">{{ $cee_reservation->time }}</div></td>
+                <td style="width: 24%; border-left: 1px solid #cbd5e1;"><div class="summary-label">Assigned room</div><div class="summary-value">{{ $cee_reservation->room_name }}</div></td>
+            </tr>
+        </table>
 
         <div class="section">
             <div class="section-head">Requirements Upon Entry to the Testing Center / Venue</div>
@@ -622,12 +677,8 @@
         </div>
 
         {{-- PERFORATION --}}
-        <div class="perforation-wrap" style="margin-top: 20px; margin-bottom: 10px;;">
-            {{-- <div class="perforation-label">Cut Here</div> --}}
-            <div class="perforation-dots">
-                ••••••••••••••••••••••••••••••••••••••••••••••••••• Cut Here
-                •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
-            </div>
+        <div class="perforation-wrap">
+            <div class="perforation-label">Cut along this line - verification stub</div>
         </div>
 
         {{-- FULL-WIDTH BOTTOM TEAR-OFF STUB --}}
@@ -641,10 +692,10 @@
 
                 <table class="stub-table">
                     <tr>
-                        <td class="stub-label stub-col-app">Applicant</td>
+                        <td class="stub-label">Applicant</td>
                         <td class="stub-col-app">{{ $fullName }}</td>
 
-                        <td class="stub-label stub-col-exam">Session</td>
+                        <td class="stub-label">Session</td>
                         <td class="stub-col-exam">{{ $cee_reservation->exam_session }}</td>
 
                         <td class="stub-col-qr" rowspan="3">
@@ -683,6 +734,10 @@
         </div>
     </div>
 
+    @php
+        $mapPath = public_path('backend/assets/images/map/' . Str::lower($cee_reservation->map_file ?? '') . '.png');
+    @endphp
+    @if(is_file($mapPath))
     {{-- PAGE 2 --}}
     <div class="page page-break">
         <div class="map-title">Testing Center Location Map</div>
@@ -691,10 +746,11 @@
         </div>
 
         <div class="map-wrap">
-            <img src="{{ public_path('backend/assets/images/map/' . Str::lower($cee_reservation->map_file) . '.png') }}"
+            <img src="{{ $mapPath }}"
                 alt="{{ $cee_reservation->map_file }}" class="map-image">
         </div>
     </div>
+    @endif
 </body>
 
 </html>

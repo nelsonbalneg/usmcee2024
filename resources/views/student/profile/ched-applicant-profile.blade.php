@@ -504,7 +504,7 @@
                             </div><!--end col-->
 
                             <div class="xl:col-span-3">
-                                <label for="desc_is_gida" class="inline-block mb-2 text-base font-medium">
+                                <label for="is_gida_desc" class="inline-block mb-2 text-base font-medium">
                                     Please specify</label>
                                 <input type="text" name="desc_is_gida" id="is_gida_desc"
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -523,9 +523,9 @@
                                     class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                     name="is_ip" data-choices data-choices-search-false>
                                     <option value="">Select</option>
-                                    <option value="1" {{ $applicant->is_ip == '1' ? 'selected' : '' }}>Yes
+                                    <option value="1" {{ old('is_ip', $applicant->is_ip) == '1' ? 'selected' : '' }}>Yes
                                     </option>
-                                    <option value="0" {{ $applicant->is_ip == '0' ? 'selected' : '' }}>No
+                                    <option value="0" {{ old('is_ip', $applicant->is_ip) == '0' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                             </div><!--end col-->
@@ -1338,16 +1338,17 @@
                     fields.forEach(field => {
                         const input = document.getElementById(field.inputId);
                         const label = document.querySelector(`label[for="${field.inputId}"]`);
+                        if (!input) return;
 
                         if (isYes) {
                             input.removeAttribute('disabled');
 
                             // Only clear the input value if it's not already set (i.e., from DB or old value)
-                            if (!input.value) {
+                            if (!input.value || input.value === 'N/A') {
                                 input.value = '';
                             }
 
-                            if (!label.querySelector('sup')) {
+                            if (label && !label.querySelector('sup')) {
                                 const sup = document.createElement('sup');
                                 sup.className = 'text-red-500';
                                 sup.innerText = '* required';
@@ -1361,7 +1362,7 @@
                                 input.value = 'N/A';
                             }
 
-                            const sup = label.querySelector('sup');
+                            const sup = label?.querySelector('sup');
                             if (sup) sup.remove();
                         }
                     });

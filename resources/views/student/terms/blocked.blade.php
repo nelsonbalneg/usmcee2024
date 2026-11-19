@@ -19,9 +19,9 @@
             </li>
         </ul>
     </div>
-    <div class="flex items-center justify-center min-h-screen px-4 bg-slate-100">
-        <div class="w-full max-w-3xl overflow-hidden bg-white border shadow-sm border-slate-200 rounded-2xl">
-            <div class="px-6 py-5 border-b border-slate-200 bg-sky-50">
+    <div class="w-full min-w-0">
+        <div class="w-full overflow-hidden bg-white border shadow-sm border-slate-200 rounded-2xl">
+            <div class="px-4 py-5 sm:px-6 border-b border-slate-200 bg-sky-50">
                 <h1 class="text-xl font-semibold text-slate-800">
                     {{ $activeTermsPolicy->title }}
                 </h1>
@@ -33,11 +33,11 @@
                 </p>
             </div>
 
-            <div class="px-6 py-5 max-h-[60vh] overflow-y-auto">
+            <div class="px-4 py-5 sm:px-6 break-words">
                 {!! $activeTermsPolicy->content !!}
             </div>
 
-            <div class="px-6 py-5 border-t border-slate-200 bg-slate-50">
+            <div class="px-4 py-5 sm:px-6 border-t border-slate-200 bg-slate-50">
                 <label class="flex items-start gap-3 mb-4">
                     <input type="checkbox" id="acceptTermsCheckbox"
                         class="mt-1 rounded border-slate-300 text-sky-600 focus:ring-sky-500">
@@ -47,7 +47,7 @@
                     </span>
                 </label>
 
-                <div class="flex justify-end">
+                <div class="flex justify-end pr-16 lg:pr-0">
                     <button id="acceptTermsBtn" data-policy-id="{{ $activeTermsPolicy->id }}" disabled
                         class="px-4 py-2 text-sm font-medium text-white rounded-lg bg-slate-400">
                         Accept and Continue

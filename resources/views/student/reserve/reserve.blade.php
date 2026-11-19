@@ -286,7 +286,7 @@
                                     <div class="xl:col-span-4">
                                         <label for="campus" class="inline-block mb-2 text-base font-medium">Select
                                             Campus<sup class="text-red-500">* required</sup></label>
-                                        <select id="campus-select" name="campus" data-choices
+                                        <select id="campus-select" name="campus" data-reservation-search
                                             class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                             <option selected="true" disabled>Choose Campus</option>
                                             @foreach ($campusNames as $campusName)
@@ -304,7 +304,7 @@
                                         <label for="firstprioprog" class="inline-block mb-2 text-base font-medium">First
                                             Priority
                                             Program <sup class="text-red-500">* required</sup></label>
-                                        <select id="program-select" name="firstprioprog" data-choices
+                                        <select id="program-select" name="firstprioprog" data-reservation-search
                                             class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                             <option selected="true" disabled>Choose Program</option>
                                         </select>
@@ -316,7 +316,7 @@
                                     <div class="xl:col-span-4">
                                         <label for="campus2" class="inline-block mb-2 text-base font-medium">Select
                                             Campus<sup class="text-red-500">* required</sup></label>
-                                        <select id="campus-select2" name="campus2" data-choices
+                                        <select id="campus-select2" name="campus2" data-reservation-search
                                             class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                             <option selected="true" disabled>Choose Campus</option>
                                             @foreach ($campusNames as $campusName)
@@ -335,7 +335,7 @@
                                         <label for="secondprioprog" class="inline-block mb-2 text-base font-medium">Second
                                             Priority
                                             Program <sup class="text-red-500">* required</sup></label>
-                                        <select id="program-select2" name="secondprioprog" data-choices
+                                        <select id="program-select2" name="secondprioprog" data-reservation-search
                                             class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                             <option selected="true" disabled>Choose Program</option>
                                         </select>
@@ -348,7 +348,7 @@
                                     <div class="xl:col-span-4">
                                         <label for="campus3" class="inline-block mb-2 text-base font-medium">Select
                                             Campus<sup class="text-red-500">* required</sup></label>
-                                        <select id="campus-select3" name="campus3" data-choices
+                                        <select id="campus-select3" name="campus3" data-reservation-search
                                             class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                             <option selected="true" disabled>Choose Campus</option>
                                             @foreach ($campusNames as $campusName)
@@ -364,7 +364,7 @@
 
                                     <!-- Modal overlay for loading spinner -->
                                     <div id="loading-modal"
-                                        class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-800 bg-opacity-50">
+                                        class="fixed inset-0 z-50 flex items-center justify-center hidden bg-transparent" role="status" aria-live="polite">
                                         <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg">
                                             <svg class="w-10 h-10 mb-4 animate-spin text-custom-500"
                                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -382,7 +382,7 @@
                                         <label for="thirdprioprog" class="inline-block mb-2 text-base font-medium">Third
                                             Priority
                                             Program <sup class="text-red-500">* required</sup></label>
-                                        <select id="program-select3" name="thirdprioprog" data-choices
+                                        <select id="program-select3" name="thirdprioprog" data-reservation-search
                                             class="form-input border-slate-300 focus:outline-none focus:border-custom-500">
                                             <option selected="true" disabled>Choose Program</option>
                                         </select>
@@ -541,7 +541,7 @@
                                                 class="inline-block mb-2 text-sm font-semibold text-slate-700 dark:text-zink-100">
                                                 Select Campus <span class="text-red-500">*</span>
                                             </label>
-                                            <select id="campus-select" name="campus" data-choices
+                                            <select id="campus-select" name="campus" data-reservation-search
                                                 class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm focus:border-custom-500 focus:outline-none dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100">
                                                 <option selected disabled>Choose Campus</option>
                                                 @foreach ($campusNames as $campusName)
@@ -558,7 +558,7 @@
                                                 class="inline-block mb-2 text-sm font-semibold text-slate-700 dark:text-zink-100">
                                                 First Priority Program <span class="text-red-500">*</span>
                                             </label>
-                                            <select id="program-select" name="firstprioprog" data-choices
+                                            <select id="program-select" name="firstprioprog" data-reservation-search
                                                 class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm focus:border-custom-500 focus:outline-none dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100">
                                                 <option selected disabled>Choose Program</option>
                                             </select>
@@ -573,7 +573,7 @@
                                                 class="inline-block mb-2 text-sm font-semibold text-slate-700 dark:text-zink-100">
                                                 Select Campus <span class="text-red-500">*</span>
                                             </label>
-                                            <select id="campus-select2" name="campus2" data-choices
+                                            <select id="campus-select2" name="campus2" data-reservation-search
                                                 class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm focus:border-custom-500 focus:outline-none dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100">
                                                 <option selected disabled>Choose Campus</option>
                                                 @foreach ($campusNames as $campusName)
@@ -590,7 +590,7 @@
                                                 class="inline-block mb-2 text-sm font-semibold text-slate-700 dark:text-zink-100">
                                                 Second Priority Program <span class="text-red-500">*</span>
                                             </label>
-                                            <select id="program-select2" name="secondprioprog" data-choices
+                                            <select id="program-select2" name="secondprioprog" data-reservation-search
                                                 class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm focus:border-custom-500 focus:outline-none dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100">
                                                 <option selected disabled>Choose Program</option>
                                             </select>
@@ -605,7 +605,7 @@
                                                 class="inline-block mb-2 text-sm font-semibold text-slate-700 dark:text-zink-100">
                                                 Select Campus <span class="text-red-500">*</span>
                                             </label>
-                                            <select id="campus-select3" name="campus3" data-choices
+                                            <select id="campus-select3" name="campus3" data-reservation-search
                                                 class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm focus:border-custom-500 focus:outline-none dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100">
                                                 <option selected disabled>Choose Campus</option>
                                                 @foreach ($campusNames as $campusName)
@@ -622,7 +622,7 @@
                                                 class="inline-block mb-2 text-sm font-semibold text-slate-700 dark:text-zink-100">
                                                 Third Priority Program <span class="text-red-500">*</span>
                                             </label>
-                                            <select id="program-select3" name="thirdprioprog" data-choices
+                                            <select id="program-select3" name="thirdprioprog" data-reservation-search
                                                 class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm focus:border-custom-500 focus:outline-none dark:border-zink-600 dark:bg-zink-700 dark:text-zink-100">
                                                 <option selected disabled>Choose Program</option>
                                             </select>
@@ -699,7 +699,7 @@
 
                     {{-- Loading Modal --}}
                     <div id="loading-modal"
-                        class="fixed inset-0 z-50 flex items-center justify-center hidden bg-slate-950/50 backdrop-blur-sm">
+                        class="fixed inset-0 z-50 flex items-center justify-center hidden bg-transparent" role="status" aria-live="polite">
                         <div
                             class="flex flex-col items-center p-6 bg-white border shadow-xl rounded-2xl border-slate-200 dark:bg-zink-800 dark:border-zink-600">
                             <svg class="w-10 h-10 mb-4 animate-spin text-custom-500" xmlns="http://www.w3.org/2000/svg"
@@ -921,32 +921,55 @@
             const thirdprogram_policy_id_Input = document.getElementById('thirdprogram_policy_id');
 
 
+            const searchableSelects = new Map();
+            const campusTerms = new Map();
+            const programDetails = new Map();
+            [campusSelect1, campusSelect2, campusSelect3].filter(Boolean).forEach(select => {
+                campusTerms.set(select, new Map(Array.from(select.options, option => [option.value, option.dataset.termid])));
+            });
+            document.querySelectorAll('[data-reservation-search], #examcampus').forEach(select => {
+                searchableSelects.set(select, new Choices(select, {
+                    searchEnabled: true,
+                    searchPlaceholderValue: 'Type to search...',
+                    shouldSort: false,
+                    itemSelectText: '',
+                    allowHTML: false,
+                }));
+            });
+
+            function replacePrograms(select, options) {
+                const choices = searchableSelects.get(select);
+                choices.removeActiveItems();
+                choices.clearChoices();
+                choices.setChoices(options, 'value', 'label', true);
+            }
+
             function loadPrograms(campusSelect, programSelect) {
                 const realCampusId = campusSelect.value;
-                const termId = campusSelect.selectedOptions[0].dataset.termid;
+                const termId = campusTerms.get(campusSelect)?.get(realCampusId);
 
                 if (!realCampusId || !termId) return; // Exit if missing values
 
-                programSelect.innerHTML = '<option selected disabled>Please wait...</option>';
+                programDetails.set(programSelect, new Map());
+                replacePrograms(programSelect, [{ value: '', label: 'Please wait...', selected: true, disabled: true }]);
 
                 fetch(`/student/cee/get-programs-by-campus?termId=${termId}&realCampusId=${realCampusId}`)
                     .then(response => response.json())
                     .then(data => {
-                        programSelect.innerHTML = '<option selected disabled>Choose Program</option>';
-                        data.forEach(program => {
-                            const option = document.createElement('option');
-                            option.value = program.programId;
-                            option.textContent = program.majorDiscDesc ?
-                                `${program.programName} - ${program.majorDiscDesc}` : program
-                                .programName;
-                            option.setAttribute('data-program-name', program.programName);
-                            option.setAttribute('data-program-policy_id', program.id);
-                            programSelect.appendChild(option);
-                        });
+                        if (campusSelect.value !== realCampusId) return;
+                        programDetails.set(programSelect, new Map(data.map(program => [String(program.programId), program])));
+                        replacePrograms(programSelect, [
+                            { value: '', label: 'Choose Program', selected: true, disabled: true },
+                            ...data.map(program => ({
+                                value: String(program.programId),
+                                label: program.majorDiscDesc ? `${program.programName} - ${program.majorDiscDesc}` : program.programName,
+                            }))
+                        ]);
                     })
                     .catch(error => {
                         console.error('Error loading programs:', error);
-                        programSelect.innerHTML = '<option selected disabled>Error loading programs</option>';
+                        if (campusSelect.value !== realCampusId) return;
+                        replacePrograms(programSelect, [{ value: '', label: 'Error loading programs', selected: true, disabled: true }]);
                     });
             }
 
@@ -956,21 +979,21 @@
 
             // Update priority description inputs when a program is selected
             programSelect1.addEventListener('change', () => {
-                const selectedOption = programSelect1.options[programSelect1.selectedIndex];
-                firstPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
-                firstprogram_policy_id_Input.value = selectedOption.getAttribute('data-program-policy_id');
+                const program = programDetails.get(programSelect1)?.get(programSelect1.value);
+                firstPriorityDescInput.value = program?.programName ?? '';
+                firstprogram_policy_id_Input.value = program?.id ?? '';
             });
 
             programSelect2.addEventListener('change', () => {
-                const selectedOption = programSelect2.options[programSelect2.selectedIndex];
-                secondPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
-                secondprogram_policy_id_Input.value = selectedOption.getAttribute('data-program-policy_id');
+                const program = programDetails.get(programSelect2)?.get(programSelect2.value);
+                secondPriorityDescInput.value = program?.programName ?? '';
+                secondprogram_policy_id_Input.value = program?.id ?? '';
             });
 
             programSelect3.addEventListener('change', () => {
-                const selectedOption = programSelect3.options[programSelect3.selectedIndex];
-                thirdPriorityDescInput.value = selectedOption.getAttribute('data-program-name');
-                thirdprogram_policy_id_Input.value = selectedOption.getAttribute('data-program-policy_id');
+                const program = programDetails.get(programSelect3)?.get(programSelect3.value);
+                thirdPriorityDescInput.value = program?.programName ?? '';
+                thirdprogram_policy_id_Input.value = program?.id ?? '';
             });
         });
     </script>

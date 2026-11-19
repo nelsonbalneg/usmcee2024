@@ -9,6 +9,13 @@ class Reservation extends Model
 {
     use HasFactory;
 
+    protected static function booted(): void
+    {
+        static::saving(function (Reservation $reservation) {
+            $reservation->checksum = \App\Services\ReservationChecksum::calculate($reservation->app_no);
+        });
+    }
+
     // Define the relationship to the User model
     public function applicant()
     {
