@@ -59,6 +59,7 @@ class CeeSlipController extends Controller
             ->select(
                 'reservations.user_id',
                 'reservations.app_no',
+                'reservations.checksum',
                 'reservations.firstpriorty_desc',
                 'reservations.secondpriority_desc',
                 'reservations.thirdpriorty_desc',

@@ -1,0 +1,7 @@
+# Admin reservation alignment
+
+The admin create flow now matches student searchable program selection and numbering, while retaining manual room/batch assignment and numeric sequence allocation. The user selector remains admin-only. Program values use programId, while hidden policy IDs use id. Retaker status is recomputed from the selected applicant on the server. Reservation creation, room decrement, operation logging and sequence increment share one retryable transaction.
+
+Deploy the student and admin allocators together with all writers stopped. Run reservations:audit-numbers, then migrations, before serving traffic. Both applications MUST connect to the same reservations, cee_sessions and reservation_sequences database tables to coordinate numbering. If their databases differ, their counters cannot coordinate. Migration filenames match the student application so a shared migrations ledger skips already-applied migrations. No historical application numbers are changed. The checksum migration backfills the checksum field only. Keep the existing operation-log hooks.
+
+Run ReservationApplicationNumberTest and ReservationTransactionTest on an isolated connection. SQL Server load testing remains required; SQLite functional tests do not establish production concurrency behavior. Confirm applicant search, three program loads, policy IDs, available rooms, manual batch/room selection and room capacity validation in the browser. Existing manual room-management routes remain available to other admin screens.

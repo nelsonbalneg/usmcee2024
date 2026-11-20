@@ -2,78 +2,144 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\ReservationSequenceExhausted;
 use App\Services\ReservationApplicationNumber;
+use App\Services\ReservationNumberAudit;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Carbon;
-use Mockery;
-use PHPUnit\Framework\Attributes\PreserveGlobalState;
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
-#[RunTestsInSeparateProcesses]
-#[PreserveGlobalState(false)]
 class ReservationApplicationNumberTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        // Isolated connection: never run destructive schema setup against the application DB.
+        config(['database.default' => 'sequence_test', 'database.connections.sequence_test' => [
+            'driver' => 'sqlite', 'database' => ':memory:', 'prefix' => '',
+        ]]);
+        Schema::create('cee_sessions', function (Blueprint $t) { $t->id(); });
+        Schema::create('reservations', function (Blueprint $t) {
+            $t->id(); $t->integer('cee_session_id'); $t->string('app_no')->unique();
+            $t->integer('checksum')->nullable(); $t->timestamps();
+        });
+        (require database_path('migrations/2026_11_20_000001_create_reservation_sequences_table.php'))->up();
+        DB::table('cee_sessions')->insert([['id' => 3], ['id' => 14]]);
+        Carbon::setTestNow(Carbon::parse('2026-11-20', 'Asia/Manila'));
+    }
+
     protected function tearDown(): void
     {
         Carbon::setTestNow();
+        DB::purge('sequence_test');
         parent::tearDown();
     }
 
-    public function test_first_number_matches_requested_format(): void
+    private function create(int $session = 3): \App\Models\Reservation
     {
-        Carbon::setTestNow(Carbon::parse('2026-11-19'));
-        $model = Mockery::mock('alias:App\Models\Reservation');
-        $count = Mockery::mock();
-        $count->shouldReceive('count')->once()->andReturn(0);
-        $model->shouldReceive('where')->with('cee_session_id', 3)->once()->andReturn($count);
-        $exists = Mockery::mock();
-        $exists->shouldReceive('exists')->once()->andReturn(false);
-        $model->shouldReceive('where')->with('app_no', '26310001')->once()->andReturn($exists);
-
-        $this->assertSame('26310001', (new ReservationApplicationNumber)->next(3));
+        return app(ReservationApplicationNumber::class)->createReservation($session, []);
     }
 
-    public function test_uses_session_count_and_skips_existing_numbers(): void
+    public function test_padded_sequences_and_independent_sessions_and_years(): void
     {
-        Carbon::setTestNow(Carbon::parse('2026-11-19'));
-        $model = Mockery::mock('alias:App\Models\Reservation');
-        $count = Mockery::mock();
-        $count->shouldReceive('count')->once()->andReturn(10015);
-        $model->shouldReceive('where')->with('cee_session_id', 3)->once()->andReturn($count);
-        foreach (['26310015' => true, '26310016' => true, '26310017' => false] as $number => $taken) {
-            $exists = Mockery::mock();
-            $exists->shouldReceive('exists')->once()->andReturn($taken);
-            $model->shouldReceive('where')->with('app_no', (string) $number)->once()->andReturn($exists);
+        for ($i = 1; $i <= 101; $i++) {
+            $this->assertSame('263'.str_pad($i, 5, '0', STR_PAD_LEFT), $this->create()->app_no);
         }
-
-        $this->assertSame('26310017', (new ReservationApplicationNumber)->next(3));
+        $this->assertSame('261400001', $this->create(14)->app_no);
+        Carbon::setTestNow(Carbon::parse('2027-01-01', 'Asia/Manila'));
+        $this->assertSame('27300001', $this->create()->app_no);
     }
 
-    public function test_large_count_is_used_without_adding_10000(): void
+    public function test_deleted_numbers_are_not_reused(): void
     {
-        Carbon::setTestNow(Carbon::parse('2026-11-19'));
-        $model = Mockery::mock('alias:App\Models\Reservation');
-        $count = Mockery::mock();
-        $count->shouldReceive('count')->once()->andReturn(18123);
-        $model->shouldReceive('where')->with('cee_session_id', 3)->once()->andReturn($count);
-        $exists = Mockery::mock();
-        $exists->shouldReceive('exists')->once()->andReturn(false);
-        $model->shouldReceive('where')->with('app_no', '26318123')->once()->andReturn($exists);
-
-        $this->assertSame('26318123', (new ReservationApplicationNumber)->next(3));
+        $this->create()->delete();
+        $this->assertSame('26300002', $this->create()->app_no);
     }
 
-    public function test_count_eleven_produces_10011_suffix(): void
+    public function test_caller_rollback_reverts_allocation_and_reservation(): void
     {
-        Carbon::setTestNow(Carbon::parse('2026-11-19'));
-        $model = Mockery::mock('alias:App\Models\Reservation');
-        $count = Mockery::mock();
-        $count->shouldReceive('count')->once()->andReturn(11);
-        $model->shouldReceive('where')->with('cee_session_id', 3)->once()->andReturn($count);
-        $exists = Mockery::mock();
-        $exists->shouldReceive('exists')->once()->andReturn(false);
-        $model->shouldReceive('where')->with('app_no', '26310011')->once()->andReturn($exists);
+        try {
+            DB::transaction(function () { $this->create(); throw new \RuntimeException('failure'); });
+        } catch (\RuntimeException $e) {
+            $this->assertSame('failure', $e->getMessage());
+        }
+        $this->assertSame(0, DB::table('reservations')->count());
+        $this->assertSame('26300001', $this->create()->app_no);
+    }
 
-        $this->assertSame('26310011', (new ReservationApplicationNumber)->next(3));
+    public function test_unique_constraint_rejects_duplicate(): void
+    {
+        $number = $this->create()->app_no;
+        $this->expectException(\Illuminate\Database\QueryException::class);
+        DB::table('reservations')->insert(['cee_session_id' => 3, 'app_no' => $number]);
+    }
+
+    public function test_overflow_does_not_create_reservation(): void
+    {
+        $this->create();
+        DB::table('reservation_sequences')->update(['last_sequence' => 99999]);
+        try { $this->create(); $this->fail('Expected overflow'); }
+        catch (ReservationSequenceExhausted $e) {
+            $this->assertSame(1, DB::table('reservations')->count());
+            $this->assertSame(99999, DB::table('reservation_sequences')->value('last_sequence'));
+        }
+    }
+
+    public function test_missing_session_is_rejected(): void
+    {
+        $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+        $this->create(999);
+    }
+
+    public function test_historical_high_water_mark_preserves_legacy_number(): void
+    {
+        DB::table('reservations')->insert(['cee_session_id' => 3, 'app_no' => '26310017',
+            'created_at' => '2026-11-01 00:00:00', 'updated_at' => '2026-11-01 00:00:00']);
+        (require database_path('migrations/2026_11_20_000001_create_reservation_sequences_table.php'))->up();
+        $this->assertSame('26310018', $this->create()->app_no);
+        $this->assertTrue(DB::table('reservations')->where('app_no', '26310017')->exists());
+    }
+
+    public function test_cee_prefixed_history_is_preserved_without_consuming_numeric_sequences(): void
+    {
+        $numbers = ['CEE-202601153636082304643', 'CEE-202601153871382304644', 'CEE-202601153873662304645'];
+        foreach ($numbers as $number) {
+            DB::table('reservations')->insert(['cee_session_id' => 3, 'app_no' => $number,
+                'created_at' => '2026-01-15 07:32:39.500']);
+        }
+        $audit = app(ReservationNumberAudit::class)->inspect();
+        $this->assertSame([], $audit['errors']);
+        $this->assertSame(3, $audit['legacy_count']);
+        $this->assertSame([], $audit['counters']);
+        (require database_path('migrations/2026_11_20_000001_create_reservation_sequences_table.php'))->up();
+        $this->assertSame('26300001', $this->create()->app_no);
+        $this->assertSame($numbers, DB::table('reservations')->where('app_no', 'like', 'CEE-%')->orderBy('id')->pluck('app_no')->all());
+    }
+
+    public function test_mixed_legacy_and_numeric_history_uses_numeric_high_water_mark(): void
+    {
+        foreach (['CEE-202601153636082304643', '26310017'] as $number) {
+            DB::table('reservations')->insert(['cee_session_id' => 3, 'app_no' => $number,
+                'created_at' => '2026-01-15 07:32:39']);
+        }
+        (require database_path('migrations/2026_11_20_000001_create_reservation_sequences_table.php'))->up();
+        $this->assertSame('26310018', $this->create()->app_no);
+    }
+
+    public function test_malformed_cee_number_still_blocks_migration(): void
+    {
+        DB::table('reservations')->insert(['cee_session_id' => 3, 'app_no' => 'CEE-invalid',
+            'created_at' => '2026-01-15']);
+        $this->expectException(\RuntimeException::class);
+        app(ReservationNumberAudit::class)->assertValid();
+    }
+
+    public function test_ambiguous_history_blocks_initialization(): void
+    {
+        DB::table('reservations')->insert(['cee_session_id' => 3, 'app_no' => 'legacy', 'created_at' => '2026-11-01']);
+        $this->expectException(\RuntimeException::class);
+        app(ReservationNumberAudit::class)->assertValid();
     }
 }

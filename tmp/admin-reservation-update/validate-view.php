@@ -1,0 +1,20 @@
+<?php
+require 'C:/laragon/www/cee-admin/vendor/autoload.php';
+$app = require 'C:/laragon/www/cee-admin/bootstrap/app.php';
+$app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+config(['session.driver' => 'array']);
+$source = file_get_contents('C:/laragon/www/cee-admin/resources/views/admin/reservation/create-reservation.blade.php');
+$source = preg_replace('/^@(?:extends|section|push).*$/m', '', $source);
+$source = str_replace(['@endsection', '@endpush'], '', $source);
+$users = collect([(object) ['id' => 1, 'fullname' => 'Preview Applicant', 'lrn' => '123', 'firstname' => 'Preview', 'lastname' => 'Applicant', 'birthdate' => '2008-01-01']]);
+$campusNames = collect([(object) ['real_campus_id' => 1, 'termid' => 101, 'campus_name' => 'USM Main']]);
+$ceeSession = (object) ['id' => 3, 'name' => 'Active session'];
+$batches = collect(['Batch 1', 'Batch 2']);
+$errors = new Illuminate\Support\MessageBag;
+$__env = app('view');
+ob_start();
+eval('?>'.app('blade.compiler')->compileString($source));
+$html = ob_get_clean();
+preg_match_all('~<script(?:\s[^>]*)?>(.*?)</script>~s', $html, $scripts);
+file_put_contents(__DIR__.'/rendered-scripts.js', implode("\n", $scripts[1]));
+echo 'Rendered manual batch and room selectors: '.(str_contains($html, 'id="room-select"') && str_contains($html, 'id="ceeexamsession"') ? 'yes' : 'no').PHP_EOL;

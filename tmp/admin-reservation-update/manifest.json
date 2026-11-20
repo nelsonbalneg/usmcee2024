@@ -1,0 +1,19 @@
+{
+  "app/Services/ReservationApplicationNumber.php": null,
+  "app/Services/ReservationTransaction.php": null,
+  "app/Services/ReservationChecksum.php": null,
+  "app/Services/ReservationNumberAudit.php": null,
+  "app/Models/ReservationSequence.php": null,
+  "app/Exceptions/ReservationDatabaseBusy.php": null,
+  "app/Exceptions/ReservationSequenceExhausted.php": null,
+  "app/Console/Commands/AuditReservationNumbers.php": null,
+  "database/migrations/2026_11_19_000002_add_checksum_to_reservations.php": null,
+  "database/migrations/2026_11_20_000001_create_reservation_sequences_table.php": null,
+  "database/migrations/2026_11_20_000002_add_reservation_booking_indexes.php": null,
+  "tests/Unit/ReservationApplicationNumberTest.php": null,
+  "tests/Unit/ReservationTransactionTest.php": null,
+  "app/Models/Reservation.php": "f61ff5e61ff13256bb9d6786aebd76940d3ddf7ec28888510cefdd80f766fdb6",
+  "app/Http/Controllers/Backend/ReservationController.php": "7069fb251d51d38f7a889b836ed1b1ac0512fc2046fa0087782dccfa0fe3725e",
+  "resources/views/admin/reservation/create-reservation.blade.php": "2cd6769e83a60a78e5b370701fe62e867acdbeddbf09159fb6ad1e76b9570a05",
+  "docs/admin-reservation-alignment.md": null
+}

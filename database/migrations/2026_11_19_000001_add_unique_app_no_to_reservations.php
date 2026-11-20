@@ -8,6 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
+        app(\App\Services\ReservationNumberAudit::class)->assertValid();
+
         Schema::table('reservations', function (Blueprint $table) {
             $table->unique('app_no', 'reservations_app_no_unique');
         });

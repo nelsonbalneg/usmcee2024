@@ -1,0 +1,25 @@
+# Reservation sequence deployment
+
+Back up the database. Stop ALL reservation writers (web nodes, workers, imports and scripts), including old deployments. Use `php artisan down` and stop queue workers; maintenance mode alone does not stop background writers. Keep writers stopped until migrations and code deployment both finish. DDL may commit independently of data transactions. The current deployment uses SQL Server; verify its locking behavior on a dedicated SQL Server test database.
+
+Run `php artisan reservations:audit-numbers`. This read-only command reports duplicate numbers and record IDs with ambiguous or invalid history. No application numbers are rewritten. Recognized history is YY + stored session ID + five digits, including the old 10001-based format. The four-digit year is derived from created_at in the configured storage timezone, converted to Asia/Manila, and must agree with YY. Explicit legacy policy: values matching `CEE-` followed entirely by digits are preserved as opaque identifiers. They cannot collide with the new all-numeric namespace and do not seed its counters; their suffix is never interpreted as a sequence. The audit reports how many were recognized, and duplicate checks still apply to them. If a year/session contains only these legacy values, its first new numeric number ends in `00001`. Mixed history uses the highest existing numeric suffix.
+
+Other formats, missing dates/sessions for numeric records and year mismatches require a reviewed explicit mapping/backfill strategy before deployment; do not guess or renumber. Resolve duplicates explicitly with the data owner and dependent records before adding uniqueness.
+
+Run `php artisan migrate --force` with writers stopped. The migration seeds the highest occupied suffix per year/session and preserves any higher existing counter on restart. Empty year/session pairs start at 00001. Existing sessions may start above 10001 because historical numbers remain occupied. Verify the unique app_no index and counters before restarting workers and running `php artisan up`.
+
+Keep sequence rows permanently, even when reservations are deleted. Restoring a database backup must restore consistent reservations AND counters. Never roll back to the old count allocator or delete counters. The migration intentionally refuses destructive rollback. Unknown direct SQL writers must use the creation service; the unique index remains the final protection against collisions.
+
+Run `php artisan test --filter=ReservationApplicationNumberTest` for isolated SQLite functional checks. These do not establish concurrency safety. Before production rollout, run simultaneous allocation workers against a dedicated database matching production; verify unique numbers, one counter row, counter equals highest committed suffix, rollback behavior and first-use initialization. Never run destructive test setup against the application database.
+
+Concurrency test: configure an isolated migrated database whose name ends in `_test`, with fixture user/room ID 1 if foreign keys require them. Set `RUN_RESERVATION_CONCURRENCY=1` and run `php artisan test --filter=ReservationSequenceConcurrencyTest`. Eight independent PHP processes create 40 committed reservations, and the test checks uniqueness and the counter. Parent and workers must inherit the same database environment; disable cached application configuration. The test removes only its own session and records.
+
+## Busy reservation traffic
+
+The booking-index migration supports the user/session/status existence check and ordered room selection, reducing work while the session lock is held. Apply it during the stopped-writer deployment window; building indexes on large tables can take time.
+
+Existing counters are read and locked directly, avoiding a redundant upsert on every booking.
+
+The transaction wrapper retries the entire rolled-back operation up to five times. Backoff uses randomized 25–400 ms delays, with no locks held during the delay. Laravel concurrency errors and SQL Server native errors 1205/1222 qualify; uniqueness violations, validation errors and unknown connection/commit failures are not automatically retried. A nested allocation delegates retries to the outer booking transaction so room capacity and numbering remain atomic. Exhaustion redirects with a busy message. Do not increase retries without measuring lock waits and request latency.
+
+Bookings for one session still serialize. These changes reduce avoidable work and retry collisions; they do not guarantee 1,000 successful simultaneous HTTP requests. Load-test the complete reservation endpoint with real fixtures on a dedicated SQL Server database, measuring successes, latency, deadlocks, capacity and duplicate user bookings. If bursts exceed measured capacity, use a durable booking-request queue plus a status page: acknowledge receipt only, process in bounded workers, and show success only after commit. That requires a separate asynchronous reservation flow and idempotency policy. Do not simply move number allocation outside the booking transaction or add hundreds of database workers.
