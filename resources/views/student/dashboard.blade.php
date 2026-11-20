@@ -14,7 +14,7 @@
 
 
     <!--start grid-->
-    <div class="grid grid-cols-1 xl:grid-cols-12 gap-x-5">
+    <div class="student-dashboard grid grid-cols-1 xl:grid-cols-12 gap-x-5">
 
         <div class="xl:col-span-4">
 
@@ -31,7 +31,7 @@
 
             <div class="sticky top-[calc(theme('spacing.header')_*_1.3)]">
                 <div
-                    class="relative overflow-hidden border shadow-sm card rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+                    class="dashboard-panel relative overflow-hidden border shadow-sm card rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
 
                     {{-- Decorative Glow --}}
                     <div class="absolute inset-0 bg-gradient-to-br from-sky-500/[0.08] via-blue-500/[0.03] to-transparent">
@@ -54,7 +54,7 @@
 
                         {{-- Photo Section --}}
                         <div
-                            class="relative px-5 mb-5 overflow-hidden border py-7 rounded-2xl bg-gradient-to-br from-sky-50 via-white to-blue-50 border-sky-100 dark:border-zink-700 dark:from-zink-800 dark:via-zink-700 dark:to-zink-800">
+                            class="dashboard-photo-panel relative px-5 mb-5 overflow-hidden border py-7 rounded-2xl bg-gradient-to-br from-sky-50 via-white to-blue-50 border-sky-100 dark:border-zink-700 dark:from-zink-800 dark:via-zink-700 dark:to-zink-800">
                             <div
                                 class="absolute rounded-full -top-8 -right-8 size-24 bg-sky-200/40 blur-2xl dark:bg-sky-500/10">
                             </div>
@@ -92,7 +92,7 @@
                         {{-- Contact / Personal Info --}}
                         <div class="space-y-3">
                             <div
-                                class="flex items-center gap-3 p-3 transition-all duration-200 border rounded-xl bg-slate-50/80 border-slate-200/70 hover:border-sky-200 hover:bg-sky-50/70 dark:bg-zink-700/40 dark:border-zink-600">
+                                class="dashboard-detail flex items-center gap-3 p-3 transition-all duration-200 border rounded-xl bg-slate-50/80 border-slate-200/70 hover:border-sky-200 hover:bg-sky-50/70 dark:bg-zink-700/40 dark:border-zink-600">
                                 <div
                                     class="flex items-center justify-center rounded-xl size-10 bg-sky-100 text-sky-600 dark:bg-sky-500/20 dark:text-sky-300 shrink-0">
                                     <i data-lucide="mail" class="size-4"></i>
@@ -109,7 +109,7 @@
                             </div>
 
                             <div
-                                class="flex items-center gap-3 p-3 transition-all duration-200 border rounded-xl bg-slate-50/80 border-slate-200/70 hover:border-sky-200 hover:bg-sky-50/70 dark:bg-zink-700/40 dark:border-zink-600">
+                                class="dashboard-detail flex items-center gap-3 p-3 transition-all duration-200 border rounded-xl bg-slate-50/80 border-slate-200/70 hover:border-sky-200 hover:bg-sky-50/70 dark:bg-zink-700/40 dark:border-zink-600">
                                 <div
                                     class="flex items-center justify-center text-green-600 bg-green-100 rounded-xl size-10 dark:bg-green-500/20 dark:text-green-300 shrink-0">
                                     <i data-lucide="phone" class="size-4"></i>
@@ -126,7 +126,7 @@
                             </div>
 
                             <div
-                                class="flex items-center gap-3 p-3 transition-all duration-200 border rounded-xl bg-slate-50/80 border-slate-200/70 hover:border-sky-200 hover:bg-sky-50/70 dark:bg-zink-700/40 dark:border-zink-600">
+                                class="dashboard-detail flex items-center gap-3 p-3 transition-all duration-200 border rounded-xl bg-slate-50/80 border-slate-200/70 hover:border-sky-200 hover:bg-sky-50/70 dark:bg-zink-700/40 dark:border-zink-600">
                                 <div
                                     class="flex items-center justify-center rounded-xl size-10 bg-violet-100 text-violet-600 dark:bg-violet-500/20 dark:text-violet-300 shrink-0">
                                     <i data-lucide="calendar" class="size-4"></i>
@@ -152,7 +152,7 @@
 
                 {{-- Premium Date & Time Card --}}
                 <div
-                    class="relative overflow-hidden border shadow-sm card rounded-2xl border-white/60 bg-white/80 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-800/70">
+                    class="dashboard-panel relative overflow-hidden border shadow-sm card rounded-2xl border-white/60 bg-white/80 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-800/70">
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-green-500/[0.08] via-emerald-500/[0.03] to-transparent">
                     </div>
@@ -190,7 +190,7 @@
 
                 {{-- Premium Quote Card --}}
                 <div
-                    class="relative overflow-hidden border shadow-sm card rounded-2xl border-white/60 bg-white/80 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-800/70">
+                    class="dashboard-panel relative overflow-hidden border shadow-sm card rounded-2xl border-white/60 bg-white/80 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-800/70">
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-orange-500/[0.08] via-amber-500/[0.04] to-transparent">
                     </div>
@@ -231,7 +231,7 @@
 
                 {{-- Premium Last Login Card --}}
                 <div
-                    class="relative overflow-hidden border shadow-sm card rounded-2xl border-white/60 bg-white/80 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-800/70">
+                    class="dashboard-panel relative overflow-hidden border shadow-sm card rounded-2xl border-white/60 bg-white/80 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-800/70">
                     <div class="absolute inset-0 bg-gradient-to-br from-sky-500/[0.08] via-cyan-500/[0.04] to-transparent">
                     </div>
                     <div class="absolute rounded-full -top-12 -right-12 size-36 bg-sky-400/10 blur-3xl"></div>
@@ -291,7 +291,7 @@
 
                 {{-- Profile Status --}}
                 <div
-                    class="relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+                    class="dashboard-panel relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-green-500/[0.06] via-emerald-500/[0.03] to-transparent">
                     </div>
@@ -351,7 +351,7 @@
 
                 {{-- Program --}}
                 <div
-                    class="relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+                    class="dashboard-panel relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-violet-500/[0.05] via-fuchsia-500/[0.03] to-transparent">
                     </div>
@@ -419,7 +419,7 @@
 
                 {{-- Registration Status --}}
                 <div
-                    class="relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+                    class="dashboard-panel relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
                     <div class="absolute inset-0 bg-gradient-to-br from-sky-500/[0.06] via-cyan-500/[0.03] to-transparent">
                     </div>
                     <div class="absolute rounded-full -top-10 -right-10 size-28 bg-sky-400/10 blur-3xl"></div>
@@ -567,7 +567,7 @@
 
                 {{-- Student ID --}}
                 <div
-                    class="relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
+                    class="dashboard-panel relative overflow-hidden border shadow-sm rounded-2xl border-white/60 bg-white/90 backdrop-blur-xl dark:border-zink-700/60 dark:bg-zink-800/80">
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.06] via-blue-500/[0.03] to-transparent">
                     </div>

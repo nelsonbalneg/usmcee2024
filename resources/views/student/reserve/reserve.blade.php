@@ -15,7 +15,7 @@
     <x-page-header title="USMCEE 4.0 " :breadcrumbs="[['label' => 'Home', 'url' => route('dashboard')], ['label' => 'Reservation']]" />
 
     <!--start grid-->
-    <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
+    <div class="reservation-page grid grid-cols-1 gap-x-5 xl:grid-cols-12">
         <!--start col-->
         <div class="xl:col-span-12">
             <!--start card-->
@@ -24,7 +24,7 @@
             <div class="flex flex-col col-span-1 gap-3 card 2xl:col-span-12">
                 <div class="card-body">
                     <div
-                        class="overflow-hidden bg-white border shadow-sm rounded-2xl border-slate-200 dark:border-zink-600 dark:bg-zink-800">
+                        class="reservation-records overflow-hidden bg-white border shadow-sm rounded-2xl border-slate-200 dark:border-zink-600 dark:bg-zink-800">
                         {{-- Header --}}
                         <div class="px-6 py-5 border-b border-slate-200 dark:border-zink-600">
                             <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">

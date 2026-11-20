@@ -62,6 +62,7 @@
 
 
     @stack('styles')
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/student-dark-mode.css') }}">
 
 </head>
 

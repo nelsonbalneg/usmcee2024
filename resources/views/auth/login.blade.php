@@ -386,10 +386,10 @@ $endofreservation = $endofreservation ?? optional(SiteSetting::first())->endrese
     </script>
 
 
+    <script src="{{ asset('backend/assets/libs/lucide/umd/lucide.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/tailwick.bundle.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     {{-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> --}}
 
     <script>

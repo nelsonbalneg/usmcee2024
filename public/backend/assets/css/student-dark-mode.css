@@ -1,0 +1,59 @@
+/* Student surfaces: scoped overrides also cover vendor widgets and runtime Tailwind. */
+html:is(.dark, [data-mode="dark"]) { color-scheme: dark; }
+html:is(.dark, [data-mode="dark"]) .page-header-panel {
+    background: #162537 !important;
+    border-color: #334155 !important;
+}
+html:is(.dark, [data-mode="dark"]) .page-header-title { color: #f1f5f9 !important; }
+html:is(.dark, [data-mode="dark"]) .page-header-subtitle { color: #cbd5e1 !important; }
+html:is(.dark, [data-mode="dark"]) .page-header-crumb {
+    background: #223247 !important;
+    border-color: #475569 !important;
+    color: #dbe7f3 !important;
+}
+html:is(.dark, [data-mode="dark"]) a.page-header-crumb:hover { background: #334155 !important; color: #fff !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page .reservation-records {
+    background: #101d2c !important;
+    border-color: #334155 !important;
+}
+html:is(.dark, [data-mode="dark"]) .reservation-page .border-b,
+html:is(.dark, [data-mode="dark"]) .reservation-page .border,
+html:is(.dark, [data-mode="dark"]) .reservation-page tbody > tr + tr { border-color: #334155 !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page thead,
+html:is(.dark, [data-mode="dark"]) .reservation-page thead th { background: #1e3045 !important; color: #dbe7f3 !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page tbody tr { background: #101d2c !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page tbody tr:hover { background: #182b40 !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page :is(.text-slate-400, .text-slate-500) { color: #b6c6d8 !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page :is(.text-slate-600, .text-slate-700, .text-slate-800) { color: #e2e8f0 !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page :is(.bg-green-100, .bg-green-50) { background: #123c36 !important; color: #86efac !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page .bg-sky-100 { background: #12364e !important; color: #7dd3fc !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page .bg-yellow-100 { background: #423719 !important; color: #fde68a !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page .bg-red-100 { background: #47272f !important; color: #fda4af !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page .bg-slate-100 { background: #25354a !important; color: #cbd5e1 !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page :is(.choices__inner, .choices__input, .choices__list--dropdown, .choices__list[aria-expanded]) {
+    background: #162537 !important;
+    border-color: #475569 !important;
+    color: #e2e8f0 !important;
+}
+html:is(.dark, [data-mode="dark"]) .reservation-page .choices__item--choice { color: #e2e8f0 !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page .choices__item--choice.is-highlighted { background: #29415b !important; }
+html:is(.dark, [data-mode="dark"]) .reservation-page .choices__placeholder { color: #b6c6d8 !important; opacity: 1; }
+html:is(.dark, [data-mode="dark"]) .reservation-page .choices[data-type*="select-one"]::after { border-top-color: #cbd5e1; }
+html:is(.dark, [data-mode="dark"]) .reservation-page .choices[data-type*="select-one"].is-open::after { border-top-color: transparent; border-bottom-color: #cbd5e1; }
+
+/* Dashboard dark surfaces, including the photo panel and overview cards. */
+html:is(.dark, [data-mode="dark"]) .student-dashboard .dashboard-panel { background-color:#162537!important;border-color:#334155!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard .dashboard-photo-panel { background:linear-gradient(135deg,#1e344b,#162537)!important;border-color:#3b5068!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard .dashboard-detail { background:#1a2c40!important;border-color:#334155!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard .dashboard-detail:hover { background:#22394f!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard :is(h5,h6) { color:#f1f5f9!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard :is(.text-slate-400,.text-slate-500) { color:#b6c6d8!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard :is(.text-slate-600,.text-slate-700,.text-slate-800) { color:#e2e8f0!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard :is(.text-sky-500,.text-sky-600) { color:#7dd3fc!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard .bg-slate-100 { background:#293c52!important;color:#cbd5e1!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard :is(.bg-green-100,[class~="bg-green-500/10"]) { background:#123c36!important;color:#86efac!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard .bg-sky-100 { background:#12364e!important;color:#7dd3fc!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard .bg-yellow-100 { background:#423719!important;color:#fde68a!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard :is(.bg-purple-100,.bg-purple-50) { background:#342650!important;color:#d8b4fe!important;border-color:#60477b!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard .bg-indigo-100 { background:#2b2c55!important;color:#c7d2fe!important; }
+html:is(.dark, [data-mode="dark"]) .student-dashboard .bg-rose-50 { background:#422735!important;color:#fda4af!important;border-color:#724052!important; }

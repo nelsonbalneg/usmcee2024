@@ -10,7 +10,7 @@
 
 <div class="mt-4 mb-4 print:hidden">
     <div
-        class="flex flex-col gap-3 rounded-[20px] border border-slate-200/80 bg-slate-50/60 px-4 py-4 md:flex-row md:items-center md:justify-between">
+        class="page-header-panel flex flex-col gap-3 rounded-[20px] border border-slate-200/80 bg-slate-50/60 px-4 py-4 md:flex-row md:items-center md:justify-between">
         <div class="min-w-0 grow">
             @if ($module || $section)
                 <div class="flex flex-wrap items-center gap-2 mb-2">
@@ -32,12 +32,12 @@
                 </div>
             @endif
 
-            <h5 class="text-[15px] font-semibold uppercase tracking-tight text-slate-500">
+            <h5 class="page-header-title text-[15px] font-semibold uppercase tracking-tight text-slate-500">
                 {{ $title }}
             </h5>
 
             @if ($subtitle)
-                <p class="mt-1 text-sm text-slate-500">
+                <p class="page-header-subtitle mt-1 text-sm text-slate-500">
                     {{ $subtitle }}
                 </p>
             @endif
@@ -49,12 +49,12 @@
                     <li>
                         @if (!empty($crumb['url']))
                             <a href="{{ $crumb['url'] }}"
-                                class="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:border-indigo-200 hover:text-indigo-600">
+                                class="page-header-crumb inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:border-indigo-200 hover:text-indigo-600">
                                 {{ $crumb['label'] }}
                             </a>
                         @else
                             <span
-                                class="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600">
+                                class="page-header-crumb inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600">
                                 {{ $crumb['label'] }}
                             </span>
                         @endif
