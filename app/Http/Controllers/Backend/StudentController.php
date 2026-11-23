@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Announcement;
 use App\Models\CeeSession;
 use App\Models\Reservation;
 use App\Models\Result;
@@ -162,7 +163,11 @@ class StudentController extends Controller
             }
 
 
+            $announcements = Announcement::visibleToStudents()
+                ->orderByDesc('is_pinned')->orderByDesc('publish_at')->orderByDesc('id')->get();
+
             return view('student.dashboard', compact(
+                'announcements',
                 'studentdetails',
                 'isreservation_exist',
                 'cee_result',

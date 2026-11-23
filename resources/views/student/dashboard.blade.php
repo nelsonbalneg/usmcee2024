@@ -12,6 +12,8 @@
 
     <x-page-header title="USMCEE | Dashboard" :breadcrumbs="[['label' => 'Home', 'url' => route('dashboard')], ['label' => 'Dashboard', 'url' => '#!']]" />
 
+    @include('student.partials.announcements-modal')
+
 
     <!--start grid-->
     <div class="student-dashboard grid grid-cols-1 xl:grid-cols-12 gap-x-5">

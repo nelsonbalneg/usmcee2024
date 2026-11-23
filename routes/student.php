@@ -23,6 +23,8 @@ Route::get('terms-policy', [TermsPolicyController::class, 'show'])->name('terms-
 Route::post('terms-policy/accept', [TermsPolicyController::class, 'accept'])->name('terms-policy.accept');
 
 Route::middleware(['check.maintenance', 'terms.accepted'])->group(function () {
+    Route::get('announcements/{announcement}/images/{directory}/{filename}', \App\Http\Controllers\Student\AnnouncementImageController::class)
+        ->whereIn('directory', ['media', 'images'])->name('announcements.images');
     Route::get('dashboard', [StudentController::class, 'dashboard'])->name('dashboard')->middleware('check.pending.applicant');
 
     Route::put('/test-update/{id}', [StudentProfileController::class, 'update']);
