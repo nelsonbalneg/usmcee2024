@@ -3,6 +3,28 @@
     USM-CEE | Result
 @endsection
 
+@push('styles')
+    <style>
+        .cee-result-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.75rem;
+            border: 1px solid;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .cee-result-badge--available { color: #166534; background: #dcfce7; border-color: #86efac; }
+        .cee-result-badge--unavailable { color: #334155; background: #f1f5f9; border-color: #cbd5e1; }
+        .cee-result-badge--retake { color: #92400e; background: #fef3c7; border-color: #fcd34d; }
+        html:is(.dark, [data-mode="dark"]) .cee-result-badge--available { color: #bbf7d0; background: #14532d; border-color: #22c55e; }
+        html:is(.dark, [data-mode="dark"]) .cee-result-badge--unavailable { color: #e2e8f0; background: #334155; border-color: #64748b; }
+        html:is(.dark, [data-mode="dark"]) .cee-result-badge--retake { color: #fde68a; background: #78350f; border-color: #d97706; }
+    </style>
+@endpush
+
 @section('contents')
     <x-page-header title="USMCEE 4.0 | CEE Result" :breadcrumbs="[['label' => 'Home', 'url' => route('dashboard')], ['label' => 'CEE Result']]" />
 
@@ -94,6 +116,14 @@
                                                             <span class="font-semibold text-slate-800 dark:text-white">
                                                                 {{ $result->app_no }}
                                                             </span>
+                                                            @if (in_array(strtolower(trim((string) $result->is_repeat_exam)), ['yes', '1'], true))
+                                                                <span class="mt-1">
+                                                                    <span class="cee-result-badge cee-result-badge--retake">
+                                                                        <i data-lucide="rotate-ccw" class="size-3" aria-hidden="true"></i>
+                                                                        Retake
+                                                                    </span>
+                                                                </span>
+                                                            @endif
                                                             <span class="text-xs text-slate-400 dark:text-zink-400">
                                                                 Applicant Reference
                                                             </span>
@@ -114,13 +144,13 @@
                                                     <td class="px-4 py-4">
                                                         @if ($isActiveSession)
                                                             <span
-                                                                class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full dark:bg-green-500/20 dark:text-green-300">
+                                                                class="cee-result-badge cee-result-badge--available">
                                                                 <i data-lucide="check-circle-2" class="size-3"></i>
                                                                 Available
                                                             </span>
                                                         @else
                                                             <span
-                                                                class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-slate-100 text-slate-600 dark:bg-slate-500/20 dark:text-slate-300">
+                                                                class="cee-result-badge cee-result-badge--unavailable">
                                                                 <i data-lucide="clock-3" class="size-3"></i>
                                                                 Unavailable
                                                             </span>

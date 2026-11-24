@@ -26,6 +26,10 @@ class ResultController extends Controller
         $reservation = Auth::user();
 
         $cee_result = Result::with('cee_term:id,name,status')
+            ->addSelect(['is_repeat_exam' => Reservation::select('is_repeat_exam')
+                ->whereColumn('reservations.app_no', 'results.app_no')
+                ->whereColumn('reservations.user_id', 'results.user_id')
+                ->limit(1)])
             ->where('user_id', $userId)
             ->where('status', 'posted')
             ->latest()
