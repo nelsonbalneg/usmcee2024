@@ -10,15 +10,19 @@ return new class extends Migration
     {
         app(\App\Services\ReservationNumberAudit::class)->assertValid();
 
-        Schema::table('reservations', function (Blueprint $table) {
-            $table->unique('app_no', 'reservations_app_no_unique');
-        });
+        if (! Schema::hasIndex('reservations', 'reservations_app_no_unique')) {
+            Schema::table('reservations', function (Blueprint $table) {
+                $table->unique('app_no', 'reservations_app_no_unique');
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('reservations', function (Blueprint $table) {
-            $table->dropUnique('reservations_app_no_unique');
-        });
+        if (Schema::hasIndex('reservations', 'reservations_app_no_unique')) {
+            Schema::table('reservations', function (Blueprint $table) {
+                $table->dropUnique('reservations_app_no_unique');
+            });
+        }
     }
 };
