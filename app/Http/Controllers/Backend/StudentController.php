@@ -147,10 +147,10 @@ class StudentController extends Controller
                 ->where('student_id', Auth::id())
                 ->first();
 
-            $cee_result = Result::where('user_id', Auth::id())
+            $cee_result = $ceeActiveession ? Result::where('user_id', Auth::id())
                 ->where('status', 'posted')
                 ->where('cee_session_id', $ceeActiveession->id)
-                ->first();
+                ->first() : null;
 
             $activeTermsPolicy = TermsPolicy::where('is_active', true)->latest('id')->first();
 
